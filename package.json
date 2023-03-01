@@ -39,6 +39,18 @@
     ],
     "parserOptions": {
       "project": "./tsconfig.json"
+    },
+    "rules": {
+      "import/no-extraneous-dependencies": [
+        "error",
+        {
+          "devDependencies": [
+            "**/*.test.{ts,tsx}",
+            "src/setupTests.ts"
+          ],
+          "optionalDependencies": false
+        }
+      ]
     }
   },
   "browserslist": {
