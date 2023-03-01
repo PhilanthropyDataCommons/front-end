@@ -10,5 +10,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version-file: ".node-version"
-      - run: npm ci
-      - run: npm run build
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
