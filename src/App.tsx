@@ -8,21 +8,29 @@ const App = () => (
     <Header />
     <main>
       <img src={logo} className="React-logo" alt="logo" />
+      <h1>
+        Data Viewer
+      </h1>
       <p>
-        Edit
-        {' '}
-        <code>src/App.tsx</code>
-        {' '}
-        and save to reload.
+        <a
+          className="App-link"
+          href="https://github.com/PhilanthropyDataCommons/data-viewer/"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          Repository
+        </a>
       </p>
-      <a
-        className="App-link"
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Learn React
-      </a>
+      <p>
+        <a
+          className="App-link"
+          href="https://philanthropydatacommons.org/"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          Website
+        </a>
+      </p>
     </main>
   </div>
 );
