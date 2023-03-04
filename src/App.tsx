@@ -1,11 +1,13 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Header } from './Header';
+import logo from './react-logo.svg';
 import './App.css';
 
 const App = () => (
   <div className="App">
-    <header className="App-header">
-      <img src={logo} className="App-logo" alt="logo" />
+    <Header />
+    <main>
+      <img src={logo} className="React-logo" alt="logo" />
       <p>
         Edit
         {' '}
@@ -21,7 +23,7 @@ const App = () => (
       >
         Learn React
       </a>
-    </header>
+    </main>
   </div>
 );
 
