@@ -42,6 +42,8 @@
       "project": "./tsconfig.json"
     },
     "rules": {
+      "import/prefer-default-export": "off",
+      "import/no-default-export":  "error",
       "import/no-extraneous-dependencies": [
         "error",
         {
@@ -50,6 +52,13 @@
             "src/setupTests.ts"
           ],
           "optionalDependencies": false
+        }
+      ],
+      "react/function-component-definition": [
+        "error",
+        {
+          "namedComponents": "arrow-function",
+          "unnamedComponents": "arrow-function"
         }
       ]
     }

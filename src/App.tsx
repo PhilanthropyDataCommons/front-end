@@ -1,30 +1,38 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Header } from './Header';
+import logo from './react-logo.svg';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit
-          {' '}
-          <code>src/App.tsx</code>
-          {' '}
-          and save to reload.
-        </p>
+const App = () => (
+  <div className="App">
+    <Header />
+    <main>
+      <img src={logo} className="React-logo" alt="logo" />
+      <h1>
+        Data Viewer
+      </h1>
+      <p>
         <a
           className="App-link"
-          href="https://reactjs.org"
+          href="https://github.com/PhilanthropyDataCommons/data-viewer/"
           target="_blank"
-          rel="noopener noreferrer"
+          rel="noreferrer noopener"
         >
-          Learn React
+          Repository
         </a>
-      </header>
-    </div>
-  );
-}
+      </p>
+      <p>
+        <a
+          className="App-link"
+          href="https://philanthropydatacommons.org/"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          Website
+        </a>
+      </p>
+    </main>
+  </div>
+);
 
-export default App;
+export { App };

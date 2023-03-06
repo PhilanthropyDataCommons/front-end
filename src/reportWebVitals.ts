@@ -15,4 +15,4 @@ const reportWebVitals = () => {
   getTTFB(reportHandler);
 };
 
-export default reportWebVitals;
+export { reportWebVitals };
