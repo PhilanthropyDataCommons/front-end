@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { App } from './App';
+import { Placeholder } from './Placeholder';
 
 test('renders app name', () => {
-  render(<App />);
+  render(<Placeholder />);
   const nameElement = screen.getByText(/data viewer/i);
   expect(nameElement).toBeInTheDocument();
 });

@@ -1,37 +1,17 @@
 import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 import { Header } from './Header';
-import logo from './react-logo.svg';
+import { NotFound } from './NotFound';
+import { Placeholder } from './Placeholder';
 import './App.css';
 
 const App = () => (
   <div className="App">
     <Header />
-    <main>
-      <img src={logo} className="React-logo" alt="logo" />
-      <h1>
-        Data Viewer
-      </h1>
-      <p>
-        <a
-          className="App-link"
-          href="https://github.com/PhilanthropyDataCommons/data-viewer/"
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          Repository
-        </a>
-      </p>
-      <p>
-        <a
-          className="App-link"
-          href="https://philanthropydatacommons.org/"
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          Website
-        </a>
-      </p>
-    </main>
+    <Routes>
+      <Route path="/" element={<Placeholder />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   </div>
 );
 
