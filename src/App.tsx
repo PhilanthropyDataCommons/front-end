@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { Header } from './Header';
-import { NotFound } from './NotFound';
-import { Placeholder } from './Placeholder';
+import { Header } from './components/Header';
+import { NotFound } from './pages/NotFound';
+import { Placeholder } from './pages/Placeholder';
 import './App.css';
 
 const App = () => (

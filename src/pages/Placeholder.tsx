@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './react-logo.svg';
+import logo from '../images/react-logo.svg';
 
 const Placeholder = () => (
   <main>
