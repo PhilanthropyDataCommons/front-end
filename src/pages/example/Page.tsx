@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Header } from './Header';
+import { Header } from '../../components/example/Header';
 import './page.css';
 
 interface User {
