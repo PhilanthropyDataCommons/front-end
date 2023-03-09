@@ -19,3 +19,9 @@ body {
 code {
   font-family: var(--font-family--monospace);
 }
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
