@@ -5,6 +5,8 @@
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   --font-family--monospace: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+
+  --transition-duration: 200ms;
 }
 
 body {
@@ -24,4 +26,5 @@ code {
 *:before,
 *:after {
   box-sizing: border-box;
+  transition-duration: var(--transition-duration);
 }
