@@ -2,7 +2,7 @@ import React from 'react';
 import logo from '../images/react-logo.svg';
 
 const Placeholder = () => (
-  <main>
+  <>
     <img src={logo} className="React-logo" alt="logo" />
     <h1>
       Data Viewer
@@ -27,7 +27,7 @@ const Placeholder = () => (
         Website
       </a>
     </p>
-  </main>
+  </>
 );
 
 export { Placeholder };

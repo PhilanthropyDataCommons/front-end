@@ -1,13 +1,34 @@
 .App {
-  text-align: center;
+  display: grid;
+  grid-template-rows: min-content 1fr;
+  gap: var(--spacing--gap);
+  padding: var(--spacing--gap);
+  width: 100vw;
+  height: 100vh;
+}
+
+.App-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: var(--spacing--gap);
 }
 
 .App-logo {
-  height: 3em;
-  padding: .5em;
+  aspect-ratio: 4.2;
+}
+
+.App-header .App-logo {
+  height: 60px;
+}
+
+.App-main {
+  text-align: center;
 }
 
 .React-logo {
+  display: inline;
   height: 50vh;
   width: 50vw;
 }
@@ -16,23 +37,6 @@
   .React-logo {
     animation: React-logo-spin infinite 20s linear;
   }
-}
-
-.App-header {
-  align-items: center;
-  background-color: #efefef;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  color: black;
-}
-
-.header-placeholder {
-  flex-grow: 99;
-}
-
-.App-link {
-  color: #61dafb;
 }
 
 @keyframes React-logo-spin {
