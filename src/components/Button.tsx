@@ -6,7 +6,7 @@ interface ButtonProps {
    * Contents of a `<Button>` can be a mix of strings and JSX elements,
    * and will be flex-aligned.
    */
-  children: JSX.Element | JSX.Element[] | string;
+  children: React.ReactNode;
   color?: 'gray' | 'blue' | 'red';
   /**
    * Makes the button dark with light text.
