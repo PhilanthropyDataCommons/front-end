@@ -1,0 +1,100 @@
+:root {
+  --button--focus-color: blue;
+  --button--font-size: 0.9rem;
+  /* These next values should be relative to the button's font-size, so we switch to `em` units. */
+  --button--height: 3.15em;
+  --button--icon-size: 1.7em;
+
+  /* V-padding based on desired button height minus font-height. */
+  --button--padding-y: calc((var(--button--height) - var(--button--font-size)) / 2);
+  /* H-padding based on desired button width minus icon size. (Smallest expected content.) */
+  --button--padding-x: calc((var(--button--height) - var(--button--icon-size)) / 2);
+}
+
+.button {
+  /* Nuclear unset of browser defaults: we want to completely define button styles. */
+  all: unset;
+  box-sizing: border-box;
+  cursor: pointer;
+
+  border-radius: 8px;
+  border: 1px solid transparent;
+  font-family: var(--font-family--sans-serif);
+  font-weight: 600;
+  font-size: var(--button--font-size);
+  line-height: 1;
+  letter-spacing: normal;
+  height: var(--button--height);
+  padding: var(--button--padding-y) var(--button--padding-x);
+
+  transition-property: background-color, color, border-color, opacity;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: calc(var(--button--padding-x) / 2);
+
+  /* Standard, default theme. */
+  --button--border-color: var(--button--primary-color);
+  --button--notification-color: var(--button--primary-color);
+  background-color: var(--button--contrast-color);
+  color: var(--button--primary-color);
+}
+
+.button:focus {
+  outline: 2px solid var(--button--focus-color);
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.button > svg {
+  height: var(--button--icon-size);
+  width: var(--button--icon-size);;
+}
+
+.button--color-gray {
+  --button--primary-color: var(--color--gray--dark);
+  --button--contrast-color: var(--color--gray--light);
+}
+
+.button--color-blue {
+  --button--primary-color: var(--color--blue);
+  --button--contrast-color: var(--color--gray--light);
+}
+
+.button--color-red {
+  --button--primary-color: var(--color--red);
+  --button--contrast-color: var(--color--gray--light);
+}
+
+.button--inverted {
+  --button--border-color: transparent;
+  --button--notification-color: var(--button--contrast-color);
+  background-color: var(--button--primary-color);
+  color: var(--button--contrast-color);
+}
+
+.button--bordered {
+  border-color: var(--button--border-color);
+}
+
+.button--notification {
+  position: relative;
+}
+
+.button--notification::after {
+  content: "";
+  border-radius: 50%;
+  width: 0.65em;
+  height: 0.65em;
+  background-color: var(--button--notification-color);
+
+  /* If we dislike this design, then remove the absolute positioning and give this element a
+     margin-left equal to the `gap` property above. */
+  position: absolute;
+  top: 3px;
+  right: 3px;
+}
