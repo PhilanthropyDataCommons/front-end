@@ -114,3 +114,7 @@ dist
 
 # TernJS port file
 .tern-port
+
+# @axa-fr/react-oidc generated files
+/public/OidcServiceWorker.js
+/public/OidcTrustedDomains.js

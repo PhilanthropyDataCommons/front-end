@@ -1,21 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
+import { OidcProvider } from '@axa-fr/react-oidc';
 import './index.css';
 import { App } from './App';
+import { getConfiguration } from './oidc-config';
 import { reportWebVitals } from './reportWebVitals';
 import { getLogger } from './logger';
 
 const logger = getLogger('index');
+
+const configuration = getConfiguration(
+  process.env.REACT_APP_OIDC_AUTHORITY,
+  process.env.REACT_APP_OIDC_CLIENT_ID,
+);
+logger.debug(configuration, 'OIDC Configuration');
 
 const rootElement = document.getElementById('root');
 if (rootElement) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <React.StrictMode>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <OidcProvider configuration={configuration}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </OidcProvider>
     </React.StrictMode>,
   );
 } else {
