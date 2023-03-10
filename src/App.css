@@ -23,6 +23,51 @@
   height: 60px;
 }
 
+.App-navbar ul {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--spacing--gap) * 2);
+}
+
+.App-navbar__item {
+  display: flex;
+  align-items: flex-start;
+  gap: calc(var(--spacing--gap) / 2);
+
+  font-size: 0.875rem;
+  color: black;
+  text-transform: uppercase;
+  font-weight: 700;
+  text-decoration: none;
+  padding: var(--spacing--gap);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.App-navbar__item:focus {
+  outline: 2px solid blue;
+}
+
+.App-navbar__item.active {
+  color: var(--color--blue);
+}
+
+.App-navbar__item:is(a, button):hover {
+  background-color: #0001;
+}
+
+.App-navbar__item svg {
+  height: 2em;
+}
+
+.App-navbar__item--loading {
+  color: var(--color--gray--medium);
+}
+
+.App-navbar__item--error {
+  color: var(--color--red);
+}
+
 .App-main {
   text-align: center;
 }
