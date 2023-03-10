@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@axa-fr/react-oidc": "^6.15.6",
     "pino": "^8.11.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
