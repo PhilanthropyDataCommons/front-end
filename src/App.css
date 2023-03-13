@@ -37,7 +37,7 @@
   font-size: 0.875rem;
   color: black;
   text-transform: uppercase;
-  font-weight: 700;
+  font-weight: var(--font-weight--bold);
   text-decoration: none;
   padding: var(--spacing--gap);
   border-radius: 5px;

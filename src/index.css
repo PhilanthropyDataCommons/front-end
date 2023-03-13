@@ -13,6 +13,9 @@
     'Roboto', 'Oxygen','Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   --font-family--monospace: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  --font-weight--normal: 400;
+  --font-weight--medium: 600;
+  --font-weight--bold: 700;
 
   --spacing--gap: 10px;
 
@@ -25,6 +28,7 @@ body {
   background-color: var(--color--gray--light);
   color: var(--color--gray--darker);
   font-family: var(--font-family--sans-serif);
+  font-weight: var(--font-weight--normal);
   font-size: var(--font-size);
   line-height: var(--line-height);
   -webkit-font-smoothing: antialiased;

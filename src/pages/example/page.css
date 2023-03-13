@@ -9,7 +9,7 @@ section {
 }
 
 section h2 {
-  font-weight: 700;
+  font-weight: var(--font-weight--bold);
   font-size: 32px;
   line-height: 1;
   margin: 0 0 4px;
@@ -40,7 +40,7 @@ section .tip {
   border-radius: 1em;
   font-size: 11px;
   line-height: 12px;
-  font-weight: 700;
+  font-weight: var(--font-weight--bold);
   background: #e7fdd8;
   color: #66bf3c;
   padding: 4px 12px;

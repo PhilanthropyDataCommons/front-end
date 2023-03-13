@@ -20,7 +20,7 @@
   border-radius: 8px;
   border: 1px solid transparent;
   font-family: var(--font-family--sans-serif);
-  font-weight: 600;
+  font-weight: var(--font-weight--medium);
   font-size: var(--button--font-size);
   line-height: 1;
   letter-spacing: normal;
