@@ -8,10 +8,12 @@ import './App.css';
 const App = () => (
   <div className="App">
     <Header />
-    <Routes>
-      <Route path="/" element={<Placeholder />} />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <main className="App-main">
+      <Routes>
+        <Route path="/" element={<Placeholder />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </main>
   </div>
 );
 

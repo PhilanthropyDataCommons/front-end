@@ -1,13 +1,79 @@
 .App {
-  text-align: center;
+  display: grid;
+  grid-template-rows: min-content 1fr;
+  gap: var(--spacing--gap);
+  padding: var(--spacing--gap);
+  width: 100vw;
+  height: 100vh;
+}
+
+.App-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: var(--spacing--gap);
 }
 
 .App-logo {
-  height: 3em;
-  padding: .5em;
+  aspect-ratio: 4.2;
+}
+
+.App-header .App-logo {
+  height: 60px;
+}
+
+.App-navbar ul {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--spacing--gap) * 2);
+}
+
+.App-navbar__item {
+  display: flex;
+  align-items: flex-start;
+  gap: calc(var(--spacing--gap) / 2);
+
+  font-size: 0.875rem;
+  color: black;
+  text-transform: uppercase;
+  font-weight: 700;
+  text-decoration: none;
+  padding: var(--spacing--gap);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.App-navbar__item:focus {
+  outline: 2px solid blue;
+}
+
+.App-navbar__item.active {
+  color: var(--color--blue);
+}
+
+.App-navbar__item:is(a, button):hover {
+  background-color: #0001;
+}
+
+.App-navbar__item svg {
+  height: 2em;
+}
+
+.App-navbar__item--loading {
+  color: var(--color--gray--medium);
+}
+
+.App-navbar__item--error {
+  color: var(--color--red);
+}
+
+.App-main {
+  text-align: center;
 }
 
 .React-logo {
+  display: inline;
   height: 50vh;
   width: 50vw;
 }
@@ -16,23 +82,6 @@
   .React-logo {
     animation: React-logo-spin infinite 20s linear;
   }
-}
-
-.App-header {
-  align-items: center;
-  background-color: #efefef;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  color: black;
-}
-
-.header-placeholder {
-  flex-grow: 99;
-}
-
-.App-link {
-  color: #61dafb;
 }
 
 @keyframes React-logo-spin {

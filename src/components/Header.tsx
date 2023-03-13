@@ -1,11 +1,13 @@
 import React from 'react';
-import { User } from './User';
-import logo from '../images/logo.png';
+import { Navbar } from './Navbar';
+import logo from '../images/pdc-logo.png';
 
 const Header = () => (
   <header className="App-header">
-    <img src={logo} className="App-logo" alt="logo" />
-    <User />
+    <a href="/">
+      <img src={logo} className="App-logo" alt="Philanthropy Data Commons logo" />
+    </a>
+    <Navbar />
   </header>
 );
 

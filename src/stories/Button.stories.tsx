@@ -37,12 +37,10 @@ export const WithIcon: Story = {
   args: {
     color: 'blue',
     bordered: true,
-    children: (
-      <>
-        <AdjustmentsHorizontalIcon />
-        Button
-      </>
-    ),
+    children: [
+      <AdjustmentsHorizontalIcon />,
+      'Button',
+    ],
   },
 };
 
@@ -51,12 +49,10 @@ export const WithIconAndNotification: Story = {
     color: 'blue',
     bordered: true,
     notification: true,
-    children: (
-      <>
-        <AdjustmentsHorizontalIcon />
-        Button
-      </>
-    ),
+    children: [
+      <AdjustmentsHorizontalIcon />,
+      'Button',
+    ],
   },
 };
 
@@ -72,12 +68,10 @@ export const InvertedWithIcon: Story = {
   args: {
     color: 'blue',
     inverted: true,
-    children: (
-      <>
-        <AdjustmentsHorizontalIcon />
-        Button
-      </>
-    ),
+    children: [
+      <AdjustmentsHorizontalIcon />,
+      'Button',
+    ],
   },
 };
 
@@ -86,20 +80,16 @@ export const InvertedWithIconAndNotification: Story = {
     color: 'blue',
     inverted: true,
     notification: true,
-    children: (
-      <>
-        <AdjustmentsHorizontalIcon />
-        Button
-      </>
-    ),
+    children: [
+      <AdjustmentsHorizontalIcon />,
+      'Button',
+    ],
   },
 };
 
 export const IconOnly: Story = {
   args: {
-    children: (
-      <AdjustmentsHorizontalIcon />
-    ),
+    children: <AdjustmentsHorizontalIcon />,
   },
 };
 

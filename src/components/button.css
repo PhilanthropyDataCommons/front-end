@@ -57,17 +57,17 @@
 
 .button--color-gray {
   --button--primary-color: var(--color--gray--dark);
-  --button--contrast-color: var(--color--gray--light);
+  --button--contrast-color: var(--color--gray--lighter);
 }
 
 .button--color-blue {
   --button--primary-color: var(--color--blue);
-  --button--contrast-color: var(--color--gray--light);
+  --button--contrast-color: var(--color--gray--lighter);
 }
 
 .button--color-red {
   --button--primary-color: var(--color--red);
-  --button--contrast-color: var(--color--gray--light);
+  --button--contrast-color: var(--color--gray--lighter);
 }
 
 .button--inverted {

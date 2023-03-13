@@ -1,5 +1,7 @@
 import React from 'react';
 import { useOidc, useOidcUser, OidcUserStatus } from '@axa-fr/react-oidc';
+import { UserIcon } from '@heroicons/react/24/solid';
+import { Button } from './Button';
 import { getLogger } from '../logger';
 
 const logger = getLogger('<User>');
@@ -10,24 +12,35 @@ const User = () => {
 
   switch (oidcUserLoadingState) {
     case OidcUserStatus.Loading:
-      return <p>User information loading...</p>;
+      return (
+        <Button bordered disabled>
+          <UserIcon />
+          Loading…
+        </Button>
+      );
     case OidcUserStatus.Unauthenticated:
       return (
-        <button
-          type="button"
-          className="btn btn-primary"
+        <Button
+          bordered
           onClick={() => { login('/').catch(logger.error); }}
         >
-          Login
-        </button>
+          <UserIcon />
+          Log in
+        </Button>
       );
     case OidcUserStatus.LoadingError:
-      return <p>Failed to load user information</p>;
+      return (
+        <Button bordered color="red">
+          <UserIcon />
+          User loading failed
+        </Button>
+      );
     default:
       return (
-        <div>
+        <Button bordered>
+          <UserIcon />
           {oidcUser.name}
-        </div>
+        </Button>
       );
   }
 };
