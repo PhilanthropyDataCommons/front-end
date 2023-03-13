@@ -1,9 +1,9 @@
 :root {
   --button--focus-color: blue;
-  --button--font-size: 0.9rem;
+  --button--font-size: 1rem;
   /* These next values should be relative to the button's font-size, so we switch to `em` units. */
-  --button--height: 3.15em;
-  --button--icon-size: 1.7em;
+  --button--height: 2.75em;
+  --button--icon-size: 1.5em;
 
   /* V-padding based on desired button height minus font-height. */
   --button--padding-y: calc((var(--button--height) - var(--button--font-size)) / 2);
