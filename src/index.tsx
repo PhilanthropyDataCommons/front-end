@@ -2,11 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { OidcProvider } from '@axa-fr/react-oidc';
-import './index.css';
 import { App } from './App';
 import { getConfiguration } from './oidc-config';
 import { reportWebVitals } from './reportWebVitals';
 import { getLogger } from './logger';
+import '@fontsource/source-sans-pro/400.css';
+import '@fontsource/source-sans-pro/600.css';
+import '@fontsource/source-sans-pro/700.css';
+import './index.css';
 
 const logger = getLogger('index');
 
