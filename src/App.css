@@ -3,8 +3,9 @@
   grid-template-rows: min-content 1fr;
   gap: var(--spacing--gap);
   padding: var(--spacing--gap);
-  width: 100vw;
-  height: 100vh;
+
+  position: absolute;
+  inset: 0;
 }
 
 .App-header {
@@ -70,6 +71,7 @@
 
 .App-main {
   text-align: center;
+  position: relative;
 }
 
 .React-logo {
