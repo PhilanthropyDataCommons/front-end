@@ -28,6 +28,8 @@
   --accessible-spacing--halfx: calc(var(--accessible-spacing--1x) / 2);
 
   --transition-duration: 200ms;
+
+  --icon-size--text: 1.25em;
 }
 
 body {
