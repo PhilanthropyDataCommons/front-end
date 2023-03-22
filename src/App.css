@@ -1,8 +1,8 @@
 .App {
   display: grid;
   grid-template-rows: min-content 1fr;
-  gap: var(--spacing--gap);
-  padding: var(--spacing--gap);
+  gap: var(--fixed-spacing--1x);
+  padding: var(--fixed-spacing--1x);
 
   position: absolute;
   inset: 0;
@@ -13,7 +13,7 @@
   justify-content: space-between;
   align-items: center;
 
-  padding: var(--spacing--gap);
+  padding: var(--fixed-spacing--1x);
 }
 
 .App-logo {
@@ -27,20 +27,20 @@
 .App-navbar ul {
   display: flex;
   align-items: center;
-  gap: calc(var(--spacing--gap) * 2);
+  gap: calc(var(--fixed-spacing--1x) * 2);
 }
 
 .App-navbar__item {
   display: flex;
   align-items: flex-start;
-  gap: calc(var(--spacing--gap) / 2);
+  gap: calc(var(--fixed-spacing--1x) / 2);
 
   font-size: 0.875rem;
   color: black;
   text-transform: uppercase;
   font-weight: var(--font-weight--bold);
   text-decoration: none;
-  padding: var(--spacing--gap);
+  padding: var(--fixed-spacing--1x);
   border-radius: 5px;
   cursor: pointer;
 }

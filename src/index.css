@@ -17,7 +17,15 @@
   --font-weight--medium: 600;
   --font-weight--bold: 700;
 
-  --spacing--gap: 10px;
+  /* These spacings shouldn't increase with font-size. They have no accessibility impact. */
+  --fixed-spacing--1x: 10px;
+  --fixed-spacing--2x: calc(2 * var(--fixed-spacing--1x));
+  --fixed-spacing--halfx: calc(var(--fixed-spacing--1x) / 2);
+
+  /* These spacings should increase with font-size. They have an accessibility impact. */
+  --accessible-spacing--1x: 0.625rem;
+  --accessible-spacing--2x: calc(2 * var(--accessible-spacing--1x));
+  --accessible-spacing--halfx: calc(var(--accessible-spacing--1x) / 2);
 
   --transition-duration: 200ms;
 }
@@ -29,7 +37,6 @@ body {
   color: var(--color--gray--darker);
   font-family: var(--font-family--sans-serif);
   font-weight: var(--font-weight--normal);
-  font-size: var(--font-size);
   line-height: var(--line-height);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
