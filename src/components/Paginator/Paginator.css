@@ -1,0 +1,83 @@
+:root {
+	--paginator--font-size: 0.875rem;
+	--paginator--min-height: calc(var(--paginator--font-size) * 4);
+	--paginator--border-radius: 9999px;
+
+	--paginator--button-size: var(--paginator--min-height);
+	--paginator--button-icon-size: calc(var(--paginator--button-size) / 2.5);
+}
+
+.paginator-wrapper {
+	/* Cover the entire parent element and don't scroll with it. */
+	position: fixed;
+	inset: var(--fixed-spacing--3x);
+
+	/* But pass all pointer events through to the table behind. */
+	pointer-events: none;
+
+	/* Position the paginator itself (child element) at the bottom center of the body. */
+	display: grid;
+	place-items: end center;
+}
+
+.paginator {
+	/* Re-capture pointer events (clicks, etc.) that were canceled on the wrapper. */
+	pointer-events: auto;
+
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: var(--fixed-spacing--2x);
+
+	overflow: hidden;
+	min-height: var(--paginator--min-height);
+	background-color: white;
+	border-radius: var(--paginator--border-radius);
+	box-shadow: 0 0 3px var(--color--gray--medium);
+
+	font-size: var(--paginator--font-size);
+	line-height: 1;
+}
+
+.paginator-button {
+	all: unset;
+
+	height: var(--paginator--button-size);
+	width: var(--paginator--button-size);
+	border-radius: var(--paginator--border-radius);
+	background-color: var(--color--gray--light);
+	color: var(--color--gray--darker);
+	cursor: pointer;
+
+	display: grid;
+	place-content: center;
+}
+
+.paginator-button .icon {
+	height: var(--paginator--button-icon-size);
+	width: var(--paginator--button-icon-size);
+}
+
+.paginator-button:disabled {
+	color: var(--color--gray--medium);
+	cursor: not-allowed;
+}
+
+.paginator-content {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: var(--accessible-spacing--halfx);
+	text-align: center;
+
+	text-transform: uppercase;
+}
+
+.paginator-status__value {
+	font-weight: var(--font-weight--medium);
+}
+
+.paginator__page-selector {
+	font-weight: var(--font-weight--medium);
+}
