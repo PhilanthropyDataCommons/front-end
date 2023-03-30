@@ -29,15 +29,17 @@
   border-bottom: 1px solid var(--color--gray--light);
 }
 
-.table tbody tr:last-child th,
-.table tbody tr:last-child td {
-  border-bottom: 1px solid var(--color--gray--medium);
-}
-
+/* The last column should stretch to the table edge and have no right border. */
 .table th:last-child,
 .table td:last-child {
   width: 100%;
   border-right: none;
+}
+
+/* The last body row should have a darker bottom border. */
+.table tbody tr:last-child th,
+.table tbody tr:last-child td {
+  border-bottom: 1px solid var(--color--gray--medium);
 }
 
 .table .has-actions .column-head-wrapper {
