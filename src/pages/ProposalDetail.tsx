@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { OidcSecure } from '@axa-fr/react-oidc';
 import { useParams } from 'react-router-dom';
 import {
@@ -39,11 +39,33 @@ const mapCanonicalFields = (
   }))
 );
 
+const getApplicant = (
+  canonicalFields: CanonicalField[],
+  proposal: Proposal,
+) => (
+  getValueOfCanonicalField(canonicalFields, proposal, 'organization_name')
+    ?? getValueOfCanonicalField(canonicalFields, proposal, 'organization_dba_name')
+    ?? getValueOfCanonicalField(canonicalFields, proposal, 'organization_legal_name')
+    ?? getValueOfCanonicalField(canonicalFields, proposal, 'proposal_primary_contact_name')
+    ?? getValueOfCanonicalField(canonicalFields, proposal, 'proposal_submitter_name')
+    ?? 'Unknown Applicant'
+);
+
 const ProposalDetail = () => {
   const params = useParams();
   const proposalId = params.proposalId ?? 'missing';
   const canonicalFields = useCanonicalFields();
   const proposal = useProposal(proposalId);
+
+  useEffect(() => {
+    if (canonicalFields === null || proposal === null) {
+      document.title = 'Proposal Detail - Philanthropy Data Commons';
+    } else {
+      const applicant = getApplicant(canonicalFields, proposal);
+      document.title = `${applicant} Proposal Detail - Philanthropy Data Commons`;
+    }
+    return () => { document.title = 'Philanthropy Data Commons'; };
+  }, [canonicalFields, proposal]);
 
   if (canonicalFields === null || proposal === null) {
     return (
@@ -61,12 +83,7 @@ const ProposalDetail = () => {
 
   const title = getValueOfCanonicalField(canonicalFields, proposal, 'proposal_name')
     ?? getValueOfCanonicalField(canonicalFields, proposal, 'proposal_title');
-  const applicant = getValueOfCanonicalField(canonicalFields, proposal, 'organization_name')
-    ?? getValueOfCanonicalField(canonicalFields, proposal, 'organization_dba_name')
-    ?? getValueOfCanonicalField(canonicalFields, proposal, 'organization_legal_name')
-    ?? getValueOfCanonicalField(canonicalFields, proposal, 'proposal_primary_contact_name')
-    ?? getValueOfCanonicalField(canonicalFields, proposal, 'proposal_submitter_name')
-    ?? 'Unknown Applicant';
+  const applicant = getApplicant(canonicalFields, proposal);
   const applicantId = getValueOfCanonicalField(canonicalFields, proposal, 'organization_tax_id');
   const { version } = proposal.versions[0];
   const values = mapCanonicalFields(canonicalFields, proposal);
