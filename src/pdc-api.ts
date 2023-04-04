@@ -6,6 +6,17 @@ const logger = getLogger('pdc-api');
 
 const API_URL = process.env.REACT_APP_API_URL;
 
+const throwNotOk = (res: Response): Response => {
+  if (!res.ok) {
+    throw new Error(`Response status: ${res.status} ${res.statusText}`);
+  }
+  return res;
+};
+
+const logError = (error: unknown, path: string) => {
+  logger.error({ error }, `Error fetching ${path}`);
+};
+
 // Custom React hook to make authenticated requests to the configured API
 const usePdcApi = <T>(path: string): T | null => {
   const { fetch } = useOidcFetch();
@@ -13,15 +24,10 @@ const usePdcApi = <T>(path: string): T | null => {
 
   useEffect(() => {
     fetch(new URL(path, API_URL))
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`Response status: ${res.status} ${res.statusText}`);
-        }
-        return res;
-      })
+      .then(throwNotOk)
       .then((res) => res.json())
       .then(setResponse)
-      .catch((error: unknown) => logger.error({ error }, `Error fetching ${path}`));
+      .catch((e) => logError(e, path));
 
     /* eslint-disable-next-line react-hooks/exhaustive-deps --
      * fetch should not be a dependency, because although it or its internal
