@@ -46,14 +46,16 @@ interface ProposalListTableProps {
     id: string;
     values: Record<string, string[]>;
   }[];
+  wrap?: boolean;
 }
 
 export const ProposalListTable = ({
   fieldNames,
   proposals,
   columns,
+  wrap = false,
 }: ProposalListTableProps) => (
-  <Table>
+  <Table truncate={!wrap}>
     <TableHead fixed>
       <TableRow>
         {columns.map((shortCode) => (

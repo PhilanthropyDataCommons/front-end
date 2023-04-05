@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Bars3BottomLeftIcon } from '@heroicons/react/24/solid';
 import {
   Panel,
   PanelHeader,
@@ -25,7 +26,7 @@ const DEFAULT_COLUMNS = [
   'organization_state_province',
   'organization_country',
   'organization_website',
-  // 'organization_mission_statement', // FIXME: Disabled until we have wrap
+  'organization_mission_statement',
   'organization_start_date',
   'organization_operating_budget',
   'proposal_title',
@@ -41,26 +42,42 @@ const DEFAULT_COLUMNS = [
 export const ProposalListTablePanel = ({
   fieldNames,
   proposals,
-}: ProposalListTablePanelProps) => (
-  <Panel>
-    <PanelHeader>
-      <PanelActions>
-        <input
-          type="text"
-          placeholder="Text to search for…"
-          className="input"
+}: ProposalListTablePanelProps) => {
+  const [wrap, setWrap] = useState(false);
+
+  const handleWrapClick = () => setWrap((previous) => !previous);
+
+  return (
+    <Panel>
+      <PanelHeader>
+        <PanelActions>
+          <input
+            type="text"
+            placeholder="Text to search for…"
+            className="input"
+          />
+          <Button disabled>
+            Search
+          </Button>
+        </PanelActions>
+        <PanelActions>
+          <Button
+            onClick={handleWrapClick}
+            color={wrap ? 'blue' : 'gray'}
+          >
+            <Bars3BottomLeftIcon className="icon" />
+            Toggle wrapping
+          </Button>
+        </PanelActions>
+      </PanelHeader>
+      <PanelBody>
+        <ProposalListTable
+          fieldNames={fieldNames}
+          proposals={proposals}
+          columns={DEFAULT_COLUMNS}
+          wrap={wrap}
         />
-        <Button disabled>
-          Search
-        </Button>
-      </PanelActions>
-    </PanelHeader>
-    <PanelBody>
-      <ProposalListTable
-        fieldNames={fieldNames}
-        proposals={proposals}
-        columns={DEFAULT_COLUMNS}
-      />
-    </PanelBody>
-  </Panel>
-);
+      </PanelBody>
+    </Panel>
+  );
+};
