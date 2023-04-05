@@ -17,6 +17,10 @@
   white-space: nowrap;
 }
 
+.table tbody th {
+  white-space: nowrap;
+}
+
 .table th,
 .table td {
   text-align: left;
