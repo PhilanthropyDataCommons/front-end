@@ -38,14 +38,12 @@ const ProposalDetailPanel = ({
         </PanelTitle>
         <PanelTitleTags>
           {applicantId && (
-            <PanelTag>
-              <BuildingLibraryIcon className="icon" />
+            <PanelTag icon={<BuildingLibraryIcon />}>
               {applicantId}
             </PanelTag>
           )}
           {title && (
-            <PanelTag>
-              <DocumentIcon className="icon" />
+            <PanelTag icon={<DocumentTextIcon />}>
               {title}
             </PanelTag>
           )}
