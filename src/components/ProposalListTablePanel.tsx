@@ -3,10 +3,10 @@ import {
   Panel,
   PanelHeader,
   PanelBody,
-  PanelTitle,
-  PanelTitleWrapper,
+  PanelActions,
 } from './Panel';
 import { ProposalListTable } from './ProposalListTable';
+import { Button } from './Button';
 
 interface ProposalListTablePanelProps {
   fieldNames: Record<string, string>;
@@ -44,9 +44,16 @@ export const ProposalListTablePanel = ({
 }: ProposalListTablePanelProps) => (
   <Panel>
     <PanelHeader>
-      <PanelTitleWrapper>
-        <PanelTitle>Proposals</PanelTitle>
-      </PanelTitleWrapper>
+      <PanelActions>
+        <input
+          type="text"
+          placeholder="Text to search for…"
+          className="input"
+        />
+        <Button disabled>
+          Search
+        </Button>
+      </PanelActions>
     </PanelHeader>
     <PanelBody>
       <ProposalListTable
