@@ -12,6 +12,7 @@ import {
 interface ProposalTableProps {
   version: number;
   values: {
+    shortCode: string,
     fieldName: string,
     position: number,
     value: string,
