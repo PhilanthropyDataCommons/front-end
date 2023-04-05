@@ -1,5 +1,5 @@
 import React from 'react';
-import { BuildingLibraryIcon, DocumentIcon } from '@heroicons/react/24/solid';
+import { DocumentTextIcon } from '@heroicons/react/24/solid';
 import {
   Panel,
   PanelBody,
@@ -38,7 +38,7 @@ const ProposalDetailPanel = ({
         </PanelTitle>
         <PanelTitleTags>
           {applicantId && (
-            <PanelTag icon={<BuildingLibraryIcon />}>
+            <PanelTag badge="EIN">
               {applicantId}
             </PanelTag>
           )}
