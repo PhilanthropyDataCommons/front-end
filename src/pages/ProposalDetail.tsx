@@ -71,6 +71,7 @@ const ProposalDetail = () => {
     return (
       <OidcSecure>
         <ProposalDetailPanel
+          proposalId={0}
           title="Loading..."
           applicant="Loading..."
           applicantId="00-0000000"
@@ -91,6 +92,7 @@ const ProposalDetail = () => {
   return (
     <OidcSecure>
       <ProposalDetailPanel
+        proposalId={proposal.id}
         title={title}
         applicant={applicant}
         applicantId={applicantId}
