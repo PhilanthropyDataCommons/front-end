@@ -43,11 +43,20 @@
   border-right: none;
 }
 
-.column-actions-wrapper {
+.table .has-actions .column-head-wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: var(--accessible-spacing--2x);
+  gap: var(--accessible-spacing--1x);
+}
+
+/* This is the default, but supplying it anyway. */
+.table .has-actions.action-alignment--right .column-head-wrapper {
+  justify-content: space-between;
+}
+
+.table .has-actions.action-alignment--left .column-head-wrapper {
+  justify-content: start;
 }
 
 .column-actions {
@@ -61,10 +70,10 @@
 
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 .column-action .icon {
   width: var(--icon-size--text);
   height: var(--icon-size--text);
 }
-

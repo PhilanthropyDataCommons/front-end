@@ -17,6 +17,7 @@ interface ProposalDetailPanelProps {
   applicantId: string | undefined;
   version: number;
   values: {
+    shortCode: string,
     fieldName: string,
     position: number,
     value: string,

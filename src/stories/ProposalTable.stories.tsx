@@ -15,7 +15,9 @@ export const Default: Story = {
   args: {
     version: 1,
     values: [
-      { fieldName: 'Proposal Date', position: 1, value: '2023-01-20' },
+      {
+        shortCode: 'proposal_date', fieldName: 'Proposal Date', position: 1, value: '2023-01-20',
+      },
     ],
   },
 };

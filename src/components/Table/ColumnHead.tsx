@@ -4,16 +4,22 @@ interface ColumnHeadProps {
   children?: React.ReactNode;
   className?: string;
   actions?: boolean;
+  actionAlignment?: 'left' | 'right';
 }
 
 export const ColumnHead = ({
   children = null,
   className = '',
   actions = false,
+  actionAlignment = 'right',
 }: ColumnHeadProps) => (
-  <th className={className}>
-    {actions ? (
-      <div className="column-actions-wrapper">{children}</div>
-    ) : children}
+  <th className={`
+    ${className}
+    ${actions ? `has-actions action-alignment--${actionAlignment}` : ''}
+  `.trim()}
+  >
+    <div className="column-head-wrapper">
+      {children}
+    </div>
   </th>
 );

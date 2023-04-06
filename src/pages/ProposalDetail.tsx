@@ -30,13 +30,17 @@ const mapCanonicalFields = (
   canonicalFields: CanonicalField[],
   proposal: Proposal,
 ) => (
-  proposal.versions[0].fieldValues.map(({ applicationFormField, value }) => ({
-    fieldName: canonicalFields.find(({ id }) => (
+  proposal.versions[0].fieldValues.map(({ applicationFormField, value }) => {
+    const canonicalField = canonicalFields.find(({ id }) => (
       id === applicationFormField.canonicalFieldId
-    ))?.label ?? 'missing',
-    position: applicationFormField.position,
-    value,
-  }))
+    ));
+    return {
+      shortCode: canonicalField?.shortCode ?? 'missing',
+      fieldName: canonicalField?.label ?? 'missing',
+      position: applicationFormField.position,
+      value,
+    };
+  })
 );
 
 const getApplicant = (

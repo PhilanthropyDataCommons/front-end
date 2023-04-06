@@ -82,6 +82,10 @@ h6 {
   line-height: 1.2;
 }
 
+code {
+  font-size: 0.8em;
+}
+
 .badge {
   background-color: var(--badge--background-color);
   color: var(--badge--color);

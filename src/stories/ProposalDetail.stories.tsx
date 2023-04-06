@@ -18,7 +18,9 @@ export const Default: Story = {
     applicantId: '12-3456789',
     version: 1,
     values: [
-      { fieldName: 'Proposal Date', position: 1, value: '2023-01-20' },
+      {
+        shortCode: 'proposal_date', fieldName: 'Proposal Date', position: 1, value: '2023-01-20',
+      },
     ],
   },
 };
