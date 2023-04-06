@@ -42,6 +42,7 @@ interface CanonicalField {
 const useCanonicalFields = () => usePdcApi<CanonicalField[]>('/canonicalFields');
 
 interface Proposal {
+  id: number;
   versions: {
     version: number;
     fieldValues: {

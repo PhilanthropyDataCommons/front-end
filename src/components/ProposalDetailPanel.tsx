@@ -1,7 +1,9 @@
 import React from 'react';
-import { DocumentTextIcon } from '@heroicons/react/24/solid';
+import { Link } from 'react-router-dom';
+import { BackwardIcon, DocumentTextIcon, ForwardIcon } from '@heroicons/react/24/solid';
 import {
   Panel,
+  PanelActions,
   PanelBody,
   PanelHeader,
   PanelTag,
@@ -15,6 +17,7 @@ interface ProposalDetailPanelProps {
   title: string | undefined;
   applicant: string;
   applicantId: string | undefined;
+  proposalId: number;
   version: number;
   values: {
     shortCode: string,
@@ -25,6 +28,7 @@ interface ProposalDetailPanelProps {
 }
 
 const ProposalDetailPanel = ({
+  proposalId,
   title,
   applicant,
   applicantId,
@@ -50,6 +54,26 @@ const ProposalDetailPanel = ({
           )}
         </PanelTitleTags>
       </PanelTitleWrapper>
+      <PanelActions>
+        {process.env.NODE_ENV !== 'production' && (
+          <>
+            <Link
+              to={`/proposal/${proposalId - 1}`}
+              className="button button--color-gray"
+            >
+              <BackwardIcon className="icon" />
+              Previous
+            </Link>
+            <Link
+              to={`/proposal/${proposalId + 1}`}
+              className="button button--color-gray"
+            >
+              Next
+              <ForwardIcon className="icon" />
+            </Link>
+          </>
+        )}
+      </PanelActions>
     </PanelHeader>
     <PanelBody>
       <ProposalTable
