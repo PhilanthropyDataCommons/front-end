@@ -61,6 +61,10 @@
   height: var(--icon-size--text);
 }
 
+.panel-tag .badge {
+  --badge--background-color: var(--color--gray--medium);
+}
+
 .panel-actions {
   display: flex;
   gap: var(--fixed-spacing--1x);
