@@ -55,22 +55,22 @@ const ProposalDetailPanel = ({
       </PanelTitleWrapper>
       <PanelActions>
         {process.env.NODE_ENV !== 'production' && (
-          <Link
-            to={`/proposal/${proposalId - 1}`}
-            className="button button--color-gray"
-          >
-            <BackwardIcon className="icon" />
-            Previous
-          </Link>
-        )}
-        {process.env.NODE_ENV !== 'production' && (
-          <Link
-            to={`/proposal/${proposalId + 1}`}
-            className="button button--color-gray"
-          >
-            Next
-            <ForwardIcon className="icon" />
-          </Link>
+          <>
+            <Link
+              to={`/proposal/${proposalId - 1}`}
+              className="button button--color-gray"
+            >
+              <BackwardIcon className="icon" />
+              Previous
+            </Link>
+            <Link
+              to={`/proposal/${proposalId + 1}`}
+              className="button button--color-gray"
+            >
+              Next
+              <ForwardIcon className="icon" />
+            </Link>
+          </>
         )}
       </PanelActions>
     </PanelHeader>
