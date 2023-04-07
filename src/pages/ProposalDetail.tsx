@@ -20,7 +20,7 @@ const getValueOfCanonicalField = (
   if (field === undefined) {
     return undefined;
   }
-  const fieldValue = proposal.versions[0].fieldValues.find(({ applicationFormField }) => (
+  const fieldValue = proposal.versions[0]?.fieldValues.find(({ applicationFormField }) => (
     applicationFormField.canonicalFieldId === field.id
   ));
   return fieldValue?.value ?? undefined;
@@ -30,7 +30,7 @@ const mapCanonicalFields = (
   canonicalFields: CanonicalField[],
   proposal: Proposal,
 ) => (
-  proposal.versions[0].fieldValues.map(({ applicationFormField, value }) => {
+  (proposal.versions[0]?.fieldValues ?? []).map(({ applicationFormField, value }) => {
     const canonicalField = canonicalFields.find(({ id }) => (
       id === applicationFormField.canonicalFieldId
     ));
@@ -90,7 +90,7 @@ const ProposalDetail = () => {
     ?? getValueOfCanonicalField(canonicalFields, proposal, 'proposal_title');
   const applicant = getApplicant(canonicalFields, proposal);
   const applicantId = getValueOfCanonicalField(canonicalFields, proposal, 'organization_tax_id');
-  const { version } = proposal.versions[0];
+  const version = proposal.versions[0]?.version ?? 0;
   const values = mapCanonicalFields(canonicalFields, proposal);
 
   return (
