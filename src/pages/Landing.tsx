@@ -23,7 +23,7 @@ const Landing = () => {
       <PanelBody>
         <h3 style={{ fontWeight: '600' }}>Welcome to the Philanthropy Data Commons pilot.</h3>
         <p>
-          This data viewer displays the data in the Philanythropy Data Commons pilot.
+          This data viewer displays the data in the Philanthropy Data Commons pilot.
           {' '}
           <OffsiteLink to="https://philanthropydatacommons.org">
             Read more about the project here.
