@@ -31,6 +31,8 @@
 }
 
 .App-navbar__item {
+  all: unset;
+
   display: flex;
   align-items: flex-start;
   gap: calc(var(--fixed-spacing--1x) / 2);
@@ -42,6 +44,10 @@
   text-decoration: none;
   padding: var(--fixed-spacing--1x);
   border-radius: 5px;
+}
+
+a.App-navbar__item,
+button.App-navbar__item {
   cursor: pointer;
 }
 
