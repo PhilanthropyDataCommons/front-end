@@ -87,6 +87,43 @@ h6 {
   line-height: 1.2;
 }
 
+/*
+  Our implementation of DLs assumes you will wrap each DT/DD pair in a
+  custom `<Dli>` component, which generates the following markup:
+  <dl>
+    <div class="dli">
+      <dt></dt>
+      <dd></dd>
+    </div>
+  </dl>
+*/
+dl {
+  margin: var(--accessible-spacing--2x) 0;
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--accessible-spacing--2x);
+}
+
+dl:first-child {
+  margin-top: 0;
+}
+
+dl:last-child {
+  margin-bottom: 0;
+}
+
+dl > .dli > dt {
+  font-weight: var(--font-weight--medium);
+}
+
+dl > .dli > dt,
+dl > .dli > dd {
+  margin: 0;
+  padding: 0;
+}
+
 code {
   font-size: 0.8em;
 }
