@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import { Header } from './components/Header';
 import { NotFound } from './pages/NotFound';
 import { ProposalDetail } from './pages/ProposalDetail';
+import { ProposalList } from './pages/ProposalList';
 import { Placeholder } from './pages/Placeholder';
 import './App.css';
 
@@ -13,6 +14,7 @@ const App = () => (
       <Routes>
         <Route path="/" element={<Placeholder />} />
         <Route path="/proposal/:proposalId" element={<ProposalDetail />} />
+        <Route path="/proposals" element={<ProposalList />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </main>
