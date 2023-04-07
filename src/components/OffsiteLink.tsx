@@ -20,12 +20,12 @@ interface OffsiteLinkProps {
 
 /**
  * Component for linking off-site.
- * Defaults to opening links in a new window/tab (which can be disabled) and
- * automatically adds the `rel="noopener noreferrer"` attribute for cross-site safety.
+ * When configured to open links in a new window/tab, adds the
+ * `rel="noopener noreferrer"` attribute for cross-site safety.
  */
 export const OffsiteLink = ({
   to,
-  targetBlank = true,
+  targetBlank = false,
   children = undefined,
   className = undefined,
 }: OffsiteLinkProps) => (
