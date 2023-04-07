@@ -13,7 +13,7 @@ const App = () => (
     <main className="App-main">
       <Routes>
         <Route path="/" element={<Placeholder />} />
-        <Route path="/proposal/:proposalId" element={<ProposalDetail />} />
+        <Route path="/proposals/:proposalId" element={<ProposalDetail />} />
         <Route path="/proposals" element={<ProposalList />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
