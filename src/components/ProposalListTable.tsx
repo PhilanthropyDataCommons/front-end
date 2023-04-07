@@ -24,7 +24,7 @@ const ProposalListTableRow = ({
   const navigate = useNavigate();
 
   const handleRowClick = () => {
-    navigate(`/proposal/${proposal.id}`);
+    navigate(`/proposals/${proposal.id}`);
   };
 
   return (

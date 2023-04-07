@@ -58,14 +58,14 @@ const ProposalDetailPanel = ({
         {process.env.NODE_ENV !== 'production' && (
           <>
             <Link
-              to={`/proposal/${proposalId - 1}`}
+              to={`/proposals/${proposalId - 1}`}
               className="button button--color-gray"
             >
               <BackwardIcon className="icon" />
               Previous
             </Link>
             <Link
-              to={`/proposal/${proposalId + 1}`}
+              to={`/proposals/${proposalId + 1}`}
               className="button button--color-gray"
             >
               Next
