@@ -5,11 +5,12 @@
 
   display: grid;
   grid-template-rows: min-content 1fr;
-  position: absolute;
-  inset: 0;
+  position: relative;
 }
 
 .panel.fill {
+  position: absolute;
+  inset: 0;
   height: 100%;
 }
 
@@ -72,6 +73,9 @@
 
 .panel-body {
   grid-row: 2;
+}
+
+.panel.fill .panel-body {
   position: absolute;
   inset: 0;
   overflow: auto;
