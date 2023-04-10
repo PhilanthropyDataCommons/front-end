@@ -21,7 +21,7 @@ const User = () => {
       return (
         <button
           className="App-navbar__item"
-          onClick={() => { login('/').catch(logger.error); }}
+          onClick={() => { login('/proposals').catch(logger.error); }}
           type="button"
         >
           <UserIcon />

@@ -41,7 +41,7 @@ const Landing = () => {
           <Button
             color="blue"
             inverted
-            onClick={() => { login('/').catch(logger.error); }}
+            onClick={() => { login('/proposals').catch(logger.error); }}
           >
             <UserIcon className="icon" />
             Log in
