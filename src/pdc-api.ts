@@ -75,6 +75,7 @@ const useProposals = (page: string, count: string) => {
     fetch(new URL(path, API_URL))
       .then(throwNotOk)
       .then((res) => res.json())
+      .then(({ entries }: { entries: Proposal[]; }) => entries)
       .then((data: { id: number; }[]) => data.map(({ id }) => id))
       .then(setProposals)
       .catch((e: unknown) => logError(e, path));
