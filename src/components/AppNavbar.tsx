@@ -4,7 +4,7 @@ import { EnvelopeIcon } from '@heroicons/react/24/outline';
 import { TableCellsIcon } from '@heroicons/react/24/solid';
 import { User } from './User';
 
-const Navbar = () => (
+const AppNavbar = () => (
   <nav className="App-navbar">
     <ul>
       <li>
@@ -29,4 +29,4 @@ const Navbar = () => (
   </nav>
 );
 
-export { Navbar };
+export { AppNavbar };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar } from './Navbar';
+import { AppNavbar } from './AppNavbar';
 import logo from '../images/pdc-logo.png';
 
 const Header = () => (
@@ -7,7 +7,7 @@ const Header = () => (
     <a href="/">
       <img src={logo} className="App-logo" alt="Philanthropy Data Commons logo" />
     </a>
-    <Navbar />
+    <AppNavbar />
   </header>
 );
 
