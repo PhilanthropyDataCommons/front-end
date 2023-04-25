@@ -7,6 +7,7 @@ import {
   useCanonicalFields,
   useProposals,
 } from '../pdc-api';
+import { PanelGrid, PanelGridItem } from '../components/PanelGrid';
 import { ProposalListTablePanel } from '../components/ProposalListTablePanel';
 
 const mapFieldNames = (fields: CanonicalField[]) => Object.fromEntries(
@@ -59,10 +60,14 @@ const ProposalList = () => {
 
   return (
     <OidcSecure>
-      <ProposalListTablePanel
-        fieldNames={mapFieldNames(fields)}
-        proposals={mapProposals(fields, proposals)}
-      />
+      <PanelGrid>
+        <PanelGridItem>
+          <ProposalListTablePanel
+            fieldNames={mapFieldNames(fields)}
+            proposals={mapProposals(fields, proposals)}
+          />
+        </PanelGridItem>
+      </PanelGrid>
     </OidcSecure>
   );
 };
