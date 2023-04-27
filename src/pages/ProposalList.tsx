@@ -65,6 +65,8 @@ const ProposalList = () => {
           <ProposalListTablePanel
             fieldNames={mapFieldNames(fields)}
             proposals={mapProposals(fields, proposals)}
+            onSearch={() => {}}
+            searchQuery={''}
           />
         </PanelGridItem>
       </PanelGrid>

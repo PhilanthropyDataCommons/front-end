@@ -8,6 +8,7 @@ import {
 } from './Panel';
 import { ProposalListTable } from './ProposalListTable';
 import { Button } from './Button';
+import { Search } from './Search';
 
 interface ProposalListTablePanelProps {
   fieldNames: Record<string, string>;
@@ -15,6 +16,8 @@ interface ProposalListTablePanelProps {
     id: string;
     values: Record<string, string[]>;
   }[];
+  onSearch: (query: string) => void;
+  searchQuery?: string;
 }
 
 // For now, we are hard-coding this list.
@@ -42,6 +45,8 @@ const DEFAULT_COLUMNS = [
 export const ProposalListTablePanel = ({
   fieldNames,
   proposals,
+  onSearch,
+  searchQuery = '',
 }: ProposalListTablePanelProps) => {
   const [wrap, setWrap] = useState(false);
 
@@ -51,14 +56,7 @@ export const ProposalListTablePanel = ({
     <Panel>
       <PanelHeader>
         <PanelActions>
-          <input
-            type="text"
-            placeholder="Text to search for…"
-            className="input"
-          />
-          <Button disabled>
-            Search
-          </Button>
+          <Search onSearch={onSearch} initialQuery={searchQuery} />
         </PanelActions>
         <PanelActions>
           <Button
