@@ -1,19 +1,20 @@
 .App {
-  display: grid;
-  grid-template-rows: min-content 1fr;
-  gap: var(--fixed-spacing--1x);
-  padding: var(--fixed-spacing--1x);
-
   position: absolute;
   inset: 0;
+
+  padding: var(--fixed-spacing--1x);
+
+  display: grid;
+  grid: min-content 1fr / auto;
+  gap: var(--fixed-spacing--1x);
 }
 
 .App-header {
+  padding: var(--fixed-spacing--1x);
+
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  padding: var(--fixed-spacing--1x);
 }
 
 .App-logo {

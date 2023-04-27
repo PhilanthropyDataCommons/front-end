@@ -16,10 +16,7 @@ const Landing = () => {
   const { login, isAuthenticated } = useOidc();
 
   return (
-    <Panel
-      fill={false}
-      className="landing-panel"
-    >
+    <Panel className="landing-panel">
       <PanelBody>
         <h3 style={{ fontWeight: '600' }}>Welcome to the Philanthropy Data Commons pilot.</h3>
         <p>

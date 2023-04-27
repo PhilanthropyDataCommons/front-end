@@ -8,12 +8,6 @@
   position: relative;
 }
 
-.panel.fill {
-  position: absolute;
-  inset: 0;
-  height: 100%;
-}
-
 .panel-header {
   grid-row: 1;
   padding: var(--fixed-spacing--1x);

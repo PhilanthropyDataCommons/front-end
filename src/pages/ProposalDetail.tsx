@@ -7,6 +7,7 @@ import {
   useCanonicalFields,
   useProposal,
 } from '../pdc-api';
+import { PanelGrid, PanelGridItem } from '../components/PanelGrid';
 import { ProposalDetailPanel } from '../components/ProposalDetailPanel';
 
 const getValueOfCanonicalField = (
@@ -74,14 +75,18 @@ const ProposalDetail = () => {
   if (canonicalFields === null || proposal === null) {
     return (
       <OidcSecure>
-        <ProposalDetailPanel
-          proposalId={0}
-          title="Loading..."
-          applicant="Loading..."
-          applicantId="00-0000000"
-          version={0}
-          values={[]}
-        />
+        <PanelGrid>
+          <PanelGridItem>
+            <ProposalDetailPanel
+              proposalId={0}
+              title="Loading..."
+              applicant="Loading..."
+              applicantId="00-0000000"
+              version={0}
+              values={[]}
+            />
+          </PanelGridItem>
+        </PanelGrid>
       </OidcSecure>
     );
   }
@@ -95,14 +100,18 @@ const ProposalDetail = () => {
 
   return (
     <OidcSecure>
-      <ProposalDetailPanel
-        proposalId={proposal.id}
-        title={title}
-        applicant={applicant}
-        applicantId={applicantId}
-        version={version}
-        values={values}
-      />
+      <PanelGrid>
+        <PanelGridItem>
+          <ProposalDetailPanel
+            proposalId={proposal.id}
+            title={title}
+            applicant={applicant}
+            applicantId={applicantId}
+            version={version}
+            values={values}
+          />
+        </PanelGridItem>
+      </PanelGrid>
     </OidcSecure>
   );
 };
