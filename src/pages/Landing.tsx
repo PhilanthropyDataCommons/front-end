@@ -69,20 +69,6 @@ const Landing = () => {
               />
             </dd>
           </Dli>
-          <Dli className="subtle">
-            <dt>Contribute on GitHub:</dt>
-            <dd>
-              This project is developed as open source at
-              {' '}
-              <OffsiteLink to="https://github.com/PhilanthropyDataCommons">
-                PhilanthropyDataCommons
-              </OffsiteLink>
-              /
-              <OffsiteLink to="https://github.com/PhilanthropyDataCommons/data-viewer">
-                data-viewer
-              </OffsiteLink>
-            </dd>
-          </Dli>
         </dl>
       </PanelBody>
     </Panel>
