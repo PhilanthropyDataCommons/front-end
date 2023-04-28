@@ -1,3 +1,7 @@
+:root {
+  --table--border-width: 1px;
+}
+
 .table {
   width: 100%;
 }
@@ -8,12 +12,12 @@
 
 .table thead.fixed {
   position: sticky;
-  top: 0;
+  top: calc(-1 * var(--table--border-width));
 }
 
 .table thead th {
-  border-top: 1px solid var(--color--gray--medium);
-  border-bottom: 1px solid var(--color--gray--medium);
+  border-top: var(--table--border-width) solid var(--color--gray--medium);
+  border-bottom: var(--table--border-width) solid var(--color--gray--medium);
   vertical-align: bottom;
   white-space: nowrap;
 }
@@ -26,8 +30,8 @@
 .table td {
   text-align: left;
   padding: var(--accessible-spacing--1x);
-  border-right: 1px solid var(--color--gray--light);
-  border-bottom: 1px solid var(--color--gray--light);
+  border-right: var(--table--border-width) solid var(--color--gray--light);
+  border-bottom: var(--table--border-width) solid var(--color--gray--light);
 }
 
 /* The last column should stretch to the table edge and have no right border. */
@@ -40,7 +44,7 @@
 /* The last body row should have a darker bottom border. */
 .table tbody tr:last-child th,
 .table tbody tr:last-child td {
-  border-bottom: 1px solid var(--color--gray--medium);
+  border-bottom: var(--table--border-width) solid var(--color--gray--medium);
 }
 
 .table tbody th,
