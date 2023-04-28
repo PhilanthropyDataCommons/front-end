@@ -25,6 +25,10 @@ interface ButtonProps {
    * Optional click handler
    */
   onClick?: () => void;
+  /**
+   * Sets the <button> type to "submit"
+   */
+  submit?: boolean;
 }
 
 /**
@@ -38,6 +42,7 @@ export const Button = ({
   notification = false,
   disabled = false,
   onClick = (() => true),
+  submit = false,
 }: ButtonProps) => {
   const buttonClassNames = [
     'button',
@@ -58,7 +63,7 @@ export const Button = ({
 
   return (
     <button
-      type="button"
+      type={submit ? 'submit' : 'button'}
       className={buttonClassNames.join(' ')}
       disabled={disabled}
       onClick={onClick}
