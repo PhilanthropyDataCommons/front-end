@@ -28,9 +28,13 @@ and set the redirect URI to `/authentication/callback`.
 
 ### Development
 
+Run `npm install` from the top level of this tree.
+
 Copy the `.env.example` file to `.env.local`,
 and replace the placeholder values with your specifics.
 Your new `.env.local` file will not be picked up by git.
+
+Then run `npm start` (see [that script's documentation](#npm-start) for further details).
 
 ### Production
 
