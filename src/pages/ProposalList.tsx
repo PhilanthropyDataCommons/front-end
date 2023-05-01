@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { OidcSecure } from '@axa-fr/react-oidc';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   CanonicalField,
   Proposal,
@@ -39,10 +39,18 @@ const mapProposals = (fields: CanonicalField[], proposals: Proposal[]) => (
   }))
 );
 
+const fieldValueMatches = (proposal: Proposal, query: string) => (
+  proposal.versions[0]?.fieldValues.some(
+    ({ value }) => value.toLowerCase().includes(query.toLowerCase()),
+  )
+);
+
 const ProposalList = () => {
+  const navigate = useNavigate();
   const [params] = useSearchParams();
   const page = params.get('page') ?? '1';
   const count = params.get('count') ?? '1000';
+  const query = params.get('q') ?? '';
   const fields = useCanonicalFields();
   const proposals = useProposals(page, count);
 
@@ -64,7 +72,9 @@ const ProposalList = () => {
         <PanelGridItem>
           <ProposalListTablePanel
             fieldNames={mapFieldNames(fields)}
-            proposals={mapProposals(fields, proposals)}
+            proposals={mapProposals(fields, proposals.filter((p) => fieldValueMatches(p, query)))}
+            searchQuery={query}
+            onSearch={(q) => navigate(`/proposals?q=${q}`)}
           />
         </PanelGridItem>
       </PanelGrid>

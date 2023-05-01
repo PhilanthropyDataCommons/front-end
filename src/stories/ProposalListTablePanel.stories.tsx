@@ -136,5 +136,6 @@ export const Default: Story = {
         },
       },
     ],
+    onSearch: () => {},
   },
 };
