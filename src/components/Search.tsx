@@ -26,7 +26,10 @@ export const Search = ({
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
-      <Button submit>
+      <Button
+        submit
+        disabled={query === ''}
+      >
         Search
       </Button>
     </form>
