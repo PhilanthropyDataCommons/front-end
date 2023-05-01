@@ -67,8 +67,7 @@ const useProposal = (proposalId: string) => (
 
 const useProposals = (page: string, count: string) => {
   const { fetch } = useOidcFetch();
-  const [proposals, setProposals] = useState<number[]>([]);
-  const [proposalsDetails, setProposalsDetails] = useState<Proposal[]>([]);
+  const [proposals, setProposals] = useState<Proposal[]>([]);
 
   useEffect(() => {
     const path = `/proposals?_page=${page}&_count=${count}`;
@@ -76,24 +75,11 @@ const useProposals = (page: string, count: string) => {
       .then(throwNotOk)
       .then((res) => res.json())
       .then(({ entries }: { entries: Proposal[]; }) => entries)
-      .then((data: { id: number; }[]) => data.map(({ id }) => id))
       .then(setProposals)
       .catch((e: unknown) => logError(e, path));
   }, [page, count]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => {
-    Promise.all(
-      proposals.map((id) => (
-        fetch(new URL(`/proposals/${id}?includeFieldsAndValues=true`, API_URL))
-          .then(throwNotOk)
-          .then((res) => res.json())
-      )),
-    )
-      .then(setProposalsDetails)
-      .catch((error: unknown) => logger.error({ error }, 'Error fetching individual proposal in list'));
-  }, [proposals]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  return proposalsDetails;
+  return proposals;
 };
 
 export {
