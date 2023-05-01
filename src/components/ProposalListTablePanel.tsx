@@ -29,7 +29,7 @@ const DEFAULT_COLUMNS = [
   'organization_mission_statement',
   'organization_start_date',
   'organization_operating_budget',
-  'proposal_title',
+  'proposal_name',
   'proposal_summary',
   'proposal_amount_requested',
   'proposal_budget',
