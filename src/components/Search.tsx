@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from './Button';
 import './Search.css';
 
@@ -32,6 +33,15 @@ export const Search = ({
       >
         Search
       </Button>
+      {initialQuery !== '' ? (
+        <Link
+          to="/proposals"
+          className="button"
+          onClick={() => setQuery('')}
+        >
+          Clear search
+        </Link>
+      ) : null}
     </form>
   );
 };
