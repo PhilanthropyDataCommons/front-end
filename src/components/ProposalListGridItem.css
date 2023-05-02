@@ -1,0 +1,28 @@
+.proposal-list-grid-item {
+  padding: var(--fixed-spacing--1x);
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid var(--color--gray--light);
+  line-height: 1.1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--fixed-spacing--halfx);
+}
+
+.proposal-list-grid-item:hover {
+  background-color: var(--color--gray--lighter);
+}
+
+.proposal-list-grid-item:last-child {
+  border-bottom: none;
+}
+
+.proposal--organization-name {
+  font-weight: var(--font-weight--medium);
+}
+
+.proposal--organization-address,
+.proposal--proposal-name {
+  color: var(--color--gray--medium-dark);
+  font-size: 0.9em;
+}
