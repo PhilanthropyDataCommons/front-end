@@ -111,7 +111,6 @@ export const Default: Story = {
           proposal_location_of_work: ['New York City'],
         },
       },
-
       {
         id: '4',
         values: {
