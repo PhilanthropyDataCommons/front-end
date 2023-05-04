@@ -70,21 +70,9 @@ interface Proposals {
   total: number;
 }
 
-const useProposals = (page: string, count: string) => {
-  const { fetch } = useOidcFetch();
-  const [proposals, setProposals] = useState<Proposals | null>(null);
-
-  useEffect(() => {
-    const path = `/proposals?_page=${page}&_count=${count}`;
-    fetch(new URL(path, API_URL))
-      .then(throwNotOk)
-      .then((res) => res.json())
-      .then(setProposals)
-      .catch((e: unknown) => logError(e, path));
-  }, [page, count]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  return proposals;
-};
+const useProposals = (page: string, count: string) => (
+  usePdcApi<Proposals>(`/proposals?_page=${page}&_count=${count}`)
+);
 
 export {
   useCanonicalFields,
