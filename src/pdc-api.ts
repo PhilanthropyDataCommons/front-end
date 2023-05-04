@@ -65,16 +65,20 @@ const useProposal = (proposalId: string) => (
   usePdcApi<Proposal>(`/proposals/${proposalId}?includeFieldsAndValues=true`)
 );
 
+interface Proposals {
+  entries: Proposal[];
+  total: number;
+}
+
 const useProposals = (page: string, count: string) => {
   const { fetch } = useOidcFetch();
-  const [proposals, setProposals] = useState<Proposal[]>([]);
+  const [proposals, setProposals] = useState<Proposals | null>(null);
 
   useEffect(() => {
     const path = `/proposals?_page=${page}&_count=${count}`;
     fetch(new URL(path, API_URL))
       .then(throwNotOk)
       .then((res) => res.json())
-      .then(({ entries }: { entries: Proposal[]; }) => entries)
       .then(setProposals)
       .catch((e: unknown) => logError(e, path));
   }, [page, count]); // eslint-disable-line react-hooks/exhaustive-deps

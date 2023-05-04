@@ -58,7 +58,7 @@ const ProposalList = () => {
     document.title = 'Proposal List - Philanthropy Data Commons';
   }, []);
 
-  if (fields === null || proposals.length === 0) {
+  if (fields === null || proposals === null) {
     return (
       <OidcSecure>
         <div>Loading data...</div>
@@ -66,13 +66,18 @@ const ProposalList = () => {
     );
   }
 
+  const mappedProposals = mapProposals(
+    fields,
+    proposals.entries.filter((p) => fieldValueMatches(p, query)),
+  );
+
   return (
     <OidcSecure>
       <PanelGrid>
         <PanelGridItem>
           <ProposalListTablePanel
             fieldNames={mapFieldNames(fields)}
-            proposals={mapProposals(fields, proposals.filter((p) => fieldValueMatches(p, query)))}
+            proposals={mappedProposals}
             searchQuery={query}
             onSearch={(q) => navigate(`/proposals?q=${q}`)}
           />
