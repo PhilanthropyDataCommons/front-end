@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { DataViewerProposal } from '../interfaces/DataViewerProposal';
 import {
   Table,
   TableHead,
@@ -11,10 +12,7 @@ import {
 
 interface ProposalListTableRowProps {
   columns: string[];
-  proposal: {
-    id: string;
-    values: Record<string, string[]>;
-  };
+  proposal: DataViewerProposal;
 }
 
 const ProposalListTableRow = ({
@@ -42,10 +40,7 @@ const ProposalListTableRow = ({
 interface ProposalListTableProps {
   columns: string[];
   fieldNames: Record<string, string>;
-  proposals: {
-    id: string;
-    values: Record<string, string[]>;
-  }[];
+  proposals: DataViewerProposal[];
   wrap?: boolean;
 }
 

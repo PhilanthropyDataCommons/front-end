@@ -1,11 +1,9 @@
 import React from 'react';
 import { ProposalListGridItem } from './ProposalListGridItem';
+import { DataViewerProposal } from '../interfaces/DataViewerProposal';
 
 interface ProposalListGridProps {
-  proposals: {
-    id: string;
-    values: Record<string, string[]>;
-  }[];
+  proposals: DataViewerProposal[];
 }
 
 export const ProposalListGrid = ({ proposals }: ProposalListGridProps) => (
