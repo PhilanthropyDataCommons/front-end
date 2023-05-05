@@ -97,7 +97,6 @@ const useProposals = (page: string, count: string) => (
 
 export {
   useCanonicalFields,
-  usePdcApi,
   useProposal,
   useProposals,
 };
