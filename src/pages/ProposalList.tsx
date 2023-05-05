@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { OidcSecure } from '@axa-fr/react-oidc';
+import { withOidcSecure } from '@axa-fr/react-oidc';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   CanonicalField,
@@ -45,7 +45,7 @@ const fieldValueMatches = (proposal: Proposal, query: string) => (
   )
 );
 
-const ProposalList = () => {
+const ProposalListLoader = () => {
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const page = params.get('page') ?? '1';
@@ -60,9 +60,7 @@ const ProposalList = () => {
 
   if (fields === null || proposals === null) {
     return (
-      <OidcSecure>
-        <div>Loading data...</div>
-      </OidcSecure>
+      <div>Loading data...</div>
     );
   }
 
@@ -72,19 +70,18 @@ const ProposalList = () => {
   );
 
   return (
-    <OidcSecure>
-      <PanelGrid>
-        <PanelGridItem>
-          <ProposalListTablePanel
-            fieldNames={mapFieldNames(fields)}
-            proposals={mappedProposals}
-            searchQuery={query}
-            onSearch={(q) => navigate(`/proposals?q=${q}`)}
-          />
-        </PanelGridItem>
-      </PanelGrid>
-    </OidcSecure>
+    <PanelGrid>
+      <PanelGridItem>
+        <ProposalListTablePanel
+          fieldNames={mapFieldNames(fields)}
+          proposals={mappedProposals}
+          searchQuery={query}
+          onSearch={(q) => navigate(`/proposals?q=${q}`)}
+        />
+      </PanelGridItem>
+    </PanelGrid>
   );
 };
 
+const ProposalList = withOidcSecure(ProposalListLoader);
 export { ProposalList };

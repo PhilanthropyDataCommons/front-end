@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { OidcSecure } from '@axa-fr/react-oidc';
+import { withOidcSecure } from '@axa-fr/react-oidc';
 import { useParams } from 'react-router-dom';
 import {
   CanonicalField,
@@ -56,7 +56,7 @@ const getApplicant = (
     ?? 'Unknown Applicant'
 );
 
-const ProposalDetail = () => {
+const ProposalDetailLoader = () => {
   const params = useParams();
   const proposalId = params.proposalId ?? 'missing';
   const canonicalFields = useCanonicalFields();
@@ -74,20 +74,18 @@ const ProposalDetail = () => {
 
   if (canonicalFields === null || proposal === null) {
     return (
-      <OidcSecure>
-        <PanelGrid>
-          <PanelGridItem>
-            <ProposalDetailPanel
-              proposalId={0}
-              title="Loading..."
-              applicant="Loading..."
-              applicantId="00-0000000"
-              version={0}
-              values={[]}
-            />
-          </PanelGridItem>
-        </PanelGrid>
-      </OidcSecure>
+      <PanelGrid>
+        <PanelGridItem>
+          <ProposalDetailPanel
+            proposalId={0}
+            title="Loading..."
+            applicant="Loading..."
+            applicantId="00-0000000"
+            version={0}
+            values={[]}
+          />
+        </PanelGridItem>
+      </PanelGrid>
     );
   }
 
@@ -99,21 +97,20 @@ const ProposalDetail = () => {
   const values = mapCanonicalFields(canonicalFields, proposal);
 
   return (
-    <OidcSecure>
-      <PanelGrid>
-        <PanelGridItem>
-          <ProposalDetailPanel
-            proposalId={proposal.id}
-            title={title}
-            applicant={applicant}
-            applicantId={applicantId}
-            version={version}
-            values={values}
-          />
-        </PanelGridItem>
-      </PanelGrid>
-    </OidcSecure>
+    <PanelGrid>
+      <PanelGridItem>
+        <ProposalDetailPanel
+          proposalId={proposal.id}
+          title={title}
+          applicant={applicant}
+          applicantId={applicantId}
+          version={version}
+          values={values}
+        />
+      </PanelGridItem>
+    </PanelGrid>
   );
 };
 
+const ProposalDetail = withOidcSecure(ProposalDetailLoader);
 export { ProposalDetail };
