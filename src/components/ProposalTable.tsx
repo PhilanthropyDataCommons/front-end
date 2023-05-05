@@ -41,7 +41,7 @@ export const ProposalTable = ({
             actions
             actionAlignment="left"
           >
-            Canonical Field
+            Base Field
             <ColumnActions>
               <ColumnAction
                 title="Toggle between field label and short code"
