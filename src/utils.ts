@@ -20,6 +20,22 @@ const getProposalValues = (proposal: DataViewerProposal, key: string) => {
   return proposal.values[key];
 };
 
+/**
+   * From a list of proposal attribute keys, safely gets the first valid proposal value array.
+   *
+   * Key order is relevant, as the first matching key's value will be returned.
+   *
+   * @param  {DataViewerProposal} proposal
+   * @param  {string[]} keys An array of keys, ordered by preference with most-preferred first.
+   * @return {(Array|undefined)} The proposal value array. Falls back to undefined.
+   */
+const getProposalValuesFromCandidates = (proposal: DataViewerProposal, keys: string[]) => {
+  const bestKey = keys.find((key) => (key in proposal.values && getProposalValues(proposal, key)));
+
+  return bestKey ? getProposalValues(proposal, bestKey) : undefined;
+};
+
 export {
   getProposalValues,
+  getProposalValuesFromCandidates,
 };
