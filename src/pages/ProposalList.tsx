@@ -7,36 +7,12 @@ import {
   useCanonicalFields,
   useProposals,
 } from '../pdc-api';
+import { mapProposals } from '../map-proposals';
 import { PanelGrid, PanelGridItem } from '../components/PanelGrid';
 import { ProposalListTablePanel } from '../components/ProposalListTablePanel';
 
 const mapFieldNames = (fields: CanonicalField[]) => Object.fromEntries(
   fields.map(({ label, shortCode }) => [shortCode, label]),
-);
-
-const extendMultimapReducer = (
-  multimap: Record<string, string[]>,
-  [key, value]: [string, string],
-): Record<string, string[]> => ({
-  [key]: (multimap[key] ?? []).concat([value]),
-  ...multimap,
-});
-
-const mapProposals = (fields: CanonicalField[], proposals: Proposal[]) => (
-  proposals.map((proposal: Proposal) => ({
-    id: proposal.id.toString(),
-    values: (
-      (proposal.versions[0]?.fieldValues ?? []).map(({
-        applicationFormField: { canonicalFieldId },
-        value,
-      }) => [
-        fields.find(({ id }) => (id === canonicalFieldId))?.shortCode,
-        value,
-      ])
-        .filter((pair): pair is [string, string] => !!pair[0])
-        .reduce(extendMultimapReducer, {})
-    ),
-  }))
 );
 
 const fieldValueMatches = (proposal: Proposal, query: string) => (
