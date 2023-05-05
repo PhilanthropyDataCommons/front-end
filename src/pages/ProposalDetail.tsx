@@ -6,9 +6,36 @@ import {
   Proposal,
   useCanonicalFields,
   useProposal,
+  useProposals,
 } from '../pdc-api';
+import { mapProposals } from '../map-proposals';
 import { PanelGrid, PanelGridItem } from '../components/PanelGrid';
 import { ProposalDetailPanel } from '../components/ProposalDetailPanel';
+import { ProposalListGridPanel } from '../components/ProposalListGridPanel';
+
+interface ProposalListGridLoaderProps {
+  canonicalFields: CanonicalField[] | null;
+}
+
+const ProposalListGridLoader = (
+  { canonicalFields }: ProposalListGridLoaderProps,
+) => {
+  const proposals = useProposals('1', '1000');
+
+  if (canonicalFields === null || proposals === null) {
+    return (
+      <div>Loading data...</div>
+    );
+  }
+
+  return (
+    <PanelGridItem>
+      <ProposalListGridPanel
+        proposals={mapProposals(canonicalFields, proposals.entries)}
+      />
+    </PanelGridItem>
+  );
+};
 
 const getValueOfCanonicalField = (
   canonicalFields: CanonicalField[],
@@ -56,10 +83,15 @@ const getApplicant = (
     ?? 'Unknown Applicant'
 );
 
-const ProposalDetailLoader = () => {
+interface ProposalDetailPanelLoaderProps {
+  canonicalFields: CanonicalField[] | null;
+}
+
+const ProposalDetailPanelLoader = (
+  { canonicalFields }: ProposalDetailPanelLoaderProps,
+) => {
   const params = useParams();
   const proposalId = params.proposalId ?? 'missing';
-  const canonicalFields = useCanonicalFields();
   const proposal = useProposal(proposalId);
 
   useEffect(() => {
@@ -74,18 +106,16 @@ const ProposalDetailLoader = () => {
 
   if (canonicalFields === null || proposal === null) {
     return (
-      <PanelGrid>
-        <PanelGridItem>
-          <ProposalDetailPanel
-            proposalId={0}
-            title="Loading..."
-            applicant="Loading..."
-            applicantId="00-0000000"
-            version={0}
-            values={[]}
-          />
-        </PanelGridItem>
-      </PanelGrid>
+      <PanelGridItem>
+        <ProposalDetailPanel
+          proposalId={0}
+          title="Loading..."
+          applicant="Loading..."
+          applicantId="00-0000000"
+          version={0}
+          values={[]}
+        />
+      </PanelGridItem>
     );
   }
 
@@ -97,17 +127,30 @@ const ProposalDetailLoader = () => {
   const values = mapCanonicalFields(canonicalFields, proposal);
 
   return (
-    <PanelGrid>
-      <PanelGridItem>
-        <ProposalDetailPanel
-          proposalId={proposal.id}
-          title={title}
-          applicant={applicant}
-          applicantId={applicantId}
-          version={version}
-          values={values}
-        />
-      </PanelGridItem>
+    <PanelGridItem>
+      <ProposalDetailPanel
+        proposalId={proposal.id}
+        title={title}
+        applicant={applicant}
+        applicantId={applicantId}
+        version={version}
+        values={values}
+      />
+    </PanelGridItem>
+  );
+};
+
+const ProposalDetailLoader = () => {
+  const canonicalFields = useCanonicalFields();
+
+  return (
+    <PanelGrid sidebarred>
+      <ProposalListGridLoader
+        canonicalFields={canonicalFields}
+      />
+      <ProposalDetailPanelLoader
+        canonicalFields={canonicalFields}
+      />
     </PanelGrid>
   );
 };
