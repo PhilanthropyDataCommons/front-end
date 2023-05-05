@@ -1,4 +1,5 @@
 import React from 'react';
+import { DataViewerProposal } from '../interfaces/DataViewerProposal';
 import {
   Panel,
   PanelBody,
@@ -6,10 +7,7 @@ import {
 import { ProposalListGrid } from './ProposalListGrid';
 
 interface ProposalListGridPanelProps {
-  proposals: {
-    id: string;
-    values: Record<string, string[]>;
-  }[];
+  proposals: DataViewerProposal[];
 }
 
 export const ProposalListGridPanel = ({ proposals }: ProposalListGridPanelProps) => (

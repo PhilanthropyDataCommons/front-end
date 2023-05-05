@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Bars3BottomLeftIcon } from '@heroicons/react/24/solid';
+import { DataViewerProposal } from '../interfaces/DataViewerProposal';
 import {
   Panel,
   PanelHeader,
@@ -12,10 +13,7 @@ import { Search } from './Search';
 
 interface ProposalListTablePanelProps {
   fieldNames: Record<string, string>;
-  proposals: {
-    id: string;
-    values: Record<string, string[]>;
-  }[];
+  proposals: DataViewerProposal[];
   onSearch: (query: string) => void;
   searchQuery?: string;
 }

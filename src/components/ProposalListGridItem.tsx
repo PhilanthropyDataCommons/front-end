@@ -1,12 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { DataViewerProposal } from '../interfaces/DataViewerProposal';
 import './ProposalListGridItem.css';
 
 interface ProposalListGridItemProps {
-  proposal: {
-    id: string;
-    values: Record<string, string[]>;
-  };
+  proposal: DataViewerProposal;
 }
 
 export const ProposalListGridItem = ({ proposal }: ProposalListGridItemProps) => {
