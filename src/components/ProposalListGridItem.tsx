@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { DataViewerProposal } from '../interfaces/DataViewerProposal';
+import { getProposalValuesFromCandidates } from '../utils';
 import './ProposalListGridItem.css';
 
 interface ProposalListGridItemProps {
@@ -8,12 +9,13 @@ interface ProposalListGridItemProps {
 }
 
 export const ProposalListGridItem = ({ proposal }: ProposalListGridItemProps) => {
-  const organizationName = proposal.values.organization_name
-    ?? proposal.values.organization_dba_name
-    ?? proposal.values.organization_legal_name
-    ?? proposal.values.proposal_primary_contact_name
-    ?? proposal.values.proposal_submitter_name
-    ?? 'Unknown Applicant';
+  const organizationName = getProposalValuesFromCandidates(proposal, [
+    'organization_name',
+    'organization_dba_name',
+    'organization_legal_name',
+    'proposal_primary_contact_name',
+    'proposal_submitter_name',
+  ]) ?? 'Unknown Applicant';
 
   const organizationLocation = ['organization_city', 'organization_state_province', 'organization_country']
     .map((key) => proposal.values[key]?.filter((value) => value !== '')) // Filter out blank strings
