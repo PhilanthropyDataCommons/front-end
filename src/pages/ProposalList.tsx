@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { withOidcSecure } from '@axa-fr/react-oidc';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
-  CanonicalField,
-  Proposal,
+  ApiCanonicalField,
+  ApiProposal,
   useCanonicalFields,
   useProposals,
 } from '../pdc-api';
@@ -11,11 +11,11 @@ import { mapProposals } from '../map-proposals';
 import { PanelGrid, PanelGridItem } from '../components/PanelGrid';
 import { ProposalListTablePanel } from '../components/ProposalListTablePanel';
 
-const mapFieldNames = (fields: CanonicalField[]) => Object.fromEntries(
+const mapFieldNames = (fields: ApiCanonicalField[]) => Object.fromEntries(
   fields.map(({ label, shortCode }) => [shortCode, label]),
 );
 
-const fieldValueMatches = (proposal: Proposal, query: string) => (
+const fieldValueMatches = (proposal: ApiProposal, query: string) => (
   proposal.versions[0]?.fieldValues.some(
     ({ value }) => value.toLowerCase().includes(query.toLowerCase()),
   )

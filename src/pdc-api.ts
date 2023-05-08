@@ -49,15 +49,15 @@ const usePdcApi = <T>(
   return response;
 };
 
-interface CanonicalField {
+interface ApiCanonicalField {
   id: number;
   label: string;
   shortCode: string;
 }
 
-const useCanonicalFields = () => usePdcApi<CanonicalField[]>('/canonicalFields');
+const useCanonicalFields = () => usePdcApi<ApiCanonicalField[]>('/canonicalFields');
 
-interface Proposal {
+interface ApiProposal {
   id: number;
   versions: {
     version: number;
@@ -72,7 +72,7 @@ interface Proposal {
 }
 
 const useProposal = (proposalId: string) => (
-  usePdcApi<Proposal>(
+  usePdcApi<ApiProposal>(
     `/proposals/${proposalId}`,
     new URLSearchParams({
       includeFieldsAndValues: 'true',
@@ -80,13 +80,13 @@ const useProposal = (proposalId: string) => (
   )
 );
 
-interface Proposals {
-  entries: Proposal[];
+interface ApiProposals {
+  entries: ApiProposal[];
   total: number;
 }
 
 const useProposals = (page: string, count: string) => (
-  usePdcApi<Proposals>(
+  usePdcApi<ApiProposals>(
     '/proposals',
     new URLSearchParams({
       _page: page,
@@ -102,6 +102,6 @@ export {
 };
 
 export type {
-  CanonicalField,
-  Proposal,
+  ApiCanonicalField,
+  ApiProposal,
 };
