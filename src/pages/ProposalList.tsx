@@ -3,9 +3,9 @@ import { withOidcSecure } from '@axa-fr/react-oidc';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   ApiBaseField,
-  ApiProposal,
   PROPOSALS_DEFAULT_COUNT,
   PROPOSALS_DEFAULT_PAGE,
+  PROPOSALS_DEFAULT_QUERY,
   useBaseFields,
   useProposals,
 } from '../pdc-api';
@@ -17,20 +17,14 @@ const mapFieldNames = (fields: ApiBaseField[]) => Object.fromEntries(
   fields.map(({ label, shortCode }) => [shortCode, label]),
 );
 
-const fieldValueMatches = (proposal: ApiProposal, query: string) => (
-  proposal.versions[0]?.fieldValues.some(
-    ({ value }) => value.toLowerCase().includes(query.toLowerCase()),
-  )
-);
-
 const ProposalListLoader = () => {
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const page = params.get('page') ?? PROPOSALS_DEFAULT_PAGE;
   const count = params.get('count') ?? PROPOSALS_DEFAULT_COUNT;
-  const query = params.get('q') ?? '';
+  const query = params.get('q') ?? PROPOSALS_DEFAULT_QUERY;
   const fields = useBaseFields();
-  const proposals = useProposals(page, count);
+  const proposals = useProposals(page, count, query);
 
   useEffect(() => {
     document.title = 'Proposal List - Philanthropy Data Commons';
@@ -44,7 +38,7 @@ const ProposalListLoader = () => {
 
   const mappedProposals = mapProposals(
     fields,
-    proposals.entries.filter((p) => fieldValueMatches(p, query)),
+    proposals.entries,
   );
 
   return (

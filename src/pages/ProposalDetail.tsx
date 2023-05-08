@@ -6,6 +6,7 @@ import {
   ApiProposal,
   PROPOSALS_DEFAULT_COUNT,
   PROPOSALS_DEFAULT_PAGE,
+  PROPOSALS_DEFAULT_QUERY,
   useBaseFields,
   useProposal,
   useProposals,
@@ -29,6 +30,7 @@ const ProposalListGridLoader = (
   const proposals = useProposals(
     PROPOSALS_DEFAULT_PAGE,
     PROPOSALS_DEFAULT_COUNT,
+    PROPOSALS_DEFAULT_QUERY,
   );
 
   if (baseFields === null || proposals === null) {

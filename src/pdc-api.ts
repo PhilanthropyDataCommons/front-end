@@ -87,13 +87,15 @@ interface ApiProposals {
 
 const PROPOSALS_DEFAULT_PAGE = '1';
 const PROPOSALS_DEFAULT_COUNT = '1000';
+const PROPOSALS_DEFAULT_QUERY = '';
 
-const useProposals = (page: string, count: string) => (
+const useProposals = (page: string, count: string, query: string) => (
   usePdcApi<ApiProposals>(
     '/proposals',
     new URLSearchParams({
       _page: page,
       _count: count,
+      _content: query,
     }),
   )
 );
@@ -101,6 +103,7 @@ const useProposals = (page: string, count: string) => (
 export {
   PROPOSALS_DEFAULT_COUNT,
   PROPOSALS_DEFAULT_PAGE,
+  PROPOSALS_DEFAULT_QUERY,
   useBaseFields,
   useProposal,
   useProposals,
