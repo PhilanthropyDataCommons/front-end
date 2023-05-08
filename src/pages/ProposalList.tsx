@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { OidcSecure } from '@axa-fr/react-oidc';
+import { withOidcSecure } from '@axa-fr/react-oidc';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   CanonicalField,
@@ -7,36 +7,12 @@ import {
   useCanonicalFields,
   useProposals,
 } from '../pdc-api';
+import { mapProposals } from '../map-proposals';
 import { PanelGrid, PanelGridItem } from '../components/PanelGrid';
 import { ProposalListTablePanel } from '../components/ProposalListTablePanel';
 
 const mapFieldNames = (fields: CanonicalField[]) => Object.fromEntries(
   fields.map(({ label, shortCode }) => [shortCode, label]),
-);
-
-const extendMultimapReducer = (
-  multimap: Record<string, string[]>,
-  [key, value]: [string, string],
-): Record<string, string[]> => ({
-  [key]: (multimap[key] ?? []).concat([value]),
-  ...multimap,
-});
-
-const mapProposals = (fields: CanonicalField[], proposals: Proposal[]) => (
-  proposals.map((proposal: Proposal) => ({
-    id: proposal.id.toString(),
-    values: (
-      (proposal.versions[0]?.fieldValues ?? []).map(({
-        applicationFormField: { canonicalFieldId },
-        value,
-      }) => [
-        fields.find(({ id }) => (id === canonicalFieldId))?.shortCode,
-        value,
-      ])
-        .filter((pair): pair is [string, string] => !!pair[0])
-        .reduce(extendMultimapReducer, {})
-    ),
-  }))
 );
 
 const fieldValueMatches = (proposal: Proposal, query: string) => (
@@ -45,7 +21,7 @@ const fieldValueMatches = (proposal: Proposal, query: string) => (
   )
 );
 
-const ProposalList = () => {
+const ProposalListLoader = () => {
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const page = params.get('page') ?? '1';
@@ -60,9 +36,7 @@ const ProposalList = () => {
 
   if (fields === null || proposals === null) {
     return (
-      <OidcSecure>
-        <div>Loading data...</div>
-      </OidcSecure>
+      <div>Loading data...</div>
     );
   }
 
@@ -72,19 +46,18 @@ const ProposalList = () => {
   );
 
   return (
-    <OidcSecure>
-      <PanelGrid>
-        <PanelGridItem>
-          <ProposalListTablePanel
-            fieldNames={mapFieldNames(fields)}
-            proposals={mappedProposals}
-            searchQuery={query}
-            onSearch={(q) => navigate(`/proposals?q=${q}`)}
-          />
-        </PanelGridItem>
-      </PanelGrid>
-    </OidcSecure>
+    <PanelGrid>
+      <PanelGridItem>
+        <ProposalListTablePanel
+          fieldNames={mapFieldNames(fields)}
+          proposals={mappedProposals}
+          searchQuery={query}
+          onSearch={(q) => navigate(`/proposals?q=${q}`)}
+        />
+      </PanelGridItem>
+    </PanelGrid>
   );
 };
 
+const ProposalList = withOidcSecure(ProposalListLoader);
 export { ProposalList };
