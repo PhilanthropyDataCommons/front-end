@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom';
 import {
   ApiBaseField,
   ApiProposal,
+  PROPOSALS_DEFAULT_COUNT,
+  PROPOSALS_DEFAULT_PAGE,
   useBaseFields,
   useProposal,
   useProposals,
@@ -24,7 +26,10 @@ interface ProposalListGridLoaderProps {
 const ProposalListGridLoader = (
   { baseFields }: ProposalListGridLoaderProps,
 ) => {
-  const proposals = useProposals('1', '1000');
+  const proposals = useProposals(
+    PROPOSALS_DEFAULT_PAGE,
+    PROPOSALS_DEFAULT_COUNT,
+  );
 
   if (baseFields === null || proposals === null) {
     return (

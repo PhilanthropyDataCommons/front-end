@@ -85,6 +85,9 @@ interface ApiProposals {
   total: number;
 }
 
+const PROPOSALS_DEFAULT_PAGE = '1';
+const PROPOSALS_DEFAULT_COUNT = '1000';
+
 const useProposals = (page: string, count: string) => (
   usePdcApi<ApiProposals>(
     '/proposals',
@@ -96,6 +99,8 @@ const useProposals = (page: string, count: string) => (
 );
 
 export {
+  PROPOSALS_DEFAULT_COUNT,
+  PROPOSALS_DEFAULT_PAGE,
   useBaseFields,
   useProposal,
   useProposals,

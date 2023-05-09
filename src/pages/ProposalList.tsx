@@ -4,6 +4,8 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   ApiBaseField,
   ApiProposal,
+  PROPOSALS_DEFAULT_COUNT,
+  PROPOSALS_DEFAULT_PAGE,
   useBaseFields,
   useProposals,
 } from '../pdc-api';
@@ -24,8 +26,8 @@ const fieldValueMatches = (proposal: ApiProposal, query: string) => (
 const ProposalListLoader = () => {
   const navigate = useNavigate();
   const [params] = useSearchParams();
-  const page = params.get('page') ?? '1';
-  const count = params.get('count') ?? '1000';
+  const page = params.get('page') ?? PROPOSALS_DEFAULT_PAGE;
+  const count = params.get('count') ?? PROPOSALS_DEFAULT_COUNT;
   const query = params.get('q') ?? '';
   const fields = useBaseFields();
   const proposals = useProposals(page, count);
