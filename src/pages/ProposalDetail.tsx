@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { withOidcSecure } from '@axa-fr/react-oidc';
 import { useParams } from 'react-router-dom';
 import {
-  CanonicalField,
-  Proposal,
+  ApiCanonicalField,
+  ApiProposal,
   useCanonicalFields,
   useProposal,
   useProposals,
@@ -14,7 +14,7 @@ import { ProposalDetailPanel } from '../components/ProposalDetailPanel';
 import { ProposalListGridPanel } from '../components/ProposalListGridPanel';
 
 interface ProposalListGridLoaderProps {
-  canonicalFields: CanonicalField[] | null;
+  canonicalFields: ApiCanonicalField[] | null;
 }
 
 const ProposalListGridLoader = (
@@ -38,8 +38,8 @@ const ProposalListGridLoader = (
 };
 
 const getValueOfCanonicalField = (
-  canonicalFields: CanonicalField[],
-  proposal: Proposal,
+  canonicalFields: ApiCanonicalField[],
+  proposal: ApiProposal,
   canonicalFieldShortCode: string,
 ) => {
   const field = canonicalFields.find(({ shortCode }) => (
@@ -55,8 +55,8 @@ const getValueOfCanonicalField = (
 };
 
 const mapCanonicalFields = (
-  canonicalFields: CanonicalField[],
-  proposal: Proposal,
+  canonicalFields: ApiCanonicalField[],
+  proposal: ApiProposal,
 ) => (
   (proposal.versions[0]?.fieldValues ?? []).map(({ applicationFormField, value }) => {
     const canonicalField = canonicalFields.find(({ id }) => (
@@ -72,8 +72,8 @@ const mapCanonicalFields = (
 );
 
 const getApplicant = (
-  canonicalFields: CanonicalField[],
-  proposal: Proposal,
+  canonicalFields: ApiCanonicalField[],
+  proposal: ApiProposal,
 ) => (
   getValueOfCanonicalField(canonicalFields, proposal, 'organization_name')
     ?? getValueOfCanonicalField(canonicalFields, proposal, 'organization_dba_name')
@@ -84,7 +84,7 @@ const getApplicant = (
 );
 
 interface ProposalDetailPanelLoaderProps {
-  canonicalFields: CanonicalField[] | null;
+  canonicalFields: ApiCanonicalField[] | null;
 }
 
 const ProposalDetailPanelLoader = (
