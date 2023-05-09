@@ -20,6 +20,7 @@ const mapProposals = (fields: ApiCanonicalField[], proposals: ApiProposal[]) => 
         value,
       ])
         .filter((pair): pair is [string, string] => !!pair[0])
+        .filter((pair) => (pair[1].trim() !== ''))
         .reduce(extendMultimapReducer, {})
     ),
   }))

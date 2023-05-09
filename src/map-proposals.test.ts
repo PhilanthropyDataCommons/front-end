@@ -91,3 +91,7 @@ test('maps values to the expected place', () => {
   expect(mappedProposals[0]?.values[targetCanonicalField]?.[0])
     .toEqual(apiProposals[0]?.versions[0]?.fieldValues[proposalFieldValueIndex ?? -1]?.value);
 });
+
+test('does not map blank values', () => {
+  expect(mappedProposals[0]?.values.organization_budget).toBeUndefined();
+});
