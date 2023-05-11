@@ -9,9 +9,9 @@ interface ProposalListGridItemProps {
 }
 
 export const ProposalListGridItem = ({ proposal }: ProposalListGridItemProps) => {
-  const organizationName = getPreferredApplicantNameValues(proposal);
+  const applicantName = getPreferredApplicantNameValues(proposal);
 
-  const organizationLocation = ['organization_city', 'organization_state_province', 'organization_country']
+  const applicantLocation = ['organization_city', 'organization_state_province', 'organization_country']
     .map((key) => proposal.values[key]?.filter((value) => value !== '')) // Filter out blank strings
     .filter((value) => (value ?? []).length > 0) // Filter out empty value arrays
     .join(', ');
@@ -21,12 +21,12 @@ export const ProposalListGridItem = ({ proposal }: ProposalListGridItemProps) =>
       to={`/proposals/${proposal.id}`}
       className="proposal-list-grid-item"
     >
-      <div className="proposal--organization-name">
-        {organizationName}
+      <div className="proposal--applicant-name">
+        {applicantName}
       </div>
-      {organizationLocation ? (
-        <div className="proposal--organization-address">
-          {organizationLocation}
+      {applicantLocation ? (
+        <div className="proposal--applicant-address">
+          {applicantLocation}
         </div>
       ) : null}
       {proposal.values.proposal_name ? (
