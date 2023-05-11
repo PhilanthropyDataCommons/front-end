@@ -26,6 +26,7 @@ const usePdcApi = <T>(
   const [response, setResponse] = useState(null);
 
   useEffect(() => {
+    setResponse(null);
     const url = new URL(path, API_URL);
     url.search = params.toString();
     fetch(url)
