@@ -49,13 +49,13 @@ const usePdcApi = <T>(
   return response;
 };
 
-interface ApiCanonicalField {
+interface ApiBaseField {
   id: number;
   label: string;
   shortCode: string;
 }
 
-const useCanonicalFields = () => usePdcApi<ApiCanonicalField[]>('/canonicalFields');
+const useBaseFields = () => usePdcApi<ApiBaseField[]>('/baseFields');
 
 interface ApiProposal {
   id: number;
@@ -63,7 +63,7 @@ interface ApiProposal {
     version: number;
     fieldValues: {
       applicationFormField: {
-        canonicalFieldId: number;
+        baseFieldId: number;
         position: number;
       };
       value: string;
@@ -96,12 +96,12 @@ const useProposals = (page: string, count: string) => (
 );
 
 export {
-  useCanonicalFields,
+  useBaseFields,
   useProposal,
   useProposals,
 };
 
 export type {
-  ApiCanonicalField,
+  ApiBaseField,
   ApiProposal,
 };
