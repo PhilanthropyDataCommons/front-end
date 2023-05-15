@@ -69,15 +69,17 @@ export const ProposalListTablePanel = ({
         <PanelActions>
           <Search onSearch={onSearch} initialQuery={searchQuery} />
         </PanelActions>
-        <PanelActions>
-          <Button
-            onClick={handleWrapClick}
-            color={wrap ? 'blue' : 'gray'}
-          >
-            <Bars3BottomLeftIcon className="icon" />
-            Toggle wrapping
-          </Button>
-        </PanelActions>
+        {hasProposals && (
+          <PanelActions>
+            <Button
+              onClick={handleWrapClick}
+              color={wrap ? 'blue' : 'gray'}
+            >
+              <Bars3BottomLeftIcon className="icon" />
+              Toggle wrapping
+            </Button>
+          </PanelActions>
+        )}
       </PanelHeader>
       <PanelBody>
         {hasProposals ? (
