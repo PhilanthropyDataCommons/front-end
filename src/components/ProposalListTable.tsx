@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DataViewerProposal } from '../interfaces/DataViewerProposal';
+import { getPreferredApplicantNameValues } from '../utils/proposals';
 import {
   Table,
   TableHead,
@@ -25,12 +26,26 @@ const ProposalListTableRow = ({
     navigate(`/proposals/${proposal.id}`);
   };
 
+  const getProposalCellContents = (shortCode: string) => {
+    let proposalValue;
+
+    switch (shortCode) {
+      case 'organization_name':
+        proposalValue = getPreferredApplicantNameValues(proposal);
+        break;
+      default:
+        proposalValue = proposal.values[shortCode];
+    }
+
+    return proposalValue;
+  };
+
   return (
     <TableRow onClick={handleRowClick}>
       {/* Iterate over columns to ensure order. */}
       {columns.map((shortCode) => (
         <RowCell key={shortCode}>
-          {proposal.values[shortCode]}
+          {getProposalCellContents(shortCode)}
         </RowCell>
       ))}
     </TableRow>
