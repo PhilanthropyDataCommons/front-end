@@ -80,7 +80,10 @@ const getApplicant = (
   proposal: ApiProposal,
 ) => {
   const applicantNameKey = PROPOSAL_APPLICANT_NAME_CASCADE
-    .find((key) => typeof getValueOfBaseField(baseFields, proposal, key) !== 'undefined');
+    .find((key) => {
+      const baseFieldValue = getValueOfBaseField(baseFields, proposal, key);
+      return typeof baseFieldValue !== 'undefined' && baseFieldValue.trim() !== '';
+    });
 
   return applicantNameKey ? (getValueOfBaseField(baseFields, proposal, applicantNameKey)
     ?? PROPOSAL_APPLICANT_NAME_FALLBACK) : PROPOSAL_APPLICANT_NAME_FALLBACK;
