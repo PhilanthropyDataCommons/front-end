@@ -2,16 +2,16 @@ import React, { useEffect } from 'react';
 import { withOidcSecure } from '@axa-fr/react-oidc';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
-  ApiCanonicalField,
+  ApiBaseField,
   ApiProposal,
-  useCanonicalFields,
+  useBaseFields,
   useProposals,
 } from '../pdc-api';
 import { mapProposals } from '../map-proposals';
 import { PanelGrid, PanelGridItem } from '../components/PanelGrid';
 import { ProposalListTablePanel } from '../components/ProposalListTablePanel';
 
-const mapFieldNames = (fields: ApiCanonicalField[]) => Object.fromEntries(
+const mapFieldNames = (fields: ApiBaseField[]) => Object.fromEntries(
   fields.map(({ label, shortCode }) => [shortCode, label]),
 );
 
@@ -27,7 +27,7 @@ const ProposalListLoader = () => {
   const page = params.get('page') ?? '1';
   const count = params.get('count') ?? '1000';
   const query = params.get('q') ?? '';
-  const fields = useCanonicalFields();
+  const fields = useBaseFields();
   const proposals = useProposals(page, count);
 
   useEffect(() => {

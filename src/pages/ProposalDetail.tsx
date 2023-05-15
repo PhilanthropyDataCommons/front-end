@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { withOidcSecure } from '@axa-fr/react-oidc';
 import { useParams } from 'react-router-dom';
 import {
-  ApiCanonicalField,
+  ApiBaseField,
   ApiProposal,
-  useCanonicalFields,
+  useBaseFields,
   useProposal,
   useProposals,
 } from '../pdc-api';
@@ -14,15 +14,15 @@ import { ProposalDetailPanel } from '../components/ProposalDetailPanel';
 import { ProposalListGridPanel } from '../components/ProposalListGridPanel';
 
 interface ProposalListGridLoaderProps {
-  canonicalFields: ApiCanonicalField[] | null;
+  baseFields: ApiBaseField[] | null;
 }
 
 const ProposalListGridLoader = (
-  { canonicalFields }: ProposalListGridLoaderProps,
+  { baseFields }: ProposalListGridLoaderProps,
 ) => {
   const proposals = useProposals('1', '1000');
 
-  if (canonicalFields === null || proposals === null) {
+  if (baseFields === null || proposals === null) {
     return (
       <div>Loading data...</div>
     );
@@ -31,40 +31,40 @@ const ProposalListGridLoader = (
   return (
     <PanelGridItem>
       <ProposalListGridPanel
-        proposals={mapProposals(canonicalFields, proposals.entries)}
+        proposals={mapProposals(baseFields, proposals.entries)}
       />
     </PanelGridItem>
   );
 };
 
-const getValueOfCanonicalField = (
-  canonicalFields: ApiCanonicalField[],
+const getValueOfBaseField = (
+  baseFields: ApiBaseField[],
   proposal: ApiProposal,
-  canonicalFieldShortCode: string,
+  baseFieldShortCode: string,
 ) => {
-  const field = canonicalFields.find(({ shortCode }) => (
-    shortCode === canonicalFieldShortCode
+  const field = baseFields.find(({ shortCode }) => (
+    shortCode === baseFieldShortCode
   ));
   if (field === undefined) {
     return undefined;
   }
   const fieldValue = proposal.versions[0]?.fieldValues.find(({ applicationFormField }) => (
-    applicationFormField.canonicalFieldId === field.id
+    applicationFormField.baseFieldId === field.id
   ));
   return fieldValue?.value ?? undefined;
 };
 
-const mapCanonicalFields = (
-  canonicalFields: ApiCanonicalField[],
+const mapBaseFields = (
+  baseFields: ApiBaseField[],
   proposal: ApiProposal,
 ) => (
   (proposal.versions[0]?.fieldValues ?? []).map(({ applicationFormField, value }) => {
-    const canonicalField = canonicalFields.find(({ id }) => (
-      id === applicationFormField.canonicalFieldId
+    const baseField = baseFields.find(({ id }) => (
+      id === applicationFormField.baseFieldId
     ));
     return {
-      shortCode: canonicalField?.shortCode ?? 'missing',
-      fieldName: canonicalField?.label ?? 'missing',
+      shortCode: baseField?.shortCode ?? 'missing',
+      fieldName: baseField?.label ?? 'missing',
       position: applicationFormField.position,
       value,
     };
@@ -72,39 +72,39 @@ const mapCanonicalFields = (
 );
 
 const getApplicant = (
-  canonicalFields: ApiCanonicalField[],
+  baseFields: ApiBaseField[],
   proposal: ApiProposal,
 ) => (
-  getValueOfCanonicalField(canonicalFields, proposal, 'organization_name')
-    ?? getValueOfCanonicalField(canonicalFields, proposal, 'organization_dba_name')
-    ?? getValueOfCanonicalField(canonicalFields, proposal, 'organization_legal_name')
-    ?? getValueOfCanonicalField(canonicalFields, proposal, 'proposal_primary_contact_name')
-    ?? getValueOfCanonicalField(canonicalFields, proposal, 'proposal_submitter_name')
+  getValueOfBaseField(baseFields, proposal, 'organization_name')
+    ?? getValueOfBaseField(baseFields, proposal, 'organization_dba_name')
+    ?? getValueOfBaseField(baseFields, proposal, 'organization_legal_name')
+    ?? getValueOfBaseField(baseFields, proposal, 'proposal_primary_contact_name')
+    ?? getValueOfBaseField(baseFields, proposal, 'proposal_submitter_name')
     ?? 'Unknown Applicant'
 );
 
 interface ProposalDetailPanelLoaderProps {
-  canonicalFields: ApiCanonicalField[] | null;
+  baseFields: ApiBaseField[] | null;
 }
 
 const ProposalDetailPanelLoader = (
-  { canonicalFields }: ProposalDetailPanelLoaderProps,
+  { baseFields }: ProposalDetailPanelLoaderProps,
 ) => {
   const params = useParams();
   const proposalId = params.proposalId ?? 'missing';
   const proposal = useProposal(proposalId);
 
   useEffect(() => {
-    if (canonicalFields === null || proposal === null) {
+    if (baseFields === null || proposal === null) {
       document.title = 'Proposal Detail - Philanthropy Data Commons';
     } else {
-      const applicant = getApplicant(canonicalFields, proposal);
+      const applicant = getApplicant(baseFields, proposal);
       document.title = `${applicant} Proposal Detail - Philanthropy Data Commons`;
     }
     return () => { document.title = 'Philanthropy Data Commons'; };
-  }, [canonicalFields, proposal]);
+  }, [baseFields, proposal]);
 
-  if (canonicalFields === null || proposal === null) {
+  if (baseFields === null || proposal === null) {
     return (
       <PanelGridItem>
         <ProposalDetailPanel
@@ -119,12 +119,12 @@ const ProposalDetailPanelLoader = (
     );
   }
 
-  const title = getValueOfCanonicalField(canonicalFields, proposal, 'proposal_name')
-    ?? getValueOfCanonicalField(canonicalFields, proposal, 'proposal_title');
-  const applicant = getApplicant(canonicalFields, proposal);
-  const applicantId = getValueOfCanonicalField(canonicalFields, proposal, 'organization_tax_id');
+  const title = getValueOfBaseField(baseFields, proposal, 'proposal_name')
+    ?? getValueOfBaseField(baseFields, proposal, 'proposal_title');
+  const applicant = getApplicant(baseFields, proposal);
+  const applicantId = getValueOfBaseField(baseFields, proposal, 'organization_tax_id');
   const version = proposal.versions[0]?.version ?? 0;
-  const values = mapCanonicalFields(canonicalFields, proposal);
+  const values = mapBaseFields(baseFields, proposal);
 
   return (
     <PanelGridItem>
@@ -141,15 +141,15 @@ const ProposalDetailPanelLoader = (
 };
 
 const ProposalDetailLoader = () => {
-  const canonicalFields = useCanonicalFields();
+  const baseFields = useBaseFields();
 
   return (
     <PanelGrid sidebarred>
       <ProposalListGridLoader
-        canonicalFields={canonicalFields}
+        baseFields={baseFields}
       />
       <ProposalDetailPanelLoader
-        canonicalFields={canonicalFields}
+        baseFields={baseFields}
       />
     </PanelGrid>
   );
