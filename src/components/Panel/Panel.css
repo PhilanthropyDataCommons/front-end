@@ -69,6 +69,11 @@
   grid-row: 2;
 }
 
+.panel-message {
+  padding: var(--fixed-spacing--1x);
+  color: var(--color--gray--medium-dark);
+}
+
 .panel.fill .panel-body {
   position: absolute;
   inset: 0;

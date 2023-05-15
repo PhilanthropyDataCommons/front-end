@@ -30,9 +30,21 @@ const ProposalListLoader = () => {
     document.title = 'Proposal List - Philanthropy Data Commons';
   }, []);
 
+  const handleSearch = (q: string) => navigate(`/proposals?q=${q}`);
+
   if (fields === null || proposals === null) {
     return (
-      <div>Loading data...</div>
+      <PanelGrid>
+        <PanelGridItem>
+          <ProposalListTablePanel
+            fieldNames={{}}
+            proposals={[]}
+            searchQuery={query}
+            onSearch={handleSearch}
+            loading
+          />
+        </PanelGridItem>
+      </PanelGrid>
     );
   }
 
@@ -48,7 +60,7 @@ const ProposalListLoader = () => {
           fieldNames={mapFieldNames(fields)}
           proposals={mappedProposals}
           searchQuery={query}
-          onSearch={(q) => navigate(`/proposals?q=${q}`)}
+          onSearch={handleSearch}
         />
       </PanelGridItem>
     </PanelGrid>

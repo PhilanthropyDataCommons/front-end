@@ -16,6 +16,7 @@ interface ProposalListTablePanelProps {
   proposals: DataViewerProposal[];
   onSearch: (query: string) => void;
   searchQuery?: string;
+  loading?: boolean;
 }
 
 // For now, we are hard-coding this list.
@@ -45,10 +46,13 @@ export const ProposalListTablePanel = ({
   proposals,
   onSearch,
   searchQuery = '',
+  loading = false,
 }: ProposalListTablePanelProps) => {
   const [wrap, setWrap] = useState(false);
 
   const handleWrapClick = () => setWrap((previous) => !previous);
+
+  const hasSearchQuery = searchQuery !== '';
 
   return (
     <Panel>
@@ -67,12 +71,18 @@ export const ProposalListTablePanel = ({
         </PanelActions>
       </PanelHeader>
       <PanelBody>
-        <ProposalListTable
-          fieldNames={fieldNames}
-          proposals={proposals}
-          columns={DEFAULT_COLUMNS}
-          wrap={wrap}
-        />
+        {loading ? (
+          <div className="panel-message">
+            {hasSearchQuery ? 'Searching…' : 'Loading…'}
+          </div>
+        ) : (
+          <ProposalListTable
+            fieldNames={fieldNames}
+            proposals={proposals}
+            columns={DEFAULT_COLUMNS}
+            wrap={wrap}
+          />
+        )}
       </PanelBody>
     </Panel>
   );
