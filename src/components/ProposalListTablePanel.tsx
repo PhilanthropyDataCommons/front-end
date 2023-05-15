@@ -52,7 +52,16 @@ export const ProposalListTablePanel = ({
 
   const handleWrapClick = () => setWrap((previous) => !previous);
 
+  const hasProposals = proposals.length > 0;
   const hasSearchQuery = searchQuery !== '';
+
+  const generateFallbackMessage = () => {
+    if (hasSearchQuery) {
+      return loading ? 'Searching…' : 'No search results for that query.';
+    }
+
+    return loading ? 'Loading…' : 'No data available.';
+  };
 
   return (
     <Panel>
@@ -71,17 +80,17 @@ export const ProposalListTablePanel = ({
         </PanelActions>
       </PanelHeader>
       <PanelBody>
-        {loading ? (
-          <div className="panel-message">
-            {hasSearchQuery ? 'Searching…' : 'Loading…'}
-          </div>
-        ) : (
+        {hasProposals ? (
           <ProposalListTable
             fieldNames={fieldNames}
             proposals={proposals}
             columns={DEFAULT_COLUMNS}
             wrap={wrap}
           />
+        ) : (
+          <div className="panel-message">
+            {generateFallbackMessage()}
+          </div>
         )}
       </PanelBody>
     </Panel>
