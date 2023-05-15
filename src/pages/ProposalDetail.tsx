@@ -12,6 +12,10 @@ import { mapProposals } from '../map-proposals';
 import { PanelGrid, PanelGridItem } from '../components/PanelGrid';
 import { ProposalDetailPanel } from '../components/ProposalDetailPanel';
 import { ProposalListGridPanel } from '../components/ProposalListGridPanel';
+import {
+  PROPOSAL_APPLICANT_NAME_CASCADE,
+  PROPOSAL_APPLICANT_NAME_FALLBACK,
+} from '../utils/proposals';
 
 interface ProposalListGridLoaderProps {
   baseFields: ApiBaseField[] | null;
@@ -74,14 +78,13 @@ const mapBaseFields = (
 const getApplicant = (
   baseFields: ApiBaseField[],
   proposal: ApiProposal,
-) => (
-  getValueOfBaseField(baseFields, proposal, 'organization_name')
-    ?? getValueOfBaseField(baseFields, proposal, 'organization_dba_name')
-    ?? getValueOfBaseField(baseFields, proposal, 'organization_legal_name')
-    ?? getValueOfBaseField(baseFields, proposal, 'proposal_primary_contact_name')
-    ?? getValueOfBaseField(baseFields, proposal, 'proposal_submitter_name')
-    ?? 'Unknown Applicant'
-);
+) => {
+  const applicantNameKey = PROPOSAL_APPLICANT_NAME_CASCADE
+    .find((key) => typeof getValueOfBaseField(baseFields, proposal, key) !== 'undefined');
+
+  return applicantNameKey ? (getValueOfBaseField(baseFields, proposal, applicantNameKey)
+    ?? PROPOSAL_APPLICANT_NAME_FALLBACK) : PROPOSAL_APPLICANT_NAME_FALLBACK;
+};
 
 interface ProposalDetailPanelLoaderProps {
   baseFields: ApiBaseField[] | null;
