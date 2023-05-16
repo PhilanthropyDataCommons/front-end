@@ -125,8 +125,7 @@ const ProposalDetailPanelLoader = (
     );
   }
 
-  const title = getValueOfBaseField(baseFields, proposal, 'proposal_name')
-    ?? getValueOfBaseField(baseFields, proposal, 'proposal_title');
+  const title = getValueOfBaseField(baseFields, proposal, 'proposal_name');
   const applicant = getApplicant(baseFields, proposal);
   const applicantId = getValueOfBaseField(baseFields, proposal, 'organization_tax_id');
   const version = proposal.versions[0]?.version ?? 0;
