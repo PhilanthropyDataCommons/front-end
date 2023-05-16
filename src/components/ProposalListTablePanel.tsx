@@ -16,6 +16,7 @@ interface ProposalListTablePanelProps {
   proposals: DataViewerProposal[];
   onSearch: (query: string) => void;
   searchQuery?: string;
+  loading?: boolean;
 }
 
 // For now, we are hard-coding this list.
@@ -45,10 +46,22 @@ export const ProposalListTablePanel = ({
   proposals,
   onSearch,
   searchQuery = '',
+  loading = false,
 }: ProposalListTablePanelProps) => {
   const [wrap, setWrap] = useState(false);
 
   const handleWrapClick = () => setWrap((previous) => !previous);
+
+  const hasProposals = proposals.length > 0;
+  const hasSearchQuery = searchQuery !== '';
+
+  const generateFallbackMessage = () => {
+    if (hasSearchQuery) {
+      return loading ? 'Searching…' : 'No search results for that query.';
+    }
+
+    return loading ? 'Loading…' : 'No data available.';
+  };
 
   return (
     <Panel>
@@ -56,23 +69,31 @@ export const ProposalListTablePanel = ({
         <PanelActions>
           <Search onSearch={onSearch} initialQuery={searchQuery} />
         </PanelActions>
-        <PanelActions>
-          <Button
-            onClick={handleWrapClick}
-            color={wrap ? 'blue' : 'gray'}
-          >
-            <Bars3BottomLeftIcon className="icon" />
-            Toggle wrapping
-          </Button>
-        </PanelActions>
+        {hasProposals && (
+          <PanelActions>
+            <Button
+              onClick={handleWrapClick}
+              color={wrap ? 'blue' : 'gray'}
+            >
+              <Bars3BottomLeftIcon className="icon" />
+              Toggle wrapping
+            </Button>
+          </PanelActions>
+        )}
       </PanelHeader>
       <PanelBody>
-        <ProposalListTable
-          fieldNames={fieldNames}
-          proposals={proposals}
-          columns={DEFAULT_COLUMNS}
-          wrap={wrap}
-        />
+        {hasProposals ? (
+          <ProposalListTable
+            fieldNames={fieldNames}
+            proposals={proposals}
+            columns={DEFAULT_COLUMNS}
+            wrap={wrap}
+          />
+        ) : (
+          <div className="panel-message">
+            {generateFallbackMessage()}
+          </div>
+        )}
       </PanelBody>
     </Panel>
   );

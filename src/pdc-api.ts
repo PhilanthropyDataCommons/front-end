@@ -26,6 +26,7 @@ const usePdcApi = <T>(
   const [response, setResponse] = useState(null);
 
   useEffect(() => {
+    setResponse(null);
     const url = new URL(path, API_URL);
     url.search = params.toString();
     fetch(url)
@@ -85,17 +86,25 @@ interface ApiProposals {
   total: number;
 }
 
-const useProposals = (page: string, count: string) => (
+const PROPOSALS_DEFAULT_PAGE = '1';
+const PROPOSALS_DEFAULT_COUNT = '1000';
+const PROPOSALS_DEFAULT_QUERY = '';
+
+const useProposals = (page: string, count: string, query: string) => (
   usePdcApi<ApiProposals>(
     '/proposals',
     new URLSearchParams({
       _page: page,
       _count: count,
+      _content: query,
     }),
   )
 );
 
 export {
+  PROPOSALS_DEFAULT_COUNT,
+  PROPOSALS_DEFAULT_PAGE,
+  PROPOSALS_DEFAULT_QUERY,
   useBaseFields,
   useProposal,
   useProposals,
