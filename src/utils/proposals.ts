@@ -12,10 +12,9 @@ const PROPOSAL_APPLICANT_NAME_FALLBACK = 'Unknown Applicant';
 
 /**
    * Proposals may store the applicant name in one of several fields.
-   * This utility returns iterates through the list of attributes where
-   * we expect to find a name, in a preferential order, and returns the
-   * first matching value.
-   *
+   * This utility iterates through the list of attributes
+   * where we expect to find a name, in a preferential order,
+   * and returns the first matching value.
    * If none is found, falls back to the fallback value.
    *
    * @param  {DataViewerProposal} proposal
