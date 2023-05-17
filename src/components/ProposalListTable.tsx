@@ -26,19 +26,9 @@ const ProposalListTableRow = ({
     navigate(`/proposals/${proposal.id}`);
   };
 
-  const getProposalCellContents = (shortCode: string) => {
-    let proposalValue;
-
-    switch (shortCode) {
-      case 'organization_name':
-        proposalValue = getPreferredApplicantNameValues(proposal);
-        break;
-      default:
-        proposalValue = proposal.values[shortCode];
-    }
-
-    return proposalValue;
-  };
+  const getProposalCellContents = (shortCode: string) => (shortCode === 'organization_name'
+    ? getPreferredApplicantNameValues(proposal)
+    : proposal.values[shortCode]);
 
   return (
     <TableRow onClick={handleRowClick}>
