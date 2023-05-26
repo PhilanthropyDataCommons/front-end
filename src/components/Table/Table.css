@@ -23,7 +23,7 @@
 }
 
 .table tbody th {
-  white-space: nowrap;
+  min-width: 25%;
 }
 
 .table th,
