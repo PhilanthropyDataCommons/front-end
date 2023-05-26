@@ -12,6 +12,7 @@ import {
   PanelTitleWrapper,
 } from './Panel';
 import { ProposalTable } from './ProposalTable';
+import { FormElementGroup } from './FormElementGroup';
 
 interface ProposalDetailPanelProps {
   title: string | undefined;
@@ -56,22 +57,22 @@ const ProposalDetailPanel = ({
       </PanelTitleWrapper>
       <PanelActions>
         {process.env.NODE_ENV !== 'production' && (
-          <>
+          <FormElementGroup>
             <Link
               to={`/proposals/${proposalId - 1}`}
               className="button button--color-gray"
+              title="Previous proposal"
             >
               <BackwardIcon className="icon" />
-              Previous
             </Link>
             <Link
               to={`/proposals/${proposalId + 1}`}
               className="button button--color-gray"
+              title="Next proposal"
             >
-              Next
               <ForwardIcon className="icon" />
             </Link>
-          </>
+          </FormElementGroup>
         )}
       </PanelActions>
     </PanelHeader>
