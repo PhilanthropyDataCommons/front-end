@@ -20,7 +20,7 @@ interface ProposalTableProps {
     fieldName: string,
     position: number,
     value: string,
-  }[],
+  }[];
 }
 
 export const ProposalTable = ({

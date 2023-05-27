@@ -25,7 +25,7 @@ interface ProposalDetailPanelProps {
     fieldName: string,
     position: number,
     value: string,
-  }[],
+  }[];
 }
 
 const ProposalDetailPanel = ({
