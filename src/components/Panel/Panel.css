@@ -67,6 +67,7 @@
 
 .panel-body {
   grid-row: 2;
+  overflow: auto;
 }
 
 .panel-message {
