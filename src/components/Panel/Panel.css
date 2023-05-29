@@ -17,10 +17,6 @@
   gap: var(--fixed-spacing--2x);
 }
 
-.panel-title-wrapper {
-  padding-left: var(--fixed-spacing--1x);
-}
-
 .panel-title {
   font-size: 1.5rem;
   font-weight: var(--font-weight--normal);
@@ -31,10 +27,12 @@
   display: flex;
   flex-wrap: wrap;
   column-gap: var(--fixed-spacing--2x);
+  row-gap: var(--fixed-spacing--halfx);
 }
 
 .panel-tag {
   font-weight: var(--font-weight--medium);
+  line-height: 1.1;
   color: var(--color--gray--medium);
 
   display: flex;
@@ -52,12 +50,14 @@
 }
 
 .panel-tag .icon {
+  flex-shrink: 0;
   width: var(--icon-size--text);
   height: var(--icon-size--text);
 }
 
 .panel-tag .badge {
   --badge--background-color: var(--color--gray--medium);
+  line-height: var(--line-height);
 }
 
 .panel-actions {
@@ -67,6 +67,7 @@
 
 .panel-body {
   grid-row: 2;
+  overflow: auto;
 }
 
 .panel-message {

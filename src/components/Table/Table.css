@@ -12,6 +12,15 @@
 
 .table thead.fixed {
   position: sticky;
+  top: 0;
+}
+
+/* When the panel-body is the first child of the panel --
+   that is to say, when we compose a panel with no panel-header --
+   we want to offset our table's sticky positioning so that
+   the top border of the table scrolls out of panel and avoids a
+   phantom shadow-darkening effect. */
+.panel > .panel-body:first-child > .table thead.fixed {
   top: calc(-1 * var(--table--border-width));
 }
 
