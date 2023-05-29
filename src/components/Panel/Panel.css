@@ -52,6 +52,7 @@
 }
 
 .panel-tag .icon {
+  flex-shrink: 0;
   width: var(--icon-size--text);
   height: var(--icon-size--text);
 }
