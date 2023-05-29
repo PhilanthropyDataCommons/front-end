@@ -17,10 +17,6 @@
   gap: var(--fixed-spacing--2x);
 }
 
-.panel-title-wrapper {
-  padding-left: var(--fixed-spacing--1x);
-}
-
 .panel-title {
   font-size: 1.5rem;
   font-weight: var(--font-weight--normal);
