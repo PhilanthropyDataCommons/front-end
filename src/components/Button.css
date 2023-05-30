@@ -25,6 +25,7 @@
   font-size: var(--button--font-size);
   line-height: 1;
   letter-spacing: normal;
+  white-space: nowrap;
   height: var(--button--height);
   padding: var(--button--padding-y) var(--button--padding-x);
 
@@ -52,6 +53,7 @@
 }
 
 .button > svg {
+  flex-shrink: 0;
   height: var(--button--icon-size);
   width: var(--button--icon-size);;
 }
