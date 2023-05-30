@@ -62,7 +62,7 @@ export const RightAligned: Story = {
 export const WithIconInTrigger: Story = {
   args: {
     trigger: [
-      <ArrowUpOnSquareIcon />,
+      <ArrowUpOnSquareIcon key="icon" />,
       'Toggle menu',
     ],
     children: [
