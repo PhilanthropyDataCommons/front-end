@@ -1,3 +1,4 @@
+import { ClosablePanel } from './ClosablePanel';
 import { Panel } from './Panel';
 import { PanelHeader } from './PanelHeader';
 import { PanelActions } from './PanelActions';
@@ -8,6 +9,7 @@ import { PanelTag } from './PanelTag';
 import { PanelBody } from './PanelBody';
 
 export {
+  ClosablePanel,
   Panel,
   PanelHeader,
   PanelActions,

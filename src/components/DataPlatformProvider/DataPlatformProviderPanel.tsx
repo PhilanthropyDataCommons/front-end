@@ -1,17 +1,39 @@
 import React from 'react';
-import { ArrowTopRightOnSquareIcon, XMarkIcon } from '@heroicons/react/24/solid';
+import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid';
 import {
-  Panel,
-  PanelActions,
-  PanelBody,
-  PanelHeader,
+  ClosablePanel,
   PanelTitle,
   PanelTitleTags,
-  PanelTitleWrapper,
 } from '../Panel';
-import { Button } from '../Button';
 import { OffsiteLink } from '../OffsiteLink';
 import { DataPlatformProviderTable } from './DataPlatformProviderTable';
+
+interface DataPlatformProviderTitleProps {
+  applicant: string;
+  provider: string;
+  url: string;
+}
+const DataPlatformProviderTitle = ({
+  applicant,
+  provider,
+  url,
+}: DataPlatformProviderTitleProps) => (
+  <>
+    <PanelTitle>
+      {applicant}
+    </PanelTitle>
+    <PanelTitleTags>
+      <OffsiteLink
+        to={url}
+        targetBlank
+        className="panel-tag panel-tag--link"
+      >
+        <ArrowTopRightOnSquareIcon className="icon" />
+        {`Open in ${provider}`}
+      </OffsiteLink>
+    </PanelTitleTags>
+  </>
+);
 
 interface DataPlatformProviderPanelProps {
   applicant: string;
@@ -32,37 +54,18 @@ const DataPlatformProviderPanel = ({
   url,
   values,
 }: DataPlatformProviderPanelProps) => (
-  <Panel>
-    <PanelHeader>
-      <PanelTitleWrapper>
-        <PanelTitle>
-          {applicant}
-        </PanelTitle>
-        <PanelTitleTags>
-          <OffsiteLink
-            to={url}
-            targetBlank
-            className="panel-tag panel-tag--link"
-          >
-            <ArrowTopRightOnSquareIcon className="icon" />
-            {`Open in ${provider}`}
-          </OffsiteLink>
-        </PanelTitleTags>
-      </PanelTitleWrapper>
-      <PanelActions>
-        <Button
-          onClick={onClose}
-          color="red"
-          title="Close data platform provider panel"
-        >
-          <XMarkIcon className="icon" />
-        </Button>
-      </PanelActions>
-    </PanelHeader>
-    <PanelBody>
-      <DataPlatformProviderTable values={values} />
-    </PanelBody>
-  </Panel>
+  <ClosablePanel
+    onClose={onClose}
+    title={(
+      <DataPlatformProviderTitle
+        applicant={applicant}
+        provider={provider}
+        url={url}
+      />
+    )}
+  >
+    <DataPlatformProviderTable values={values} />
+  </ClosablePanel>
 );
 
 export { DataPlatformProviderPanel };
