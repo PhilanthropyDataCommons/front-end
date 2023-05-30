@@ -59,6 +59,19 @@
       "project": "./tsconfig.json"
     },
     "rules": {
+      "@typescript-eslint/comma-dangle": [
+        "error",
+        {
+          "arrays": "always-multiline",
+          "objects": "always-multiline",
+          "imports": "always-multiline",
+          "exports": "always-multiline",
+          "functions": "only-multiline",
+          "enums": "always-multiline",
+          "generics": "always-multiline",
+          "tuples": "always-multiline"
+        }
+      ],
       "import/prefer-default-export": "off",
       "import/no-default-export": "error",
       "import/no-extraneous-dependencies": [
