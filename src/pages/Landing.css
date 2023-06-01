@@ -1,8 +1,6 @@
 .landing-panel {
   max-width: 60ch;
   margin: var(--fixed-spacing--2x) auto;
-}
 
-.landing-panel .panel-body {
-  padding: var(--fixed-spacing--2x);
+  --panel--padding: var(--fixed-spacing--2x);
 }
