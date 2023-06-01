@@ -17,8 +17,19 @@ export const DropdownMenuLink = ({
   to,
   children,
   className = '',
-}: DropdownMenuLinkProps) => (
-  <Link to={to} className={`dropdown-menu-link ${className}`.trim()}>
-    {children}
-  </Link>
-);
+}: DropdownMenuLinkProps) => {
+  const handleClick = (e: React.SyntheticEvent) => {
+    const $target = e.nativeEvent.target as HTMLLinkElement;
+    $target.closest('.dropdown')?.removeAttribute('open');
+  };
+
+  return (
+    <Link
+      to={to}
+      className={`dropdown-menu-link ${className}`.trim()}
+      onClick={handleClick}
+    >
+      {children}
+    </Link>
+  );
+};
