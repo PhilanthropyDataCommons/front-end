@@ -90,7 +90,7 @@ export const ProposalListTablePanel = ({
             wrap={wrap}
           />
         ) : (
-          <div className="panel-message">
+          <div className="quiet">
             {generateFallbackMessage()}
           </div>
         )}

@@ -86,7 +86,3 @@
 .panel-body--padded {
   padding: var(--panel--padding);
 }
-
-.panel-message {
-  color: var(--color--gray--medium-dark);
-}
