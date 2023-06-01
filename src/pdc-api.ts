@@ -101,6 +101,22 @@ const useProposals = (page: string, count: string, query: string) => (
   )
 );
 
+interface PlatformProviderResponse {
+  createdAt: string;
+  externalId: string;
+  platformProvider: string;
+  data: object;
+}
+
+const useProviderData = (externalId: string) => (
+  usePdcApi<PlatformProviderResponse[]>(
+    '/platformProviderResponses',
+    new URLSearchParams({
+      externalId,
+    }),
+  )
+);
+
 export {
   PROPOSALS_DEFAULT_COUNT,
   PROPOSALS_DEFAULT_PAGE,
@@ -108,6 +124,7 @@ export {
   useBaseFields,
   useProposal,
   useProposals,
+  useProviderData,
 };
 
 export type {
