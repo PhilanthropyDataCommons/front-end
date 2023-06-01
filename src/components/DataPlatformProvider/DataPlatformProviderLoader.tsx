@@ -8,7 +8,7 @@ import { DataPlatformProviderPanel } from './DataPlatformProviderPanel';
 interface JSONPathAll {
   path: string;
   pointer: string;
-  value: string;
+  value: unknown;
 }
 
 const mapPathsToValues = (paths: string[][], data: object) => (
@@ -29,7 +29,9 @@ const mapPathsToValues = (paths: string[][], data: object) => (
       ),
       value,
     }))
-    .filter(({ value }) => typeof value === 'string' && value.trim() != '')
+    .filter(({ value }) => value !== null && value !== undefined)
+    .map(({ value, ...rest }) => ({ value: String(value), ...rest }))
+    .filter(({ value }) => value.trim() !== '')
 );
 
 const providers = {
@@ -80,9 +82,35 @@ const providers = {
   'charity-navigator': {
     name: 'Charity Navigator',
     parse: (data: object) => ({
-      applicant: 'todo',
-      url: 'todo',
-      values: [],
+      applicant: JSONPath<string>({
+        json: data,
+        path: ['$', 'title'],
+        preventEval: true,
+        resultType: 'value',
+        wrap: false,
+      }),
+      url: `https://www.charitynavigator.org${JSONPath<string>({
+        json: data,
+        path: ['$', 'url'],
+        preventEval: true,
+        resultType: 'value',
+        wrap: false,
+      })}`,
+      values: mapPathsToValues([
+        ['$', 'name'],
+        ['$', 'star_rating'],
+        ['$', 'ein'],
+        ['$', 'subsection'],
+        ['$', 'cause'],
+        ['$', 'city'],
+        ['$', 'state'],
+        ['$', 'size'],
+        ['$', 'acronym'],
+        ['$', 'donation_eligible'],
+        ['$', 'encompass_eligible'],
+        ['$', 'highest_level_advisory'],
+        ['$', 'akas', '*'],
+      ], data),
     }),
   },
 };
