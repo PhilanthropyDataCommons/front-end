@@ -11,26 +11,23 @@ import {
   RowCell,
   ColumnAction,
   ColumnActions,
-} from './Table';
+} from '../Table';
 
-interface ProposalTableProps {
-  version: number;
+interface DataPlatformProviderTableProps {
   values: {
-    shortCode: string,
+    jsonPath: string,
     fieldName: string,
-    position: number,
     value: string,
   }[];
 }
 
-export const ProposalTable = ({
+export const DataPlatformProviderTable = ({
   values,
-  version,
-}: ProposalTableProps) => {
-  const [displayShortCodes, setDisplayShortCodes] = useState(false);
+}: DataPlatformProviderTableProps) => {
+  const [displayJsonPaths, setDisplayJsonPaths] = useState(false);
 
-  const handleDisplayShortCodesClick = () => {
-    setDisplayShortCodes((previous) => !previous);
+  const handleDisplayJsonPathsClick = () => {
+    setDisplayJsonPaths((previous) => !previous);
   };
 
   return (
@@ -41,30 +38,30 @@ export const ProposalTable = ({
             actions
             actionAlignment="left"
           >
-            Base Field
+            Field Name
             <ColumnActions>
               <ColumnAction
-                title="Toggle between field label and short code"
-                onClick={handleDisplayShortCodesClick}
+                title="Toggle between field label and JSON path"
+                onClick={handleDisplayJsonPathsClick}
               >
-                {displayShortCodes
+                {displayJsonPaths
                   ? <SolidBracketIcon className="icon" />
                   : <OutlineBracketIcon className="icon" />}
               </ColumnAction>
             </ColumnActions>
           </ColumnHead>
           <ColumnHead>
-            {`Version ${version}`}
+            Values
           </ColumnHead>
         </TableRow>
       </TableHead>
       <TableBody>
         {values.map(({
-          shortCode, fieldName, position, value,
+          jsonPath, fieldName, value,
         }) => (
-          <TableRow key={position}>
+          <TableRow key={jsonPath}>
             <RowHead>
-              {displayShortCodes ? <code>{shortCode}</code> : fieldName}
+              {displayJsonPaths ? <code>{jsonPath}</code> : fieldName}
             </RowHead>
             <RowCell>
               {value}

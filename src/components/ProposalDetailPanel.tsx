@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { BackwardIcon, DocumentTextIcon, ForwardIcon } from '@heroicons/react/24/solid';
+import { ArrowRightOnRectangleIcon, CircleStackIcon } from '@heroicons/react/24/outline';
 import {
   Panel,
   PanelActions,
@@ -13,6 +14,7 @@ import {
 } from './Panel';
 import { ProposalTable } from './ProposalTable';
 import { FormElementGroup } from './FormElementGroup';
+import { Dropdown, DropdownMenuLink, DropdownMenuText } from './Dropdown';
 
 interface ProposalDetailPanelProps {
   title: string | undefined;
@@ -25,7 +27,7 @@ interface ProposalDetailPanelProps {
     fieldName: string,
     position: number,
     value: string,
-  }[],
+  }[];
 }
 
 const ProposalDetailPanel = ({
@@ -74,6 +76,33 @@ const ProposalDetailPanel = ({
             </Link>
           </FormElementGroup>
         )}
+        <Dropdown
+          align="right"
+          trigger={(
+            <>
+              <CircleStackIcon />
+              Data providers
+            </>
+        )}
+        >
+          <DropdownMenuText>
+            View applicant data from one of the data platform providers:
+          </DropdownMenuText>
+          <DropdownMenuLink
+            to={`/proposals/${proposalId}/provider/candid`}
+            key="candid"
+          >
+            Candid
+            <ArrowRightOnRectangleIcon />
+          </DropdownMenuLink>
+          <DropdownMenuLink
+            to={`/proposals/${proposalId}/provider/charity-navigator`}
+            key="charity-navigator"
+          >
+            Charity Navigator
+            <ArrowRightOnRectangleIcon />
+          </DropdownMenuLink>
+        </Dropdown>
       </PanelActions>
     </PanelHeader>
     <PanelBody>
