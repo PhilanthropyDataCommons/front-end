@@ -14,7 +14,7 @@ const App = () => (
     <AppMain>
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/proposals/:proposalId" element={<ProposalDetail />} />
+        <Route path="/proposals/:proposalId/provider?/:provider?" element={<ProposalDetail />} />
         <Route path="/proposals" element={<ProposalList />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

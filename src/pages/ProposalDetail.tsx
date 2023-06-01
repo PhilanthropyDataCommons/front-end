@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { withOidcSecure } from '@axa-fr/react-oidc';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   ApiBaseField,
   ApiProposal,
@@ -12,6 +12,7 @@ import {
   useProposals,
 } from '../pdc-api';
 import { mapProposals } from '../map-proposals';
+import { DataPlatformProviderLoader } from '../components/DataPlatformProvider/DataPlatformProviderLoader';
 import { PanelGrid, PanelGridItem } from '../components/PanelGrid';
 import { ProposalDetailPanel } from '../components/ProposalDetailPanel';
 import { ProposalListGridPanel } from '../components/ProposalListGridPanel';
@@ -103,8 +104,10 @@ interface ProposalDetailPanelLoaderProps {
 const ProposalDetailPanelLoader = (
   { baseFields }: ProposalDetailPanelLoaderProps,
 ) => {
+  const navigate = useNavigate();
   const params = useParams();
   const proposalId = params.proposalId ?? 'missing';
+  const { provider } = params;
   const proposal = useProposal(proposalId);
 
   useEffect(() => {
@@ -119,16 +122,27 @@ const ProposalDetailPanelLoader = (
 
   if (baseFields === null || proposal === null) {
     return (
-      <PanelGridItem>
-        <ProposalDetailPanel
-          proposalId={0}
-          title="Loading..."
-          applicant="Loading..."
-          applicantId="00-0000000"
-          version={0}
-          values={[]}
-        />
-      </PanelGridItem>
+      <>
+        <PanelGridItem key="detailPanel">
+          <ProposalDetailPanel
+            proposalId={0}
+            title="Loading..."
+            applicant="Loading..."
+            applicantId="00-0000000"
+            version={0}
+            values={[]}
+          />
+        </PanelGridItem>
+        { provider && (
+          <PanelGridItem key="platformPanel">
+            <DataPlatformProviderLoader
+              externalId={undefined}
+              onClose={() => { navigate(`/proposals/${proposalId}`); }}
+              provider={provider}
+            />
+          </PanelGridItem>
+        )}
+      </>
     );
   }
 
@@ -139,16 +153,27 @@ const ProposalDetailPanelLoader = (
   const values = mapBaseFields(baseFields, proposal);
 
   return (
-    <PanelGridItem>
-      <ProposalDetailPanel
-        proposalId={proposal.id}
-        title={title}
-        applicant={applicant}
-        applicantId={applicantId}
-        version={version}
-        values={values}
-      />
-    </PanelGridItem>
+    <>
+      <PanelGridItem key="detailPanel">
+        <ProposalDetailPanel
+          proposalId={proposal.id}
+          title={title}
+          applicant={applicant}
+          applicantId={applicantId}
+          version={version}
+          values={values}
+        />
+      </PanelGridItem>
+      { provider && (
+        <PanelGridItem key="platformPanel">
+          <DataPlatformProviderLoader
+            provider={provider}
+            externalId={applicantId}
+            onClose={() => { navigate(`/proposals/${proposalId}`); }}
+          />
+        </PanelGridItem>
+      )}
+    </>
   );
 };
 
