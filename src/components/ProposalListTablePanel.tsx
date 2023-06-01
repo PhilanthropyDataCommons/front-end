@@ -81,7 +81,7 @@ export const ProposalListTablePanel = ({
           </PanelActions>
         )}
       </PanelHeader>
-      <PanelBody>
+      <PanelBody padded={!hasProposals}>
         {hasProposals ? (
           <ProposalListTable
             fieldNames={fieldNames}
