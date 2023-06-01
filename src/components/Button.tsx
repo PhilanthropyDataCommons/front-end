@@ -29,6 +29,7 @@ interface ButtonProps {
    * Sets the <button> type to "submit"
    */
   submit?: boolean;
+  title?: string;
 }
 
 /**
@@ -43,6 +44,7 @@ export const Button = ({
   disabled = false,
   onClick = (() => true),
   submit = false,
+  title = undefined,
 }: ButtonProps) => {
   const buttonClassNames = [
     'button',
@@ -67,6 +69,7 @@ export const Button = ({
       className={buttonClassNames.join(' ')}
       disabled={disabled}
       onClick={onClick}
+      title={title}
     >
       {children}
     </button>
