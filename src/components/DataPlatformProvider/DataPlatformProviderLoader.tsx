@@ -138,7 +138,9 @@ const Invalid = ({
       </PanelTitle>
     )}
   >
-    {`The data platform provider ${provider} is not recognized.`}
+    <div className="quiet">
+      {`The data platform provider “${provider}” is not recognized.`}
+    </div>
   </ClosablePanel>
 );
 
@@ -158,7 +160,9 @@ const Loading = ({
       </PanelTitle>
     )}
   >
-    {`Loading data from ${providers[provider].name}...`}
+    <div className="quiet">
+      Loading data…
+    </div>
   </ClosablePanel>
 );
 
@@ -174,7 +178,9 @@ const NoData = ({
       </PanelTitle>
     )}
   >
-    No data found
+    <div className="quiet">
+      No data found.
+    </div>
   </ClosablePanel>
 );
 
