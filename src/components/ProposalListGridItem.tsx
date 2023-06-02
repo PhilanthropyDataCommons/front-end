@@ -6,9 +6,13 @@ import './ProposalListGridItem.css';
 
 interface ProposalListGridItemProps {
   proposal: DataViewerProposal;
+  active?: boolean;
 }
 
-export const ProposalListGridItem = ({ proposal }: ProposalListGridItemProps) => {
+export const ProposalListGridItem = ({
+  proposal,
+  active = false,
+}: ProposalListGridItemProps) => {
   const applicantName = getPreferredApplicantNameValues(proposal);
 
   const applicantLocation = ['organization_city', 'organization_state_province', 'organization_country']
@@ -19,7 +23,7 @@ export const ProposalListGridItem = ({ proposal }: ProposalListGridItemProps) =>
   return (
     <Link
       to={`/proposals/${proposal.id}`}
-      className="proposal-list-grid-item"
+      className={`proposal-list-grid-item ${active ? 'active' : ''}`.trim()}
     >
       <div className="proposal--applicant-name">
         {applicantName}

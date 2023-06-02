@@ -8,12 +8,19 @@ import { ProposalListGrid } from './ProposalListGrid';
 
 interface ProposalListGridPanelProps {
   proposals: DataViewerProposal[];
+  activeProposalId?: string | undefined;
 }
 
-export const ProposalListGridPanel = ({ proposals }: ProposalListGridPanelProps) => (
+export const ProposalListGridPanel = ({
+  proposals,
+  activeProposalId = undefined,
+}: ProposalListGridPanelProps) => (
   <Panel>
     <PanelBody padded={false}>
-      <ProposalListGrid proposals={proposals} />
+      <ProposalListGrid
+        proposals={proposals}
+        activeProposalId={activeProposalId}
+      />
     </PanelBody>
   </Panel>
 );

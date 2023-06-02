@@ -164,3 +164,10 @@ export const Default: Story = {
     proposals,
   },
 };
+
+export const WithActiveProposal: Story = {
+  args: {
+    proposals,
+    activeProposalId: '2',
+  },
+};

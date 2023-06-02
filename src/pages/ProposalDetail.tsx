@@ -28,6 +28,8 @@ interface ProposalListGridLoaderProps {
 const ProposalListGridLoader = (
   { baseFields }: ProposalListGridLoaderProps,
 ) => {
+  const { proposalId } = useParams();
+
   const proposals = useProposals(
     PROPOSALS_DEFAULT_PAGE,
     PROPOSALS_DEFAULT_COUNT,
@@ -44,6 +46,7 @@ const ProposalListGridLoader = (
     <PanelGridItem>
       <ProposalListGridPanel
         proposals={mapProposals(baseFields, proposals.entries)}
+        activeProposalId={proposalId}
       />
     </PanelGridItem>
   );
