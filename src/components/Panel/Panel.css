@@ -1,3 +1,7 @@
+:root {
+  --panel--padding: var(--fixed-spacing--1x);
+}
+
 .panel {
   background-color: white;
   border-radius: 5px;
@@ -10,7 +14,7 @@
 
 .panel-header {
   grid-row: 1;
-  padding: var(--fixed-spacing--1x);
+  padding: var(--panel--padding);
 
   display: flex;
   justify-content: space-between;
@@ -79,13 +83,6 @@
   overflow: auto;
 }
 
-.panel-message {
-  padding: var(--fixed-spacing--1x);
-  color: var(--color--gray--medium-dark);
-}
-
-.panel.fill .panel-body {
-  position: absolute;
-  inset: 0;
-  overflow: auto;
+.panel-body--padded {
+  padding: var(--panel--padding);
 }

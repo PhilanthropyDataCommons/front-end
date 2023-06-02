@@ -11,12 +11,17 @@ interface ClosablePanelProps {
   children: React.ReactNode;
   onClose: () => void;
   title: React.ReactNode;
+  /**
+   * Controls whether the panel body has internal padding.
+   */
+  padded?: boolean;
 }
 
 const ClosablePanel = ({
   children,
   onClose,
   title,
+  padded = true,
 }: ClosablePanelProps) => (
   <Panel>
     <PanelHeader>
@@ -33,7 +38,7 @@ const ClosablePanel = ({
         </Button>
       </PanelActions>
     </PanelHeader>
-    <PanelBody>
+    <PanelBody padded={padded}>
       {children}
     </PanelBody>
   </Panel>

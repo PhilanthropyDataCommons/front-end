@@ -12,7 +12,7 @@ interface ProposalListGridPanelProps {
 
 export const ProposalListGridPanel = ({ proposals }: ProposalListGridPanelProps) => (
   <Panel>
-    <PanelBody>
+    <PanelBody padded={false}>
       <ProposalListGrid proposals={proposals} />
     </PanelBody>
   </Panel>

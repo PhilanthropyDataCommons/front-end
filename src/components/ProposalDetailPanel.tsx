@@ -105,7 +105,7 @@ const ProposalDetailPanel = ({
         </Dropdown>
       </PanelActions>
     </PanelHeader>
-    <PanelBody>
+    <PanelBody padded={false}>
       <ProposalTable
         version={version}
         values={values}

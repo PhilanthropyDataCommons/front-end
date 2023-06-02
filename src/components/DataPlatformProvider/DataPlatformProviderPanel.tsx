@@ -56,6 +56,7 @@ const DataPlatformProviderPanel = ({
 }: DataPlatformProviderPanelProps) => (
   <ClosablePanel
     onClose={onClose}
+    padded={false}
     title={(
       <DataPlatformProviderTitle
         applicant={applicant}

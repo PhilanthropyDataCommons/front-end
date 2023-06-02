@@ -2,16 +2,19 @@ import React from 'react';
 
 interface PanelBodyProps {
   children: React.ReactNode;
+  /**
+   * Controls whether the panel body has internal padding.
+   */
+  padded?: boolean;
   className?: string;
-  fill?: boolean;
 }
 
 export const PanelBody = ({
   children,
   className = '',
-  fill = true,
+  padded = true,
 }: PanelBodyProps) => (
-  <div className={`panel-body ${fill ? 'panel-body--fill' : ''} ${className}`.trim()}>
+  <div className={`panel-body ${padded ? 'panel-body--padded' : ''} ${className}`.trim()}>
     {children}
   </div>
 );

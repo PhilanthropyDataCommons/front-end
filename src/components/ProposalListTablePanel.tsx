@@ -81,7 +81,7 @@ export const ProposalListTablePanel = ({
           </PanelActions>
         )}
       </PanelHeader>
-      <PanelBody>
+      <PanelBody padded={!hasProposals}>
         {hasProposals ? (
           <ProposalListTable
             fieldNames={fieldNames}
@@ -90,7 +90,7 @@ export const ProposalListTablePanel = ({
             wrap={wrap}
           />
         ) : (
-          <div className="panel-message">
+          <div className="quiet">
             {generateFallbackMessage()}
           </div>
         )}

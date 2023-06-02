@@ -60,7 +60,6 @@ code {
 *:before,
 *:after {
   box-sizing: border-box;
-  transition-duration: var(--transition-duration);
 }
 
 nav ul,
@@ -128,8 +127,7 @@ code {
   font-size: 0.8em;
 }
 
-.subtle {
-  font-size: 0.85em;
+.quiet {
   color: var(--color--gray--medium-dark);
 }
 

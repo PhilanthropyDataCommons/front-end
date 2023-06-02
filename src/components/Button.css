@@ -30,6 +30,7 @@
   padding: var(--button--padding-y) var(--button--padding-x);
 
   transition-property: background-color, color, border-color, opacity;
+  transition-duration: var(--transition-duration);
 
   display: inline-flex;
   flex-direction: row;
