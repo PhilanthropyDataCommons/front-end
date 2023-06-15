@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { BackwardIcon, DocumentTextIcon, ForwardIcon } from '@heroicons/react/24/solid';
+import { DocumentTextIcon } from '@heroicons/react/24/solid';
 import { ArrowRightOnRectangleIcon, CircleStackIcon } from '@heroicons/react/24/outline';
 import {
   Panel,
@@ -13,7 +12,6 @@ import {
   PanelTitleWrapper,
 } from './Panel';
 import { ProposalTable } from './ProposalTable';
-import { FormElementGroup } from './FormElementGroup';
 import { Dropdown, DropdownMenuLink, DropdownMenuText } from './Dropdown';
 
 interface ProposalDetailPanelProps {
@@ -58,24 +56,6 @@ const ProposalDetailPanel = ({
         </PanelTitleTags>
       </PanelTitleWrapper>
       <PanelActions>
-        {process.env.NODE_ENV !== 'production' && (
-          <FormElementGroup>
-            <Link
-              to={`/proposals/${proposalId - 1}`}
-              className="button button--color-gray"
-              title="Previous proposal"
-            >
-              <BackwardIcon className="icon" />
-            </Link>
-            <Link
-              to={`/proposals/${proposalId + 1}`}
-              className="button button--color-gray"
-              title="Next proposal"
-            >
-              <ForwardIcon className="icon" />
-            </Link>
-          </FormElementGroup>
-        )}
         <Dropdown
           align="right"
           trigger={(
