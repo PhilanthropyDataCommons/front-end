@@ -1,3 +1,7 @@
+:root {
+  --proposal-list-grid-item--details-color: var(--color--gray--medium-dark);
+}
+
 .proposal-list-grid-item {
   padding: var(--fixed-spacing--1x);
   color: inherit;
@@ -13,6 +17,11 @@
   background-color: var(--color--gray--lighter);
 }
 
+.proposal-list-grid-item.active {
+  --proposal-list-grid-item--details-color: var(--color--gray--darker);
+  background-color: var(--color--blue--lighter);
+}
+
 .proposal-list-grid-item:last-child {
   border-bottom: none;
 }
@@ -23,6 +32,6 @@
 
 .proposal--applicant-address,
 .proposal--proposal-name {
-  color: var(--color--gray--medium-dark);
+  color: var(--proposal-list-grid-item--details-color);
   font-size: 0.9em;
 }
