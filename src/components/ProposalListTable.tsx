@@ -23,7 +23,10 @@ const ProposalListTableRow = ({
   const navigate = useNavigate();
 
   const handleRowClick = () => {
-    navigate(`/proposals/${proposal.id}`);
+    // Only navigate if we didn't just finish selecting text.
+    if (window.getSelection()?.isCollapsed) {
+      navigate(`/proposals/${proposal.id}`);
+    }
   };
 
   const getProposalCellContents = (shortCode: string) => (shortCode === 'organization_name'
