@@ -9,6 +9,10 @@ updates:
       - dependency-name: "@types/node"
         update-types:
           - "version-update:semver-major"
+      - dependency-name: "*storybook*"
+        # Dependabot is not yet able to upgrade all the dependencies together,
+        # which leads to mixed versions and quite a lot of PR thrash.
+        # See https://github.com/dependabot/dependabot-core/issues/1190
 
   - package-ecosystem: "github-actions"
     directory: ".github/workflows"
