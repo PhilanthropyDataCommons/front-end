@@ -1,5 +1,4 @@
 :root {
-  --button--focus-color: blue;
   --button--font-size: 1rem;
   --button--border-radius: 8px;
   /* These next values should be relative to the button's font-size, so we switch to `em` units. */
@@ -29,8 +28,8 @@
   height: var(--button--height);
   padding: var(--button--padding-y) var(--button--padding-x);
 
-  transition-property: background-color, color, border-color, opacity;
-  transition-duration: var(--transition-duration);
+  transition-property: background-color, color, border-color, outline, opacity;
+  transition-duration: var(--transition-duration--cursor);
 
   display: inline-flex;
   flex-direction: row;
@@ -44,8 +43,12 @@
   color: var(--button--primary-color);
 }
 
-.button:focus {
-  outline: 2px solid var(--button--focus-color);
+.button:not(:disabled):is(:hover, :focus, :active) {
+  background-color: var(--button--contrast-color--accent);
+}
+
+.button:not(:disabled):active {
+  outline: 2px solid var(--button--primary-color--accent);
 }
 
 .button:disabled {
@@ -61,17 +64,23 @@
 
 .button--color-gray {
   --button--primary-color: var(--color--gray--dark);
+  --button--primary-color--accent: var(--color--gray--darker);
   --button--contrast-color: var(--color--gray--lighter);
+  --button--contrast-color--accent: var(--color--gray--light);
 }
 
 .button--color-blue {
   --button--primary-color: var(--color--blue);
+  --button--primary-color--accent: var(--color--blue--dark);
   --button--contrast-color: var(--color--gray--lighter);
+  --button--contrast-color--accent: var(--color--gray--light);
 }
 
 .button--color-red {
   --button--primary-color: var(--color--red);
+  --button--primary-color--accent: var(--color--red--dark);
   --button--contrast-color: var(--color--gray--lighter);
+  --button--contrast-color--accent: var(--color--gray--light);
 }
 
 .button--inverted {
@@ -79,6 +88,14 @@
   --button--notification-color: var(--button--contrast-color);
   background-color: var(--button--primary-color);
   color: var(--button--contrast-color);
+}
+
+.button--inverted:not(:disabled):is(:hover, :focus, :active) {
+  background-color: var(--button--primary-color--accent);
+}
+
+.button--inverted:not(:disabled):active {
+  outline: 2px solid var(--button--primary-color--accent);
 }
 
 .button--bordered {
