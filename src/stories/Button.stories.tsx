@@ -58,7 +58,22 @@ export const WithIconAndNotification: Story = {
 
 export const Inverted: Story = {
   args: {
+    inverted: true,
+    children: 'Button',
+  },
+};
+
+export const InvertedBlue: Story = {
+  args: {
     color: 'blue',
+    inverted: true,
+    children: 'Button',
+  },
+};
+
+export const InvertedRed: Story = {
+  args: {
+    color: 'red',
     inverted: true,
     children: 'Button',
   },

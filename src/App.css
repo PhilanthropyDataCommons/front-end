@@ -52,15 +52,11 @@ button.App-navbar__item {
   cursor: pointer;
 }
 
-.App-navbar__item:focus {
-  outline: 2px solid blue;
-}
-
 .App-navbar__item.active {
   color: var(--color--blue);
 }
 
-.App-navbar__item:is(a, button):hover {
+.App-navbar__item:is(a, button):is(:hover, :focus) {
   background-color: #0001;
 }
 
