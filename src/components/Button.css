@@ -56,7 +56,7 @@
 .button > svg {
   flex-shrink: 0;
   height: var(--button--icon-size);
-  width: var(--button--icon-size);;
+  width: var(--button--icon-size);
 }
 
 .button--color-gray {
