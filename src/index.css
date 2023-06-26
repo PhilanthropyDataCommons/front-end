@@ -36,6 +36,9 @@
   --accessible-spacing--halfx: calc(var(--accessible-spacing--1x) / 2);
 
   --transition-duration: 200ms;
+  /* `cursor` should be faster than the standard duration,
+     for things like hover events. */
+  --transition-duration--cursor: 100ms;
 
   --icon-size--text: 1.25em;
 
