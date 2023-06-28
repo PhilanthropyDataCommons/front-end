@@ -6,6 +6,7 @@
   starting with Candid and Charity Navigator
 - Highlight current proposal in sidebar
 - Allow text selection on Dashboard table
+- Improve styling of buttons and other interactive elements
 
 ## May 2023
 
