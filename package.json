@@ -15,13 +15,14 @@
     "web-vitals": "^3.4.0"
   },
   "devDependencies": {
-    "@storybook/addon-essentials": "^7.0.23",
-    "@storybook/addon-interactions": "^7.0.23",
-    "@storybook/addon-links": "^7.0.23",
-    "@storybook/blocks": "^7.0.23",
-    "@storybook/preset-create-react-app": "^7.0.23",
-    "@storybook/react": "^7.0.23",
-    "@storybook/react-webpack5": "^7.0.23",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@storybook/addon-essentials": "^7.3.2",
+    "@storybook/addon-interactions": "^7.3.2",
+    "@storybook/addon-links": "^7.3.2",
+    "@storybook/blocks": "^7.3.2",
+    "@storybook/preset-create-react-app": "^7.3.2",
+    "@storybook/react": "^7.3.2",
+    "@storybook/react-webpack5": "^7.3.2",
     "@storybook/testing-library": "^0.2.0",
     "@testing-library/jest-dom": "^6.0.1",
     "@testing-library/react": "^14.0.0",
@@ -34,7 +35,7 @@
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.1.0",
     "react-scripts": "5.0.1",
-    "storybook": "^7.0.23",
+    "storybook": "^7.3.2",
     "typescript": "^4.9.5"
   },
   "scripts": {
