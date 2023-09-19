@@ -1,5 +1,5 @@
 import React from 'react';
-import { DataViewerProposal } from '../interfaces/DataViewerProposal';
+import { FrontEndProposal } from '../interfaces/FrontEndProposal';
 import {
   Panel,
   PanelBody,
@@ -7,7 +7,7 @@ import {
 import { ProposalListGrid } from './ProposalListGrid';
 
 interface ProposalListGridPanelProps {
-  proposals: DataViewerProposal[];
+  proposals: FrontEndProposal[];
   activeProposalId?: string | undefined;
 }
 

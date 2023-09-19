@@ -1,4 +1,4 @@
-import { DataViewerProposal } from '../interfaces/DataViewerProposal';
+import { FrontEndProposal } from '../interfaces/FrontEndProposal';
 import {
   getPreferredApplicantNameValues,
   PROPOSAL_APPLICANT_NAME_CASCADE,
@@ -14,7 +14,7 @@ const proposal = {
     proposal_primary_contact_name: ['Proposal Contact Name'],
     proposal_submitter_name: ['Proposal Submitter Name'],
   },
-} as DataViewerProposal;
+} as FrontEndProposal;
 
 test('can select most preferred applicant name', () => {
   const mostPreferredNameKey = PROPOSAL_APPLICANT_NAME_CASCADE[0] ?? '';
@@ -30,7 +30,7 @@ test('can cascade through preferred applicant names', () => {
     values: {
       [leastPreferredNameKey]: leastPreferredNameValues,
     },
-  } as DataViewerProposal;
+  } as FrontEndProposal;
 
   expect(getPreferredApplicantNameValues(leastPreferredProposal)).toEqual(leastPreferredNameValues);
 });
@@ -39,7 +39,7 @@ test('can fall back to fallback applicant name', () => {
   const blankProposal = {
     id: '123',
     values: {},
-  } as DataViewerProposal;
+  } as FrontEndProposal;
 
   expect(getPreferredApplicantNameValues(blankProposal))
     .toEqual([PROPOSAL_APPLICANT_NAME_FALLBACK]);
