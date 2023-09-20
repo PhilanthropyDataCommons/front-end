@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { ProposalListGridItem } from './ProposalListGridItem';
-import { DataViewerProposal } from '../interfaces/DataViewerProposal';
+import { FrontEndProposal } from '../interfaces/FrontEndProposal';
 
 interface ProposalListGridProps {
-  proposals: DataViewerProposal[];
+  proposals: FrontEndProposal[];
   activeProposalId?: string | undefined;
 }
 

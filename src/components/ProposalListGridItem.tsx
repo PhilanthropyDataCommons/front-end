@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { DataViewerProposal } from '../interfaces/DataViewerProposal';
+import { FrontEndProposal } from '../interfaces/FrontEndProposal';
 import { getPreferredApplicantNameValues } from '../utils/proposals';
 import './ProposalListGridItem.css';
 
 interface ProposalListGridItemProps {
-  proposal: DataViewerProposal;
+  proposal: FrontEndProposal;
   active?: boolean;
 }
 

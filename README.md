@@ -1,4 +1,4 @@
-# data-viewer
+# front-end
 A UI for interacting with the data stored in the PDC service
 
 ## Dependencies
@@ -8,14 +8,14 @@ Open ID Connect ("OIDC")
 identity provider ("IdP")
 for authentication.
 It should be agnostic about what kind of IdP is used.
-To use the data-viewer application,
+To use the front-end application,
 you will need to be able to log in.
 
 ## Configuration
 
 ### Identity Provider
 
-The IdP needs a client for the data-viewer.
+The IdP needs a client for the front-end.
 The IdP should be configured for the client to use the
 [Authorization Code flow](https://oauth.net/2/grant-types/authorization-code/).
 This client is a public client,

@@ -73,7 +73,7 @@ const Landing = () => {
             <dt>Recent improvements</dt>
             <dd>
               <OffsiteLink
-                to="https://github.com/PhilanthropyDataCommons/data-viewer/blob/main/RECENT_CHANGES.md"
+                to="https://github.com/PhilanthropyDataCommons/front-end/blob/main/RECENT_CHANGES.md"
               >
                 Read a summary of recent changes here.
               </OffsiteLink>

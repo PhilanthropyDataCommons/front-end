@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { DataViewerProposal } from '../interfaces/DataViewerProposal';
+import { FrontEndProposal } from '../interfaces/FrontEndProposal';
 import { getPreferredApplicantNameValues } from '../utils/proposals';
 import {
   Table,
@@ -13,7 +13,7 @@ import {
 
 interface ProposalListTableRowProps {
   columns: string[];
-  proposal: DataViewerProposal;
+  proposal: FrontEndProposal;
 }
 
 const ProposalListTableRow = ({
@@ -48,7 +48,7 @@ const ProposalListTableRow = ({
 interface ProposalListTableProps {
   columns: string[];
   fieldNames: Record<string, string>;
-  proposals: DataViewerProposal[];
+  proposals: FrontEndProposal[];
   wrap?: boolean;
 }
 

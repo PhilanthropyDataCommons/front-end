@@ -1,4 +1,4 @@
-import { DataViewerProposal } from '../interfaces/DataViewerProposal';
+import { FrontEndProposal } from '../interfaces/FrontEndProposal';
 
 const PROPOSAL_APPLICANT_NAME_CASCADE = [
   'organization_name',
@@ -17,10 +17,10 @@ const PROPOSAL_APPLICANT_NAME_FALLBACK = 'Unknown Applicant';
    * and returns the first matching value.
    * If none is found, falls back to the fallback value.
    *
-   * @param  {DataViewerProposal} proposal
+   * @param  {FrontEndProposal} proposal
    * @return {(Array)} The applicant name value array.
    */
-const getPreferredApplicantNameValues = (proposal: DataViewerProposal) => {
+const getPreferredApplicantNameValues = (proposal: FrontEndProposal) => {
   const bestNameKey = PROPOSAL_APPLICANT_NAME_CASCADE.find((key) => proposal.values[key]);
 
   if (bestNameKey) {

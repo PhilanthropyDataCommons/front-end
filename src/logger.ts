@@ -5,7 +5,7 @@ const level = process.env.REACT_APP_LOG_LEVEL
   ?? (process.env.NODE_ENV === 'production' ? 'error' : 'info');
 
 const logger = pino({
-  name: 'data-viewer',
+  name: 'front-end',
   level,
   browser: {
     asObject: true,
