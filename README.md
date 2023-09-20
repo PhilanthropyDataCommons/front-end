@@ -1,5 +1,5 @@
-# front-end
-A UI for interacting with the data stored in the PDC service
+# Philanthropy Data Commons Front End
+A UI for interacting with the data stored in the PDC service.
 
 ## Dependencies
 
