@@ -1,4 +1,4 @@
-# Recent Changes to the PDC Pilot
+# Recent Changes to the PDC
 
 ## June 2023
 
