@@ -18,9 +18,9 @@ const Landing = () => {
   return (
     <Panel className="landing-panel">
       <PanelBody>
-        <h3 style={{ fontWeight: '600' }}>Welcome to the Philanthropy Data Commons Pilot.</h3>
+        <h3 style={{ fontWeight: '600' }}>Welcome to the Philanthropy Data Commons.</h3>
         <p>
-          This pilot site displays the data in the Philanthropy Data Commons.
+          This site displays the data in the Philanthropy Data Commons.
           {' '}
           <OffsiteLink to="https://philanthropydatacommons.org">
             Read more about the project here.
@@ -53,7 +53,7 @@ const Landing = () => {
                 {' '}
                 <EmailLink
                   to="jimmcgowan@opentechstrategies.com"
-                  subject="PDC Pilot account"
+                  subject="PDC account"
                 />
               </dd>
             </Dli>
@@ -65,7 +65,7 @@ const Landing = () => {
               {' '}
               <EmailLink
                 to="info@philanthropydatacommons.org"
-                subject="PDC Pilot"
+                subject="PDC"
               />
             </dd>
           </Dli>
