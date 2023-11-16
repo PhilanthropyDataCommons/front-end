@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
 import { OidcProvider } from '@axa-fr/react-oidc';
 import { App } from './App';
 import { getConfiguration } from './oidc-config';
@@ -25,9 +24,7 @@ if (rootElement) {
   root.render(
     <React.StrictMode>
       <OidcProvider configuration={configuration}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <App />
       </OidcProvider>
     </React.StrictMode>,
   );
