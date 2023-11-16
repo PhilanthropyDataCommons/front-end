@@ -11,7 +11,6 @@ import './App.css';
 
 const Root = () => (
   <Routes>
-    <Route path="/proposals" element={<ProposalList />} />
     <Route path="*" element={<NotFound />} />
   </Routes>
 );
@@ -22,6 +21,7 @@ const router = createBrowserRouter([
     children: [
       { path: '/', Component: Landing },
       { path: '/proposals/:proposalId/provider?/:provider?', Component: ProposalDetail },
+      { path: '/proposals', Component: ProposalList },
       { path: '*', Component: Root },
     ],
   },
