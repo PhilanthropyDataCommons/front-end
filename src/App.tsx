@@ -11,17 +11,20 @@ import './App.css';
 
 const Root = () => (
   <Routes>
-    <Route element={<Layout />}>
-      <Route path="/" element={<Landing />} />
-      <Route path="/proposals/:proposalId/provider?/:provider?" element={<ProposalDetail />} />
-      <Route path="/proposals" element={<ProposalList />} />
-      <Route path="*" element={<NotFound />} />
-    </Route>
+    <Route path="/" element={<Landing />} />
+    <Route path="/proposals/:proposalId/provider?/:provider?" element={<ProposalDetail />} />
+    <Route path="/proposals" element={<ProposalList />} />
+    <Route path="*" element={<NotFound />} />
   </Routes>
 );
 
 const router = createBrowserRouter([
-  { path: '*', Component: Root },
+  {
+    Component: Layout,
+    children: [
+      { path: '*', Component: Root },
+    ],
+  },
 ]);
 
 const App = () => (
