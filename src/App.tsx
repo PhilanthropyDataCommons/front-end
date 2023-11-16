@@ -11,7 +11,6 @@ import './App.css';
 
 const Root = () => (
   <Routes>
-    <Route path="/" element={<Landing />} />
     <Route path="/proposals/:proposalId/provider?/:provider?" element={<ProposalDetail />} />
     <Route path="/proposals" element={<ProposalList />} />
     <Route path="*" element={<NotFound />} />
@@ -22,6 +21,7 @@ const router = createBrowserRouter([
   {
     Component: Layout,
     children: [
+      { path: '/', Component: Landing },
       { path: '*', Component: Root },
     ],
   },
