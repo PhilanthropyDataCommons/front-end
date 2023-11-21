@@ -1,5 +1,10 @@
 # Recent Changes to the PDC
 
+## November 2023
+
+- Renamed the domain from `pilot.philanthropydatacommons.org`
+  to `app.philanthropydatacommons.org`
+
 ## June 2023
 
 - Add the ability to show applicant data from data platform providers,
