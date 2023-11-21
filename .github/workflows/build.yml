@@ -3,7 +3,7 @@ on:
   pull_request:
   push:
 jobs:
-  run_tests:
+  run_build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
