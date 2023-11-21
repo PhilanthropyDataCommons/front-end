@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { EnvelopeIcon } from '@heroicons/react/24/outline';
+import { BookOpenIcon, EnvelopeIcon } from '@heroicons/react/24/outline';
 import { TableCellsIcon } from '@heroicons/react/24/solid';
 import { User } from './User';
 
@@ -13,6 +13,14 @@ const AppNavbar = () => (
           Dashboard
         </NavLink>
       </li>
+      {process.env.REACT_APP_SHOW_STORYBOOK === 'true' && (
+        <li>
+          <a href="/storybook" className="App-navbar__item">
+            <BookOpenIcon />
+            Storybook
+          </a>
+        </li>
+      )}
       <li>
         <a
           href="mailto:info@philanthropydatacommons.org?Subject=Feedback%20on%20the%20Philanthropy%20Data%20Commons"
