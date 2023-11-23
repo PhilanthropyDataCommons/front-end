@@ -1,0 +1,102 @@
+:root {
+  --file-picker--background-color: var(--color--gray--lighter);
+  --file-picker--color: var(--color--gray--darker);
+  --file-picker--border: 1px solid var(--color--gray--medium);
+  --file-picker--max-width: none;
+  --file-picker--button--cursor: pointer;
+  --file-picker--icon-size: 3rem;
+}
+
+.file-picker {
+  max-width: var(--file-picker--max-width);
+}
+
+.file-picker.dragging {
+  --file-picker--background-color: var(--color--gray--light);
+  --file-picker--border: 3px dotted var(--color--gray--medium);
+}
+
+.file-picker.uploading {
+  --file-picker--border: 3px dotted var(--color--gray);
+  --file-picker--button--cursor: default;
+}
+
+.file-picker.uploading.dragging {
+  --file-picker--button--cursor: no-drop;
+}
+
+.file-picker.error {
+  --file-picker--border: 3px dotted var(--color--gray--light);
+  --file-picker--color: var(--color--red);
+}
+
+.file-picker button {
+  all: unset;
+  box-sizing: border-box;
+  cursor: var(--file-picker--button--cursor);
+
+  display: grid;
+  place-items: center;
+  text-align: center;
+  aspect-ratio: 1;
+  width: 100%;
+  padding: var(--fixed-spacing--1x);
+  background-color: var(--file-picker--background-color);
+  color: var(--file-picker--color);
+  font-weight: var(--font-weight--medium);
+  border: var(--file-picker--border);
+  border-radius: 10px;
+
+  transition-duration: var(--transition-duration--cursor);
+  transition-property: background-color, border, color, outline;
+}
+
+/* Prevent markup within the label from blocking drag events. */
+.file-picker button > * {
+  pointer-events: none;
+}
+
+.file-picker button:focus {
+  outline: 2px solid blue;
+}
+
+.file-picker input[type="file"] {
+  display: none;
+}
+
+.file-picker-message {
+  display: flex;
+  flex-direction: column;
+  gap: var(--accessible-spacing--1x);
+  align-items: center;
+  text-align: center;
+}
+
+.file-picker-message__icon {
+  /* For SVG icons: */
+  width: var(--file-picker--icon-size);
+  height: var(--file-picker--icon-size);
+  aspect-ratio: 1;
+
+  /* For other components: */
+  --spinner--size: var(--file-picker--icon-size);
+}
+
+.complete .file-picker-message__icon {
+  color: var(--color--green);
+}
+
+.file-picker-message__text {
+  color: var(--file-picker--color);
+  font-weight: var(--font-weight--medium); 
+}
+
+.file-picker-message__additional-text {
+  font-weight: var(--font-weight--normal); 
+}
+
+.file-picker-message__reset-link {
+  font-weight: var(--font-weight--normal); 
+  color: var(--color--blue--dark);
+  text-decoration: underline;
+}
