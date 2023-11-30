@@ -1,3 +1,6 @@
 # https://docs.netlify.com/routing/redirects/
 
+# Move from pilot.pdco to app.pdco
+https://pilot.philanthropydatacommons.org/* https://app.philanthropydatacommons.org/:splat 301!
+
 /*  /index.html  200
