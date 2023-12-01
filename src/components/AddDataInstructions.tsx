@@ -62,7 +62,21 @@ export const AddDataInstructions = ({
         </p>
       </article>
 
-      {children}
+      <article>
+        <header className="add-data-instructions">
+          <h3>Base Fields</h3>
+
+          <p>
+            Base fields are the backbone of the PDC. Your data must write to an
+            existing base field, unless you create a new one using the
+            {' '}
+            <a href={apiUrl.toString()}>API</a>
+            .
+          </p>
+        </header>
+
+        {children}
+      </article>
     </PanelBody>
   </Panel>
 );

@@ -14,16 +14,24 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     fields: [
-      { id: 1, label: 'Organization Name', shortCode: 'organization_name' },
-      { id: 2, label: 'Proposal Summary', shortCode: 'proposal_summary' },
+      {
+        id: 1,
+        label: 'Organization Name',
+        shortCode: 'organization_name',
+        description: 'Common name of the organization',
+      },
+      {
+        id: 2,
+        label: 'Proposal Summary',
+        shortCode: 'proposal_summary',
+        description: "Summary of the proposal's purpose",
+      },
     ],
-    loading: false,
   },
 };
 
 export const Loading: Story = {
   args: {
     fields: [],
-    loading: true,
   },
 };
