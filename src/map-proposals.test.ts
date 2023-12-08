@@ -9,21 +9,25 @@ const baseFields: ApiBaseField[] = [
     id: 1,
     label: 'Organization Name',
     shortCode: 'organization_name',
+    description: 'Common name of the organization',
   },
   {
     id: 2,
     label: 'Organization City',
     shortCode: 'organization_city',
+    description: 'City of the organization',
   },
   {
     id: 3,
     label: 'Organization Contact',
     shortCode: 'organization_contact',
+    description: 'Person contact regarding this organization',
   },
   {
     id: 4,
     label: 'Organization Budget',
     shortCode: 'organization_budget',
+    description: 'Annual budget of the organization',
   },
 ];
 

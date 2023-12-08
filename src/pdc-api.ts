@@ -51,6 +51,7 @@ const usePdcApi = <T>(
 };
 
 interface ApiBaseField {
+  description: string;
   id: number;
   label: string;
   shortCode: string;

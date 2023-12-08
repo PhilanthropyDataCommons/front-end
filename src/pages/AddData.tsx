@@ -19,7 +19,7 @@ const BaseFieldsLoader = () => {
   const fields = useBaseFields();
   if (fields === null) {
     return (
-      <BaseFields fields={[]} loading />
+      <BaseFields fields={[]} />
     );
   }
 
