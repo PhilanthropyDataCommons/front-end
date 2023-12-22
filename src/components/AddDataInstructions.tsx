@@ -39,12 +39,6 @@ export const AddDataInstructions = ({
         </ol>
 
         <p>
-          Note that you cannot create new base fields via the bulk uploader.
-          Any columns in your file that don’t match an existing base field will
-          cause an error.
-        </p>
-
-        <p>
           <b>Adding data via the API</b>
           {' '}
           allows the most control. You can create new opportunities,
