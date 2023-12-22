@@ -81,8 +81,10 @@
 .panel-body {
   grid-row: 2;
   overflow: auto;
+  scroll-behavior: smooth;
 }
 
 .panel-body--padded {
   padding: var(--panel--padding);
+  scroll-padding-top: var(--panel--padding);
 }
