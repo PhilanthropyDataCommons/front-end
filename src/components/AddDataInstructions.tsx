@@ -25,8 +25,13 @@ export const AddDataInstructions = ({
 
         <ol>
           <li>
-            Create a CSV of your data with base field keys as the first row
-            (see table below). If you want, you can start with
+            Create a CSV of your data with
+            {' '}
+            <a href="#base-fields">
+              base field keys
+            </a>
+            {' '}
+            as the first row. If you want, you can start with
             {' '}
             <a href={bulkUploadTemplateUrl.toString()}>
               this template of recommended base fields
@@ -56,7 +61,7 @@ export const AddDataInstructions = ({
         </p>
       </article>
 
-      <article>
+      <article id="base-fields">
         <header className="add-data-instructions">
           <h3>Base Fields</h3>
 
