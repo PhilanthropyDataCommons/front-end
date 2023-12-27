@@ -31,7 +31,17 @@ export const AddDataInstructions = ({
               base field keys
             </a>
             {' '}
-            as the first row. If you want, you can start with
+            as the first row.
+            {' '}
+            <strong>
+              The
+              {' '}
+              <code>proposal_submitter_email</code>
+              {' '}
+              field is required.
+            </strong>
+            {' '}
+            If you want, you can start with
             {' '}
             <a href={bulkUploadTemplateUrl.toString()}>
               this template of recommended base fields
