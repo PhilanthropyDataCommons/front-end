@@ -25,8 +25,23 @@ export const AddDataInstructions = ({
 
         <ol>
           <li>
-            Create a CSV of your data with base field keys as the first row
-            (see table below). If you want, you can start with
+            Create a CSV of your data with
+            {' '}
+            <a href="#base-fields">
+              base field keys
+            </a>
+            {' '}
+            as the first row.
+            {' '}
+            <strong>
+              The
+              {' '}
+              <code>proposal_submitter_email</code>
+              {' '}
+              field is required.
+            </strong>
+            {' '}
+            If you want, you can start with
             {' '}
             <a href={bulkUploadTemplateUrl.toString()}>
               this template of recommended base fields
@@ -37,12 +52,6 @@ export const AddDataInstructions = ({
             Upload your CSV in the sidebar to the left.
           </li>
         </ol>
-
-        <p>
-          Note that you cannot create new base fields via the bulk uploader.
-          Any columns in your file that don’t match an existing base field will
-          cause an error.
-        </p>
 
         <p>
           <b>Adding data via the API</b>
@@ -62,7 +71,7 @@ export const AddDataInstructions = ({
         </p>
       </article>
 
-      <article>
+      <article id="base-fields">
         <header className="add-data-instructions">
           <h3>Base Fields</h3>
 
