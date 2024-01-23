@@ -1,18 +1,24 @@
 import React, { useEffect } from 'react';
 import { withOidcSecure } from '@axa-fr/react-oidc';
-import { useBaseFields } from '../pdc-api';
+import {
+  useBaseFields,
+  useBulkUploads,
+} from '../pdc-api';
 import { PanelGrid, PanelGridItem } from '../components/PanelGrid';
+import { Panel, PanelBody } from '../components/Panel';
 import { AddDataInstructions } from '../components/AddDataInstructions';
 import { BaseFields } from '../components/BaseFields';
-import { BulkUploader } from '../components/BulkUploader';
+import { BulkUploadList } from '../components/BulkUploadList';
 
-const BulkUploaderLoader = () => {
-  const history: object[] = []; // todo
-  return (
-    <PanelGridItem>
-      <BulkUploader history={history} loading />
-    </PanelGridItem>
-  );
+const BulkUploaderLoader = () => <p>TODO: bulk uploader</p>;
+
+const BulkUploadHistoryLoader = () => {
+  const history = useBulkUploads();
+
+  if (history === null) {
+    return <BulkUploadList uploads={[]} />;
+  }
+  return <BulkUploadList uploads={history.entries} />;
 };
 
 const BaseFieldsLoader = () => {
@@ -35,7 +41,14 @@ const AddDataLoader = () => {
 
   return (
     <PanelGrid sidebarred>
-      <BulkUploaderLoader />
+      <PanelGridItem>
+        <Panel>
+          <PanelBody>
+            <BulkUploaderLoader />
+            <BulkUploadHistoryLoader />
+          </PanelBody>
+        </Panel>
+      </PanelGridItem>
       <PanelGridItem>
         <AddDataInstructions>
           <BaseFieldsLoader />

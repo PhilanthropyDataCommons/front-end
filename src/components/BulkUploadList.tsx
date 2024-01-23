@@ -1,19 +1,19 @@
 import React from 'react';
-import { BulkUpload } from '../interfaces/BulkUpload';
 import { BulkUploadListItem } from './BulkUploadListItem';
 import './BulkUploadList.css';
+import type { ApiBulkUpload } from '../pdc-api';
 
 interface BulkUploadListProps {
-  uploads: BulkUpload[];
+  uploads: ApiBulkUpload[];
 }
 
 export const BulkUploadList = ({
   uploads,
 }: BulkUploadListProps) => (
   <div className="bulk-upload-list">
-    {uploads.map((upload, index) => (
+    {uploads.map((upload) => (
       <BulkUploadListItem
-        key={index} // eslint-disable-line react/no-array-index-key
+        key={upload.id}
         upload={upload}
       />
     ))}

@@ -10,7 +10,7 @@ import {
   localizeDateTime,
   relativizeDateTime,
 } from '../utils/datetime';
-import { BulkUpload } from '../interfaces/BulkUpload';
+import type { ApiBulkUpload } from '../pdc-api';
 import { EmailLink } from './EmailLink';
 import './BulkUploadListItem.css';
 
@@ -23,7 +23,7 @@ enum BulkUploadStatuses {
 }
 
 interface BulkUploadListItemProps {
-  upload: BulkUpload;
+  upload: ApiBulkUpload;
 }
 
 export const BulkUploadListItem = ({ upload }: BulkUploadListItemProps) => {
