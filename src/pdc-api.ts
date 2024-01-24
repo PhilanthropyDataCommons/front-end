@@ -59,6 +59,21 @@ interface ApiBaseField {
 
 const useBaseFields = () => usePdcApi<ApiBaseField[]>('/baseFields');
 
+interface ApiBulkUpload {
+  id: number;
+  fileName: string;
+  fileSize: number;
+  status: string;
+  createdAt: string;
+}
+
+interface ApiBulkUploads {
+  entries: ApiBulkUpload[];
+  total: number;
+}
+
+const useBulkUploads = () => usePdcApi<ApiBulkUploads>('/bulkUploads');
+
 interface ApiProposal {
   id: number;
   versions: {
@@ -123,6 +138,7 @@ export {
   PROPOSALS_DEFAULT_PAGE,
   PROPOSALS_DEFAULT_QUERY,
   useBaseFields,
+  useBulkUploads,
   useProposal,
   useProposals,
   useProviderData,
@@ -130,5 +146,6 @@ export {
 
 export type {
   ApiBaseField,
+  ApiBulkUpload,
   ApiProposal,
 };
