@@ -49,7 +49,13 @@ const FilePickerMessage = ({
   </div>
 );
 
-export const BulkUploaderFilePicker = () => {
+interface BulkUploaderFilePickerProps {
+  uploadFile: (file: File) => Promise<void>;
+}
+
+export const BulkUploaderFilePicker = ({
+  uploadFile,
+}: BulkUploaderFilePickerProps) => {
   const ACCEPTED_MIME_TYPES = ['text/csv'];
   const ACCEPTED_FILE_EXTENSIONS = ['csv'];
   const MAXIMUM_FILE_SIZE_BYTES = 1e+9; // 1GB
@@ -74,7 +80,7 @@ export const BulkUploaderFilePicker = () => {
    *
    * @param  {FileList | null} files
    */
-  const validateFiles = (files: FileList | null) => {
+  const validateFiles = (files: FileList | null): files is FileList & { 0: File } => {
     if (!files?.[0]) {
       setStatus('error.noFile');
       return false;
@@ -105,10 +111,8 @@ export const BulkUploaderFilePicker = () => {
   };
 
   /**
-   * Provided a list of files
-   * from either a native file picker
-   * or the Drag and Drop API,
-   * validates and uploads the files.
+   * Provided a list of files from either a native file picker
+   * or the Drag and Drop API, validates and uploads the files.
    *
    * @param  {FileList | null} files
    */
@@ -118,13 +122,18 @@ export const BulkUploaderFilePicker = () => {
     }
 
     // Remove focus from the button.
-    // We wait until after validation
-    // so focus is not wrenched away.
+    // We wait until after validation so focus is not wrenched away.
     buttonRef.current?.blur();
 
     setStatus('uploading');
 
-    // TODO: Begin uploading
+    uploadFile(files[0])
+      .then(() => {
+        setStatus('complete');
+      })
+      .catch(() => {
+        setStatus('error.uploadFailure');
+      });
   };
 
   /**
@@ -302,12 +311,12 @@ export const BulkUploaderFilePicker = () => {
               resetLink
             />
           );
-        case 'generic':
+        case 'uploadFailure':
         default:
           return (
             <FilePickerMessage
               icon={<XCircleIcon className="icon" />}
-              text="Error uploading your file"
+              text="Error uploading your file. Please try again."
               resetLink
             />
           );
