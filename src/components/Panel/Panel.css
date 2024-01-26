@@ -14,11 +14,14 @@
 
 .panel-header {
   grid-row: 1;
-  padding: var(--panel--padding);
 
   display: flex;
   justify-content: space-between;
   gap: var(--fixed-spacing--2x);
+}
+
+.panel-header--padded {
+  padding: var(--panel--padding);
 }
 
 .panel-title {
