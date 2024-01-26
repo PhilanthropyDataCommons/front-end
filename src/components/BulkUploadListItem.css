@@ -4,7 +4,7 @@
 }
 
 .bulk-upload-list-item {
-  padding: var(--accessible-spacing--1x);
+  padding: var(--bulk-upload-list--padding-v) var(--bulk-upload-list--padding-h);
   display: grid;
   column-gap: var(--accessible-spacing--1x);
   grid-template-columns: var(--bulk-upload-list-item--icon-size) 1fr;

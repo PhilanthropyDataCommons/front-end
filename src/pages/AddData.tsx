@@ -70,7 +70,7 @@ const AddDataLoader = () => {
           <PanelHeader>
             <BulkUploaderLoader />
           </PanelHeader>
-          <PanelBody>
+          <PanelBody padded={false}>
             <BulkUploadHistoryLoader />
           </PanelBody>
         </Panel>

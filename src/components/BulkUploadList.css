@@ -1,8 +1,8 @@
 .bulk-upload-list {
-  display: flex;
-  flex-direction: column;
+  --bulk-upload-list--padding-h: var(--accessible-spacing--1x);
+  --bulk-upload-list--padding-v: var(--accessible-spacing--1x);
 }
 
-.bulk-upload-list .bulk-upload-list-item {
+.bulk-upload-list-item {
   border-bottom: 1px solid var(--color--gray--light);
 }
