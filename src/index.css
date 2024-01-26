@@ -52,7 +52,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: var(--color--gray--light);
-  color: var(--color--gray--darker);
+  color: black;
   font-family: var(--font-family--sans-serif);
   font-weight: var(--font-weight--normal);
   line-height: var(--line-height);
