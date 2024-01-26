@@ -3,6 +3,20 @@
   --bulk-upload-list--padding-v: var(--accessible-spacing--1x);
 }
 
+.bulk-upload-list-header {
+  position: sticky;
+  top: 0;
+
+  padding: calc(var(--bulk-upload-list--padding-h) / 2) var(--bulk-upload-list--padding-h);
+  border-top: 1px solid var(--color--gray);
+  border-bottom: 1px solid var(--color--gray);
+  background-color: var(--color--gray--lighter);
+
+  font-size: 0.9rem;
+  font-weight: var(--font-weight--medium);
+  text-transform: uppercase;
+}
+
 .bulk-upload-list-item {
   border-bottom: 1px solid var(--color--gray--light);
 }
