@@ -14,6 +14,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
+    apiUrl: new URL('http://localhost/'),
     bulkUploaderLoader: <code>bulkUploaderLoader</code>,
     baseFieldsLoader: <code>baseFieldsLoader</code>,
   },
