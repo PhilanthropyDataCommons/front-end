@@ -1,5 +1,9 @@
 # Recent Changes to the PDC
 
+## February 2024
+
+- Add bulk upload of proposal data via CSV
+
 ## November 2023
 
 - Renamed the domain from `pilot.philanthropydatacommons.org`
