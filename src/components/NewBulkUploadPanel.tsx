@@ -6,11 +6,13 @@ const apiUrl = new URL('/', process.env.REACT_APP_API_URL);
 const bulkUploadTemplateUrl = new URL('/static/bulkUpload.csv', apiUrl);
 
 interface NewBulkUploadPanelProps {
-  children?: React.ReactNode;
+  bulkUploaderLoader: React.ReactNode;
+  baseFieldsLoader: React.ReactNode;
 }
 
 export const NewBulkUploadPanel = ({
-  children = null,
+  bulkUploaderLoader,
+  baseFieldsLoader,
 }: NewBulkUploadPanelProps) => (
   <Panel>
     <PanelBody>
@@ -69,6 +71,8 @@ export const NewBulkUploadPanel = ({
           <a href={apiUrl.toString()}>{apiUrl.hostname}</a>
           .
         </p>
+
+        {bulkUploaderLoader}
       </article>
 
       <article id="base-fields">
@@ -84,7 +88,7 @@ export const NewBulkUploadPanel = ({
           </p>
         </header>
 
-        {children}
+        {baseFieldsLoader}
       </article>
     </PanelBody>
   </Panel>

@@ -8,7 +8,7 @@ import {
   useRegisterBulkUploadCallback,
 } from '../pdc-api';
 import { PanelGrid, PanelGridItem } from '../components/PanelGrid';
-import { Panel, PanelBody, PanelHeader } from '../components/Panel';
+import { Panel, PanelBody } from '../components/Panel';
 import { NewBulkUploadPanel } from '../components/NewBulkUploadPanel';
 import { BaseFields } from '../components/BaseFields';
 import { BulkUploaderFilePicker } from '../components/BulkUploaderFilePicker';
@@ -67,18 +67,16 @@ const AddDataLoader = () => {
     <PanelGrid sidebarred>
       <PanelGridItem>
         <Panel>
-          <PanelHeader>
-            <BulkUploaderLoader />
-          </PanelHeader>
           <PanelBody padded={false}>
             <BulkUploadHistoryLoader />
           </PanelBody>
         </Panel>
       </PanelGridItem>
       <PanelGridItem>
-        <NewBulkUploadPanel>
-          <BaseFieldsLoader />
-        </NewBulkUploadPanel>
+        <NewBulkUploadPanel
+          bulkUploaderLoader={<BulkUploaderLoader />}
+          baseFieldsLoader={<BaseFieldsLoader />}
+        />
       </PanelGridItem>
     </PanelGrid>
   );
