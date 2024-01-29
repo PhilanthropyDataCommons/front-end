@@ -159,3 +159,32 @@ code {
     transform: rotate(360deg);
   }
 }
+
+.label {
+  font-size: 0.9rem;
+  font-weight: var(--font-weight--medium);
+  text-transform: uppercase;
+}
+
+a.no-visited {
+  color: var(--color--blue--dark);
+}
+
+.has-icon {
+  --icon-wrapper--flex-type: flex;
+
+  display: var(--icon-wrapper--flex-type);
+  align-items: center;
+  gap: 0.5ch;
+}
+
+a.has-icon {
+  --icon-wrapper--flex-type: inline-flex;
+}
+
+.icon {
+  flex-shrink: 0;
+  width: var(--icon-size--text);
+  height: var(--icon-size--text);
+  color: inherit;
+}

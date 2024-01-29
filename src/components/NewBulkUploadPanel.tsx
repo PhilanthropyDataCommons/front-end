@@ -1,6 +1,7 @@
 import React from 'react';
-import './NewBulkUploadPanel.css';
+import { DocumentDuplicateIcon } from '@heroicons/react/24/outline';
 import { Panel, PanelBody } from './Panel';
+import './NewBulkUploadPanel.css';
 
 interface NewBulkUploadPanelProps {
   apiUrl: URL;
@@ -18,69 +19,54 @@ export const NewBulkUploadPanel = ({
   return (
     <Panel>
       <PanelBody>
-        <article className="bulk-upload-instructions">
-          <h3>Add data to the PDC</h3>
+        <section id="bulk-upload-instructions">
+          <div className="instructions">
+            <h1>New bulk upload</h1>
 
-          <p>
-            <b>Adding data via the bulk uploader</b>
-            {' '}
-            is drag-and-drop easy:
-          </p>
+            <p>
+              Quickly add your data to the PDC by mapping it to the PDC base fields (
+              <a href="#base-fields">see table below</a>
+              ) and uploading as a CSV.
+            </p>
 
-          <ol>
-            <li>
-              Create a CSV of your data with
-              {' '}
-              <a href="#base-fields">
-                base field keys
-              </a>
-              {' '}
-              as the first row.
-              {' '}
-              <strong>
-                The
+            <h2 className="label">Requirements</h2>
+            <ul>
+              <li>
+                <strong>Your data must be mapped to valid base fields.</strong>
                 {' '}
-                <code>proposal_submitter_email</code>
+                Other fields will be ignored.
+              </li>
+              <li>
+                <strong>The first row must contain base field keys.</strong>
                 {' '}
-                field is required.
-              </strong>
-              {' '}
-              If you want, you can start with
-              {' '}
-              <a href={bulkUploadTemplateUrl.toString()}>
-                this template of recommended base fields
-              </a>
-              .
-            </li>
-            <li>
-              Upload your CSV in the sidebar to the left.
-            </li>
-          </ol>
+                Each subsequent row will be imported as a new proposal.
+              </li>
+              <li>
+                <strong>
+                  <code>proposal_submitter_email</code>
+                  {' '}
+                  field is required.
+                </strong>
+              </li>
+            </ul>
 
-          <p>
-            <b>Adding data via the API</b>
-            {' '}
-            allows the most control. You can create new opportunities,
-            add applications, register new base fields, and more.
-            To use the API, request an API key from
-            {' '}
-            <a href="mailto:info@philanthropydatacommons.org?Subject=PDC%20API%20key%20request">
-              info@philanthropydatacommons.org
+            <h2 className="label">Optional</h2>
+            <a href={bulkUploadTemplateUrl.toString()} className="has-icon no-visited">
+              <DocumentDuplicateIcon className="icon" />
+              Download CSV template of recommended base field keys
             </a>
-            {' '}
-            and then visit the documentation site at
-            {' '}
-            <a href={apiUrl.toString()}>{apiUrl.hostname}</a>
-            .
-          </p>
 
-          {bulkUploaderLoader}
-        </article>
+          </div>
 
-        <article id="base-fields">
-          <header className="bulk-upload-instructions">
-            <h3>Base Fields</h3>
+          <div id="bulk-uploader-wrapper">
+            {bulkUploaderLoader}
+          </div>
+        </section>
 
+        <section id="base-fields">
+          <h1>Base fields</h1>
+
+          <div className="instructions">
             <p>
               Base fields are the backbone of the PDC. Your data must write to an
               existing base field, unless you create a new one using the
@@ -88,10 +74,10 @@ export const NewBulkUploadPanel = ({
               <a href={apiUrl.toString()}>API</a>
               .
             </p>
-          </header>
+          </div>
 
           {baseFieldsLoader}
-        </article>
+        </section>
       </PanelBody>
     </Panel>
   );
