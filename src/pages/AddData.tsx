@@ -9,7 +9,7 @@ import {
 } from '../pdc-api';
 import { PanelGrid, PanelGridItem } from '../components/PanelGrid';
 import { Panel, PanelBody, PanelHeader } from '../components/Panel';
-import { AddDataInstructions } from '../components/AddDataInstructions';
+import { NewBulkUploadPanel } from '../components/NewBulkUploadPanel';
 import { BaseFields } from '../components/BaseFields';
 import { BulkUploaderFilePicker } from '../components/BulkUploaderFilePicker';
 import { BulkUploadList } from '../components/BulkUploadList';
@@ -76,9 +76,9 @@ const AddDataLoader = () => {
         </Panel>
       </PanelGridItem>
       <PanelGridItem>
-        <AddDataInstructions>
+        <NewBulkUploadPanel>
           <BaseFieldsLoader />
-        </AddDataInstructions>
+        </NewBulkUploadPanel>
       </PanelGridItem>
     </PanelGrid>
   );

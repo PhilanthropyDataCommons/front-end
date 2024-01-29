@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 
-import { AddDataInstructions } from '../components/AddDataInstructions';
+import { NewBulkUploadPanel } from '../components/NewBulkUploadPanel';
 
 const meta = {
-  component: AddDataInstructions,
+  component: NewBulkUploadPanel,
   tags: ['autodocs'],
-} satisfies Meta<typeof AddDataInstructions>;
+} satisfies Meta<typeof NewBulkUploadPanel>;
 
 export default meta;
 

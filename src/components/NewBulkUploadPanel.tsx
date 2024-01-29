@@ -1,20 +1,20 @@
 import React from 'react';
-import './AddDataInstructions.css';
+import './NewBulkUploadPanel.css';
 import { Panel, PanelBody } from './Panel';
 
 const apiUrl = new URL('/', process.env.REACT_APP_API_URL);
 const bulkUploadTemplateUrl = new URL('/static/bulkUpload.csv', apiUrl);
 
-interface AddDataInstructionsProps {
+interface NewBulkUploadPanelProps {
   children?: React.ReactNode;
 }
 
-export const AddDataInstructions = ({
+export const NewBulkUploadPanel = ({
   children = null,
-}: AddDataInstructionsProps) => (
+}: NewBulkUploadPanelProps) => (
   <Panel>
     <PanelBody>
-      <article className="add-data-instructions">
+      <article className="bulk-upload-instructions">
         <h3>Add data to the PDC</h3>
 
         <p>
@@ -72,7 +72,7 @@ export const AddDataInstructions = ({
       </article>
 
       <article id="base-fields">
-        <header className="add-data-instructions">
+        <header className="bulk-upload-instructions">
           <h3>Base Fields</h3>
 
           <p>
