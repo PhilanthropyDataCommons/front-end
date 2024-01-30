@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 import { withOidcSecure } from '@axa-fr/react-oidc';
+import { DocumentPlusIcon } from '@heroicons/react/24/outline';
 import {
   uploadUsingPresignedPost,
   useBaseFields,
@@ -8,11 +10,12 @@ import {
   useRegisterBulkUploadCallback,
 } from '../pdc-api';
 import { PanelGrid, PanelGridItem } from '../components/PanelGrid';
-import { Panel, PanelBody } from '../components/Panel';
-import { AddDataInstructions } from '../components/AddDataInstructions';
+import { Panel, PanelBody, PanelHeader } from '../components/Panel';
+import { NewBulkUploadPanel } from '../components/NewBulkUploadPanel';
 import { BaseFields } from '../components/BaseFields';
 import { BulkUploaderFilePicker } from '../components/BulkUploaderFilePicker';
 import { BulkUploadList } from '../components/BulkUploadList';
+import './AddData.css';
 
 const BulkUploaderLoader = () => {
   const createPresignedPost = usePresignedPostCallback();
@@ -67,16 +70,23 @@ const AddDataLoader = () => {
     <PanelGrid sidebarred>
       <PanelGridItem>
         <Panel>
-          <PanelBody>
-            <BulkUploaderLoader />
+          <PanelHeader padded={false}>
+            <NavLink to="/add-data" className="new-bulk-upload-link">
+              <DocumentPlusIcon className="icon" />
+              New bulk upload
+            </NavLink>
+          </PanelHeader>
+          <PanelBody padded={false}>
             <BulkUploadHistoryLoader />
           </PanelBody>
         </Panel>
       </PanelGridItem>
       <PanelGridItem>
-        <AddDataInstructions>
-          <BaseFieldsLoader />
-        </AddDataInstructions>
+        <NewBulkUploadPanel
+          apiUrl={new URL('/', process.env.REACT_APP_API_URL)}
+          bulkUploaderLoader={<BulkUploaderLoader />}
+          baseFieldsLoader={<BaseFieldsLoader />}
+        />
       </PanelGridItem>
     </PanelGrid>
   );

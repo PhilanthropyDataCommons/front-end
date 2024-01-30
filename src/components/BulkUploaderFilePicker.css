@@ -2,13 +2,12 @@
   --file-picker--background-color: var(--color--gray--lighter);
   --file-picker--color: var(--color--gray--darker);
   --file-picker--border: 1px solid var(--color--gray--medium);
-  --file-picker--max-width: none;
   --file-picker--button--cursor: pointer;
   --file-picker--icon-size: 3rem;
 }
 
 .file-picker {
-  max-width: var(--file-picker--max-width);
+  width: 100%;
 }
 
 .file-picker.dragging {
@@ -38,9 +37,8 @@
   display: grid;
   place-items: center;
   text-align: center;
-  aspect-ratio: 1;
   width: 100%;
-  padding: var(--fixed-spacing--1x);
+  padding: var(--fixed-spacing--4x) var(--fixed-spacing--1x);
   background-color: var(--file-picker--background-color);
   color: var(--file-picker--color);
   font-weight: var(--font-weight--medium);
@@ -74,6 +72,7 @@
 
 .file-picker-message__icon {
   /* For SVG icons: */
+  --icon-size--text: var(--file-picker--icon-size);
   width: var(--file-picker--icon-size);
   height: var(--file-picker--icon-size);
   aspect-ratio: 1;
@@ -88,15 +87,15 @@
 
 .file-picker-message__text {
   color: var(--file-picker--color);
-  font-weight: var(--font-weight--medium); 
+  font-weight: var(--font-weight--medium);
 }
 
 .file-picker-message__additional-text {
-  font-weight: var(--font-weight--normal); 
+  font-weight: var(--font-weight--normal);
 }
 
 .file-picker-message__reset-link {
-  font-weight: var(--font-weight--normal); 
+  font-weight: var(--font-weight--normal);
   color: var(--color--blue--dark);
   text-decoration: underline;
 }

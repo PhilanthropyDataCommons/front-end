@@ -272,11 +272,7 @@ export const BulkUploaderFilePicker = ({
         <FilePickerMessage
           icon={<CheckCircleIcon className="icon" />}
           text="Upload complete!"
-          additionalText={`
-            We are now processing your file.
-            Come back to this page any time
-            to check the progress below.
-          `}
+          additionalText="We are now processing your file."
         />
       );
     }
