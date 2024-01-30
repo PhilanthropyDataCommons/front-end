@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useOidcFetch } from '@axa-fr/react-oidc';
 import { getLogger } from './logger';
 
@@ -6,14 +6,14 @@ const logger = getLogger('pdc-api');
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-const throwNotOk = (res: Response): Response => {
+const throwIfResponseIsNotOk = (res: Response): Response => {
   if (!res.ok) {
     throw new Error(`Response status: ${res.status} ${res.statusText}`);
   }
   return res;
 };
 
-const logError = (error: unknown, path: string, params: URLSearchParams) => {
+const logError = (error: unknown, path: string, params: object) => {
   logger.error({ error, params }, `Error fetching ${path}`);
 };
 
@@ -30,7 +30,7 @@ const usePdcApi = <T>(
     const url = new URL(path, API_URL);
     url.search = params.toString();
     fetch(url)
-      .then(throwNotOk)
+      .then(throwIfResponseIsNotOk)
       .then((res) => res.json())
       .then(setResponse)
       .catch((e) => logError(e, path, params));
@@ -48,6 +48,103 @@ const usePdcApi = <T>(
   }, [path, params.toString()]);
 
   return response;
+};
+
+const usePdcCallbackApi = <T>(
+  path: string,
+): (options: RequestInit) => Promise<T> => {
+  const { fetch } = useOidcFetch();
+
+  return useCallback((options: RequestInit) => {
+    const url = new URL(path, API_URL);
+    return fetch(url, options)
+      .then(throwIfResponseIsNotOk)
+      .then((res) => res.json())
+      .catch((e) => logError(e, path, options));
+
+    /* eslint-disable-next-line react-hooks/exhaustive-deps --
+     *
+     * fetch should not be a dependency, because although it or its internal
+     * state may change from render to render, such changes are not relevant:
+     * a change in the way we make a request should not trigger an API request
+     */
+  }, [path]);
+};
+
+interface ApiPresignedPostRequest {
+  fileType: string;
+  fileSize: number;
+}
+
+interface PresignedPost {
+  url: string;
+  fields: Record<string, string> & {
+    key: string,
+  };
+}
+
+interface ApiPresignedPostResponse {
+  fileType: string;
+  fileSize: number;
+  presignedPost: PresignedPost;
+}
+
+const usePresignedPostCallback = () => {
+  const api = usePdcCallbackApi<ApiPresignedPostResponse>('/presignedPostRequests');
+  return (params: ApiPresignedPostRequest) => api({
+    method: 'post',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(params),
+  });
+};
+
+const uploadUsingPresignedPost = async (
+  file: File,
+  presignedPost: PresignedPost,
+) => {
+  const formData = new FormData();
+  Object.entries(presignedPost.fields).forEach(([key, value]) => (
+    formData.append(key, value)
+  ));
+  formData.append('Content-Type', file.type || 'application/octet-stream');
+  formData.append('file', file);
+  return fetch(
+    presignedPost.url,
+    {
+      method: 'post',
+      body: formData,
+    },
+  )
+    .then(throwIfResponseIsNotOk);
+};
+
+interface ApiBulkUploadsPostRequest {
+  fileName: string;
+  sourceKey: string;
+}
+
+interface ApiBulkUploadsPostResponse {
+  id: number;
+  fileName: string;
+  fileSize: number;
+  sourceKey: string;
+  status: string;
+  createdAt: string;
+}
+
+const useRegisterBulkUploadCallback = () => {
+  const api = usePdcCallbackApi<ApiBulkUploadsPostResponse>('/bulkUploads');
+  return (params: ApiBulkUploadsPostRequest) => api({
+    method: 'post',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(params),
+  });
 };
 
 interface ApiBaseField {
@@ -137,11 +234,14 @@ export {
   PROPOSALS_DEFAULT_COUNT,
   PROPOSALS_DEFAULT_PAGE,
   PROPOSALS_DEFAULT_QUERY,
+  uploadUsingPresignedPost,
   useBaseFields,
   useBulkUploads,
+  usePresignedPostCallback,
   useProposal,
   useProposals,
   useProviderData,
+  useRegisterBulkUploadCallback,
 };
 
 export type {
