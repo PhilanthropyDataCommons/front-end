@@ -17,7 +17,7 @@ import { BulkUploaderFilePicker } from '../components/BulkUploaderFilePicker';
 import { BulkUploadList } from '../components/BulkUploadList';
 import './AddData.css';
 
-const BulkUploaderLoader = () => {
+const BulkUploader = () => {
   const createPresignedPost = usePresignedPostCallback();
   const registerBulkUpload = useRegisterBulkUploadCallback();
   const handleUpload = async (file: File) => {
@@ -84,7 +84,7 @@ const AddDataLoader = () => {
       <PanelGridItem>
         <NewBulkUploadPanel
           apiUrl={new URL('/', process.env.REACT_APP_API_URL)}
-          bulkUploaderLoader={<BulkUploaderLoader />}
+          bulkUploader={<BulkUploader />}
           baseFieldsLoader={<BaseFieldsLoader />}
         />
       </PanelGridItem>
