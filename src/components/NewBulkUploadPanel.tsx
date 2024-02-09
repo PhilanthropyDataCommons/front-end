@@ -5,13 +5,13 @@ import './NewBulkUploadPanel.css';
 
 interface NewBulkUploadPanelProps {
   apiUrl: URL;
-  bulkUploaderLoader: React.ReactNode;
+  bulkUploader: React.ReactNode;
   baseFieldsLoader: React.ReactNode;
 }
 
 export const NewBulkUploadPanel = ({
   apiUrl,
-  bulkUploaderLoader,
+  bulkUploader,
   baseFieldsLoader,
 }: NewBulkUploadPanelProps) => {
   const bulkUploadTemplateUrl = new URL('/static/bulkUpload.csv', apiUrl);
@@ -59,7 +59,7 @@ export const NewBulkUploadPanel = ({
           </div>
 
           <div id="bulk-uploader-wrapper">
-            {bulkUploaderLoader}
+            {bulkUploader}
           </div>
         </section>
 

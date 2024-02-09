@@ -17,7 +17,25 @@ import { BulkUploaderFilePicker } from '../components/BulkUploaderFilePicker';
 import { BulkUploadList } from '../components/BulkUploadList';
 import './AddData.css';
 
-const BulkUploaderLoader = () => {
+const BaseFieldsLoader = () => {
+  const [fields] = useBaseFields();
+  if (fields === null) {
+    return (
+      <BaseFields fields={[]} />
+    );
+  }
+
+  return (
+    <BaseFields fields={fields} />
+  );
+};
+
+interface BulkUploaderProps {
+  onBulkUpload: () => void;
+}
+const BulkUploader = ({
+  onBulkUpload,
+}: BulkUploaderProps) => {
   const createPresignedPost = usePresignedPostCallback();
   const registerBulkUpload = useRegisterBulkUploadCallback();
   const handleUpload = async (file: File) => {
@@ -32,36 +50,21 @@ const BulkUploaderLoader = () => {
       fileName: file.name,
       sourceKey: presignedPost.fields.key,
     });
+
+    onBulkUpload();
   };
 
   return (
-    <BulkUploaderFilePicker uploadFile={handleUpload} />
-  );
-};
-
-const BulkUploadHistoryLoader = () => {
-  const history = useBulkUploads();
-
-  if (history === null) {
-    return <BulkUploadList uploads={[]} />;
-  }
-  return <BulkUploadList uploads={history.entries} />;
-};
-
-const BaseFieldsLoader = () => {
-  const fields = useBaseFields();
-  if (fields === null) {
-    return (
-      <BaseFields fields={[]} />
-    );
-  }
-
-  return (
-    <BaseFields fields={fields} />
+    <BulkUploaderFilePicker
+      uploadFile={handleUpload}
+    />
   );
 };
 
 const AddDataLoader = () => {
+  const [bulkUploadResponse, refreshBulkUploads] = useBulkUploads();
+  const bulkUploads = bulkUploadResponse?.entries ?? [];
+
   useEffect(() => {
     document.title = 'Add Data - Philanthropy Data Commons';
   }, []);
@@ -77,14 +80,18 @@ const AddDataLoader = () => {
             </NavLink>
           </PanelHeader>
           <PanelBody padded={false}>
-            <BulkUploadHistoryLoader />
+            <BulkUploadList uploads={bulkUploads} />
           </PanelBody>
         </Panel>
       </PanelGridItem>
       <PanelGridItem>
         <NewBulkUploadPanel
           apiUrl={new URL('/', process.env.REACT_APP_API_URL)}
-          bulkUploaderLoader={<BulkUploaderLoader />}
+          bulkUploader={(
+            <BulkUploader
+              onBulkUpload={refreshBulkUploads}
+            />
+          )}
           baseFieldsLoader={<BaseFieldsLoader />}
         />
       </PanelGridItem>

@@ -30,7 +30,7 @@ const ProposalListGridLoader = (
 ) => {
   const { proposalId } = useParams();
 
-  const proposals = useProposals(
+  const [proposals] = useProposals(
     PROPOSALS_DEFAULT_PAGE,
     PROPOSALS_DEFAULT_COUNT,
     PROPOSALS_DEFAULT_QUERY,
@@ -111,7 +111,7 @@ const ProposalDetailPanelLoader = (
   const params = useParams();
   const proposalId = params.proposalId ?? 'missing';
   const { provider } = params;
-  const proposal = useProposal(proposalId);
+  const [proposal] = useProposal(proposalId);
 
   useEffect(() => {
     if (baseFields === null || proposal === null) {
@@ -181,7 +181,7 @@ const ProposalDetailPanelLoader = (
 };
 
 const ProposalDetailLoader = () => {
-  const baseFields = useBaseFields();
+  const [baseFields] = useBaseFields();
 
   return (
     <PanelGrid sidebarred>
