@@ -21,11 +21,11 @@ const logError = (error: unknown, path: string, params: object) => {
 const usePdcApi = <T>(
   path: string,
   params: URLSearchParams = new URLSearchParams(),
-): T | null => {
+): [T | null, () => void] => {
   const { fetch } = useOidcFetch();
   const [response, setResponse] = useState(null);
 
-  useEffect(() => {
+  const fetchData = useCallback(() => {
     setResponse(null);
     const url = new URL(path, API_URL);
     url.search = params.toString();
@@ -47,7 +47,14 @@ const usePdcApi = <T>(
      */
   }, [path, params.toString()]);
 
-  return response;
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  return [
+    response,
+    fetchData,
+  ];
 };
 
 const usePdcCallbackApi = <T>(

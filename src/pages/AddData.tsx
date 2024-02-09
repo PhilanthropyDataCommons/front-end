@@ -40,7 +40,7 @@ const BulkUploaderLoader = () => {
 };
 
 const BulkUploadHistoryLoader = () => {
-  const history = useBulkUploads();
+  const [history] = useBulkUploads();
 
   if (history === null) {
     return <BulkUploadList uploads={[]} />;
@@ -49,7 +49,7 @@ const BulkUploadHistoryLoader = () => {
 };
 
 const BaseFieldsLoader = () => {
-  const fields = useBaseFields();
+  const [fields] = useBaseFields();
   if (fields === null) {
     return (
       <BaseFields fields={[]} />

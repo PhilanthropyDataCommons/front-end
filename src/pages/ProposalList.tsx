@@ -23,8 +23,8 @@ const ProposalListLoader = () => {
   const page = params.get('page') ?? PROPOSALS_DEFAULT_PAGE;
   const count = params.get('count') ?? PROPOSALS_DEFAULT_COUNT;
   const query = params.get('q') ?? PROPOSALS_DEFAULT_QUERY;
-  const fields = useBaseFields();
-  const proposals = useProposals(page, count, query);
+  const [fields] = useBaseFields();
+  const [proposals] = useProposals(page, count, query);
 
   useEffect(() => {
     document.title = 'Proposal List - Philanthropy Data Commons';

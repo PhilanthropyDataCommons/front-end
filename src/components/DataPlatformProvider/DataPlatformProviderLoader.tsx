@@ -195,7 +195,7 @@ const ProviderPanelLoader = ({
   onClose,
   provider,
 }: ProviderPanelLoaderProps) => {
-  const allProviderData = useProviderData(externalId);
+  const [allProviderData] = useProviderData(externalId);
   if (allProviderData === null) {
     return <Loading onClose={onClose} provider={provider} />;
   }
