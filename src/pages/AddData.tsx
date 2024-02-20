@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { withOidcSecure } from '@axa-fr/react-oidc';
 import { DocumentPlusIcon } from '@heroicons/react/24/outline';
@@ -63,11 +63,14 @@ const BulkUploader = ({
 
 const AddDataLoader = () => {
   const [bulkUploadResponse, refreshBulkUploads] = useBulkUploads();
-  const bulkUploads = bulkUploadResponse?.entries ?? [];
+  const [bulkUploads, setBulkUploads] = useState(bulkUploadResponse?.entries ?? []);
 
   useEffect(() => {
     document.title = 'Add Data - Philanthropy Data Commons';
-  }, []);
+    if (bulkUploadResponse?.entries) {
+      setBulkUploads(bulkUploadResponse.entries);
+    }
+  }, [bulkUploadResponse]);
 
   return (
     <PanelGrid sidebarred>
