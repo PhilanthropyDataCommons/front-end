@@ -51,7 +51,11 @@ export const NewBulkUploadPanel = ({
             </ul>
 
             <h2 className="label">Optional</h2>
-            <a href={bulkUploadTemplateUrl.toString()} className="has-icon no-visited">
+            <a
+              href={bulkUploadTemplateUrl.toString()}
+              className="has-icon no-visited"
+              download="pdc-bulk-upload-template"
+            >
               <DocumentDuplicateIcon className="icon" />
               Download CSV template of recommended base field keys
             </a>
