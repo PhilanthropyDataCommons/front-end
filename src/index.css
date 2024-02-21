@@ -60,10 +60,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: var(--font-family--monospace);
-}
-
 *,
 *:before,
 *:after {
@@ -133,7 +129,21 @@ dl > .dli > dd {
 
 code {
   font-size: 0.8em;
+  font-family: var(--font-family--monospace);
+  background-color: var(--color--gray--light);
+  border-radius: 0.5ch;
+  padding: 0.5ch;
 }
+
+code.short-code {
+  display: block;
+  background-color: transparent;
+  border-radius: 0;
+  padding: 0;
+  max-width: 50ch;
+  word-wrap: break-word;
+}
+
 
 .quiet {
   color: var(--color--gray--medium-dark);
