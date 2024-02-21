@@ -3,6 +3,7 @@
 ## February 2024
 
 - Add bulk upload of proposal data via CSV
+- Add Developers and About menus to site navbar
 
 ## November 2023
 
