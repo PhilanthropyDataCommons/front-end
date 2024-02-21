@@ -1,9 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import { ArrowRightOnRectangleIcon, ArrowUpOnSquareIcon } from '@heroicons/react/24/outline';
+import {
+  ArrowRightOnRectangleIcon,
+  ArrowUpOnSquareIcon,
+} from '@heroicons/react/24/outline';
 
 import {
   Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
   DropdownMenuText,
   DropdownMenuLink,
 } from '../components/Dropdown';
@@ -19,11 +24,13 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    trigger: 'Toggle menu',
     children: [
-      <DropdownMenuLink to="/" key="item1">Item 1</DropdownMenuLink>,
-      <DropdownMenuLink to="/" key="item2">Item 2</DropdownMenuLink>,
-      <DropdownMenuLink to="/" key="item3">Item 3</DropdownMenuLink>,
+      <DropdownTrigger>Toggle menu</DropdownTrigger>,
+      <DropdownMenu>
+        <DropdownMenuLink to="/" key="item1">Item 1</DropdownMenuLink>
+        <DropdownMenuLink to="/" key="item2">Item 2</DropdownMenuLink>
+        <DropdownMenuLink to="/" key="item3">Item 3</DropdownMenuLink>
+      </DropdownMenu>,
     ],
   },
   // Storybook elements are placed inside `overflow:hidden` containers,
@@ -35,14 +42,21 @@ export const Default: Story = {
   ],
 };
 
+/**
+ * **Note:**
+ * We have forced the trigger to be aligned on the right side of the Storybook canvas
+ * in order to demonstrate a right-aligned menu without overflowing the canvas boundaries.
+ * In real use, the trigger does not need to be right-aligned.
+ */
 export const RightAligned: Story = {
   args: {
-    align: 'right',
-    trigger: 'Toggle menu',
     children: [
-      <DropdownMenuLink to="/" key="item1">Item 1</DropdownMenuLink>,
-      <DropdownMenuLink to="/" key="item2">Item 2</DropdownMenuLink>,
-      <DropdownMenuLink to="/" key="item3">Item 3</DropdownMenuLink>,
+      <DropdownTrigger>Toggle menu</DropdownTrigger>,
+      <DropdownMenu align="right">
+        <DropdownMenuLink to="/" key="item1">Item 1</DropdownMenuLink>
+        <DropdownMenuLink to="/" key="item2">Item 2</DropdownMenuLink>
+        <DropdownMenuLink to="/" key="item3">Item 3</DropdownMenuLink>
+      </DropdownMenu>,
     ],
   },
   decorators: [
@@ -61,14 +75,16 @@ export const RightAligned: Story = {
 
 export const WithIconInTrigger: Story = {
   args: {
-    trigger: [
-      <ArrowUpOnSquareIcon key="icon" />,
-      'Toggle menu',
-    ],
     children: [
-      <DropdownMenuLink to="/" key="item1">Item 1</DropdownMenuLink>,
-      <DropdownMenuLink to="/" key="item2">Item 2</DropdownMenuLink>,
-      <DropdownMenuLink to="/" key="item3">Item 3</DropdownMenuLink>,
+      <DropdownTrigger>
+        <ArrowUpOnSquareIcon key="icon" />
+        Toggle menu
+      </DropdownTrigger>,
+      <DropdownMenu>
+        <DropdownMenuLink to="/" key="item1">Item 1</DropdownMenuLink>
+        <DropdownMenuLink to="/" key="item2">Item 2</DropdownMenuLink>
+        <DropdownMenuLink to="/" key="item3">Item 3</DropdownMenuLink>
+      </DropdownMenu>,
     ],
   },
   decorators: [
@@ -78,12 +94,16 @@ export const WithIconInTrigger: Story = {
 
 export const WithMenuTitle: Story = {
   args: {
-    trigger: 'Toggle menu',
     children: [
-      <DropdownMenuText key="title1">Some optional explainer text for the menu items:</DropdownMenuText>,
-      <DropdownMenuLink to="/" key="item1">Item 1</DropdownMenuLink>,
-      <DropdownMenuLink to="/" key="item2">Item 2</DropdownMenuLink>,
-      <DropdownMenuLink to="/" key="item3">Item 3</DropdownMenuLink>,
+      <DropdownTrigger>Toggle menu</DropdownTrigger>,
+      <DropdownMenu>
+        <DropdownMenuText key="title1">
+          Some optional explainer text for the menu items:
+        </DropdownMenuText>
+        <DropdownMenuLink to="/" key="item1">Item 1</DropdownMenuLink>
+        <DropdownMenuLink to="/" key="item2">Item 2</DropdownMenuLink>
+        <DropdownMenuLink to="/" key="item3">Item 3</DropdownMenuLink>
+      </DropdownMenu>,
     ],
   },
   decorators: [
@@ -93,16 +113,20 @@ export const WithMenuTitle: Story = {
 
 export const WithMultipleMenuTitles: Story = {
   args: {
-    trigger: 'Toggle menu',
     children: [
-      <DropdownMenuText key="title1">Some optional explainer text for the menu items:</DropdownMenuText>,
-      <DropdownMenuLink to="/" key="item1">Item 1</DropdownMenuLink>,
-      <DropdownMenuLink to="/" key="item2">Item 2</DropdownMenuLink>,
-      <DropdownMenuLink to="/" key="item3">Item 3</DropdownMenuLink>,
-      <DropdownMenuText key="title2">…or mid-stream…</DropdownMenuText>,
-      <DropdownMenuLink to="/" key="item4">Item 4</DropdownMenuLink>,
-      <DropdownMenuLink to="/" key="item5">Item 5</DropdownMenuLink>,
-      <DropdownMenuText key="title3">…or even at the end.</DropdownMenuText>,
+      <DropdownTrigger>Toggle menu</DropdownTrigger>,
+      <DropdownMenu>
+        <DropdownMenuText key="title1">
+          Some optional explainer text for the menu items:
+        </DropdownMenuText>
+        <DropdownMenuLink to="/" key="item1">Item 1</DropdownMenuLink>
+        <DropdownMenuLink to="/" key="item2">Item 2</DropdownMenuLink>
+        <DropdownMenuLink to="/" key="item3">Item 3</DropdownMenuLink>
+        <DropdownMenuText key="title2">…or mid-stream…</DropdownMenuText>
+        <DropdownMenuLink to="/" key="item4">Item 4</DropdownMenuLink>
+        <DropdownMenuLink to="/" key="item5">Item 5</DropdownMenuLink>
+        <DropdownMenuText key="title3">…or even at the end.</DropdownMenuText>
+      </DropdownMenu>,
     ],
   },
   decorators: [
@@ -112,14 +136,20 @@ export const WithMultipleMenuTitles: Story = {
 
 export const WithMenuItemIcons: Story = {
   args: {
-    trigger: 'Toggle menu',
     children: [
-      <DropdownMenuLink to="/" key="item1">
-        Item 1
-        <ArrowRightOnRectangleIcon />
-      </DropdownMenuLink>,
-      <DropdownMenuLink to="/" key="item2">Item 2</DropdownMenuLink>,
-      <DropdownMenuLink to="/" key="item3">Item 3</DropdownMenuLink>,
+      <DropdownTrigger>Toggle menu</DropdownTrigger>,
+      <DropdownMenu>
+        <DropdownMenuLink
+          to="/"
+          icon={<ArrowRightOnRectangleIcon />}
+          alignIcon="right"
+          key="item1"
+        >
+          Item 1
+        </DropdownMenuLink>
+        <DropdownMenuLink to="/" key="item2">Item 2</DropdownMenuLink>
+        <DropdownMenuLink to="/" key="item3">Item 3</DropdownMenuLink>
+      </DropdownMenu>,
     ],
   },
   decorators: [

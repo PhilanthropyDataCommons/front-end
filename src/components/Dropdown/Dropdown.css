@@ -1,6 +1,7 @@
 :root {
   --dropdown--menu--border-radius: 8px;
   --dropdown--menu--spacing: var(--accessible-spacing--1x);
+  --dropdown--menu--width: 30ch;
   --dropdown--menu-item--icon-size: 1.5em;
 }
 
@@ -10,11 +11,8 @@
 }
 
 .dropdown-trigger {
-  /* Hide the disclosure triangle that is natively applied to `<summary>` elements.
-     This is already implicit because the dropdown-trigger has the `.button` class applied,
-     which class specifies the `all: unset` property that has this same effect.
-     However, we shouldn't rely on that implicit effect,
-     so here we make our intention explicit. */
+  user-select: none;
+  /* Hide the disclosure triangle that is natively applied to `<summary>` elements. */
   list-style: none;
 }
 
@@ -26,6 +24,7 @@
 .dropdown[open] > .dropdown-trigger {
   --button--primary-color: var(--color--blue);
   --button--contrast-color: var(--color--gray--lighter);
+  --navbar-item--background-color: #0001;
 }
 
 /* This generates an invisible backdrop when the dropdown is open,
@@ -45,7 +44,7 @@
 .dropdown-menu {
   position: absolute;
   z-index: 100;
-  width: 30ch;
+  width: var(--dropdown--menu--width);
 
   background-color: white;
   border-radius: 8px;
@@ -56,11 +55,11 @@
   flex-direction: column;
 }
 
-.dropdown.dropdown--left > .dropdown-menu {
+.dropdown-menu.left {
   left: 0;
 }
 
-.dropdown.dropdown--right > .dropdown-menu {
+.dropdown-menu.right {
   right: 0;
 }
 
@@ -98,11 +97,26 @@
   font-weight: var(--font-weight--medium);
   text-decoration: none;
   padding: var(--dropdown--menu--spacing);
+}
 
+.dropdown-menu-link.has-icon {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: var(--fixed-spacing--1x);
+}
+
+.dropdown-menu-link.has-icon.align-icon--right {
+  justify-content: space-between;
   gap: var(--fixed-spacing--2x);
+}
+
+.dropdown-menu-link .title {
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+.dropdown-menu-link .description {
+  font-weight: normal;
 }
 
 .dropdown-menu-link:hover {
