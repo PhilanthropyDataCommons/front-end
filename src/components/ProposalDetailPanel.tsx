@@ -12,7 +12,13 @@ import {
   PanelTitleWrapper,
 } from './Panel';
 import { ProposalTable } from './ProposalTable';
-import { Dropdown, DropdownMenuLink, DropdownMenuText } from './Dropdown';
+import {
+  Dropdown,
+  DropdownMenu,
+  DropdownMenuLink,
+  DropdownMenuText,
+  DropdownTrigger,
+} from './Dropdown';
 
 interface ProposalDetailPanelProps {
   title: string | undefined;
@@ -56,32 +62,32 @@ const ProposalDetailPanel = ({
         </PanelTitleTags>
       </PanelTitleWrapper>
       <PanelActions>
-        <Dropdown
-          align="right"
-          trigger={(
-            <>
-              <CircleStackIcon />
-              Data providers
-            </>
-        )}
-        >
-          <DropdownMenuText>
-            View applicant data from one of the data platform providers:
-          </DropdownMenuText>
-          <DropdownMenuLink
-            to={`/proposals/${proposalId}/provider/candid`}
-            key="candid"
-          >
-            Candid
-            <ArrowRightOnRectangleIcon />
-          </DropdownMenuLink>
-          <DropdownMenuLink
-            to={`/proposals/${proposalId}/provider/charity-navigator`}
-            key="charity-navigator"
-          >
-            Charity Navigator
-            <ArrowRightOnRectangleIcon />
-          </DropdownMenuLink>
+        <Dropdown>
+          <DropdownTrigger>
+            <CircleStackIcon />
+            Data providers
+          </DropdownTrigger>
+          <DropdownMenu align="right">
+            <DropdownMenuText>
+              View applicant data from one of the data platform providers:
+            </DropdownMenuText>
+            <DropdownMenuLink
+              to={`/proposals/${proposalId}/provider/candid`}
+              icon={<ArrowRightOnRectangleIcon />}
+              alignIcon="right"
+              key="candid"
+            >
+              Candid
+            </DropdownMenuLink>
+            <DropdownMenuLink
+              to={`/proposals/${proposalId}/provider/charity-navigator`}
+              icon={<ArrowRightOnRectangleIcon />}
+              alignIcon="right"
+              key="charity-navigator"
+            >
+              Charity Navigator
+            </DropdownMenuLink>
+          </DropdownMenu>
         </Dropdown>
       </PanelActions>
     </PanelHeader>

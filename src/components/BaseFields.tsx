@@ -1,5 +1,4 @@
 import React from 'react';
-import './BaseFields.css';
 import { ApiBaseField } from '../pdc-api';
 import {
   Table,
@@ -19,7 +18,7 @@ const BaseFieldListTableRow = ({
 }: BaseFieldListTableRowProps) => (
   <TableRow>
     <RowCell>
-      <code className="base-field-short-code">
+      <code className="short-code">
         {field.shortCode}
       </code>
     </RowCell>

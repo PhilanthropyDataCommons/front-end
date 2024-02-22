@@ -64,7 +64,7 @@ export const ProposalTable = ({
         }) => (
           <TableRow key={position}>
             <RowHead>
-              {displayShortCodes ? <code>{shortCode}</code> : fieldName}
+              {displayShortCodes ? <code className="short-code">{shortCode}</code> : fieldName}
             </RowHead>
             <RowCell>
               {value}
