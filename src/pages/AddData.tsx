@@ -17,6 +17,8 @@ import { BulkUploaderFilePicker } from '../components/BulkUploaderFilePicker';
 import { BulkUploadList } from '../components/BulkUploadList';
 import './AddData.css';
 
+const REFRESH_BULK_UPLOADS_INTERVAL = 5000;
+
 const BaseFieldsLoader = () => {
   const [fields] = useBaseFields();
   if (fields === null) {
@@ -67,10 +69,19 @@ const AddDataLoader = () => {
 
   useEffect(() => {
     document.title = 'Add Data - Philanthropy Data Commons';
+
     if (bulkUploadResponse?.entries) {
       setBulkUploads(bulkUploadResponse.entries);
     }
-  }, [bulkUploadResponse]);
+
+    const intervalId = setInterval(() => {
+      refreshBulkUploads();
+    }, REFRESH_BULK_UPLOADS_INTERVAL);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [bulkUploadResponse, refreshBulkUploads]);
 
   return (
     <PanelGrid sidebarred>
