@@ -1,6 +1,6 @@
 import React from 'react';
 import { DocumentTextIcon } from '@heroicons/react/24/solid';
-import { ArrowRightOnRectangleIcon, CircleStackIcon } from '@heroicons/react/24/outline';
+import { ArrowRightStartOnRectangleIcon, CircleStackIcon } from '@heroicons/react/24/outline';
 import {
   Panel,
   PanelActions,
@@ -73,7 +73,7 @@ const ProposalDetailPanel = ({
             </DropdownMenuText>
             <DropdownMenuLink
               to={`/proposals/${proposalId}/provider/candid`}
-              icon={<ArrowRightOnRectangleIcon />}
+              icon={<ArrowRightStartOnRectangleIcon />}
               alignIcon="right"
               key="candid"
             >
@@ -81,7 +81,7 @@ const ProposalDetailPanel = ({
             </DropdownMenuLink>
             <DropdownMenuLink
               to={`/proposals/${proposalId}/provider/charity-navigator`}
-              icon={<ArrowRightOnRectangleIcon />}
+              icon={<ArrowRightStartOnRectangleIcon />}
               alignIcon="right"
               key="charity-navigator"
             >

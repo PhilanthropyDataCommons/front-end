@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import {
-  ArrowRightOnRectangleIcon,
+  ArrowRightStartOnRectangleIcon,
   ArrowUpOnSquareIcon,
 } from '@heroicons/react/24/outline';
 
@@ -141,7 +141,7 @@ export const WithMenuItemIcons: Story = {
       <DropdownMenu>
         <DropdownMenuLink
           to="/"
-          icon={<ArrowRightOnRectangleIcon />}
+          icon={<ArrowRightStartOnRectangleIcon />}
           alignIcon="right"
           key="item1"
         >
