@@ -24,3 +24,13 @@ As a reviewer,
 be sure to review `RECENT_CHANGES.md` additions as well —
 and if the submitter didn't write one,
 be sure to consider whether they should.
+
+### Ignored revisions
+
+We have set up a file to track commits that are focused on formatting changes. It is possible to [ignore these commits when running git blame](https://akrabat.com/ignoring-revisions-with-git-blame/).
+
+You can configure your local git to always ignore these commits by invoking:
+
+```
+git config blame.ignoreRevsFile .git-blame-ignore-revs
+```
