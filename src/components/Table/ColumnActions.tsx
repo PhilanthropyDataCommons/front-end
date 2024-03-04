@@ -1,15 +1,13 @@
 import React from 'react';
 
 interface ColumnActionsProps {
-  children: React.ReactNode;
-  className?: string;
+	children: React.ReactNode;
+	className?: string;
 }
 
 export const ColumnActions = ({
-  children,
-  className = '',
+	children,
+	className = '',
 }: ColumnActionsProps) => (
-  <div className={`column-actions ${className}`.trim()}>
-    {children}
-  </div>
+	<div className={`column-actions ${className}`.trim()}>{children}</div>
 );

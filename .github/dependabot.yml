@@ -1,33 +1,33 @@
 version: 2
 updates:
-  - package-ecosystem: "npm"
-    directory: "/"
+  - package-ecosystem: 'npm'
+    directory: '/'
     schedule:
-      interval: "weekly"
-      timezone: "America/Los_Angeles"
-      time: "01:00"
-      day: "monday"
+      interval: 'weekly'
+      timezone: 'America/Los_Angeles'
+      time: '01:00'
+      day: 'monday'
     open-pull-requests-limit: 10
     ignore:
-      - dependency-name: "@types/node"
+      - dependency-name: '@types/node'
         update-types:
-          - "version-update:semver-major"
+          - 'version-update:semver-major'
     groups:
       storybook:
-        dependency-type: "development"
+        dependency-type: 'development'
         patterns:
-          - "storybook"
-          - "@storybook/*"
+          - 'storybook'
+          - '@storybook/*'
       react:
         patterns:
-          - "react"
-          - "react-dom"
-          - "@types/react"
-          - "@types/react-dom"
+          - 'react'
+          - 'react-dom'
+          - '@types/react'
+          - '@types/react-dom'
 
-  - package-ecosystem: "github-actions"
-    directory: ".github/workflows"
+  - package-ecosystem: 'github-actions'
+    directory: '.github/workflows'
     schedule:
-      interval: "daily"
-      timezone: "America/Los_Angeles"
-      time: "12:00"
+      interval: 'daily'
+      timezone: 'America/Los_Angeles'
+      time: '12:00'

@@ -1,13 +1,11 @@
 import React from 'react';
 
 interface AppMainProps {
-  children: React.ReactNode;
+	children: React.ReactNode;
 }
 
 const AppMain = ({ children }: AppMainProps) => (
-  <main className="App-main">
-    {children}
-  </main>
+	<main className="App-main">{children}</main>
 );
 
 export { AppMain };

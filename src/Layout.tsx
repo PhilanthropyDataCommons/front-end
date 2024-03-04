@@ -4,12 +4,12 @@ import { AppHeader } from './components/AppHeader';
 import { AppMain } from './components/AppMain';
 
 const Layout = () => (
-  <div className="App">
-    <AppHeader />
-    <AppMain>
-      <Outlet />
-    </AppMain>
-  </div>
+	<div className="App">
+		<AppHeader />
+		<AppMain>
+			<Outlet />
+		</AppMain>
+	</div>
 );
 
 export { Layout };

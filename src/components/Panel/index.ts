@@ -9,13 +9,13 @@ import { PanelTag } from './PanelTag';
 import { PanelBody } from './PanelBody';
 
 export {
-  ClosablePanel,
-  Panel,
-  PanelHeader,
-  PanelActions,
-  PanelTitleWrapper,
-  PanelTitle,
-  PanelTitleTags,
-  PanelTag,
-  PanelBody,
+	ClosablePanel,
+	Panel,
+	PanelHeader,
+	PanelActions,
+	PanelTitleWrapper,
+	PanelTitle,
+	PanelTitleTags,
+	PanelTag,
+	PanelBody,
 };

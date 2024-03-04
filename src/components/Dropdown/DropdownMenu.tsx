@@ -1,18 +1,16 @@
 import React from 'react';
 
 interface DropdownMenuProps {
-  children: React.ReactNode;
-  /**
-   * Align the menu to the left or right edge of its toggle.
-   */
-  align?: 'left' | 'right';
+	children: React.ReactNode;
+	/**
+	 * Align the menu to the left or right edge of its toggle.
+	 */
+	align?: 'left' | 'right';
 }
 
 export const DropdownMenu = ({
-  children,
-  align = 'left',
+	children,
+	align = 'left',
 }: DropdownMenuProps) => (
-  <div className={`dropdown-menu ${align}`}>
-    {children}
-  </div>
+	<div className={`dropdown-menu ${align}`}>{children}</div>
 );

@@ -9,20 +9,21 @@ import { Landing } from './pages/Landing';
 import './App.css';
 
 const router = createBrowserRouter([
-  {
-    Component: Layout,
-    children: [
-      { path: '/', Component: Landing },
-      { path: '/add-data', Component: AddData },
-      { path: '/proposals/:proposalId/provider?/:provider?', Component: ProposalDetail },
-      { path: '/proposals', Component: ProposalList },
-      { path: '*', Component: NotFound },
-    ],
-  },
+	{
+		Component: Layout,
+		children: [
+			{ path: '/', Component: Landing },
+			{ path: '/add-data', Component: AddData },
+			{
+				path: '/proposals/:proposalId/provider?/:provider?',
+				Component: ProposalDetail,
+			},
+			{ path: '/proposals', Component: ProposalList },
+			{ path: '*', Component: NotFound },
+		],
+	},
 ]);
 
-const App = () => (
-  <RouterProvider router={router} />
-);
+const App = () => <RouterProvider router={router} />;
 
 export { App };

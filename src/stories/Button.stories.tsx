@@ -5,8 +5,8 @@ import { AdjustmentsHorizontalIcon } from '@heroicons/react/24/outline';
 import { Button } from '../components/Button';
 
 const meta = {
-  component: Button,
-  tags: ['autodocs'],
+	component: Button,
+	tags: ['autodocs'],
 } satisfies Meta<typeof Button>;
 
 export default meta;
@@ -14,103 +14,91 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: {
-    children: 'Button',
-  },
+	args: {
+		children: 'Button',
+	},
 };
 
 export const Blue: Story = {
-  args: {
-    color: 'blue',
-    children: 'Button',
-  },
+	args: {
+		color: 'blue',
+		children: 'Button',
+	},
 };
 
 export const Red: Story = {
-  args: {
-    color: 'red',
-    children: 'Button',
-  },
+	args: {
+		color: 'red',
+		children: 'Button',
+	},
 };
 
 export const WithIcon: Story = {
-  args: {
-    color: 'blue',
-    bordered: true,
-    children: [
-      <AdjustmentsHorizontalIcon />,
-      'Button',
-    ],
-  },
+	args: {
+		color: 'blue',
+		bordered: true,
+		children: [<AdjustmentsHorizontalIcon />, 'Button'],
+	},
 };
 
 export const WithIconAndNotification: Story = {
-  args: {
-    color: 'blue',
-    bordered: true,
-    notification: true,
-    children: [
-      <AdjustmentsHorizontalIcon />,
-      'Button',
-    ],
-  },
+	args: {
+		color: 'blue',
+		bordered: true,
+		notification: true,
+		children: [<AdjustmentsHorizontalIcon />, 'Button'],
+	},
 };
 
 export const Inverted: Story = {
-  args: {
-    inverted: true,
-    children: 'Button',
-  },
+	args: {
+		inverted: true,
+		children: 'Button',
+	},
 };
 
 export const InvertedBlue: Story = {
-  args: {
-    color: 'blue',
-    inverted: true,
-    children: 'Button',
-  },
+	args: {
+		color: 'blue',
+		inverted: true,
+		children: 'Button',
+	},
 };
 
 export const InvertedRed: Story = {
-  args: {
-    color: 'red',
-    inverted: true,
-    children: 'Button',
-  },
+	args: {
+		color: 'red',
+		inverted: true,
+		children: 'Button',
+	},
 };
 
 export const InvertedWithIcon: Story = {
-  args: {
-    color: 'blue',
-    inverted: true,
-    children: [
-      <AdjustmentsHorizontalIcon />,
-      'Button',
-    ],
-  },
+	args: {
+		color: 'blue',
+		inverted: true,
+		children: [<AdjustmentsHorizontalIcon />, 'Button'],
+	},
 };
 
 export const InvertedWithIconAndNotification: Story = {
-  args: {
-    color: 'blue',
-    inverted: true,
-    notification: true,
-    children: [
-      <AdjustmentsHorizontalIcon />,
-      'Button',
-    ],
-  },
+	args: {
+		color: 'blue',
+		inverted: true,
+		notification: true,
+		children: [<AdjustmentsHorizontalIcon />, 'Button'],
+	},
 };
 
 export const IconOnly: Story = {
-  args: {
-    children: <AdjustmentsHorizontalIcon />,
-  },
+	args: {
+		children: <AdjustmentsHorizontalIcon />,
+	},
 };
 
 export const Disabled: Story = {
-  args: {
-    children: 'Button',
-    disabled: true,
-  },
+	args: {
+		children: 'Button',
+		disabled: true,
+	},
 };

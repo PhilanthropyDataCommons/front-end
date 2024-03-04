@@ -1,4 +1,5 @@
 # Philanthropy Data Commons Front End
+
 A UI for interacting with the data stored in the PDC service.
 
 ## Dependencies
@@ -19,7 +20,7 @@ The IdP needs a client for the front-end.
 The IdP should be configured for the client to use the
 [Authorization Code flow](https://oauth.net/2/grant-types/authorization-code/).
 This client is a public client,
-and so should *not* have a secret,
+and so should _not_ have a secret,
 and should not be able to log in with a client credentials grant.
 
 Set the client root URL to the app's URL

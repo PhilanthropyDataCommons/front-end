@@ -5,9 +5,9 @@ import { DropdownMenuText } from './DropdownMenuText';
 import { DropdownMenuLink } from './DropdownMenuLink';
 
 export {
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownMenuText,
-  DropdownMenuLink,
+	Dropdown,
+	DropdownTrigger,
+	DropdownMenu,
+	DropdownMenuText,
+	DropdownMenuLink,
 };

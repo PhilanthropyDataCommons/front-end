@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface DropdownMenuTextProps {
-  children: React.ReactNode;
+	children: React.ReactNode;
 }
 
 /**
@@ -10,7 +10,5 @@ interface DropdownMenuTextProps {
  * based on where in the markup they appear.
  */
 export const DropdownMenuText = ({ children }: DropdownMenuTextProps) => (
-  <div className="dropdown-menu-text">
-    {children}
-  </div>
+	<div className="dropdown-menu-text">{children}</div>
 );

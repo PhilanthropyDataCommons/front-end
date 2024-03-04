@@ -2,14 +2,14 @@ import React, { useEffect } from 'react';
 import { withOidcSecure } from '@axa-fr/react-oidc';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
-  ApiBaseField,
-  ApiProposal,
-  PROPOSALS_DEFAULT_COUNT,
-  PROPOSALS_DEFAULT_PAGE,
-  PROPOSALS_DEFAULT_QUERY,
-  useBaseFields,
-  useProposal,
-  useProposals,
+	ApiBaseField,
+	ApiProposal,
+	PROPOSALS_DEFAULT_COUNT,
+	PROPOSALS_DEFAULT_PAGE,
+	PROPOSALS_DEFAULT_QUERY,
+	useBaseFields,
+	useProposal,
+	useProposals,
 } from '../pdc-api';
 import { mapProposals } from '../map-proposals';
 import { DataPlatformProviderLoader } from '../components/DataPlatformProvider/DataPlatformProviderLoader';
@@ -17,182 +17,184 @@ import { PanelGrid, PanelGridItem } from '../components/PanelGrid';
 import { ProposalDetailPanel } from '../components/ProposalDetailPanel';
 import { ProposalListGridPanel } from '../components/ProposalListGridPanel';
 import {
-  PROPOSAL_APPLICANT_NAME_CASCADE,
-  PROPOSAL_APPLICANT_NAME_FALLBACK,
+	PROPOSAL_APPLICANT_NAME_CASCADE,
+	PROPOSAL_APPLICANT_NAME_FALLBACK,
 } from '../utils/proposals';
 
 interface ProposalListGridLoaderProps {
-  baseFields: ApiBaseField[] | null;
+	baseFields: ApiBaseField[] | null;
 }
 
-const ProposalListGridLoader = (
-  { baseFields }: ProposalListGridLoaderProps,
-) => {
-  const { proposalId } = useParams();
+const ProposalListGridLoader = ({
+	baseFields,
+}: ProposalListGridLoaderProps) => {
+	const { proposalId } = useParams();
 
-  const [proposals] = useProposals(
-    PROPOSALS_DEFAULT_PAGE,
-    PROPOSALS_DEFAULT_COUNT,
-    PROPOSALS_DEFAULT_QUERY,
-  );
+	const [proposals] = useProposals(
+		PROPOSALS_DEFAULT_PAGE,
+		PROPOSALS_DEFAULT_COUNT,
+		PROPOSALS_DEFAULT_QUERY,
+	);
 
-  if (baseFields === null || proposals === null) {
-    return (
-      <div>Loading data...</div>
-    );
-  }
+	if (baseFields === null || proposals === null) {
+		return <div>Loading data...</div>;
+	}
 
-  return (
-    <PanelGridItem>
-      <ProposalListGridPanel
-        proposals={mapProposals(baseFields, proposals.entries)}
-        activeProposalId={proposalId}
-      />
-    </PanelGridItem>
-  );
+	return (
+		<PanelGridItem>
+			<ProposalListGridPanel
+				proposals={mapProposals(baseFields, proposals.entries)}
+				activeProposalId={proposalId}
+			/>
+		</PanelGridItem>
+	);
 };
 
 const getValueOfBaseField = (
-  baseFields: ApiBaseField[],
-  proposal: ApiProposal,
-  baseFieldShortCode: string,
+	baseFields: ApiBaseField[],
+	proposal: ApiProposal,
+	baseFieldShortCode: string,
 ) => {
-  const field = baseFields.find(({ shortCode }) => (
-    shortCode === baseFieldShortCode
-  ));
-  if (field === undefined) {
-    return undefined;
-  }
-  const fieldValue = proposal.versions[0]?.fieldValues.find(({ applicationFormField }) => (
-    applicationFormField.baseFieldId === field.id
-  ));
-  return fieldValue?.value ?? undefined;
+	const field = baseFields.find(
+		({ shortCode }) => shortCode === baseFieldShortCode,
+	);
+	if (field === undefined) {
+		return undefined;
+	}
+	const fieldValue = proposal.versions[0]?.fieldValues.find(
+		({ applicationFormField }) => applicationFormField.baseFieldId === field.id,
+	);
+	return fieldValue?.value ?? undefined;
 };
 
-const mapBaseFields = (
-  baseFields: ApiBaseField[],
-  proposal: ApiProposal,
-) => (
-  (proposal.versions[0]?.fieldValues ?? []).map(({ applicationFormField, value }) => {
-    const baseField = baseFields.find(({ id }) => (
-      id === applicationFormField.baseFieldId
-    ));
-    return {
-      shortCode: baseField?.shortCode ?? 'missing',
-      fieldName: baseField?.label ?? 'missing',
-      position: applicationFormField.position,
-      value,
-    };
-  })
-);
+const mapBaseFields = (baseFields: ApiBaseField[], proposal: ApiProposal) =>
+	(proposal.versions[0]?.fieldValues ?? []).map(
+		({ applicationFormField, value }) => {
+			const baseField = baseFields.find(
+				({ id }) => id === applicationFormField.baseFieldId,
+			);
+			return {
+				shortCode: baseField?.shortCode ?? 'missing',
+				fieldName: baseField?.label ?? 'missing',
+				position: applicationFormField.position,
+				value,
+			};
+		},
+	);
 
-const getApplicant = (
-  baseFields: ApiBaseField[],
-  proposal: ApiProposal,
-) => {
-  const applicantNameKey = PROPOSAL_APPLICANT_NAME_CASCADE
-    .find((key) => {
-      const baseFieldValue = getValueOfBaseField(baseFields, proposal, key);
-      return typeof baseFieldValue !== 'undefined' && baseFieldValue.trim() !== '';
-    });
+const getApplicant = (baseFields: ApiBaseField[], proposal: ApiProposal) => {
+	const applicantNameKey = PROPOSAL_APPLICANT_NAME_CASCADE.find((key) => {
+		const baseFieldValue = getValueOfBaseField(baseFields, proposal, key);
+		return (
+			typeof baseFieldValue !== 'undefined' && baseFieldValue.trim() !== ''
+		);
+	});
 
-  return applicantNameKey ? (getValueOfBaseField(baseFields, proposal, applicantNameKey)
-    ?? PROPOSAL_APPLICANT_NAME_FALLBACK) : PROPOSAL_APPLICANT_NAME_FALLBACK;
+	return applicantNameKey
+		? getValueOfBaseField(baseFields, proposal, applicantNameKey) ??
+				PROPOSAL_APPLICANT_NAME_FALLBACK
+		: PROPOSAL_APPLICANT_NAME_FALLBACK;
 };
 
 interface ProposalDetailPanelLoaderProps {
-  baseFields: ApiBaseField[] | null;
+	baseFields: ApiBaseField[] | null;
 }
 
-const ProposalDetailPanelLoader = (
-  { baseFields }: ProposalDetailPanelLoaderProps,
-) => {
-  const navigate = useNavigate();
-  const params = useParams();
-  const proposalId = params.proposalId ?? 'missing';
-  const { provider } = params;
-  const [proposal] = useProposal(proposalId);
+const ProposalDetailPanelLoader = ({
+	baseFields,
+}: ProposalDetailPanelLoaderProps) => {
+	const navigate = useNavigate();
+	const params = useParams();
+	const proposalId = params.proposalId ?? 'missing';
+	const { provider } = params;
+	const [proposal] = useProposal(proposalId);
 
-  useEffect(() => {
-    if (baseFields === null || proposal === null) {
-      document.title = 'Proposal Detail - Philanthropy Data Commons';
-    } else {
-      const applicant = getApplicant(baseFields, proposal);
-      document.title = `${applicant} Proposal Detail - Philanthropy Data Commons`;
-    }
-    return () => { document.title = 'Philanthropy Data Commons'; };
-  }, [baseFields, proposal]);
+	useEffect(() => {
+		if (baseFields === null || proposal === null) {
+			document.title = 'Proposal Detail - Philanthropy Data Commons';
+		} else {
+			const applicant = getApplicant(baseFields, proposal);
+			document.title = `${applicant} Proposal Detail - Philanthropy Data Commons`;
+		}
+		return () => {
+			document.title = 'Philanthropy Data Commons';
+		};
+	}, [baseFields, proposal]);
 
-  if (baseFields === null || proposal === null) {
-    return (
-      <>
-        <PanelGridItem key="detailPanel">
-          <ProposalDetailPanel
-            proposalId={0}
-            title="Loading..."
-            applicant="Loading..."
-            applicantId="00-0000000"
-            version={0}
-            values={[]}
-          />
-        </PanelGridItem>
-        { provider && (
-          <PanelGridItem key="platformPanel">
-            <DataPlatformProviderLoader
-              externalId={undefined}
-              onClose={() => { navigate(`/proposals/${proposalId}`); }}
-              provider={provider}
-            />
-          </PanelGridItem>
-        )}
-      </>
-    );
-  }
+	if (baseFields === null || proposal === null) {
+		return (
+			<>
+				<PanelGridItem key="detailPanel">
+					<ProposalDetailPanel
+						proposalId={0}
+						title="Loading..."
+						applicant="Loading..."
+						applicantId="00-0000000"
+						version={0}
+						values={[]}
+					/>
+				</PanelGridItem>
+				{provider && (
+					<PanelGridItem key="platformPanel">
+						<DataPlatformProviderLoader
+							externalId={undefined}
+							onClose={() => {
+								navigate(`/proposals/${proposalId}`);
+							}}
+							provider={provider}
+						/>
+					</PanelGridItem>
+				)}
+			</>
+		);
+	}
 
-  const title = getValueOfBaseField(baseFields, proposal, 'proposal_name');
-  const applicant = getApplicant(baseFields, proposal);
-  const applicantId = getValueOfBaseField(baseFields, proposal, 'organization_tax_id');
-  const version = proposal.versions[0]?.version ?? 0;
-  const values = mapBaseFields(baseFields, proposal);
+	const title = getValueOfBaseField(baseFields, proposal, 'proposal_name');
+	const applicant = getApplicant(baseFields, proposal);
+	const applicantId = getValueOfBaseField(
+		baseFields,
+		proposal,
+		'organization_tax_id',
+	);
+	const version = proposal.versions[0]?.version ?? 0;
+	const values = mapBaseFields(baseFields, proposal);
 
-  return (
-    <>
-      <PanelGridItem key="detailPanel">
-        <ProposalDetailPanel
-          proposalId={proposal.id}
-          title={title}
-          applicant={applicant}
-          applicantId={applicantId}
-          version={version}
-          values={values}
-        />
-      </PanelGridItem>
-      { provider && (
-        <PanelGridItem key="platformPanel">
-          <DataPlatformProviderLoader
-            provider={provider}
-            externalId={applicantId}
-            onClose={() => { navigate(`/proposals/${proposalId}`); }}
-          />
-        </PanelGridItem>
-      )}
-    </>
-  );
+	return (
+		<>
+			<PanelGridItem key="detailPanel">
+				<ProposalDetailPanel
+					proposalId={proposal.id}
+					title={title}
+					applicant={applicant}
+					applicantId={applicantId}
+					version={version}
+					values={values}
+				/>
+			</PanelGridItem>
+			{provider && (
+				<PanelGridItem key="platformPanel">
+					<DataPlatformProviderLoader
+						provider={provider}
+						externalId={applicantId}
+						onClose={() => {
+							navigate(`/proposals/${proposalId}`);
+						}}
+					/>
+				</PanelGridItem>
+			)}
+		</>
+	);
 };
 
 const ProposalDetailLoader = () => {
-  const [baseFields] = useBaseFields();
+	const [baseFields] = useBaseFields();
 
-  return (
-    <PanelGrid sidebarred>
-      <ProposalListGridLoader
-        baseFields={baseFields}
-      />
-      <ProposalDetailPanelLoader
-        baseFields={baseFields}
-      />
-    </PanelGrid>
-  );
+	return (
+		<PanelGrid sidebarred>
+			<ProposalListGridLoader baseFields={baseFields} />
+			<ProposalDetailPanelLoader baseFields={baseFields} />
+		</PanelGrid>
+	);
 };
 
 const ProposalDetail = withOidcSecure(ProposalDetailLoader);

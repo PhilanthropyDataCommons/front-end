@@ -1,131 +1,137 @@
 {
-  "name": "front-end",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@axa-fr/react-oidc": "^7.18.5",
-    "@fontsource/source-sans-pro": "^5.0.8",
-    "@heroicons/react": "^2.1.1",
-    "dayjs": "^1.11.10",
-    "jsonpath-plus": "^8.0.0",
-    "pino": "^8.19.0",
-    "pretty-bytes": "^6.1.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.22.1",
-    "title-case": "^4.3.1",
-    "web-vitals": "^3.5.2"
-  },
-  "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@storybook/addon-essentials": "^7.6.17",
-    "@storybook/addon-interactions": "^7.6.17",
-    "@storybook/addon-links": "^7.6.17",
-    "@storybook/blocks": "^7.3.2",
-    "@storybook/preset-create-react-app": "^7.6.17",
-    "@storybook/react": "^7.6.17",
-    "@storybook/react-webpack5": "^7.6.17",
-    "@storybook/testing-library": "^0.2.2",
-    "@testing-library/jest-dom": "^6.4.2",
-    "@testing-library/react": "^14.2.1",
-    "@testing-library/user-event": "^14.5.2",
-    "@types/jest": "^29.5.12",
-    "@types/node": "^18.19.18",
-    "@types/react": "^18.2.58",
-    "@types/react-dom": "^18.2.19",
-    "babel-plugin-named-exports-order": "^0.0.2",
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-airbnb-typescript": "^17.1.0",
-    "react-scripts": "5.0.1",
-    "storybook": "^7.6.17",
-    "typescript": "^4.9.5"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "npm run build:app && npm run build:storybook",
-    "build:app": "react-scripts build",
-    "build:storybook": "storybook build -o build/storybook",
-    "storybook": "storybook dev -p 6006",
-    "test": "react-scripts test",
-    "lint": "eslint src/",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest",
-      "plugin:@typescript-eslint/recommended",
-      "plugin:@typescript-eslint/recommended-requiring-type-checking",
-      "plugin:@typescript-eslint/strict",
-      "airbnb",
-      "airbnb-typescript"
-    ],
-    "parserOptions": {
-      "project": "./tsconfig.json"
-    },
-    "rules": {
-      "@typescript-eslint/comma-dangle": [
-        "error",
-        {
-          "arrays": "always-multiline",
-          "objects": "always-multiline",
-          "imports": "always-multiline",
-          "exports": "always-multiline",
-          "functions": "only-multiline",
-          "enums": "always-multiline",
-          "generics": "always-multiline",
-          "tuples": "always-multiline"
-        }
-      ],
-      "import/prefer-default-export": "off",
-      "import/no-default-export": "error",
-      "import/no-extraneous-dependencies": [
-        "error",
-        {
-          "devDependencies": [
-            "**/*.test.{ts,tsx}",
-            "src/setupTests.ts",
-            "**/*.stories.*"
-          ],
-          "optionalDependencies": false
-        }
-      ],
-      "react/function-component-definition": [
-        "error",
-        {
-          "namedComponents": "arrow-function",
-          "unnamedComponents": "arrow-function"
-        }
-      ],
-      "react/require-default-props": [
-        "error",
-        {
-          "functions": "defaultArguments"
-        }
-      ]
-    },
-    "overrides": [
-      {
-        "files": [
-          "**/*.stories.*"
-        ],
-        "rules": {
-          "import/no-anonymous-default-export": "off",
-          "import/no-default-export": "off"
-        }
-      }
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+	"name": "front-end",
+	"version": "0.1.0",
+	"private": true,
+	"dependencies": {
+		"@axa-fr/react-oidc": "^7.18.5",
+		"@fontsource/source-sans-pro": "^5.0.8",
+		"@heroicons/react": "^2.1.1",
+		"dayjs": "^1.11.10",
+		"jsonpath-plus": "^8.0.0",
+		"pino": "^8.19.0",
+		"pretty-bytes": "^6.1.1",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-router-dom": "^6.22.1",
+		"title-case": "^4.3.1",
+		"web-vitals": "^3.5.2"
+	},
+	"devDependencies": {
+		"@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+		"@storybook/addon-essentials": "^7.6.17",
+		"@storybook/addon-interactions": "^7.6.17",
+		"@storybook/addon-links": "^7.6.17",
+		"@storybook/blocks": "^7.3.2",
+		"@storybook/preset-create-react-app": "^7.6.17",
+		"@storybook/react": "^7.6.17",
+		"@storybook/react-webpack5": "^7.6.17",
+		"@storybook/testing-library": "^0.2.2",
+		"@testing-library/jest-dom": "^6.4.2",
+		"@testing-library/react": "^14.2.1",
+		"@testing-library/user-event": "^14.5.2",
+		"@types/jest": "^29.5.12",
+		"@types/node": "^18.19.18",
+		"@types/react": "^18.2.58",
+		"@types/react-dom": "^18.2.19",
+		"babel-plugin-named-exports-order": "^0.0.2",
+		"eslint-config-airbnb": "^19.0.4",
+		"eslint-config-airbnb-typescript": "^17.1.0",
+		"eslint-config-prettier": "^9.1.0",
+		"prettier": "^3.2.5",
+		"react-scripts": "5.0.1",
+		"storybook": "^7.6.17",
+		"typescript": "^4.9.5"
+	},
+	"scripts": {
+		"start": "react-scripts start",
+		"build": "npm run build:app && npm run build:storybook",
+		"build:app": "react-scripts build",
+		"build:storybook": "storybook build -o build/storybook",
+		"storybook": "storybook dev -p 6006",
+		"test": "react-scripts test",
+		"lint:prettier": "prettier . --check",
+		"lint:eslint": "eslint ./src --ext .ts,.tsx,.js",
+		"lint": "npm run lint:eslint && npm run lint:prettier",
+		"format": "prettier . --write",
+		"eject": "react-scripts eject"
+	},
+	"eslintConfig": {
+		"extends": [
+			"react-app",
+			"react-app/jest",
+			"plugin:@typescript-eslint/recommended",
+			"plugin:@typescript-eslint/recommended-requiring-type-checking",
+			"plugin:@typescript-eslint/strict",
+			"airbnb",
+			"airbnb-typescript",
+			"prettier"
+		],
+		"parserOptions": {
+			"project": "./tsconfig.json"
+		},
+		"rules": {
+			"@typescript-eslint/comma-dangle": [
+				"error",
+				{
+					"arrays": "always-multiline",
+					"objects": "always-multiline",
+					"imports": "always-multiline",
+					"exports": "always-multiline",
+					"functions": "only-multiline",
+					"enums": "always-multiline",
+					"generics": "always-multiline",
+					"tuples": "always-multiline"
+				}
+			],
+			"import/prefer-default-export": "off",
+			"import/no-default-export": "error",
+			"import/no-extraneous-dependencies": [
+				"error",
+				{
+					"devDependencies": [
+						"**/*.test.{ts,tsx}",
+						"src/setupTests.ts",
+						"**/*.stories.*"
+					],
+					"optionalDependencies": false
+				}
+			],
+			"react/function-component-definition": [
+				"error",
+				{
+					"namedComponents": "arrow-function",
+					"unnamedComponents": "arrow-function"
+				}
+			],
+			"react/require-default-props": [
+				"error",
+				{
+					"functions": "defaultArguments"
+				}
+			]
+		},
+		"overrides": [
+			{
+				"files": [
+					"**/*.stories.*"
+				],
+				"rules": {
+					"import/no-anonymous-default-export": "off",
+					"import/no-default-export": "off"
+				}
+			}
+		]
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	}
 }
