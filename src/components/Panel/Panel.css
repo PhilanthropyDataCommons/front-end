@@ -1,93 +1,93 @@
 :root {
-  --panel--padding: var(--fixed-spacing--1x);
+	--panel--padding: var(--fixed-spacing--1x);
 }
 
 .panel {
-  background-color: white;
-  border-radius: 5px;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
+	background-color: white;
+	border-radius: 5px;
+	box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
 
-  display: grid;
-  grid-template-rows: min-content 1fr;
-  position: relative;
+	display: grid;
+	grid-template-rows: min-content 1fr;
+	position: relative;
 }
 
 .panel-header {
-  grid-row: 1;
+	grid-row: 1;
 
-  display: flex;
-  justify-content: space-between;
-  gap: var(--fixed-spacing--2x);
+	display: flex;
+	justify-content: space-between;
+	gap: var(--fixed-spacing--2x);
 }
 
 .panel-header--padded {
-  padding: var(--panel--padding);
+	padding: var(--panel--padding);
 }
 
 .panel-title {
-  font-size: 1.5rem;
-  font-weight: var(--font-weight--normal);
-  margin-bottom: 0.25em;
+	font-size: 1.5rem;
+	font-weight: var(--font-weight--normal);
+	margin-bottom: 0.25em;
 }
 
 .panel-title-tags {
-  display: flex;
-  flex-wrap: wrap;
-  column-gap: var(--fixed-spacing--2x);
-  row-gap: var(--fixed-spacing--halfx);
+	display: flex;
+	flex-wrap: wrap;
+	column-gap: var(--fixed-spacing--2x);
+	row-gap: var(--fixed-spacing--halfx);
 }
 
 .panel-tag {
-  font-weight: var(--font-weight--medium);
-  line-height: 1.1;
-  color: var(--color--gray--medium);
+	font-weight: var(--font-weight--medium);
+	line-height: 1.1;
+	color: var(--color--gray--medium);
 
-  display: flex;
-  align-items: center;
-  gap: 0.75ch;
+	display: flex;
+	align-items: center;
+	gap: 0.75ch;
 }
 
 .panel-tag > a {
-  color: inherit;
+	color: inherit;
 
-  /* Duplicated, in case the panel tag just contains a link. */
-  display: flex;
-  align-items: center;
-  gap: 0.75ch;
+	/* Duplicated, in case the panel tag just contains a link. */
+	display: flex;
+	align-items: center;
+	gap: 0.75ch;
 }
 
 .panel-tag--link {
-  color: var(--color--blue);
+	color: var(--color--blue);
 }
 
 .panel-tag--link:hover,
 .panel-tag > a:hover {
-  text-decoration: none;
+	text-decoration: none;
 }
 
 .panel-tag .icon {
-  flex-shrink: 0;
-  width: var(--icon-size--text);
-  height: var(--icon-size--text);
+	flex-shrink: 0;
+	width: var(--icon-size--text);
+	height: var(--icon-size--text);
 }
 
 .panel-tag .badge {
-  --badge--background-color: var(--color--gray--medium);
-  line-height: var(--line-height);
+	--badge--background-color: var(--color--gray--medium);
+	line-height: var(--line-height);
 }
 
 .panel-actions {
-  display: flex;
-  gap: var(--fixed-spacing--1x);
+	display: flex;
+	gap: var(--fixed-spacing--1x);
 }
 
 .panel-body {
-  grid-row: 2;
-  overflow: auto;
-  scroll-behavior: smooth;
+	grid-row: 2;
+	overflow: auto;
+	scroll-behavior: smooth;
 }
 
 .panel-body--padded {
-  padding: var(--panel--padding);
-  scroll-padding-top: var(--panel--padding);
+	padding: var(--panel--padding);
+	scroll-padding-top: var(--panel--padding);
 }

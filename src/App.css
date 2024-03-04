@@ -1,86 +1,86 @@
 .App {
-  position: absolute;
-  inset: 0;
+	position: absolute;
+	inset: 0;
 
-  padding: var(--fixed-spacing--1x);
+	padding: var(--fixed-spacing--1x);
 
-  display: grid;
-  grid: min-content 1fr / auto;
-  gap: var(--fixed-spacing--1x);
+	display: grid;
+	grid: min-content 1fr / auto;
+	gap: var(--fixed-spacing--1x);
 }
 
 .App-header {
-  padding: var(--fixed-spacing--1x);
+	padding: var(--fixed-spacing--1x);
 
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .App-logo {
-  aspect-ratio: 4.2;
+	aspect-ratio: 4.2;
 }
 
 .App-header .App-logo {
-  height: 60px;
+	height: 60px;
 }
 
 .App-navbar {
-  --navbar-item--color: black;
-  --navbar-item--background-color: transparent;
+	--navbar-item--color: black;
+	--navbar-item--background-color: transparent;
 }
 
 .App-navbar .dropdown {
-  --dropdown--menu--width: 35ch;
+	--dropdown--menu--width: 35ch;
 }
 
 .App-navbar ul {
-  display: flex;
-  align-items: center;
-  gap: calc(var(--fixed-spacing--1x) * 2);
+	display: flex;
+	align-items: center;
+	gap: calc(var(--fixed-spacing--1x) * 2);
 }
 
 .App-navbar__item {
-  all: unset;
+	all: unset;
 
-  display: flex;
-  align-items: flex-start;
-  gap: calc(var(--fixed-spacing--1x) / 2);
+	display: flex;
+	align-items: flex-start;
+	gap: calc(var(--fixed-spacing--1x) / 2);
 
-  font-size: 0.875rem;
-  color: var(--navbar-item--color);
-  background-color: var(--navbar-item--background-color);
-  text-transform: uppercase;
-  font-weight: var(--font-weight--bold);
-  text-decoration: none;
-  padding: var(--fixed-spacing--1x);
-  border-radius: 5px;
+	font-size: 0.875rem;
+	color: var(--navbar-item--color);
+	background-color: var(--navbar-item--background-color);
+	text-transform: uppercase;
+	font-weight: var(--font-weight--bold);
+	text-decoration: none;
+	padding: var(--fixed-spacing--1x);
+	border-radius: 5px;
 }
 
 .App-navbar__item:where(a, button, summary) {
-  cursor: pointer;
+	cursor: pointer;
 }
 
 .App-navbar__item.active {
-  --navbar-item--color: var(--color--blue);
+	--navbar-item--color: var(--color--blue);
 }
 
 .App-navbar__item:where(a, button, summary):is(:hover, :focus) {
-  --navbar-item--background-color: #0001;
+	--navbar-item--background-color: #0001;
 }
 
 .App-navbar__item svg {
-  height: 2em;
+	height: 2em;
 }
 
 .App-navbar__item--loading {
-  color: var(--color--gray--medium);
+	color: var(--color--gray--medium);
 }
 
 .App-navbar__item--error {
-  color: var(--color--red);
+	color: var(--color--red);
 }
 
 .App-main {
-  position: relative;
+	position: relative;
 }

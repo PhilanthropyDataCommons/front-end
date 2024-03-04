@@ -1,15 +1,13 @@
 import React from 'react';
 
 interface PanelActionsProps {
-  children: React.ReactNode;
-  className?: string;
+	children: React.ReactNode;
+	className?: string;
 }
 
 export const PanelActions = ({
-  children,
-  className = '',
+	children,
+	className = '',
 }: PanelActionsProps) => (
-  <div className={`panel-actions ${className}`.trim()}>
-    {children}
-  </div>
+	<div className={`panel-actions ${className}`.trim()}>{children}</div>
 );

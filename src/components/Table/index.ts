@@ -9,13 +9,13 @@ import { RowHead } from './RowHead';
 import { RowCell } from './RowCell';
 
 export {
-  Table,
-  TableHead,
-  ColumnHead,
-  ColumnActions,
-  ColumnAction,
-  TableBody,
-  TableRow,
-  RowHead,
-  RowCell,
+	Table,
+	TableHead,
+	ColumnHead,
+	ColumnActions,
+	ColumnAction,
+	TableBody,
+	TableRow,
+	RowHead,
+	RowCell,
 };

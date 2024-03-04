@@ -1,37 +1,37 @@
 :root {
-  --proposal-list-grid-item--details-color: var(--color--gray--medium-dark);
+	--proposal-list-grid-item--details-color: var(--color--gray--medium-dark);
 }
 
 .proposal-list-grid-item {
-  padding: var(--fixed-spacing--1x);
-  color: inherit;
-  text-decoration: none;
-  border-bottom: 1px solid var(--color--gray--light);
-  line-height: 1.1;
-  display: flex;
-  flex-direction: column;
-  gap: var(--fixed-spacing--halfx);
+	padding: var(--fixed-spacing--1x);
+	color: inherit;
+	text-decoration: none;
+	border-bottom: 1px solid var(--color--gray--light);
+	line-height: 1.1;
+	display: flex;
+	flex-direction: column;
+	gap: var(--fixed-spacing--halfx);
 }
 
 .proposal-list-grid-item:hover {
-  background-color: var(--color--gray--lighter);
+	background-color: var(--color--gray--lighter);
 }
 
 .proposal-list-grid-item.active {
-  --proposal-list-grid-item--details-color: var(--color--gray--darker);
-  background-color: var(--color--blue--lighter);
+	--proposal-list-grid-item--details-color: var(--color--gray--darker);
+	background-color: var(--color--blue--lighter);
 }
 
 .proposal-list-grid-item:last-child {
-  border-bottom: none;
+	border-bottom: none;
 }
 
 .proposal--applicant-name {
-  font-weight: var(--font-weight--medium);
+	font-weight: var(--font-weight--medium);
 }
 
 .proposal--applicant-address,
 .proposal--proposal-name {
-  color: var(--proposal-list-grid-item--details-color);
-  font-size: 0.9em;
+	color: var(--proposal-list-grid-item--details-color);
+	font-size: 0.9em;
 }

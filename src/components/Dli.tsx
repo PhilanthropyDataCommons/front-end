@@ -1,8 +1,8 @@
 import React from 'react';
 
 interface DliProps {
-  children: React.ReactNode;
-  className?: string;
+	children: React.ReactNode;
+	className?: string;
 }
 
 /**
@@ -17,9 +17,6 @@ interface DliProps {
  * ```
  * Since this isn't a native element in HTML, this virtually creates it as a DIV.
  */
-export const Dli = ({
-  children,
-  className = '',
-}: DliProps) => (
-  <div className={`dli ${className}`.trim()}>{children}</div>
+export const Dli = ({ children, className = '' }: DliProps) => (
+	<div className={`dli ${className}`.trim()}>{children}</div>
 );

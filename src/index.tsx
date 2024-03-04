@@ -13,23 +13,23 @@ import './index.css';
 const logger = getLogger('index');
 
 const configuration = getConfiguration(
-  process.env.REACT_APP_OIDC_AUTHORITY,
-  process.env.REACT_APP_OIDC_CLIENT_ID,
+	process.env.REACT_APP_OIDC_AUTHORITY,
+	process.env.REACT_APP_OIDC_CLIENT_ID,
 );
 logger.debug(configuration, 'OIDC Configuration');
 
 const rootElement = document.getElementById('root');
 if (rootElement) {
-  const root = ReactDOM.createRoot(rootElement);
-  root.render(
-    <React.StrictMode>
-      <OidcProvider configuration={configuration}>
-        <App />
-      </OidcProvider>
-    </React.StrictMode>,
-  );
+	const root = ReactDOM.createRoot(rootElement);
+	root.render(
+		<React.StrictMode>
+			<OidcProvider configuration={configuration}>
+				<App />
+			</OidcProvider>
+		</React.StrictMode>,
+	);
 } else {
-  logger.error('Could not find root element to render into.');
+	logger.error('Could not find root element to render into.');
 }
 
 // If you want to start measuring performance in your app, pass a function
