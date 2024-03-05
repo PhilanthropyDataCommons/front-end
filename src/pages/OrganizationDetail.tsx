@@ -3,8 +3,35 @@ import { useParams } from 'react-router-dom';
 import { withOidcSecure } from '@axa-fr/react-oidc';
 import { Organization } from '@pdc/sdk';
 import { PanelGrid, PanelGridItem } from '../components/PanelGrid';
-import { useOrganization } from '../pdc-api';
+import {
+	useOrganization,
+	useOrganizations,
+	ORGANIZATIONS_DEFAULT_PAGE,
+	ORGANIZATIONS_DEFAULT_COUNT,
+} from '../pdc-api';
 import { OrganizationDetailPanel } from '../components/OrganizationDetailPanel';
+import { OrganizationListGridPanel } from '../components/OrganizationListGridPanel';
+
+const OrganizationListGridPanelLoader = () => {
+	const { organizationId } = useParams();
+	const [organizations] = useOrganizations(
+		ORGANIZATIONS_DEFAULT_PAGE,
+		ORGANIZATIONS_DEFAULT_COUNT,
+	);
+
+	if (organizations === null) {
+		return <div>Loading data...</div>;
+	}
+
+	return (
+		<PanelGridItem key="detailPanel">
+			<OrganizationListGridPanel
+				organizations={organizations}
+				activeOrganizationId={organizationId}
+			/>
+		</PanelGridItem>
+	);
+};
 
 const OrganizationDetailPanelLoader = () => {
 	const params = useParams();
@@ -15,7 +42,7 @@ const OrganizationDetailPanelLoader = () => {
 		if (organization === null) {
 			document.title = 'Loading... - Philanthropy Data Commons';
 		} else {
-			document.title = `${organization.name} Proposal Detail - Philanthropy Data Commons`;
+			document.title = `${organization.name} Organization Detail - Philanthropy Data Commons`;
 		}
 		return () => {
 			document.title = 'Philanthropy Data Commons';
@@ -43,7 +70,8 @@ const OrganizationDetailPanelLoader = () => {
 };
 
 const OrganizationDetailLoader = () => (
-	<PanelGrid>
+	<PanelGrid sidebarred>
+		<OrganizationListGridPanelLoader />
 		<OrganizationDetailPanelLoader />
 	</PanelGrid>
 );

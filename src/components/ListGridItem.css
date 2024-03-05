@@ -2,7 +2,7 @@
 	--proposal-list-grid-item--details-color: var(--color--gray--medium-dark);
 }
 
-.proposal-list-grid-item {
+.list-grid-item {
 	padding: var(--fixed-spacing--1x);
 	color: inherit;
 	text-decoration: none;
@@ -13,25 +13,30 @@
 	gap: var(--fixed-spacing--halfx);
 }
 
-.proposal-list-grid-item:hover {
+.list-grid-item:hover {
 	background-color: var(--color--gray--lighter);
 }
 
-.proposal-list-grid-item.active {
+.list-grid-item.active {
 	--proposal-list-grid-item--details-color: var(--color--gray--darker);
 	background-color: var(--color--blue--lighter);
 }
 
-.proposal-list-grid-item:last-child {
+.list-grid-item:last-child {
 	border-bottom: none;
 }
 
-.proposal--applicant-name {
+.list-grid-item-title {
 	font-weight: var(--font-weight--medium);
 }
 
-.proposal--applicant-address,
-.proposal--proposal-name {
+.list-grid-item-applicant-address,
+.list-grid-item-proposal-name {
+	color: var(--proposal-list-grid-item--details-color);
+	font-size: 0.9em;
+}
+
+.list-grid-item-organization-ein {
 	color: var(--proposal-list-grid-item--details-color);
 	font-size: 0.9em;
 }

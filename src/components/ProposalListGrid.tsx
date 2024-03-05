@@ -1,6 +1,49 @@
-import React, { useEffect } from 'react';
-import { ProposalListGridItem } from './ProposalListGridItem';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { FrontEndProposal } from '../interfaces/FrontEndProposal';
+import { getPreferredApplicantNameValues } from '../utils/proposals';
+import { ListGrid } from './ListGrid';
+import './ListGridItem.css';
+
+interface ProposalListGridItemProps {
+	proposal: FrontEndProposal;
+	active?: boolean;
+}
+
+const ProposalListGridItem = ({
+	proposal,
+	active = false,
+}: ProposalListGridItemProps) => {
+	const applicantName = getPreferredApplicantNameValues(proposal);
+
+	const applicantLocation = [
+		'organization_city',
+		'organization_state_province',
+		'organization_country',
+	]
+		.map((key) => proposal.values[key]?.filter((value) => value !== '')) // Filter out blank strings
+		.filter((value) => (value ?? []).length > 0) // Filter out empty value arrays
+		.join(', ');
+
+	return (
+		<Link
+			to={`/proposals/${proposal.id}`}
+			className={`list-grid-item ${active ? 'active' : ''}`.trim()}
+		>
+			<div className="list-grid-item-applicant-name">{applicantName}</div>
+			{applicantLocation ? (
+				<div className="list-grid-item-applicant-address">
+					{applicantLocation}
+				</div>
+			) : null}
+			{proposal.values.proposal_name ? (
+				<div className="list-grid-item-proposal-name">
+					{proposal.values.proposal_name}
+				</div>
+			) : null}
+		</Link>
+	);
+};
 
 interface ProposalListGridProps {
 	proposals: FrontEndProposal[];
@@ -10,37 +53,15 @@ interface ProposalListGridProps {
 export const ProposalListGrid = ({
 	proposals,
 	activeProposalId = undefined,
-}: ProposalListGridProps) => {
-	const listGridRef = React.useRef<HTMLDivElement>(null);
-
-	useEffect(() => {
-		// We want the active proposal to be visible in the sidebar
-		// when the page renders, so the user knows "where they are".
-		//
-		// If we just scrolled the active proposal into view, however,
-		// the user might not realize there are more proposals
-		// "above" the active one; thus, we scroll to the previous element.
-		// If it doesn't exist -- i.e., if the first proposal is active --
-		// then we can noop since it's visible by default anyway.
-		//
-		// Note that we only run this on initial page render,
-		// not every time the active proposal changes.
-		// This is because we only need to orient the user on load;
-		// after that, their clicks run the show.
-		listGridRef.current
-			?.querySelector('.active')
-			?.previousElementSibling?.scrollIntoView();
-	}, []);
-
-	return (
-		<div ref={listGridRef} className="proposal-list-grid">
-			{proposals.map((proposal, index) => (
-				<ProposalListGridItem
-					key={index} // eslint-disable-line react/no-array-index-key
-					proposal={proposal}
-					active={activeProposalId === proposal.id}
-				/>
-			))}
-		</div>
-	);
-};
+}: ProposalListGridProps) => (
+	<ListGrid
+		items={proposals}
+		renderItem={(proposal) => (
+			<ProposalListGridItem
+				proposal={proposal}
+				active={activeProposalId === proposal.id}
+				key={proposal.id}
+			/>
+		)}
+	/>
+);
