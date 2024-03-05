@@ -6,6 +6,7 @@
 		"@axa-fr/react-oidc": "^7.18.5",
 		"@fontsource/source-sans-pro": "^5.0.8",
 		"@heroicons/react": "^2.1.1",
+		"@pdc/sdk": "^0.4.1",
 		"dayjs": "^1.11.10",
 		"jsonpath-plus": "^8.0.0",
 		"pino": "^8.19.0",
