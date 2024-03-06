@@ -24,6 +24,9 @@ updates:
           - 'react-dom'
           - '@types/react'
           - '@types/react-dom'
+      eslint:
+        patterns:
+          - '*eslint*'
 
   - package-ecosystem: 'github-actions'
     directory: '.github/workflows'
