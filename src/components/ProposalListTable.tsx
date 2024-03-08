@@ -2,14 +2,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FrontEndProposal } from '../interfaces/FrontEndProposal';
 import { getPreferredApplicantNameValues } from '../utils/proposals';
-import {
-	Table,
-	TableHead,
-	ColumnHead,
-	TableBody,
-	TableRow,
-	RowCell,
-} from './Table';
+import { TableRow, RowCell } from './Table';
+import { ListTable } from './ListTable';
 
 interface ProposalListTableRowProps {
 	columns: string[];
@@ -22,11 +16,14 @@ const ProposalListTableRow = ({
 }: ProposalListTableRowProps) => {
 	const navigate = useNavigate();
 
-	const handleRowClick = () => {
-		// Only navigate if we didn't just finish selecting text.
+	const userHasNotSelectedText = () => {
 		if (window.getSelection()?.isCollapsed) {
 			navigate(`/proposals/${proposal.id}`);
 		}
+	};
+
+	const handleRowClick = () => {
+		userHasNotSelectedText();
 	};
 
 	const getProposalCellContents = (shortCode: string) =>
@@ -57,22 +54,17 @@ export const ProposalListTable = ({
 	columns,
 	wrap = false,
 }: ProposalListTableProps) => (
-	<Table truncate={!wrap}>
-		<TableHead fixed>
-			<TableRow>
-				{columns.map((shortCode) => (
-					<ColumnHead key={shortCode}>{fieldNames[shortCode]}</ColumnHead>
-				))}
-			</TableRow>
-		</TableHead>
-		<TableBody>
-			{proposals.map((proposal, index) => (
-				<ProposalListTableRow
-					key={index} // eslint-disable-line react/no-array-index-key
-					columns={columns}
-					proposal={proposal}
-				/>
-			))}
-		</TableBody>
-	</Table>
+	<ListTable
+		items={proposals}
+		columns={columns}
+		fieldNames={fieldNames}
+		wrap={wrap}
+		renderItem={(proposal) => (
+			<ProposalListTableRow
+				key={proposal.id}
+				proposal={proposal}
+				columns={columns}
+			/>
+		)}
+	/>
 );
