@@ -30,13 +30,8 @@
 	font-weight: var(--font-weight--medium);
 }
 
-.list-grid-item-applicant-address,
-.list-grid-item-proposal-name {
+.list-grid-item-detail{
 	color: var(--proposal-list-grid-item--details-color);
 	font-size: 0.9em;
 }
 
-.list-grid-item-organization-ein {
-	color: var(--proposal-list-grid-item--details-color);
-	font-size: 0.9em;
-}

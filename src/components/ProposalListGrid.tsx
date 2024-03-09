@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FrontEndProposal } from '../interfaces/FrontEndProposal';
 import { getPreferredApplicantNameValues } from '../utils/proposals';
-import { ListGrid } from './ListGrid';
+import { LIST_GRID_ITEM_TRUNCATE_LENGTH, ListGrid } from './ListGrid';
 import './ListGridItem.css';
 
 interface ProposalListGridItemProps {
@@ -15,6 +15,11 @@ const ProposalListGridItem = ({
 	active = false,
 }: ProposalListGridItemProps) => {
 	const applicantName = getPreferredApplicantNameValues(proposal);
+	const title = proposal.values.proposal_name
+		? proposal.values.proposal_name
+		: proposal.values.proposal_summary
+				?.toString()
+				.substring(0, LIST_GRID_ITEM_TRUNCATE_LENGTH);
 
 	const applicantLocation = [
 		'organization_city',
@@ -30,16 +35,17 @@ const ProposalListGridItem = ({
 			to={`/proposals/${proposal.id}`}
 			className={`list-grid-item ${active ? 'active' : ''}`.trim()}
 		>
-			<div className="list-grid-item-applicant-name">{applicantName}</div>
+			{title ? (
+				<div className="list-grid-item-title">
+					{title}
+				</div>
+			) : (
+				<div className="list-grid-item-title">Untitled Proposal</div>
+			)}
+			<div className="list-grid-item-detail">{applicantName}</div>
+
 			{applicantLocation ? (
-				<div className="list-grid-item-applicant-address">
-					{applicantLocation}
-				</div>
-			) : null}
-			{proposal.values.proposal_name ? (
-				<div className="list-grid-item-proposal-name">
-					{proposal.values.proposal_name}
-				</div>
+				<div className="list-grid-item-detail">{applicantLocation}</div>
 			) : null}
 		</Link>
 	);

@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 
+const LIST_GRID_ITEM_TRUNCATE_LENGTH = 30;
+
 interface ListGridProps<T> {
 	items: T[];
 	renderItem(item: T): React.ReactNode;
@@ -20,3 +22,5 @@ export const ListGrid = <T,>({ items, renderItem }: ListGridProps<T>) => {
 
 	return <div ref={listGridRef}>{items.map((item) => renderItem(item))}</div>;
 };
+
+export { LIST_GRID_ITEM_TRUNCATE_LENGTH };
