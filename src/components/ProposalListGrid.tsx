@@ -36,9 +36,7 @@ const ProposalListGridItem = ({
 			className={`list-grid-item ${active ? 'active' : ''}`.trim()}
 		>
 			{title ? (
-				<div className="list-grid-item-title">
-					{title}
-				</div>
+				<div className="list-grid-item-title">{title}</div>
 			) : (
 				<div className="list-grid-item-title">Untitled Proposal</div>
 			)}
