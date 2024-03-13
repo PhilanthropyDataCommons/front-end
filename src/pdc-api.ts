@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useOidcFetch } from '@axa-fr/react-oidc';
+import { Organization, OrganizationBundle } from '@pdc/sdk';
 import { getLogger } from './logger';
 
 const logger = getLogger('pdc-api');
@@ -233,16 +234,40 @@ const useProviderData = (externalId: string) =>
 		}),
 	);
 
+const useOrganization = (organizationId: string) =>
+	usePdcApi<Organization>(
+		`/organizations/${organizationId}`,
+		new URLSearchParams({
+			includeFieldsAndValues: 'true',
+		}),
+	);
+
+const ORGANIZATIONS_DEFAULT_PAGE = '1';
+const ORGANIZATIONS_DEFAULT_COUNT = '100';
+
+const useOrganizations = (page: string, count: string) =>
+	usePdcApi<OrganizationBundle>(
+		'/organizations',
+		new URLSearchParams({
+			_page: page,
+			_count: count,
+		}),
+	);
+
 export {
 	PROPOSALS_DEFAULT_COUNT,
 	PROPOSALS_DEFAULT_PAGE,
 	PROPOSALS_DEFAULT_QUERY,
+	ORGANIZATIONS_DEFAULT_COUNT,
+	ORGANIZATIONS_DEFAULT_PAGE,
 	uploadUsingPresignedPost,
 	useBaseFields,
 	useBulkUploads,
 	usePresignedPostCallback,
 	useProposal,
 	useProposals,
+	useOrganization,
+	useOrganizations,
 	useProviderData,
 	useRegisterBulkUploadCallback,
 };

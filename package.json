@@ -6,6 +6,7 @@
 		"@axa-fr/react-oidc": "^7.18.5",
 		"@fontsource/source-sans-pro": "^5.0.8",
 		"@heroicons/react": "^2.1.1",
+		"@pdc/sdk": "^0.4.1",
 		"dayjs": "^1.11.10",
 		"jsonpath-plus": "^8.0.0",
 		"pino": "^8.19.0",
@@ -70,19 +71,6 @@
 			"project": "./tsconfig.json"
 		},
 		"rules": {
-			"@typescript-eslint/comma-dangle": [
-				"error",
-				{
-					"arrays": "always-multiline",
-					"objects": "always-multiline",
-					"imports": "always-multiline",
-					"exports": "always-multiline",
-					"functions": "only-multiline",
-					"enums": "always-multiline",
-					"generics": "always-multiline",
-					"tuples": "always-multiline"
-				}
-			],
 			"import/prefer-default-export": "off",
 			"import/no-default-export": "error",
 			"import/no-extraneous-dependencies": [
