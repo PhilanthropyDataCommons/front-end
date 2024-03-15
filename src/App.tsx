@@ -5,8 +5,9 @@ import { AddData } from './pages/AddData';
 import { NotFound } from './pages/NotFound';
 import { ProposalDetail } from './pages/ProposalDetail';
 import { ProposalList } from './pages/ProposalList';
-import { Landing } from './pages/Landing';
 import { OrganizationDetail } from './pages/OrganizationDetail';
+import { OrganizationList } from './pages/OrganizationList';
+import { Landing } from './pages/Landing';
 import './App.css';
 
 const router = createBrowserRouter([
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
 			{
 				path: '/organizations/:organizationId',
 				Component: OrganizationDetail,
+			},
+			{
+				path: '/organizations',
+				Component: OrganizationList,
 			},
 			{
 				path: '/proposals/:proposalId/provider?/:provider?',
