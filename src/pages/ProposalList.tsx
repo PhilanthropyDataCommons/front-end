@@ -24,7 +24,6 @@ const ProposalListLoader = () => {
 	const query = params.get('q') ?? PROPOSALS_DEFAULT_QUERY;
 	const [fields] = useBaseFields();
 	const [proposals] = useProposals(page, count, query);
-
 	useEffect(() => {
 		document.title = 'Proposal List - Philanthropy Data Commons';
 	}, []);
@@ -64,4 +63,4 @@ const ProposalListLoader = () => {
 };
 
 const ProposalList = withOidcSecure(ProposalListLoader);
-export { ProposalList };
+export { ProposalList, mapFieldNames };
