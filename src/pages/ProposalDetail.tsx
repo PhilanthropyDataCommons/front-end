@@ -20,6 +20,7 @@ import {
 	PROPOSAL_APPLICANT_NAME_CASCADE,
 	PROPOSAL_APPLICANT_NAME_FALLBACK,
 } from '../utils/proposals';
+import { PANEL_TITLE_TRUNCATE_LENGTH } from '../components/Panel/PanelTitle';
 
 interface ProposalListGridLoaderProps {
 	baseFields: ApiBaseField[] | null;
@@ -126,7 +127,6 @@ const ProposalDetailPanelLoader = ({
 			<>
 				<PanelGridItem key="detailPanel">
 					<ProposalDetailPanel
-						proposalId={0}
 						title="Loading..."
 						applicant="Loading..."
 						applicantId="00-0000000"
@@ -149,7 +149,12 @@ const ProposalDetailPanelLoader = ({
 		);
 	}
 
-	const title = getValueOfBaseField(baseFields, proposal, 'proposal_name');
+	const title =
+		getValueOfBaseField(baseFields, proposal, 'proposal_name') ??
+		getValueOfBaseField(baseFields, proposal, 'proposal_summary')?.substring(
+			0,
+			PANEL_TITLE_TRUNCATE_LENGTH,
+		);
 	const applicant = getApplicant(baseFields, proposal);
 	const applicantId = getValueOfBaseField(
 		baseFields,
@@ -163,7 +168,6 @@ const ProposalDetailPanelLoader = ({
 		<>
 			<PanelGridItem key="detailPanel">
 				<ProposalDetailPanel
-					proposalId={proposal.id}
 					title={title}
 					applicant={applicant}
 					applicantId={applicantId}
