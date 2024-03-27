@@ -8,15 +8,24 @@ import {
 	PanelTitleTags,
 	PanelTitleWrapper,
 } from './Panel';
+import { PanelGridItem } from './PanelGrid';
+import { ProposalListTable } from './ProposalListTable';
+import { DEFAULT_COLUMNS } from './ProposalListTablePanel';
+import { FrontEndProposal } from '../interfaces/FrontEndProposal';
 
 interface OrganizationDetailPanelProps {
 	organization: Organization;
+	proposals?: FrontEndProposal[];
+	proposalFields?: Record<string, string>;
 }
 
 const OrganizationDetailPanel = ({
 	organization,
+	proposals = undefined,
+	proposalFields = undefined,
 }: OrganizationDetailPanelProps) => {
 	const { name, employerIdentificationNumber } = organization;
+	const hasProposals = proposalFields && proposals;
 	return (
 		<Panel>
 			<PanelHeader>
@@ -29,6 +38,15 @@ const OrganizationDetailPanel = ({
 					</PanelTitleTags>
 				</PanelTitleWrapper>
 			</PanelHeader>
+			<PanelGridItem>
+				{hasProposals && (
+					<ProposalListTable
+						fieldNames={proposalFields}
+						proposals={proposals}
+						columns={DEFAULT_COLUMNS}
+					/>
+				)}
+			</PanelGridItem>
 		</Panel>
 	);
 };

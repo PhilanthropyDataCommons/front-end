@@ -88,3 +88,5 @@ export const ProposalListTablePanel = ({
 		</Panel>
 	);
 };
+
+export { DEFAULT_COLUMNS };

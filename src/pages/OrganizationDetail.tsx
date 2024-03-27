@@ -3,11 +3,18 @@ import { useParams } from 'react-router-dom';
 import { withOidcSecure } from '@axa-fr/react-oidc';
 import { Organization } from '@pdc/sdk';
 import { PanelGrid, PanelGridItem } from '../components/PanelGrid';
+import { mapFieldNames } from './ProposalList';
+import { mapProposals } from '../map-proposals';
 import {
 	useOrganization,
 	useOrganizations,
 	ORGANIZATIONS_DEFAULT_PAGE,
 	ORGANIZATIONS_DEFAULT_COUNT,
+	useBaseFields,
+	useProposals,
+	PROPOSALS_DEFAULT_COUNT,
+	PROPOSALS_DEFAULT_PAGE,
+	PROPOSALS_DEFAULT_QUERY,
 } from '../pdc-api';
 import { OrganizationDetailPanel } from '../components/OrganizationDetailPanel';
 import { OrganizationListGridPanel } from '../components/OrganizationListGridPanel';
@@ -37,6 +44,13 @@ const OrganizationDetailPanelLoader = () => {
 	const params = useParams();
 	const organizationId = params.organizationId ?? 'missing';
 	const [organization] = useOrganization(organizationId);
+	const [proposalFields] = useBaseFields();
+	const [proposals] = useProposals(
+		PROPOSALS_DEFAULT_PAGE,
+		PROPOSALS_DEFAULT_COUNT,
+		PROPOSALS_DEFAULT_QUERY,
+	);
+	const hasProposals = proposalFields !== null && proposals !== null;
 
 	useEffect(() => {
 		if (organization === null) {
@@ -49,7 +63,7 @@ const OrganizationDetailPanelLoader = () => {
 		};
 	}, [organization]);
 
-	if (organization === null) {
+	if (organization === null || !hasProposals) {
 		const dummyOrganization: Organization = {
 			id: 0,
 			employerIdentificationNumber: '00-0000000',
@@ -62,9 +76,16 @@ const OrganizationDetailPanelLoader = () => {
 			</PanelGridItem>
 		);
 	}
+
+	const mappedProposals = mapProposals(proposalFields, proposals.entries);
+
 	return (
 		<PanelGridItem key="detailPanel">
-			<OrganizationDetailPanel organization={organization} />
+			<OrganizationDetailPanel
+				organization={organization}
+				proposals={mappedProposals}
+				proposalFields={mapFieldNames(proposalFields)}
+			/>
 		</PanelGridItem>
 	);
 };
