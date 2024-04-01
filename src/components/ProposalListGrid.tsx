@@ -1,9 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { FrontEndProposal } from '../interfaces/FrontEndProposal';
 import { getPreferredApplicantNameValues } from '../utils/proposals';
-import { ListGrid } from './ListGrid';
-import './ListGridItem.css';
+import {
+	ListGrid,
+	ListGridItem,
+	ListGridItemDetails,
+	ListGridItemTitle,
+} from './ListGrid';
 
 interface ProposalListGridItemProps {
 	proposal: FrontEndProposal;
@@ -26,22 +29,17 @@ const ProposalListGridItem = ({
 		.join(', ');
 
 	return (
-		<Link
-			to={`/proposals/${proposal.id}`}
-			className={`list-grid-item ${active ? 'active' : ''}`.trim()}
-		>
-			<div className="list-grid-item-applicant-name">{applicantName}</div>
+		<ListGridItem linkTo={`/proposals/${proposal.id}`} active={active}>
+			<ListGridItemTitle>{applicantName}</ListGridItemTitle>
 			{applicantLocation ? (
-				<div className="list-grid-item-applicant-address">
-					{applicantLocation}
-				</div>
+				<ListGridItemDetails>{applicantLocation}</ListGridItemDetails>
 			) : null}
 			{proposal.values.proposal_name ? (
-				<div className="list-grid-item-proposal-name">
+				<ListGridItemDetails>
 					{proposal.values.proposal_name}
-				</div>
+				</ListGridItemDetails>
 			) : null}
-		</Link>
+		</ListGridItem>
 	);
 };
 
