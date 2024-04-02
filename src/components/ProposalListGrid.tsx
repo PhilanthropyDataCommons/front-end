@@ -1,6 +1,9 @@
 import React from 'react';
 import { FrontEndProposal } from '../interfaces/FrontEndProposal';
-import { getPreferredApplicantNameValues } from '../utils/proposals';
+import {
+	getPreferredProposalApplicantNameValues,
+	getPreferredProposalNameValues,
+} from '../utils/proposals';
 import {
 	ListGrid,
 	ListGridItem,
@@ -17,7 +20,9 @@ const ProposalListGridItem = ({
 	proposal,
 	active = false,
 }: ProposalListGridItemProps) => {
-	const applicantName = getPreferredApplicantNameValues(proposal);
+	const proposalName = getPreferredProposalNameValues(proposal);
+
+	const applicantName = getPreferredProposalApplicantNameValues(proposal);
 
 	const applicantLocation = [
 		'organization_city',
@@ -30,14 +35,10 @@ const ProposalListGridItem = ({
 
 	return (
 		<ListGridItem linkTo={`/proposals/${proposal.id}`} active={active}>
-			<ListGridItemTitle>{applicantName}</ListGridItemTitle>
+			<ListGridItemTitle>{proposalName}</ListGridItemTitle>
+			<ListGridItemDetails>{applicantName}</ListGridItemDetails>
 			{applicantLocation ? (
 				<ListGridItemDetails>{applicantLocation}</ListGridItemDetails>
-			) : null}
-			{proposal.values.proposal_name ? (
-				<ListGridItemDetails>
-					{proposal.values.proposal_name}
-				</ListGridItemDetails>
 			) : null}
 		</ListGridItem>
 	);
