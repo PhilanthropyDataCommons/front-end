@@ -13,7 +13,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	args: {
-		proposalId: 1,
 		title: 'Proposal Title',
 		applicant: 'Organization Name',
 		applicantId: '12-3456789',
