@@ -1,11 +1,17 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useOidc } from '@axa-fr/react-oidc';
-import { InformationCircleIcon } from '@heroicons/react/24/outline';
 import {
-	CommandLineIcon,
-	SquaresPlusIcon,
-	TableCellsIcon,
+	CommandLineIcon as CommandLineIconOutline,
+	InformationCircleIcon as InformationCircleIconOutline,
+	SquaresPlusIcon as SquaresPlusIconOutline,
+	TableCellsIcon as TableCellsIconOutline,
+} from '@heroicons/react/24/outline';
+import {
+	CommandLineIcon as CommandLineIconSolid,
+	InformationCircleIcon as InformationCircleIconSolid,
+	SquaresPlusIcon as SquaresPlusIconSolid,
+	TableCellsIcon as TableCellsIconSolid,
 } from '@heroicons/react/24/solid';
 import { User } from './User';
 import {
@@ -23,22 +29,35 @@ const AppNavbar = () => {
 			<ul>
 				<li>
 					<NavLink to="/proposals" className="App-navbar__item">
-						<TableCellsIcon />
-						Dashboard
+						{({ isActive }) => (
+							<>
+								{isActive ? <TableCellsIconSolid /> : <TableCellsIconOutline />}
+								Dashboard
+							</>
+						)}
 					</NavLink>
 				</li>
 				{isAuthenticated && (
 					<li>
 						<NavLink to="/add-data" className="App-navbar__item">
-							<SquaresPlusIcon />
-							Add Data
+							{({ isActive }) => (
+								<>
+									{isActive ? (
+										<SquaresPlusIconSolid />
+									) : (
+										<SquaresPlusIconOutline />
+									)}
+									Add Data
+								</>
+							)}
 						</NavLink>
 					</li>
 				)}
 				<li>
 					<Dropdown>
 						<DropdownTrigger type="navbar-item">
-							<CommandLineIcon />
+							<CommandLineIconOutline className="closed-only" />
+							<CommandLineIconSolid className="open-only" />
 							Developers
 						</DropdownTrigger>
 						<DropdownMenu align="right">
@@ -70,7 +89,8 @@ const AppNavbar = () => {
 				<li>
 					<Dropdown>
 						<DropdownTrigger type="navbar-item">
-							<InformationCircleIcon />
+							<InformationCircleIconOutline className="closed-only" />
+							<InformationCircleIconSolid className="open-only" />
 							About
 						</DropdownTrigger>
 						<DropdownMenu align="right">

@@ -127,3 +127,13 @@
 	height: var(--dropdown--menu-item--icon-size);
 	width: var(--dropdown--menu-item--icon-size);
 }
+
+.dropdown[open] .closed-only,
+.dropdown:not([open]) .open-only {
+	display: none;
+}
+
+.dropdown[open] .open-only,
+.dropdown:not([open]) .closed-only {
+	display: block;
+}
