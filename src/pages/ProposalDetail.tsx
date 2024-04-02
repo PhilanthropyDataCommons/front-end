@@ -18,6 +18,8 @@ import { ProposalListGridPanel } from '../components/ProposalListGridPanel';
 import {
 	PROPOSAL_APPLICANT_NAME_CASCADE,
 	PROPOSAL_APPLICANT_NAME_FALLBACK,
+	PROPOSAL_NAME_CASCADE,
+	PROPOSAL_NAME_FALLBACK,
 } from '../utils/proposals';
 
 interface ProposalListGridLoaderProps {
@@ -95,6 +97,20 @@ const getApplicant = (baseFields: ApiBaseField[], proposal: ApiProposal) => {
 		: PROPOSAL_APPLICANT_NAME_FALLBACK;
 };
 
+const getTitle = (baseFields: ApiBaseField[], proposal: ApiProposal) => {
+	const titleKey = PROPOSAL_NAME_CASCADE.find((key) => {
+		const baseFieldValue = getValueOfBaseField(baseFields, proposal, key);
+		return (
+			typeof baseFieldValue !== 'undefined' && baseFieldValue.trim() !== ''
+		);
+	});
+
+	return titleKey
+		? getValueOfBaseField(baseFields, proposal, titleKey) ??
+				PROPOSAL_NAME_FALLBACK
+		: PROPOSAL_NAME_FALLBACK;
+};
+
 interface ProposalDetailPanelLoaderProps {
 	baseFields: ApiBaseField[] | null;
 }
@@ -132,7 +148,7 @@ const ProposalDetailPanelLoader = ({
 		);
 	}
 
-	const title = getValueOfBaseField(baseFields, proposal, 'proposal_name');
+	const title = getTitle(baseFields, proposal);
 	const applicant = getApplicant(baseFields, proposal);
 	const applicantId = getValueOfBaseField(
 		baseFields,

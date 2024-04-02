@@ -1,5 +1,5 @@
 import React from 'react';
-import { DocumentTextIcon } from '@heroicons/react/24/solid';
+import { BuildingOffice2Icon } from '@heroicons/react/24/solid';
 import {
 	Panel,
 	PanelBody,
@@ -12,7 +12,7 @@ import {
 import { ProposalTable } from './ProposalTable';
 
 interface ProposalDetailPanelProps {
-	title: string | undefined;
+	title: string;
 	applicant: string;
 	applicantId: string | undefined;
 	version: number;
@@ -34,10 +34,12 @@ const ProposalDetailPanel = ({
 	<Panel>
 		<PanelHeader>
 			<PanelTitleWrapper>
-				<PanelTitle>{applicant}</PanelTitle>
+				<PanelTitle>{title}</PanelTitle>
 				<PanelTitleTags>
+					{applicant && (
+						<PanelTag icon={<BuildingOffice2Icon />}>{applicant}</PanelTag>
+					)}
 					{applicantId && <PanelTag badge="EIN">{applicantId}</PanelTag>}
-					{title && <PanelTag icon={<DocumentTextIcon />}>{title}</PanelTag>}
 				</PanelTitleTags>
 			</PanelTitleWrapper>
 		</PanelHeader>
