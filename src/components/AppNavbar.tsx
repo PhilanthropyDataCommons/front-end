@@ -1,11 +1,17 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useOidc } from '@axa-fr/react-oidc';
-import { InformationCircleIcon } from '@heroicons/react/24/outline';
 import {
-	CommandLineIcon,
-	SquaresPlusIcon,
-	TableCellsIcon,
+	CommandLineIcon as CommandLineIconOutline,
+	InformationCircleIcon as InformationCircleIconOutline,
+	SquaresPlusIcon as SquaresPlusIconOutline,
+	TableCellsIcon as TableCellsIconOutline,
+} from '@heroicons/react/24/outline';
+import {
+	CommandLineIcon as CommandLineIconSolid,
+	InformationCircleIcon as InformationCircleIconSolid,
+	SquaresPlusIcon as SquaresPlusIconSolid,
+	TableCellsIcon as TableCellsIconSolid,
 } from '@heroicons/react/24/solid';
 import { User } from './User';
 import {
@@ -23,54 +29,35 @@ const AppNavbar = () => {
 			<ul>
 				<li>
 					<NavLink to="/proposals" className="App-navbar__item">
-						<TableCellsIcon />
-						Dashboard
+						{({ isActive }) => (
+							<>
+								{isActive ? <TableCellsIconSolid /> : <TableCellsIconOutline />}
+								Dashboard
+							</>
+						)}
 					</NavLink>
 				</li>
 				{isAuthenticated && (
 					<li>
 						<NavLink to="/add-data" className="App-navbar__item">
-							<SquaresPlusIcon />
-							Add Data
+							{({ isActive }) => (
+								<>
+									{isActive ? (
+										<SquaresPlusIconSolid />
+									) : (
+										<SquaresPlusIconOutline />
+									)}
+									Add Data
+								</>
+							)}
 						</NavLink>
 					</li>
 				)}
 				<li>
 					<Dropdown>
 						<DropdownTrigger type="navbar-item">
-							<CommandLineIcon />
-							Developers
-						</DropdownTrigger>
-						<DropdownMenu align="right">
-							<DropdownMenuLink to="https://api.philanthropydatacommons.org">
-								<div className="title">API Documentation</div>
-								<div className="description">
-									Read the Swagger spec to interact with the PDC via our API.
-								</div>
-							</DropdownMenuLink>
-							<DropdownMenuLink to="https://www.npmjs.com/package/@pdc/sdk">
-								<div className="title">TypeScript SDK</div>
-								<div className="description">
-									Develop with our TypeScript SDK using <code>@pdc/sdk</code>{' '}
-									from NPM.
-								</div>
-							</DropdownMenuLink>
-							{process.env.REACT_APP_SHOW_STORYBOOK === 'true' && (
-								<DropdownMenuLink to="/storybook" reloadDocument>
-									<div className="title">Storybook</div>
-									<div className="description">
-										View our UI component library. (Only relevant to PDC front
-										end developers.)
-									</div>
-								</DropdownMenuLink>
-							)}
-						</DropdownMenu>
-					</Dropdown>
-				</li>
-				<li>
-					<Dropdown>
-						<DropdownTrigger type="navbar-item">
-							<InformationCircleIcon />
+							<InformationCircleIconOutline className="closed-only" />
+							<InformationCircleIconSolid className="open-only" />
 							About
 						</DropdownTrigger>
 						<DropdownMenu align="right">
@@ -100,6 +87,39 @@ const AppNavbar = () => {
 									Keep up with recent changes and improvements to the PDC.
 								</div>
 							</DropdownMenuLink>
+						</DropdownMenu>
+					</Dropdown>
+				</li>
+				<li>
+					<Dropdown>
+						<DropdownTrigger type="navbar-item">
+							<CommandLineIconOutline className="closed-only" />
+							<CommandLineIconSolid className="open-only" />
+							Developers
+						</DropdownTrigger>
+						<DropdownMenu align="right">
+							<DropdownMenuLink to="https://api.philanthropydatacommons.org">
+								<div className="title">API Documentation</div>
+								<div className="description">
+									Read the Swagger spec to interact with the PDC via our API.
+								</div>
+							</DropdownMenuLink>
+							<DropdownMenuLink to="https://www.npmjs.com/package/@pdc/sdk">
+								<div className="title">TypeScript SDK</div>
+								<div className="description">
+									Develop with our TypeScript SDK using <code>@pdc/sdk</code>{' '}
+									from NPM.
+								</div>
+							</DropdownMenuLink>
+							{process.env.REACT_APP_SHOW_STORYBOOK === 'true' && (
+								<DropdownMenuLink to="/storybook" reloadDocument>
+									<div className="title">Storybook</div>
+									<div className="description">
+										View our UI component library. (Only relevant to PDC front
+										end developers.)
+									</div>
+								</DropdownMenuLink>
+							)}
 						</DropdownMenu>
 					</Dropdown>
 				</li>
