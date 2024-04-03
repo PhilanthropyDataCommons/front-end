@@ -28,6 +28,14 @@
 	font-size: 1.5rem;
 	font-weight: var(--font-weight--normal);
 	margin-bottom: 0.25em;
+
+	/* Limit display to two lines of text. */
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	line-clamp: 2;
+	display: -webkit-box;
+	text-overflow: ellipsis;
+	overflow: hidden;
 }
 
 .panel-title-tags {

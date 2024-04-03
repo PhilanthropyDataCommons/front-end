@@ -1,5 +1,29 @@
 import { FrontEndProposal } from '../interfaces/FrontEndProposal';
 
+/**
+ * Iterates through a list of fields on the proposal,
+ * in preferential order (most to least), looking for desired data.
+ * Returns the first matching value. If none is found, returns the fallback value.
+ *
+ * @param  {FrontEndProposal} proposal
+ * @param  {string[]} candidates Array of candidate field names, in order.
+ * @param  {string} fallback Value to fall back to if no preferred data is found.
+ * @return {(Array)} Preferred value, but as an array (due to proposal ergonomics).
+ */
+const getPreferredProposalValues = (
+	proposal: FrontEndProposal,
+	candidates: string[],
+	fallback: string,
+) => {
+	const preferredValue = candidates.find((key) => proposal.values[key]);
+
+	if (preferredValue) {
+		return proposal.values[preferredValue];
+	}
+
+	return [fallback];
+};
+
 const PROPOSAL_APPLICANT_NAME_CASCADE = [
 	'organization_name',
 	'organization_dba_name',
@@ -20,20 +44,36 @@ const PROPOSAL_APPLICANT_NAME_FALLBACK = 'Unknown Applicant';
  * @param  {FrontEndProposal} proposal
  * @return {(Array)} The applicant name value array.
  */
-const getPreferredApplicantNameValues = (proposal: FrontEndProposal) => {
-	const bestNameKey = PROPOSAL_APPLICANT_NAME_CASCADE.find(
-		(key) => proposal.values[key],
+const getPreferredProposalApplicantNameValues = (proposal: FrontEndProposal) =>
+	getPreferredProposalValues(
+		proposal,
+		PROPOSAL_APPLICANT_NAME_CASCADE,
+		PROPOSAL_APPLICANT_NAME_FALLBACK,
 	);
 
-	if (bestNameKey) {
-		return proposal.values[bestNameKey];
-	}
+const PROPOSAL_NAME_CASCADE = ['proposal_name', 'proposal_summary'];
 
-	return [PROPOSAL_APPLICANT_NAME_FALLBACK];
-};
+const PROPOSAL_NAME_FALLBACK = 'Untitled Proposal';
+
+/**
+ * Proposals may not have a name, in which case we fall back to summary.
+ *
+ * @param  {FrontEndProposal} proposal
+ * @return {(Array)} The proposal name, or a fallback.
+ */
+const getPreferredProposalNameValues = (proposal: FrontEndProposal) =>
+	getPreferredProposalValues(
+		proposal,
+		PROPOSAL_NAME_CASCADE,
+		PROPOSAL_NAME_FALLBACK,
+	);
 
 export {
+	getPreferredProposalValues,
 	PROPOSAL_APPLICANT_NAME_CASCADE,
 	PROPOSAL_APPLICANT_NAME_FALLBACK,
-	getPreferredApplicantNameValues,
+	getPreferredProposalApplicantNameValues,
+	PROPOSAL_NAME_CASCADE,
+	PROPOSAL_NAME_FALLBACK,
+	getPreferredProposalNameValues,
 };

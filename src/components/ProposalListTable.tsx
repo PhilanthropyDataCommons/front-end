@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FrontEndProposal } from '../interfaces/FrontEndProposal';
-import { getPreferredApplicantNameValues } from '../utils/proposals';
+import { getPreferredProposalApplicantNameValues } from '../utils/proposals';
 import { TableRow, RowCell } from './Table';
 import { ListTable } from './ListTable';
 
@@ -28,7 +28,7 @@ const ProposalListTableRow = ({
 
 	const getProposalCellContents = (shortCode: string) =>
 		shortCode === 'organization_name'
-			? getPreferredApplicantNameValues(proposal)
+			? getPreferredProposalApplicantNameValues(proposal)
 			: proposal.values[shortCode];
 
 	return (

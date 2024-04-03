@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { withOidcSecure } from '@axa-fr/react-oidc';
 import { Organization } from '@pdc/sdk';
+import { DataPlatformProviderLoader } from '../components/DataPlatformProvider/DataPlatformProviderLoader';
 import { PanelGrid, PanelGridItem } from '../components/PanelGrid';
 import {
 	useOrganization,
@@ -34,8 +35,9 @@ const OrganizationListGridPanelLoader = () => {
 };
 
 const OrganizationDetailPanelLoader = () => {
+	const navigate = useNavigate();
 	const params = useParams();
-	const organizationId = params.organizationId ?? 'missing';
+	const { provider, organizationId = 'missing' } = params;
 	const [organization] = useOrganization(organizationId);
 
 	useEffect(() => {
@@ -57,15 +59,41 @@ const OrganizationDetailPanelLoader = () => {
 			createdAt: new Date('2024-03-06'),
 		};
 		return (
-			<PanelGridItem key="detailPanel">
-				<OrganizationDetailPanel organization={dummyOrganization} />
-			</PanelGridItem>
+			<>
+				<PanelGridItem key="detailPanel">
+					<OrganizationDetailPanel organization={dummyOrganization} />
+				</PanelGridItem>
+				{provider && (
+					<PanelGridItem key="platformPanel">
+						<DataPlatformProviderLoader
+							externalId={undefined}
+							onClose={() => {
+								navigate(`/organizations/${organizationId}`);
+							}}
+							provider={provider}
+						/>
+					</PanelGridItem>
+				)}
+			</>
 		);
 	}
 	return (
-		<PanelGridItem key="detailPanel">
-			<OrganizationDetailPanel organization={organization} />
-		</PanelGridItem>
+		<>
+			<PanelGridItem key="detailPanel">
+				<OrganizationDetailPanel organization={organization} />
+			</PanelGridItem>
+			{provider && (
+				<PanelGridItem key="platformPanel">
+					<DataPlatformProviderLoader
+						provider={provider}
+						externalId={organization.employerIdentificationNumber}
+						onClose={() => {
+							navigate(`/organizations/${organizationId}`);
+						}}
+					/>
+				</PanelGridItem>
+			)}
+		</>
 	);
 };
 

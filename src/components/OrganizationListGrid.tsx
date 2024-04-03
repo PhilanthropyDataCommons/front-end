@@ -1,28 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Organization, OrganizationBundle } from '@pdc/sdk';
-import { ListGrid } from './ListGrid';
-import './ListGridItem.css';
-
-interface OrganizationListGridItemProps {
-	organization: Organization;
-	active?: boolean;
-}
-
-const OrganizationListGridItem = ({
-	organization,
-	active = false,
-}: OrganizationListGridItemProps) => (
-	<Link
-		to={`/organizations/${organization.id}`}
-		className={`list-grid-item ${active ? 'active' : ''}`.trim()}
-	>
-		<div className="list-grid-item-title">{organization.name}</div>
-		<div className="list-grid-item-organization-ein">
-			{organization.employerIdentificationNumber}
-		</div>
-	</Link>
-);
+import { OrganizationBundle } from '@pdc/sdk';
+import {
+	ListGrid,
+	ListGridItem,
+	ListGridItemDetails,
+	ListGridItemTitle,
+} from './ListGrid';
 
 interface OrganizationListGridProps {
 	organizations: OrganizationBundle;
@@ -36,11 +19,16 @@ export const OrganizationListGrid = ({
 	<ListGrid
 		items={organizations.entries}
 		renderItem={(organization) => (
-			<OrganizationListGridItem
-				organization={organization}
+			<ListGridItem
+				linkTo={`/organizations/${organization.id}`}
 				active={String(organization.id) === activeOrganizationId}
 				key={organization.id}
-			/>
+			>
+				<ListGridItemTitle>{organization.name}</ListGridItemTitle>
+				<ListGridItemDetails>
+					{organization.employerIdentificationNumber}
+				</ListGridItemDetails>
+			</ListGridItem>
 		)}
 	/>
 );

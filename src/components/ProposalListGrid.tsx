@@ -1,9 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { FrontEndProposal } from '../interfaces/FrontEndProposal';
-import { getPreferredApplicantNameValues } from '../utils/proposals';
-import { ListGrid } from './ListGrid';
-import './ListGridItem.css';
+import {
+	getPreferredProposalApplicantNameValues,
+	getPreferredProposalNameValues,
+} from '../utils/proposals';
+import {
+	ListGrid,
+	ListGridItem,
+	ListGridItemDetails,
+	ListGridItemTitle,
+} from './ListGrid';
 
 interface ProposalListGridItemProps {
 	proposal: FrontEndProposal;
@@ -14,7 +20,9 @@ const ProposalListGridItem = ({
 	proposal,
 	active = false,
 }: ProposalListGridItemProps) => {
-	const applicantName = getPreferredApplicantNameValues(proposal);
+	const proposalName = getPreferredProposalNameValues(proposal);
+
+	const applicantName = getPreferredProposalApplicantNameValues(proposal);
 
 	const applicantLocation = [
 		'organization_city',
@@ -26,22 +34,13 @@ const ProposalListGridItem = ({
 		.join(', ');
 
 	return (
-		<Link
-			to={`/proposals/${proposal.id}`}
-			className={`list-grid-item ${active ? 'active' : ''}`.trim()}
-		>
-			<div className="list-grid-item-applicant-name">{applicantName}</div>
+		<ListGridItem linkTo={`/proposals/${proposal.id}`} active={active}>
+			<ListGridItemTitle>{proposalName}</ListGridItemTitle>
+			<ListGridItemDetails>{applicantName}</ListGridItemDetails>
 			{applicantLocation ? (
-				<div className="list-grid-item-applicant-address">
-					{applicantLocation}
-				</div>
+				<ListGridItemDetails>{applicantLocation}</ListGridItemDetails>
 			) : null}
-			{proposal.values.proposal_name ? (
-				<div className="list-grid-item-proposal-name">
-					{proposal.values.proposal_name}
-				</div>
-			) : null}
-		</Link>
+		</ListGridItem>
 	);
 };
 

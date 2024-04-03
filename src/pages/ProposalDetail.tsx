@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { withOidcSecure } from '@axa-fr/react-oidc';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import {
 	ApiBaseField,
 	ApiProposal,
@@ -12,13 +12,14 @@ import {
 	useProposals,
 } from '../pdc-api';
 import { mapProposals } from '../map-proposals';
-import { DataPlatformProviderLoader } from '../components/DataPlatformProvider/DataPlatformProviderLoader';
 import { PanelGrid, PanelGridItem } from '../components/PanelGrid';
 import { ProposalDetailPanel } from '../components/ProposalDetailPanel';
 import { ProposalListGridPanel } from '../components/ProposalListGridPanel';
 import {
 	PROPOSAL_APPLICANT_NAME_CASCADE,
 	PROPOSAL_APPLICANT_NAME_FALLBACK,
+	PROPOSAL_NAME_CASCADE,
+	PROPOSAL_NAME_FALLBACK,
 } from '../utils/proposals';
 
 interface ProposalListGridLoaderProps {
@@ -96,6 +97,20 @@ const getApplicant = (baseFields: ApiBaseField[], proposal: ApiProposal) => {
 		: PROPOSAL_APPLICANT_NAME_FALLBACK;
 };
 
+const getTitle = (baseFields: ApiBaseField[], proposal: ApiProposal) => {
+	const titleKey = PROPOSAL_NAME_CASCADE.find((key) => {
+		const baseFieldValue = getValueOfBaseField(baseFields, proposal, key);
+		return (
+			typeof baseFieldValue !== 'undefined' && baseFieldValue.trim() !== ''
+		);
+	});
+
+	return titleKey
+		? getValueOfBaseField(baseFields, proposal, titleKey) ??
+				PROPOSAL_NAME_FALLBACK
+		: PROPOSAL_NAME_FALLBACK;
+};
+
 interface ProposalDetailPanelLoaderProps {
 	baseFields: ApiBaseField[] | null;
 }
@@ -103,10 +118,8 @@ interface ProposalDetailPanelLoaderProps {
 const ProposalDetailPanelLoader = ({
 	baseFields,
 }: ProposalDetailPanelLoaderProps) => {
-	const navigate = useNavigate();
 	const params = useParams();
-	const proposalId = params.proposalId ?? 'missing';
-	const { provider } = params;
+	const { proposalId = 'missing' } = params;
 	const [proposal] = useProposal(proposalId);
 
 	useEffect(() => {
@@ -123,33 +136,19 @@ const ProposalDetailPanelLoader = ({
 
 	if (baseFields === null || proposal === null) {
 		return (
-			<>
-				<PanelGridItem key="detailPanel">
-					<ProposalDetailPanel
-						proposalId={0}
-						title="Loading..."
-						applicant="Loading..."
-						applicantId="00-0000000"
-						version={0}
-						values={[]}
-					/>
-				</PanelGridItem>
-				{provider && (
-					<PanelGridItem key="platformPanel">
-						<DataPlatformProviderLoader
-							externalId={undefined}
-							onClose={() => {
-								navigate(`/proposals/${proposalId}`);
-							}}
-							provider={provider}
-						/>
-					</PanelGridItem>
-				)}
-			</>
+			<PanelGridItem key="detailPanel">
+				<ProposalDetailPanel
+					title="Loading..."
+					applicant="Loading..."
+					applicantId="00-0000000"
+					version={0}
+					values={[]}
+				/>
+			</PanelGridItem>
 		);
 	}
 
-	const title = getValueOfBaseField(baseFields, proposal, 'proposal_name');
+	const title = getTitle(baseFields, proposal);
 	const applicant = getApplicant(baseFields, proposal);
 	const applicantId = getValueOfBaseField(
 		baseFields,
@@ -160,29 +159,15 @@ const ProposalDetailPanelLoader = ({
 	const values = mapBaseFields(baseFields, proposal);
 
 	return (
-		<>
-			<PanelGridItem key="detailPanel">
-				<ProposalDetailPanel
-					proposalId={proposal.id}
-					title={title}
-					applicant={applicant}
-					applicantId={applicantId}
-					version={version}
-					values={values}
-				/>
-			</PanelGridItem>
-			{provider && (
-				<PanelGridItem key="platformPanel">
-					<DataPlatformProviderLoader
-						provider={provider}
-						externalId={applicantId}
-						onClose={() => {
-							navigate(`/proposals/${proposalId}`);
-						}}
-					/>
-				</PanelGridItem>
-			)}
-		</>
+		<PanelGridItem key="detailPanel">
+			<ProposalDetailPanel
+				title={title}
+				applicant={applicant}
+				applicantId={applicantId}
+				version={version}
+				values={values}
+			/>
+		</PanelGridItem>
 	);
 };
 
