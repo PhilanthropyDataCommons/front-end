@@ -22,9 +22,7 @@ export const OrganizationListTablePanel = ({
 		<Panel>
 			<PanelBody padded={hasOrganizations}>
 				{hasOrganizations ? (
-					<OrganizationListTable
-						organizations={organizations}
-					/>
+					<OrganizationListTable organizations={organizations} />
 				) : (
 					<div className="quiet">{generateFallbackMessage()}</div>
 				)}

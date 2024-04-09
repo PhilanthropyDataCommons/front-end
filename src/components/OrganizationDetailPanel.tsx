@@ -7,6 +7,7 @@ import { Organization } from '@pdc/sdk';
 import {
 	Panel,
 	PanelActions,
+	PanelBody,
 	PanelHeader,
 	PanelTag,
 	PanelTitle,
@@ -20,13 +21,19 @@ import {
 	DropdownMenuText,
 	DropdownTrigger,
 } from './Dropdown';
+import { FrontEndProposal } from '../interfaces/FrontEndProposal';
+import { ProposalListTable } from './ProposalListTable';
 
 interface OrganizationDetailPanelProps {
 	organization: Organization;
+	proposals: FrontEndProposal[];
+	proposalFields: Record<string, string>;
 }
 
 const OrganizationDetailPanel = ({
 	organization,
+	proposals,
+	proposalFields,
 }: OrganizationDetailPanelProps) => {
 	const { id, name, employerIdentificationNumber } = organization;
 	return (
@@ -70,6 +77,9 @@ const OrganizationDetailPanel = ({
 					</Dropdown>
 				</PanelActions>
 			</PanelHeader>
+			<PanelBody padded={false}>
+				<ProposalListTable fieldNames={proposalFields} proposals={proposals} />
+			</PanelBody>
 		</Panel>
 	);
 };

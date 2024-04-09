@@ -32,7 +32,6 @@ const OrganizationListTableRow = ({
 
 const DEFAULT_ORGANIZATION_COLUMNS = ['Name', 'EIN'];
 
-
 interface OrganizationListTableProps {
 	organizations: OrganizationBundle;
 	columns?: string[];

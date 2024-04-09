@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { withOidcSecure } from '@axa-fr/react-oidc';
 import { Organization } from '@pdc/sdk';
@@ -9,9 +9,16 @@ import {
 	useOrganizations,
 	ORGANIZATIONS_DEFAULT_PAGE,
 	ORGANIZATIONS_DEFAULT_COUNT,
+	PROPOSALS_DEFAULT_PAGE,
+	PROPOSALS_DEFAULT_COUNT,
+	useBaseFields,
+	useProposalsByOrganizationId,
 } from '../pdc-api';
 import { OrganizationDetailPanel } from '../components/OrganizationDetailPanel';
 import { OrganizationListGridPanel } from '../components/OrganizationListGridPanel';
+import { FrontEndProposal } from '../interfaces/FrontEndProposal';
+import { mapProposals } from '../map-proposals';
+import { mapFieldNames } from '../utils/baseFields';
 
 const OrganizationListGridPanelLoader = () => {
 	const { organizationId } = useParams();
@@ -39,6 +46,16 @@ const OrganizationDetailPanelLoader = () => {
 	const params = useParams();
 	const { provider, organizationId = 'missing' } = params;
 	const [organization] = useOrganization(organizationId);
+	const [fields] = useBaseFields();
+	const [proposals] = useProposalsByOrganizationId(
+		PROPOSALS_DEFAULT_PAGE,
+		PROPOSALS_DEFAULT_COUNT,
+		organizationId,
+	);
+	const emptyProposalArray: FrontEndProposal[] = [];
+	const [proposalState, setProposalState] = useState(emptyProposalArray);
+	const emptyRecord: Record<string, string> = {};
+	const [fieldsState, setFieldsState] = useState(emptyRecord);
 
 	useEffect(() => {
 		if (organization === null) {
@@ -46,10 +63,15 @@ const OrganizationDetailPanelLoader = () => {
 		} else {
 			document.title = `${organization.name} Organization Detail - Philanthropy Data Commons`;
 		}
+		if (fields && proposals) {
+			setFieldsState(mapFieldNames(fields));
+			setProposalState(mapProposals(fields, proposals.entries));
+		}
+
 		return () => {
 			document.title = 'Philanthropy Data Commons';
 		};
-	}, [organization]);
+	}, [fields, proposals, organization]);
 
 	if (organization === null) {
 		const dummyOrganization: Organization = {
@@ -61,7 +83,11 @@ const OrganizationDetailPanelLoader = () => {
 		return (
 			<>
 				<PanelGridItem key="detailPanel">
-					<OrganizationDetailPanel organization={dummyOrganization} />
+					<OrganizationDetailPanel
+						organization={dummyOrganization}
+						proposals={proposalState}
+						proposalFields={fieldsState}
+					/>
 				</PanelGridItem>
 				{provider && (
 					<PanelGridItem key="platformPanel">
@@ -80,7 +106,11 @@ const OrganizationDetailPanelLoader = () => {
 	return (
 		<>
 			<PanelGridItem key="detailPanel">
-				<OrganizationDetailPanel organization={organization} />
+				<OrganizationDetailPanel
+					organization={organization}
+					proposals={proposalState}
+					proposalFields={fieldsState}
+				/>
 			</PanelGridItem>
 			{provider && (
 				<PanelGridItem key="platformPanel">
