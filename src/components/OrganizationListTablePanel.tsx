@@ -8,8 +8,6 @@ interface OrganizationListTablePanelProps {
 	loading?: boolean;
 }
 
-const DEFAULT_COLUMNS = ['Name', 'EIN'];
-
 export const OrganizationListTablePanel = ({
 	organizations = undefined,
 	loading = false,
@@ -26,7 +24,6 @@ export const OrganizationListTablePanel = ({
 				{hasOrganizations ? (
 					<OrganizationListTable
 						organizations={organizations}
-						columns={DEFAULT_COLUMNS}
 					/>
 				) : (
 					<div className="quiet">{generateFallbackMessage()}</div>
