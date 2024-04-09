@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { withOidcSecure } from '@axa-fr/react-oidc';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
-	ApiBaseField,
 	PROPOSALS_DEFAULT_COUNT,
 	PROPOSALS_DEFAULT_PAGE,
 	PROPOSALS_DEFAULT_QUERY,
@@ -12,9 +11,7 @@ import {
 import { mapProposals } from '../map-proposals';
 import { PanelGrid, PanelGridItem } from '../components/PanelGrid';
 import { ProposalListTablePanel } from '../components/ProposalListTablePanel';
-
-const mapFieldNames = (fields: ApiBaseField[]) =>
-	Object.fromEntries(fields.map(({ label, shortCode }) => [shortCode, label]));
+import { mapFieldNames } from '../utils/baseFields';
 
 const ProposalListLoader = () => {
 	const navigate = useNavigate();
