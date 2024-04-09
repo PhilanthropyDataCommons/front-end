@@ -14,28 +14,6 @@ interface ProposalListTablePanelProps {
 	loading?: boolean;
 }
 
-// For now, we are hard-coding this list.
-// In the future, this will be user-configurable.
-const DEFAULT_COLUMNS = [
-	'organization_name',
-	'organization_tax_id',
-	'organization_city',
-	'organization_state_province',
-	'organization_country',
-	'organization_website',
-	'organization_mission_statement',
-	'organization_start_date',
-	'organization_operating_budget',
-	'proposal_name',
-	'proposal_summary',
-	'proposal_amount_requested',
-	'proposal_budget',
-	'proposal_fiscal_sponsor_name',
-	'proposal_start_date',
-	'proposal_end_date',
-	'proposal_location_of_work',
-];
-
 export const ProposalListTablePanel = ({
 	fieldNames,
 	proposals,
@@ -78,7 +56,6 @@ export const ProposalListTablePanel = ({
 					<ProposalListTable
 						fieldNames={fieldNames}
 						proposals={proposals}
-						columns={DEFAULT_COLUMNS}
 						wrap={wrap}
 					/>
 				) : (

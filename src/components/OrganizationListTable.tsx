@@ -30,14 +30,16 @@ const OrganizationListTableRow = ({
 	);
 };
 
+const DEFAULT_ORGANIZATION_COLUMNS = ['Name', 'EIN'];
+
 interface OrganizationListTableProps {
 	organizations: OrganizationBundle;
-	columns: string[];
+	columns?: string[];
 }
 
 export const OrganizationListTable = ({
 	organizations,
-	columns,
+	columns = DEFAULT_ORGANIZATION_COLUMNS,
 }: OrganizationListTableProps) => (
 	<ListTable
 		items={organizations.entries}

@@ -219,6 +219,20 @@ const useProposals = (page: string, count: string, query: string) =>
 		}),
 	);
 
+const useProposalsByOrganizationId = (
+	page: string,
+	count: string,
+	organizationId: string,
+) =>
+	usePdcApi<ApiProposals>(
+		'/proposals',
+		new URLSearchParams({
+			_page: page,
+			_count: count,
+			organization: organizationId,
+		}),
+	);
+
 interface PlatformProviderResponse {
 	createdAt: string;
 	externalId: string;
@@ -266,6 +280,7 @@ export {
 	usePresignedPostCallback,
 	useProposal,
 	useProposals,
+	useProposalsByOrganizationId,
 	useOrganization,
 	useOrganizations,
 	useProviderData,
