@@ -5,25 +5,46 @@ import { getPreferredProposalApplicantNameValues } from '../utils/proposals';
 import { TableRow, RowCell } from './Table';
 import { ListTable } from './ListTable';
 
+enum ProposalDetailDestinations {
+	PROPOSAL_DETAIL_PAGE = 'proposalDetailPage',
+	ORGANIZATION_PROPOSAL_PANEL = 'organizationProposalPanel',
+}
+
 interface ProposalListTableRowProps {
 	columns: string[];
 	proposal: FrontEndProposal;
+	rowClickDestination: ProposalDetailDestinations;
+	organizationId?: number;
+	active?: boolean;
 }
 
 const ProposalListTableRow = ({
 	proposal,
 	columns,
+	rowClickDestination = ProposalDetailDestinations.PROPOSAL_DETAIL_PAGE,
+	organizationId = undefined,
+	active = false,
 }: ProposalListTableRowProps) => {
 	const navigate = useNavigate();
 
-	const userHasNotSelectedText = () => {
-		if (window.getSelection()?.isCollapsed) {
-			navigate(`/proposals/${proposal.id}`);
-		}
-	};
+	const userHasNotSelectedText = () => window.getSelection()?.isCollapsed;
 
 	const handleRowClick = () => {
-		userHasNotSelectedText();
+		if (userHasNotSelectedText()) {
+			switch (rowClickDestination) {
+				case 'organizationProposalPanel':
+					if (organizationId) {
+						navigate(
+							`/organizations/${organizationId}/proposals/${proposal.id}`,
+						);
+					}
+					break;
+				case 'proposalDetailPage':
+				default:
+					navigate(`/proposals/${proposal.id}`);
+					break;
+			}
+		}
 	};
 
 	const getProposalCellContents = (shortCode: string) =>
@@ -32,7 +53,7 @@ const ProposalListTableRow = ({
 			: proposal.values[shortCode];
 
 	return (
-		<TableRow onClick={handleRowClick}>
+		<TableRow onClick={handleRowClick} active={active}>
 			{/* Iterate over columns to ensure order. */}
 			{columns.map((shortCode) => (
 				<RowCell key={shortCode}>{getProposalCellContents(shortCode)}</RowCell>
@@ -44,8 +65,11 @@ const ProposalListTableRow = ({
 interface ProposalListTableProps {
 	fieldNames: Record<string, string>;
 	proposals: FrontEndProposal[];
+	rowClickDestination?: ProposalDetailDestinations;
+	organizationId?: number;
 	wrap?: boolean;
 	columns?: string[];
+	activeProposalId?: string | undefined;
 }
 
 const DEFAULT_PROPOSAL_COLUMNS = [
@@ -68,11 +92,14 @@ const DEFAULT_PROPOSAL_COLUMNS = [
 	'proposal_location_of_work',
 ];
 
-export const ProposalListTable = ({
+const ProposalListTable = ({
 	fieldNames,
 	proposals,
 	columns = DEFAULT_PROPOSAL_COLUMNS,
 	wrap = false,
+	rowClickDestination = ProposalDetailDestinations.PROPOSAL_DETAIL_PAGE,
+	organizationId = undefined,
+	activeProposalId = undefined,
 }: ProposalListTableProps) => (
 	<ListTable
 		items={proposals}
@@ -84,7 +111,12 @@ export const ProposalListTable = ({
 				key={proposal.id}
 				proposal={proposal}
 				columns={columns}
+				rowClickDestination={rowClickDestination}
+				organizationId={organizationId}
+				active={activeProposalId === proposal.id}
 			/>
 		)}
 	/>
 );
+
+export { ProposalListTable, ProposalDetailDestinations };
