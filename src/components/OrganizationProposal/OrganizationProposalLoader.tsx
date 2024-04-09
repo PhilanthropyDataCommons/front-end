@@ -27,7 +27,12 @@ const OrganizationProposalLoader = ({
 	if (baseFields === null || proposal === null) {
 		return (
 			<PanelGridItem key="detailPanel">
-				<OrganizationProposalPanel version={0} values={[]} onClose={onClose} />
+				<OrganizationProposalPanel
+					proposalId={proposalId}
+					version={0}
+					values={[]}
+					onClose={onClose}
+				/>
 			</PanelGridItem>
 		);
 	}
@@ -39,6 +44,7 @@ const OrganizationProposalLoader = ({
 	return (
 		<PanelGridItem key="detailPanel">
 			<OrganizationProposalPanel
+				proposalId={proposalId}
 				version={version}
 				values={values}
 				onClose={onClose}

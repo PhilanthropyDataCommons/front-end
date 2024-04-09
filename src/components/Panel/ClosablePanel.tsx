@@ -15,6 +15,7 @@ interface ClosablePanelProps {
 	 * Controls whether the panel body has internal padding.
 	 */
 	padded?: boolean;
+	actions?: React.ReactNode;
 }
 
 const ClosablePanel = ({
@@ -22,11 +23,13 @@ const ClosablePanel = ({
 	onClose,
 	title,
 	padded = true,
+	actions = undefined,
 }: ClosablePanelProps) => (
 	<Panel>
 		<PanelHeader>
 			<PanelTitleWrapper>{title}</PanelTitleWrapper>
 			<PanelActions>
+				{actions}
 				<Button onClick={onClose} color="red" title="Close this panel">
 					<XMarkIcon className="icon" />
 				</Button>
