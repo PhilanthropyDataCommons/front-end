@@ -47,9 +47,9 @@
 	width: var(--dropdown--menu--width);
 
 	background-color: white;
-	border-radius: 8px;
+	border-radius: var(--dropdown--menu--border-radius);
 	border: 1px solid var(--color--gray--medium);
-	overflow: hidden;
+	overflow: visible;
 
 	display: flex;
 	flex-direction: column;
@@ -67,8 +67,15 @@
 	border-bottom: 1px solid var(--color--gray--light);
 }
 
+.dropdown-menu > *:first-child {
+	border-top-left-radius: var(--dropdown--menu--border-radius);
+	border-top-right-radius: var(--dropdown--menu--border-radius);
+}
+
 .dropdown-menu > *:last-child {
 	border-bottom: none;
+	border-bottom-left-radius: var(--dropdown--menu--border-radius);
+	border-bottom-right-radius: var(--dropdown--menu--border-radius);
 }
 
 /* CSS `transition` doesn't work when disclosing `<details>` element contents,
