@@ -41,7 +41,7 @@
 
 .list-grid-item--details {
 	color: var(--list-grid-item--details--color);
-	font-size: 0.9em;
+	font-size: var(--font-size--sm);
 
 	display: flex;
 	flex-direction: row;

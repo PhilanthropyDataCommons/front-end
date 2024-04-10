@@ -88,7 +88,7 @@
 }
 
 .dropdown-menu-text {
-	font-size: 0.85rem;
+	font-size: var(--font-size--sm);
 	padding: var(--dropdown--menu--spacing);
 }
 
@@ -112,7 +112,7 @@
 
 .dropdown-menu-link .title {
 	text-transform: uppercase;
-	font-size: 0.9rem;
+	font-size: var(--font-size--sm);
 }
 
 .dropdown-menu-link .description {
