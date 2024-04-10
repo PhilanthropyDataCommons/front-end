@@ -11,6 +11,7 @@ import {
 	DropdownMenu,
 	DropdownMenuText,
 	DropdownMenuLink,
+	DropdownMenuLinkDescription,
 } from '../components/Dropdown';
 
 const meta = {
@@ -119,36 +120,7 @@ export const WithIconInTrigger: Story = {
 	],
 };
 
-export const WithMenuTitle: Story = {
-	args: {
-		children: [
-			<DropdownTrigger>Toggle menu</DropdownTrigger>,
-			<DropdownMenu>
-				<DropdownMenuText key="title1">
-					Some optional explainer text for the menu items:
-				</DropdownMenuText>
-				<DropdownMenuLink to="/" key="item1">
-					Item 1
-				</DropdownMenuLink>
-				<DropdownMenuLink to="/" key="item2">
-					Item 2
-				</DropdownMenuLink>
-				<DropdownMenuLink to="/" key="item3">
-					Item 3
-				</DropdownMenuLink>
-			</DropdownMenu>,
-		],
-	},
-	decorators: [
-		(Story) => (
-			<div style={{ height: '250px' }}>
-				<Story />
-			</div>
-		),
-	],
-};
-
-export const WithMultipleMenuTitles: Story = {
+export const WithMenuText: Story = {
 	args: {
 		children: [
 			<DropdownTrigger>Toggle menu</DropdownTrigger>,
@@ -185,7 +157,66 @@ export const WithMultipleMenuTitles: Story = {
 	],
 };
 
+export const WithLinkDescriptions: Story = {
+	args: {
+		children: [
+			<DropdownTrigger>Toggle menu</DropdownTrigger>,
+			<DropdownMenu>
+				<DropdownMenuLink to="/" key="item1">
+					Item 1
+					<DropdownMenuLinkDescription>
+						This explains something about this link.
+					</DropdownMenuLinkDescription>
+				</DropdownMenuLink>
+				<DropdownMenuLink to="/" key="item2">
+					Item 2
+				</DropdownMenuLink>
+				<DropdownMenuLink to="/" key="item3">
+					Item 3
+				</DropdownMenuLink>
+			</DropdownMenu>,
+		],
+	},
+	decorators: [
+		(Story) => (
+			<div style={{ height: '400px' }}>
+				<Story />
+			</div>
+		),
+	],
+};
+
 export const WithMenuItemIcons: Story = {
+	args: {
+		children: [
+			<DropdownTrigger>Toggle menu</DropdownTrigger>,
+			<DropdownMenu>
+				<DropdownMenuLink
+					to="/"
+					icon={<ArrowRightStartOnRectangleIcon />}
+					key="item1"
+				>
+					Item 1
+				</DropdownMenuLink>
+				<DropdownMenuLink to="/" key="item2">
+					Item 2
+				</DropdownMenuLink>
+				<DropdownMenuLink to="/" key="item3">
+					Item 3
+				</DropdownMenuLink>
+			</DropdownMenu>,
+		],
+	},
+	decorators: [
+		(Story) => (
+			<div style={{ height: '200px' }}>
+				<Story />
+			</div>
+		),
+	],
+};
+
+export const WithMenuItemIconsOnRight: Story = {
 	args: {
 		children: [
 			<DropdownTrigger>Toggle menu</DropdownTrigger>,
@@ -203,6 +234,43 @@ export const WithMenuItemIcons: Story = {
 				</DropdownMenuLink>
 				<DropdownMenuLink to="/" key="item3">
 					Item 3
+				</DropdownMenuLink>
+			</DropdownMenu>,
+		],
+	},
+	decorators: [
+		(Story) => (
+			<div style={{ height: '200px' }}>
+				<Story />
+			</div>
+		),
+	],
+};
+
+export const WithMenuItemIconsAndDescriptions: Story = {
+	args: {
+		children: [
+			<DropdownTrigger>Toggle menu</DropdownTrigger>,
+			<DropdownMenu>
+				<DropdownMenuLink
+					to="/"
+					icon={<ArrowRightStartOnRectangleIcon />}
+					key="item1"
+				>
+					Item 1
+					<DropdownMenuLinkDescription>
+						This explains something about this link.
+					</DropdownMenuLinkDescription>
+				</DropdownMenuLink>
+				<DropdownMenuLink
+					to="/"
+					icon={<ArrowRightStartOnRectangleIcon />}
+					key="item2"
+				>
+					Item 2
+					<DropdownMenuLinkDescription>
+						This explains something about this link.
+					</DropdownMenuLinkDescription>
 				</DropdownMenuLink>
 			</DropdownMenu>,
 		],

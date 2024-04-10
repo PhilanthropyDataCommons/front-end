@@ -101,7 +101,7 @@
 
 .dropdown-menu-link.has-icon {
 	display: flex;
-	align-items: center;
+	align-items: flex-start;
 	gap: var(--fixed-spacing--1x);
 }
 
@@ -110,13 +110,10 @@
 	gap: var(--fixed-spacing--2x);
 }
 
-.dropdown-menu-link .title {
-	text-transform: uppercase;
-	font-size: var(--font-size--sm);
-}
-
 .dropdown-menu-link .description {
+	display: block;
 	font-weight: normal;
+	font-size: var(--font-size--sm);
 }
 
 .dropdown-menu-link:hover {
@@ -124,6 +121,7 @@
 }
 
 .dropdown-menu-link > svg {
+	flex-shrink: 0;
 	height: var(--dropdown--menu-item--icon-size);
 	width: var(--dropdown--menu-item--icon-size);
 }

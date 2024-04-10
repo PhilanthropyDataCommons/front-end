@@ -44,7 +44,7 @@ export const DropdownMenuLink = ({
 			reloadDocument={reloadDocument}
 		>
 			{icon && alignIcon === 'left' && icon}
-			{children}
+			<div>{children}</div>
 			{icon && alignIcon === 'right' && icon}
 		</Link>
 	);
