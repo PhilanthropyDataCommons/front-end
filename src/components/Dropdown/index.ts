@@ -3,6 +3,7 @@ import { DropdownTrigger } from './DropdownTrigger';
 import { DropdownMenu } from './DropdownMenu';
 import { DropdownMenuText } from './DropdownMenuText';
 import { DropdownMenuLink } from './DropdownMenuLink';
+import { DropdownMenuLinkDescription } from './DropdownMenuLinkDescription';
 
 export {
 	Dropdown,
@@ -10,4 +11,5 @@ export {
 	DropdownMenu,
 	DropdownMenuText,
 	DropdownMenuLink,
+	DropdownMenuLinkDescription,
 };

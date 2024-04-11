@@ -47,9 +47,9 @@
 	width: var(--dropdown--menu--width);
 
 	background-color: white;
-	border-radius: 8px;
+	border-radius: var(--dropdown--menu--border-radius);
 	border: 1px solid var(--color--gray--medium);
-	overflow: hidden;
+	overflow: visible;
 
 	display: flex;
 	flex-direction: column;
@@ -67,8 +67,15 @@
 	border-bottom: 1px solid var(--color--gray--light);
 }
 
+.dropdown-menu > *:first-child {
+	border-top-left-radius: var(--dropdown--menu--border-radius);
+	border-top-right-radius: var(--dropdown--menu--border-radius);
+}
+
 .dropdown-menu > *:last-child {
 	border-bottom: none;
+	border-bottom-left-radius: var(--dropdown--menu--border-radius);
+	border-bottom-right-radius: var(--dropdown--menu--border-radius);
 }
 
 /* CSS `transition` doesn't work when disclosing `<details>` element contents,
@@ -88,7 +95,7 @@
 }
 
 .dropdown-menu-text {
-	font-size: 0.85rem;
+	font-size: var(--font-size--sm);
 	padding: var(--dropdown--menu--spacing);
 }
 
@@ -101,7 +108,7 @@
 
 .dropdown-menu-link.has-icon {
 	display: flex;
-	align-items: center;
+	align-items: flex-start;
 	gap: var(--fixed-spacing--1x);
 }
 
@@ -110,13 +117,10 @@
 	gap: var(--fixed-spacing--2x);
 }
 
-.dropdown-menu-link .title {
-	text-transform: uppercase;
-	font-size: 0.9rem;
-}
-
 .dropdown-menu-link .description {
+	display: block;
 	font-weight: normal;
+	font-size: var(--font-size--sm);
 }
 
 .dropdown-menu-link:hover {
@@ -124,6 +128,7 @@
 }
 
 .dropdown-menu-link > svg {
+	flex-shrink: 0;
 	height: var(--dropdown--menu-item--icon-size);
 	width: var(--dropdown--menu-item--icon-size);
 }

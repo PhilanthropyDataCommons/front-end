@@ -47,7 +47,7 @@
 	align-items: flex-start;
 	gap: calc(var(--fixed-spacing--1x) / 2);
 
-	font-size: 0.875rem;
+	font-size: var(--font-size--sm);
 	color: var(--navbar-item--color);
 	background-color: var(--navbar-item--background-color);
 	text-transform: uppercase;

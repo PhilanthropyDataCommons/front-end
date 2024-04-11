@@ -19,6 +19,7 @@ import {
 	DropdownTrigger,
 	DropdownMenu,
 	DropdownMenuLink,
+	DropdownMenuLinkDescription,
 } from './Dropdown';
 
 const AppNavbar = () => {
@@ -62,30 +63,32 @@ const AppNavbar = () => {
 						</DropdownTrigger>
 						<DropdownMenu align="right">
 							<DropdownMenuLink to="https://www.philanthropydatacommons.org">
-								<div className="title">About the PDC project</div>
-								<div className="description">
+								About the PDC project
+								<DropdownMenuLinkDescription>
 									Read about the history, vision, and governance body of the
 									PDC.
-								</div>
+								</DropdownMenuLinkDescription>
 							</DropdownMenuLink>
 							{!isAuthenticated && (
 								<DropdownMenuLink to="mailto:jimmcgowan@opentechstrategies.com?subject=PDC%20account">
-									<div className="title">Need an account?</div>
-									<div className="description">
+									Need an account?
+									<DropdownMenuLinkDescription>
 										Full access is restricted. Email Jim McGowan to request an
 										account.
-									</div>
+									</DropdownMenuLinkDescription>
 								</DropdownMenuLink>
 							)}
 							<DropdownMenuLink to="mailto:info@philanthropydatacommons.org?subject=PDC">
-								<div className="title">Questions or feedback</div>
-								<div className="description">Send an email to the team.</div>
+								Questions or feedback
+								<DropdownMenuLinkDescription>
+									Send an email to the team.
+								</DropdownMenuLinkDescription>
 							</DropdownMenuLink>
 							<DropdownMenuLink to="https://github.com/PhilanthropyDataCommons/front-end/blob/main/RECENT_CHANGES.md">
-								<div className="title">Recent improvements</div>
-								<div className="description">
+								Recent improvements
+								<DropdownMenuLinkDescription>
 									Keep up with recent changes and improvements to the PDC.
-								</div>
+								</DropdownMenuLinkDescription>
 							</DropdownMenuLink>
 						</DropdownMenu>
 					</Dropdown>
@@ -99,25 +102,25 @@ const AppNavbar = () => {
 						</DropdownTrigger>
 						<DropdownMenu align="right">
 							<DropdownMenuLink to="https://api.philanthropydatacommons.org">
-								<div className="title">API Documentation</div>
-								<div className="description">
+								API Documentation
+								<DropdownMenuLinkDescription>
 									Read the Swagger spec to interact with the PDC via our API.
-								</div>
+								</DropdownMenuLinkDescription>
 							</DropdownMenuLink>
 							<DropdownMenuLink to="https://www.npmjs.com/package/@pdc/sdk">
-								<div className="title">TypeScript SDK</div>
-								<div className="description">
+								TypeScript SDK
+								<DropdownMenuLinkDescription>
 									Develop with our TypeScript SDK using <code>@pdc/sdk</code>{' '}
 									from NPM.
-								</div>
+								</DropdownMenuLinkDescription>
 							</DropdownMenuLink>
 							{process.env.REACT_APP_SHOW_STORYBOOK === 'true' && (
 								<DropdownMenuLink to="/storybook" reloadDocument>
-									<div className="title">Storybook</div>
-									<div className="description">
+									Storybook
+									<DropdownMenuLinkDescription>
 										View our UI component library. (Only relevant to PDC front
 										end developers.)
-									</div>
+									</DropdownMenuLinkDescription>
 								</DropdownMenuLink>
 							)}
 						</DropdownMenu>
