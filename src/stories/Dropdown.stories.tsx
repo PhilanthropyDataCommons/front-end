@@ -283,3 +283,40 @@ export const WithMenuItemIconsAndDescriptions: Story = {
 		),
 	],
 };
+
+/**
+ * Only one of these can be open at once, because they use the same `name` property.
+ * This is tricky to see in action in the Storybook context, but:
+ *
+ * 1. Open the left-hand dropdown.
+ * 2. Tab through its items. (This may not work on macOS unless you have enabled *System Settings* → *Keyboard* → *Keyboard navigation*.)
+ * 3. After tab focus leaves the third item, it will be on the second dropdown trigger. (Invisibly, sorry.)
+ * 4. Hit space or return to activate the second dropdown.
+ * 5. Note that the first dropdown menu closes and the second opens.
+ */
+export const AccordionStyle: Story = {
+	args: {
+		name: 'whatever',
+		children: [
+			<DropdownTrigger>Toggle menu</DropdownTrigger>,
+			<DropdownMenu>
+				<DropdownMenuLink to="/" key="item1">
+					Item 1
+				</DropdownMenuLink>
+				<DropdownMenuLink to="/" key="item2">
+					Item 2
+				</DropdownMenuLink>
+				<DropdownMenuLink to="/" key="item3">
+					Item 3
+				</DropdownMenuLink>
+			</DropdownMenu>,
+		],
+	},
+	decorators: [
+		(Story) => (
+			<div style={{ height: '200px' }}>
+				<Story key="story1" /> <Story key="story2" />
+			</div>
+		),
+	],
+};
