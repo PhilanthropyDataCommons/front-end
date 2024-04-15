@@ -73,6 +73,14 @@ interface ProposalListTableProps {
 }
 
 const DEFAULT_PROPOSAL_COLUMNS = [
+	'proposal_name',
+	'proposal_summary',
+	'proposal_amount_requested',
+	'proposal_budget',
+	'proposal_fiscal_sponsor_name',
+	'proposal_start_date',
+	'proposal_end_date',
+	'proposal_location_of_work',
 	'organization_name',
 	'organization_tax_id',
 	'organization_city',
@@ -82,14 +90,6 @@ const DEFAULT_PROPOSAL_COLUMNS = [
 	'organization_mission_statement',
 	'organization_start_date',
 	'organization_operating_budget',
-	'proposal_name',
-	'proposal_summary',
-	'proposal_amount_requested',
-	'proposal_budget',
-	'proposal_fiscal_sponsor_name',
-	'proposal_start_date',
-	'proposal_end_date',
-	'proposal_location_of_work',
 ];
 
 const ProposalListTable = ({
