@@ -24,6 +24,14 @@
 	top: calc(-1 * var(--table--border-width));
 }
 
+.panel > .panel-body:first-child > .table:first-child thead.fixed {
+	top: 0;
+}
+
+.panel > .panel-body:first-child > .table:first-child thead.fixed th {
+	border-top: 0;
+}
+
 .table thead th {
 	border-top: var(--table--border-width) solid var(--color--gray--medium);
 	border-bottom: var(--table--border-width) solid var(--color--gray--medium);
