@@ -17,7 +17,15 @@ const router = createBrowserRouter([
 			{ path: '/', Component: Landing },
 			{ path: '/add-data', Component: AddData },
 			{
-				path: '/organizations/:organizationId/provider?/:provider?',
+				path: '/organizations/:organizationId',
+				Component: OrganizationDetail,
+			},
+			{
+				path: '/organizations/:organizationId/provider/:provider',
+				Component: OrganizationDetail,
+			},
+			{
+				path: '/organizations/:organizationId/proposals/:proposalId',
 				Component: OrganizationDetail,
 			},
 			{

@@ -18,9 +18,12 @@ import { ProposalListGridPanel } from '../components/ProposalListGridPanel';
 import {
 	PROPOSAL_APPLICANT_NAME_CASCADE,
 	PROPOSAL_APPLICANT_NAME_FALLBACK,
-	PROPOSAL_NAME_CASCADE,
-	PROPOSAL_NAME_FALLBACK,
 } from '../utils/proposals';
+import {
+	mapProposalBaseFields,
+	getValueOfBaseField,
+	getTitle,
+} from '../utils/proposalFields';
 
 interface ProposalListGridLoaderProps {
 	baseFields: ApiBaseField[] | null;
@@ -51,38 +54,6 @@ const ProposalListGridLoader = ({
 	);
 };
 
-const getValueOfBaseField = (
-	baseFields: ApiBaseField[],
-	proposal: ApiProposal,
-	baseFieldShortCode: string,
-) => {
-	const field = baseFields.find(
-		({ shortCode }) => shortCode === baseFieldShortCode,
-	);
-	if (field === undefined) {
-		return undefined;
-	}
-	const fieldValue = proposal.versions[0]?.fieldValues.find(
-		({ applicationFormField }) => applicationFormField.baseFieldId === field.id,
-	);
-	return fieldValue?.value ?? undefined;
-};
-
-const mapBaseFields = (baseFields: ApiBaseField[], proposal: ApiProposal) =>
-	(proposal.versions[0]?.fieldValues ?? []).map(
-		({ applicationFormField, value }) => {
-			const baseField = baseFields.find(
-				({ id }) => id === applicationFormField.baseFieldId,
-			);
-			return {
-				shortCode: baseField?.shortCode ?? 'missing',
-				fieldName: baseField?.label ?? 'missing',
-				position: applicationFormField.position,
-				value,
-			};
-		},
-	);
-
 const getApplicant = (baseFields: ApiBaseField[], proposal: ApiProposal) => {
 	const applicantNameKey = PROPOSAL_APPLICANT_NAME_CASCADE.find((key) => {
 		const baseFieldValue = getValueOfBaseField(baseFields, proposal, key);
@@ -95,20 +66,6 @@ const getApplicant = (baseFields: ApiBaseField[], proposal: ApiProposal) => {
 		? getValueOfBaseField(baseFields, proposal, applicantNameKey) ??
 				PROPOSAL_APPLICANT_NAME_FALLBACK
 		: PROPOSAL_APPLICANT_NAME_FALLBACK;
-};
-
-const getTitle = (baseFields: ApiBaseField[], proposal: ApiProposal) => {
-	const titleKey = PROPOSAL_NAME_CASCADE.find((key) => {
-		const baseFieldValue = getValueOfBaseField(baseFields, proposal, key);
-		return (
-			typeof baseFieldValue !== 'undefined' && baseFieldValue.trim() !== ''
-		);
-	});
-
-	return titleKey
-		? getValueOfBaseField(baseFields, proposal, titleKey) ??
-				PROPOSAL_NAME_FALLBACK
-		: PROPOSAL_NAME_FALLBACK;
 };
 
 interface ProposalDetailPanelLoaderProps {
@@ -156,7 +113,7 @@ const ProposalDetailPanelLoader = ({
 		'organization_tax_id',
 	);
 	const version = proposal.versions[0]?.version ?? 0;
-	const values = mapBaseFields(baseFields, proposal);
+	const values = mapProposalBaseFields(baseFields, proposal);
 
 	return (
 		<PanelGridItem key="detailPanel">

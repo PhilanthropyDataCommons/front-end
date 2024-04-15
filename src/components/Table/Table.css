@@ -73,8 +73,12 @@
 	cursor: pointer;
 }
 
-.table .clickable:hover {
+.table .clickable:not(.active):hover {
 	background-color: var(--color--gray--lighter);
+}
+
+.table .active {
+	background-color: var(--color--blue--lighter);
 }
 
 .table .has-actions .column-head-wrapper {

@@ -22,18 +22,23 @@ import {
 	DropdownTrigger,
 } from './Dropdown';
 import { FrontEndProposal } from '../interfaces/FrontEndProposal';
-import { ProposalListTable } from './ProposalListTable';
+import {
+	ProposalDetailDestinations,
+	ProposalListTable,
+} from './ProposalListTable';
 
 interface OrganizationDetailPanelProps {
 	organization: Organization;
 	proposals: FrontEndProposal[];
 	proposalFields: Record<string, string>;
+	activeProposalId?: string | undefined;
 }
 
 const OrganizationDetailPanel = ({
 	organization,
 	proposals,
 	proposalFields,
+	activeProposalId = undefined,
 }: OrganizationDetailPanelProps) => {
 	const { id, name, employerIdentificationNumber } = organization;
 	return (
@@ -77,8 +82,16 @@ const OrganizationDetailPanel = ({
 					</Dropdown>
 				</PanelActions>
 			</PanelHeader>
-			<PanelBody padded={false}>
-				<ProposalListTable fieldNames={proposalFields} proposals={proposals} />
+			<PanelBody>
+				<ProposalListTable
+					fieldNames={proposalFields}
+					proposals={proposals}
+					rowClickDestination={
+						ProposalDetailDestinations.ORGANIZATION_PROPOSAL_PANEL
+					}
+					organizationId={id}
+					activeProposalId={activeProposalId}
+				/>
 			</PanelBody>
 		</Panel>
 	);

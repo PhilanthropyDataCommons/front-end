@@ -19,6 +19,7 @@ import { OrganizationListGridPanel } from '../components/OrganizationListGridPan
 import { FrontEndProposal } from '../interfaces/FrontEndProposal';
 import { mapProposals } from '../map-proposals';
 import { mapFieldNames } from '../utils/baseFields';
+import { OrganizationProposalLoader } from '../components/OrganizationProposal/OrganizationProposalLoader';
 
 const OrganizationListGridPanelLoader = () => {
 	const { organizationId } = useParams();
@@ -44,7 +45,7 @@ const OrganizationListGridPanelLoader = () => {
 const OrganizationDetailPanelLoader = () => {
 	const navigate = useNavigate();
 	const params = useParams();
-	const { provider, organizationId = 'missing' } = params;
+	const { provider, organizationId = 'missing', proposalId } = params;
 	const [organization] = useOrganization(organizationId);
 	const [fields] = useBaseFields();
 	const [proposals] = useProposalsByOrganizationId(
@@ -110,6 +111,7 @@ const OrganizationDetailPanelLoader = () => {
 					organization={organization}
 					proposals={proposalState}
 					proposalFields={fieldsState}
+					activeProposalId={proposalId}
 				/>
 			</PanelGridItem>
 			{provider && (
@@ -122,6 +124,15 @@ const OrganizationDetailPanelLoader = () => {
 						}}
 					/>
 				</PanelGridItem>
+			)}
+			{proposalId && (
+				<OrganizationProposalLoader
+					proposalId={proposalId}
+					organization={organization}
+					onClose={() => {
+						navigate(`/organizations/${organizationId}`);
+					}}
+				/>
 			)}
 		</>
 	);
