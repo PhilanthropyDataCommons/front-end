@@ -20,7 +20,7 @@ export const OrganizationListTablePanel = ({
 
 	return (
 		<Panel>
-			<PanelBody padded={hasOrganizations}>
+			<PanelBody padded={!hasOrganizations}>
 				{hasOrganizations ? (
 					<OrganizationListTable organizations={organizations} />
 				) : (
