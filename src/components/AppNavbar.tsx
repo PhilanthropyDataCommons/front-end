@@ -55,7 +55,7 @@ const AppNavbar = () => {
 					</li>
 				)}
 				<li>
-					<Dropdown>
+					<Dropdown name="navbar-dropdown">
 						<DropdownTrigger type="navbar-item">
 							<InformationCircleIconOutline className="closed-only" />
 							<InformationCircleIconSolid className="open-only" />
@@ -94,7 +94,7 @@ const AppNavbar = () => {
 					</Dropdown>
 				</li>
 				<li>
-					<Dropdown>
+					<Dropdown name="navbar-dropdown">
 						<DropdownTrigger type="navbar-item">
 							<CommandLineIconOutline className="closed-only" />
 							<CommandLineIconSolid className="open-only" />
