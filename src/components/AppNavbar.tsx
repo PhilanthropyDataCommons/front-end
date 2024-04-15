@@ -28,35 +28,37 @@ const AppNavbar = () => {
 	return (
 		<nav className="App-navbar">
 			<ul>
-				<li>
-					<NavLink to="/proposals" className="App-navbar__item">
-						{({ isActive }) => (
-							<>
-								{isActive ? (
-									<DocumentTextIconSolid />
-								) : (
-									<DocumentTextIconOutline />
-								)}
-								Proposals
-							</>
-						)}
-					</NavLink>
-				</li>
 				{isAuthenticated && (
-					<li>
-						<NavLink to="/add-data" className="App-navbar__item">
-							{({ isActive }) => (
-								<>
-									{isActive ? (
-										<SquaresPlusIconSolid />
-									) : (
-										<SquaresPlusIconOutline />
-									)}
-									Add Data
-								</>
-							)}
-						</NavLink>
-					</li>
+					<>
+						<li>
+							<NavLink to="/proposals" className="App-navbar__item">
+								{({ isActive }) => (
+									<>
+										{isActive ? (
+											<DocumentTextIconSolid />
+										) : (
+											<DocumentTextIconOutline />
+										)}
+										Proposals
+									</>
+								)}
+							</NavLink>
+						</li>
+						<li>
+							<NavLink to="/add-data" className="App-navbar__item">
+								{({ isActive }) => (
+									<>
+										{isActive ? (
+											<SquaresPlusIconSolid />
+										) : (
+											<SquaresPlusIconOutline />
+										)}
+										Add Data
+									</>
+								)}
+							</NavLink>
+						</li>
+					</>
 				)}
 				<li>
 					<Dropdown name="navbar-dropdown">
