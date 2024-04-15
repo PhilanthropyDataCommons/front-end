@@ -3,15 +3,15 @@ import { NavLink } from 'react-router-dom';
 import { useOidc } from '@axa-fr/react-oidc';
 import {
 	CommandLineIcon as CommandLineIconOutline,
+	DocumentTextIcon as DocumentTextIconOutline,
 	InformationCircleIcon as InformationCircleIconOutline,
 	SquaresPlusIcon as SquaresPlusIconOutline,
-	TableCellsIcon as TableCellsIconOutline,
 } from '@heroicons/react/24/outline';
 import {
 	CommandLineIcon as CommandLineIconSolid,
+	DocumentTextIcon as DocumentTextIconSolid,
 	InformationCircleIcon as InformationCircleIconSolid,
 	SquaresPlusIcon as SquaresPlusIconSolid,
-	TableCellsIcon as TableCellsIconSolid,
 } from '@heroicons/react/24/solid';
 import { User } from './User';
 import {
@@ -32,8 +32,12 @@ const AppNavbar = () => {
 					<NavLink to="/proposals" className="App-navbar__item">
 						{({ isActive }) => (
 							<>
-								{isActive ? <TableCellsIconSolid /> : <TableCellsIconOutline />}
-								Dashboard
+								{isActive ? (
+									<DocumentTextIconSolid />
+								) : (
+									<DocumentTextIconOutline />
+								)}
+								Proposals
 							</>
 						)}
 					</NavLink>
