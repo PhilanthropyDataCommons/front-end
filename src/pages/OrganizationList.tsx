@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { withOidcSecure } from '@axa-fr/react-oidc';
 import { PanelGrid, PanelGridItem } from '../components/PanelGrid';
 import { OrganizationListTablePanel } from '../components/OrganizationListTablePanel';
 import {
@@ -37,5 +36,4 @@ const OrganizationListLoader = () => {
 	);
 };
 
-const OrganizationList = withOidcSecure(OrganizationListLoader);
-export { OrganizationList };
+export { OrganizationListLoader as OrganizationList };

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { withOidcSecure } from '@axa-fr/react-oidc';
 import { DocumentPlusIcon } from '@heroicons/react/24/outline';
 import {
 	uploadUsingPresignedPost,
@@ -101,5 +100,4 @@ const AddDataLoader = () => {
 	);
 };
 
-const AddData = withOidcSecure(AddDataLoader);
-export { AddData };
+export { AddDataLoader as AddData };

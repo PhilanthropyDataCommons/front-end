@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { withOidcSecure } from '@axa-fr/react-oidc';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
 	PROPOSALS_DEFAULT_COUNT,
@@ -60,5 +59,4 @@ const ProposalListLoader = () => {
 	);
 };
 
-const ProposalList = withOidcSecure(ProposalListLoader);
-export { ProposalList };
+export { ProposalListLoader as ProposalList };
