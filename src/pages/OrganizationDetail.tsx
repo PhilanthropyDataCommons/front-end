@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useOidc } from '@axa-fr/react-oidc';
 import { Organization } from '@pdc/sdk';
 import { FrontEndProposal } from '../interfaces/FrontEndProposal';
 import { mapProposals } from '../map-proposals';
@@ -42,6 +43,7 @@ const OrganizationListGridPanelLoader = () => {
 };
 
 const OrganizationDetailPanelLoader = () => {
+	const { isAuthenticated } = useOidc();
 	const navigate = useNavigate();
 	const params = useParams();
 	const { provider, organizationId = 'missing', proposalId } = params;
@@ -50,6 +52,9 @@ const OrganizationDetailPanelLoader = () => {
 	const [proposalState, setProposalState] = useState(emptyProposalArray);
 	const emptyRecord: Record<string, string> = {};
 	const [fieldsState, setFieldsState] = useState(emptyRecord);
+
+	const canSeeProviderPanel = isAuthenticated;
+	const canSeeProposalPanel = isAuthenticated;
 
 	const [organization] = useOrganization(organizationId);
 	const [fields] = useBaseFields();
@@ -75,6 +80,9 @@ const OrganizationDetailPanelLoader = () => {
 		};
 	}, [fields, proposals, organization]);
 
+	const showProviderPanel = provider && canSeeProviderPanel;
+	const showProposalPanel = proposalId && canSeeProposalPanel;
+
 	if (organization === null) {
 		const dummyOrganization: Organization = {
 			id: 0,
@@ -92,7 +100,7 @@ const OrganizationDetailPanelLoader = () => {
 						proposalFields={fieldsState}
 					/>
 				</PanelGridItem>
-				{provider && (
+				{showProviderPanel && (
 					<PanelGridItem key="platformPanel">
 						<DataPlatformProviderLoader
 							externalId={undefined}
@@ -106,6 +114,7 @@ const OrganizationDetailPanelLoader = () => {
 			</>
 		);
 	}
+
 	return (
 		<>
 			<PanelGridItem key="detailPanel">
@@ -116,7 +125,7 @@ const OrganizationDetailPanelLoader = () => {
 					activeProposalId={proposalId}
 				/>
 			</PanelGridItem>
-			{provider && (
+			{showProviderPanel && (
 				<PanelGridItem key="platformPanel">
 					<DataPlatformProviderLoader
 						provider={provider}
@@ -127,7 +136,7 @@ const OrganizationDetailPanelLoader = () => {
 					/>
 				</PanelGridItem>
 			)}
-			{proposalId && (
+			{showProposalPanel && (
 				<PanelGridItem key="proposalPanel">
 					<OrganizationProposalLoader
 						proposalId={proposalId}

@@ -19,7 +19,7 @@ const router = createBrowserRouter([
 			{ path: '/add-data', Component: withOidcSecure(AddData) },
 			{
 				path: '/organizations/:organizationId',
-				Component: withOidcSecure(OrganizationDetail),
+				Component: OrganizationDetail,
 			},
 			{
 				path: '/organizations/:organizationId/provider/:provider',
