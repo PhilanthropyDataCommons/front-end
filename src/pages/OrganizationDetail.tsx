@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Organization } from '@pdc/sdk';
+import { FrontEndProposal } from '../interfaces/FrontEndProposal';
+import { mapProposals } from '../map-proposals';
+import { mapFieldNames } from '../utils/baseFields';
 import { DataPlatformProviderLoader } from '../components/DataPlatformProvider/DataPlatformProviderLoader';
 import { PanelGrid, PanelGridItem } from '../components/PanelGrid';
 import {
@@ -15,9 +18,6 @@ import {
 } from '../pdc-api';
 import { OrganizationDetailPanel } from '../components/OrganizationDetailPanel';
 import { OrganizationListGridPanel } from '../components/OrganizationListGridPanel';
-import { FrontEndProposal } from '../interfaces/FrontEndProposal';
-import { mapProposals } from '../map-proposals';
-import { mapFieldNames } from '../utils/baseFields';
 import { OrganizationProposalLoader } from '../components/OrganizationProposal/OrganizationProposalLoader';
 
 const OrganizationListGridPanelLoader = () => {
@@ -45,6 +45,12 @@ const OrganizationDetailPanelLoader = () => {
 	const navigate = useNavigate();
 	const params = useParams();
 	const { provider, organizationId = 'missing', proposalId } = params;
+
+	const emptyProposalArray: FrontEndProposal[] = [];
+	const [proposalState, setProposalState] = useState(emptyProposalArray);
+	const emptyRecord: Record<string, string> = {};
+	const [fieldsState, setFieldsState] = useState(emptyRecord);
+
 	const [organization] = useOrganization(organizationId);
 	const [fields] = useBaseFields();
 	const [proposals] = useProposalsByOrganizationId(
@@ -52,10 +58,6 @@ const OrganizationDetailPanelLoader = () => {
 		PROPOSALS_DEFAULT_COUNT,
 		organizationId,
 	);
-	const emptyProposalArray: FrontEndProposal[] = [];
-	const [proposalState, setProposalState] = useState(emptyProposalArray);
-	const emptyRecord: Record<string, string> = {};
-	const [fieldsState, setFieldsState] = useState(emptyRecord);
 
 	useEffect(() => {
 		if (organization === null) {
@@ -80,6 +82,7 @@ const OrganizationDetailPanelLoader = () => {
 			name: 'Loading...',
 			createdAt: new Date('2024-03-06'),
 		};
+
 		return (
 			<>
 				<PanelGridItem key="detailPanel">

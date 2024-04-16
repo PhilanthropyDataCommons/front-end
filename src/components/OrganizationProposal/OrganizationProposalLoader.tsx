@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react';
 import { Organization } from '@pdc/sdk';
 import { useBaseFields, useProposal } from '../../pdc-api';
-import { OrganizationProposalPanel } from './OrganizationProposalPanel';
 import { mapProposalBaseFields, getTitle } from '../../utils/proposalFields';
+import { OrganizationProposalPanel } from './OrganizationProposalPanel';
 
 interface OrganizationProposalLoaderProps {
 	organization: Organization;
 	proposalId: string;
 	onClose(): void;
 }
+
 const OrganizationProposalLoader = ({
 	organization,
 	proposalId,
