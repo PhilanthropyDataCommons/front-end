@@ -51,7 +51,7 @@
 	background-color: var(--button--contrast-color--accent);
 }
 
-.button:not(:disabled):active {
+.button:not(:disabled, .button--link-style):active {
 	outline: 2px solid var(--button--primary-color--accent);
 }
 
@@ -122,4 +122,26 @@
 	position: absolute;
 	top: 3px;
 	right: 3px;
+}
+
+.button--link-style {
+	--button--primary-color: var(--color--blue);
+	--button--primary-color: var(--color--blue--dark);
+	--button--contrast-color: transparent;
+	--button--contrast-color--accent: transparent;
+
+	--button--border-color: transparent;
+	--button--border-radius: 0;
+
+	--button--font-size: 1em;
+	--button--height: auto;
+	--button--padding-y: 0;
+	--button--padding-x: 0;
+
+	text-decoration: underline;
+
+	&:hover,
+	&:focus {
+		text-decoration: none;
+	}
 }

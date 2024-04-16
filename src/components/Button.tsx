@@ -29,6 +29,10 @@ interface ButtonProps {
 	 * Sets the <button> type to "submit"
 	 */
 	submit?: boolean;
+	/**
+	 * Style the button like a text link
+	 */
+	linkStyle?: boolean;
 	title?: string;
 }
 
@@ -44,6 +48,7 @@ export const Button = ({
 	disabled = false,
 	onClick = () => true,
 	submit = false,
+	linkStyle = false,
 	title = undefined,
 }: ButtonProps) => {
 	const buttonClassNames = ['button', `button--color-${color}`];
@@ -58,6 +63,10 @@ export const Button = ({
 
 	if (notification) {
 		buttonClassNames.push('button--notification');
+	}
+
+	if (linkStyle) {
+		buttonClassNames.push('button--link-style');
 	}
 
 	return (
