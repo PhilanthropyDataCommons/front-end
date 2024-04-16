@@ -39,11 +39,6 @@ export const NewBulkUploadPanel = ({
 								<strong>The first row must contain base field keys.</strong>{' '}
 								Each subsequent row will be imported as a new proposal.
 							</li>
-							<li>
-								<strong>
-									<code>proposal_submitter_email</code> field is required.
-								</strong>
-							</li>
 						</ul>
 
 						<h2 className="label">Optional</h2>
