@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useOidc } from '@axa-fr/react-oidc';
-import { TableCellsIcon, UserIcon } from '@heroicons/react/24/solid';
+import { DocumentTextIcon } from '@heroicons/react/24/outline';
+import { UserIcon } from '@heroicons/react/24/solid';
 import { getLogger } from '../logger';
 import { Panel, PanelBody } from '../components/Panel';
 import { Button } from '../components/Button';
@@ -32,8 +33,8 @@ const Landing = () => {
 						to="/proposals"
 						className="button button--color-blue button--inverted"
 					>
-						<TableCellsIcon className="icon" />
-						Go to the Dashboard
+						<DocumentTextIcon />
+						View proposals
 					</Link>
 				) : (
 					<Button

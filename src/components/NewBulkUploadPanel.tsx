@@ -55,7 +55,7 @@ export const NewBulkUploadPanel = ({
 				</section>
 
 				<section id="base-fields">
-					<h1>Base fields</h1>
+					<h2>Base fields</h2>
 
 					<div className="instructions">
 						<p>

@@ -86,10 +86,44 @@ h3,
 h4,
 h5,
 h6 {
-	margin: 0;
+	margin: 1rem 0;
 	padding: 0;
 	font-weight: var(--font-weight--normal);
 	line-height: 1.2;
+
+	&:first-child {
+		margin-block-start: 0;
+	}
+
+	&:last-child {
+		margin-block-end: 0;
+	}
+}
+
+h1 {
+	font-size: 1.75rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+}
+
+h3 {
+	font-size: 1.3rem;
+}
+
+h4 {
+	font-size: 1.15rem;
+}
+
+h5 {
+	font-weight: var(--font-weight--medium);
+	font-size: 1rem;
+}
+
+h6 {
+	font-size: 0.95rem;
+	font-weight: var(--font-weight--medium);
 }
 
 /*
@@ -175,6 +209,7 @@ code.short-code {
 	font-size: var(--font-size--sm);
 	font-weight: var(--font-weight--medium);
 	text-transform: uppercase;
+	margin-block: 0;
 }
 
 a.no-visited {

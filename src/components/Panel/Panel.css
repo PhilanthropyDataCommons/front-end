@@ -25,9 +25,7 @@
 }
 
 .panel-title {
-	font-size: 1.5rem;
-	font-weight: var(--font-weight--normal);
-	margin-bottom: 0.25em;
+	margin-bottom: 0.5em;
 
 	/* Limit display to two lines of text. */
 	-webkit-box-orient: vertical;

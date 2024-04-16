@@ -3,15 +3,15 @@ import { NavLink } from 'react-router-dom';
 import { useOidc } from '@axa-fr/react-oidc';
 import {
 	CommandLineIcon as CommandLineIconOutline,
+	DocumentTextIcon as DocumentTextIconOutline,
 	InformationCircleIcon as InformationCircleIconOutline,
 	SquaresPlusIcon as SquaresPlusIconOutline,
-	TableCellsIcon as TableCellsIconOutline,
 } from '@heroicons/react/24/outline';
 import {
 	CommandLineIcon as CommandLineIconSolid,
+	DocumentTextIcon as DocumentTextIconSolid,
 	InformationCircleIcon as InformationCircleIconSolid,
 	SquaresPlusIcon as SquaresPlusIconSolid,
-	TableCellsIcon as TableCellsIconSolid,
 } from '@heroicons/react/24/solid';
 import { User } from './User';
 import {
@@ -28,31 +28,37 @@ const AppNavbar = () => {
 	return (
 		<nav className="App-navbar">
 			<ul>
-				<li>
-					<NavLink to="/proposals" className="App-navbar__item">
-						{({ isActive }) => (
-							<>
-								{isActive ? <TableCellsIconSolid /> : <TableCellsIconOutline />}
-								Dashboard
-							</>
-						)}
-					</NavLink>
-				</li>
 				{isAuthenticated && (
-					<li>
-						<NavLink to="/add-data" className="App-navbar__item">
-							{({ isActive }) => (
-								<>
-									{isActive ? (
-										<SquaresPlusIconSolid />
-									) : (
-										<SquaresPlusIconOutline />
-									)}
-									Add Data
-								</>
-							)}
-						</NavLink>
-					</li>
+					<>
+						<li>
+							<NavLink to="/proposals" className="App-navbar__item">
+								{({ isActive }) => (
+									<>
+										{isActive ? (
+											<DocumentTextIconSolid />
+										) : (
+											<DocumentTextIconOutline />
+										)}
+										Proposals
+									</>
+								)}
+							</NavLink>
+						</li>
+						<li>
+							<NavLink to="/add-data" className="App-navbar__item">
+								{({ isActive }) => (
+									<>
+										{isActive ? (
+											<SquaresPlusIconSolid />
+										) : (
+											<SquaresPlusIconOutline />
+										)}
+										Add Data
+									</>
+								)}
+							</NavLink>
+						</li>
+					</>
 				)}
 				<li>
 					<Dropdown name="navbar-dropdown">

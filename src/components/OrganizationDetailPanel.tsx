@@ -83,15 +83,24 @@ const OrganizationDetailPanel = ({
 				</PanelActions>
 			</PanelHeader>
 			<PanelBody>
-				<ProposalListTable
-					fieldNames={proposalFields}
-					proposals={proposals}
-					rowClickDestination={
-						ProposalDetailDestinations.ORGANIZATION_PROPOSAL_PANEL
-					}
-					organizationId={id}
-					activeProposalId={activeProposalId}
-				/>
+				<section id="organization-proposals">
+					<h2>Proposals</h2>
+					{proposals.length > 0 ? (
+						<ProposalListTable
+							fieldNames={proposalFields}
+							proposals={proposals}
+							rowClickDestination={
+								ProposalDetailDestinations.ORGANIZATION_PROPOSAL_PANEL
+							}
+							organizationId={id}
+							activeProposalId={activeProposalId}
+						/>
+					) : (
+						<p className="quiet">
+							There are no proposals linked to this organization.
+						</p>
+					)}
+				</section>
 			</PanelBody>
 		</Panel>
 	);
