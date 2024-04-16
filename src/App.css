@@ -1,16 +1,35 @@
+:root {
+	--app-banner--space-within: var(--fixed-spacing--halfx)
+		var(--fixed-spacing--1x);
+	--app-header--space-around: var(--fixed-spacing--2x) var(--fixed-spacing--2x)
+		var(--fixed-spacing--1x);
+	--app-main--space-around: var(--fixed-spacing--1x);
+}
+
 .App {
 	position: absolute;
 	inset: 0;
 
-	padding: var(--fixed-spacing--1x);
-
 	display: grid;
-	grid: min-content 1fr / auto;
-	gap: var(--fixed-spacing--1x);
+	grid-template:
+		'banner' min-content
+		'header' min-content
+		'main' 1fr
+		/ auto;
+}
+
+.App-banner {
+	grid-area: banner;
+	padding: var(--app-banner--space-within);
+	background-color: var(--color--gray);
+	font-weight: var(--font-weight--medium);
+	text-align: center;
 }
 
 .App-header {
-	padding: var(--fixed-spacing--1x);
+	grid-area: header;
+
+	margin: var(--app-header--space-around);
 
 	display: flex;
 	justify-content: space-between;
@@ -82,5 +101,7 @@
 }
 
 .App-main {
+	grid-area: main;
 	position: relative;
+	margin: var(--app-main--space-around);
 }
