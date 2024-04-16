@@ -31,7 +31,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: '/organizations',
-				Component: withOidcSecure(OrganizationList),
+				Component: OrganizationList,
 			},
 			{
 				path: '/proposals/:proposalId',
