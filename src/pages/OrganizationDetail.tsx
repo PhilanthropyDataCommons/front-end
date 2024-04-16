@@ -125,13 +125,15 @@ const OrganizationDetailPanelLoader = () => {
 				</PanelGridItem>
 			)}
 			{proposalId && (
-				<OrganizationProposalLoader
-					proposalId={proposalId}
-					organization={organization}
-					onClose={() => {
-						navigate(`/organizations/${organizationId}`);
-					}}
-				/>
+				<PanelGridItem key="proposalPanel">
+					<OrganizationProposalLoader
+						proposalId={proposalId}
+						organization={organization}
+						onClose={() => {
+							navigate(`/organizations/${organizationId}`);
+						}}
+					/>
+				</PanelGridItem>
 			)}
 		</>
 	);
