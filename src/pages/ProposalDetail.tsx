@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { withOidcSecure } from '@axa-fr/react-oidc';
 import { useParams } from 'react-router-dom';
 import {
 	ApiBaseField,
@@ -139,5 +138,4 @@ const ProposalDetailLoader = () => {
 	);
 };
 
-const ProposalDetail = withOidcSecure(ProposalDetailLoader);
-export { ProposalDetail };
+export { ProposalDetailLoader as ProposalDetail };

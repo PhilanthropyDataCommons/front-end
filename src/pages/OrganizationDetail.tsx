@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { withOidcSecure } from '@axa-fr/react-oidc';
 import { Organization } from '@pdc/sdk';
 import { DataPlatformProviderLoader } from '../components/DataPlatformProvider/DataPlatformProviderLoader';
 import { PanelGrid, PanelGridItem } from '../components/PanelGrid';
@@ -145,5 +144,4 @@ const OrganizationDetailLoader = () => (
 	</PanelGrid>
 );
 
-const OrganizationDetail = withOidcSecure(OrganizationDetailLoader);
-export { OrganizationDetail };
+export { OrganizationDetailLoader as OrganizationDetail };
