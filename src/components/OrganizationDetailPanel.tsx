@@ -22,30 +22,20 @@ import {
 	DropdownMenuText,
 	DropdownTrigger,
 } from './Dropdown';
-import { FrontEndProposal } from '../interfaces/FrontEndProposal';
-import {
-	ProposalDetailDestinations,
-	ProposalListTable,
-} from './ProposalListTable';
 
 interface OrganizationDetailPanelProps {
 	organization: Organization;
-	proposals: FrontEndProposal[];
-	proposalFields: Record<string, string>;
-	activeProposalId?: string | undefined;
+	children?: React.ReactNode;
 }
 
 const OrganizationDetailPanel = ({
 	organization,
-	proposals,
-	proposalFields,
-	activeProposalId = undefined,
+	children = undefined,
 }: OrganizationDetailPanelProps) => {
 	const { id, name, employerIdentificationNumber } = organization;
 	const { isAuthenticated } = useOidc();
 
 	const showDataProviderMenu = isAuthenticated;
-	const showProposalSection = isAuthenticated;
 
 	return (
 		<Panel>
@@ -90,28 +80,7 @@ const OrganizationDetailPanel = ({
 					)}
 				</PanelActions>
 			</PanelHeader>
-			<PanelBody>
-				{showProposalSection && (
-					<section id="organization-proposals">
-						<h2>Proposals</h2>
-						{proposals.length > 0 ? (
-							<ProposalListTable
-								fieldNames={proposalFields}
-								proposals={proposals}
-								rowClickDestination={
-									ProposalDetailDestinations.ORGANIZATION_PROPOSAL_PANEL
-								}
-								organizationId={id}
-								activeProposalId={activeProposalId}
-							/>
-						) : (
-							<p className="quiet">
-								There are no proposals linked to this organization.
-							</p>
-						)}
-					</section>
-				)}
-			</PanelBody>
+			<PanelBody>{children}</PanelBody>
 		</Panel>
 	);
 };

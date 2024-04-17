@@ -20,6 +20,63 @@ import {
 import { OrganizationDetailPanel } from '../components/OrganizationDetailPanel';
 import { OrganizationListGridPanel } from '../components/OrganizationListGridPanel';
 import { OrganizationProposalLoader } from '../components/OrganizationProposal/OrganizationProposalLoader';
+import {
+	ProposalListTable,
+	ProposalDetailDestinations,
+} from '../components/ProposalListTable';
+
+interface OrganizationProposalsTableLoaderProps {
+	organization: Organization;
+	organizationId: string;
+	activeProposalId?: string | undefined;
+}
+
+const OrganizationProposalsTableLoader = ({
+	organization,
+	organizationId,
+	activeProposalId = undefined,
+}: OrganizationProposalsTableLoaderProps) => {
+	const emptyProposalArray: FrontEndProposal[] = [];
+	const [proposalState, setProposalState] = useState(emptyProposalArray);
+	const emptyRecord: Record<string, string> = {};
+	const [fieldsState, setFieldsState] = useState(emptyRecord);
+
+	const [fields] = useBaseFields();
+	const [proposals] = useProposalsByOrganizationId(
+		PROPOSALS_DEFAULT_PAGE,
+		PROPOSALS_DEFAULT_COUNT,
+		organizationId,
+	);
+	useEffect(() => {
+		if (fields && proposals) {
+			setFieldsState(mapFieldNames(fields));
+			setProposalState(mapProposals(fields, proposals.entries));
+		}
+
+		return () => {};
+	}, [fields, proposals]);
+
+	return (
+		<section id="organization-proposals">
+			<h2>Proposals</h2>
+			{proposalState.length > 0 ? (
+				<ProposalListTable
+					fieldNames={fieldsState}
+					proposals={proposalState}
+					rowClickDestination={
+						ProposalDetailDestinations.ORGANIZATION_PROPOSAL_PANEL
+					}
+					organizationId={organization.id}
+					activeProposalId={activeProposalId}
+				/>
+			) : (
+				<p className="quiet">
+					There are no proposals linked to this organization.
+				</p>
+			)}
+		</section>
+	);
+};
 
 const OrganizationListGridPanelLoader = () => {
 	const { organizationId } = useParams();
@@ -48,21 +105,10 @@ const OrganizationDetailPanelLoader = () => {
 	const params = useParams();
 	const { provider, organizationId = 'missing', proposalId } = params;
 
-	const emptyProposalArray: FrontEndProposal[] = [];
-	const [proposalState, setProposalState] = useState(emptyProposalArray);
-	const emptyRecord: Record<string, string> = {};
-	const [fieldsState, setFieldsState] = useState(emptyRecord);
-
 	const canSeeProviderPanel = isAuthenticated;
 	const canSeeProposalPanel = isAuthenticated;
 
 	const [organization] = useOrganization(organizationId);
-	const [fields] = useBaseFields();
-	const [proposals] = useProposalsByOrganizationId(
-		PROPOSALS_DEFAULT_PAGE,
-		PROPOSALS_DEFAULT_COUNT,
-		organizationId,
-	);
 
 	useEffect(() => {
 		if (organization === null) {
@@ -70,15 +116,11 @@ const OrganizationDetailPanelLoader = () => {
 		} else {
 			document.title = `${organization.name} Organization Detail - Philanthropy Data Commons`;
 		}
-		if (fields && proposals) {
-			setFieldsState(mapFieldNames(fields));
-			setProposalState(mapProposals(fields, proposals.entries));
-		}
 
 		return () => {
 			document.title = 'Philanthropy Data Commons';
 		};
-	}, [fields, proposals, organization]);
+	}, [organization]);
 
 	const showProviderPanel = provider && canSeeProviderPanel;
 	const showProposalPanel = proposalId && canSeeProposalPanel;
@@ -94,11 +136,7 @@ const OrganizationDetailPanelLoader = () => {
 		return (
 			<>
 				<PanelGridItem key="detailPanel">
-					<OrganizationDetailPanel
-						organization={dummyOrganization}
-						proposals={proposalState}
-						proposalFields={fieldsState}
-					/>
+					<OrganizationDetailPanel organization={dummyOrganization} />
 				</PanelGridItem>
 				{showProviderPanel && (
 					<PanelGridItem key="platformPanel">
@@ -118,12 +156,15 @@ const OrganizationDetailPanelLoader = () => {
 	return (
 		<>
 			<PanelGridItem key="detailPanel">
-				<OrganizationDetailPanel
-					organization={organization}
-					proposals={proposalState}
-					proposalFields={fieldsState}
-					activeProposalId={proposalId}
-				/>
+				<OrganizationDetailPanel organization={organization}>
+					{isAuthenticated && (
+						<OrganizationProposalsTableLoader
+							organization={organization}
+							organizationId={organizationId}
+							activeProposalId={proposalId}
+						/>
+					)}
+				</OrganizationDetailPanel>
 			</PanelGridItem>
 			{showProviderPanel && (
 				<PanelGridItem key="platformPanel">
