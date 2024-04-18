@@ -1,3 +1,9 @@
 # Ignore artifacts. Prettier inherits ignore rules from .gitignore
 # https://prettier.io/docs/en/ignore.html
 build
+
+# Ignore ejected CRA content
+config/**
+react-app-env.d.ts
+scripts/**
+
