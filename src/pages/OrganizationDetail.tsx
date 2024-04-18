@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useOidc } from '@axa-fr/react-oidc';
 import { Organization } from '@pdc/sdk';
+import { FrontEndProposal } from '../interfaces/FrontEndProposal';
+import { mapProposals } from '../map-proposals';
+import { mapFieldNames } from '../utils/baseFields';
 import { DataPlatformProviderLoader } from '../components/DataPlatformProvider/DataPlatformProviderLoader';
 import { PanelGrid, PanelGridItem } from '../components/PanelGrid';
 import {
@@ -15,10 +19,64 @@ import {
 } from '../pdc-api';
 import { OrganizationDetailPanel } from '../components/OrganizationDetailPanel';
 import { OrganizationListGridPanel } from '../components/OrganizationListGridPanel';
-import { FrontEndProposal } from '../interfaces/FrontEndProposal';
-import { mapProposals } from '../map-proposals';
-import { mapFieldNames } from '../utils/baseFields';
 import { OrganizationProposalLoader } from '../components/OrganizationProposal/OrganizationProposalLoader';
+import {
+	ProposalListTable,
+	ProposalDetailDestinations,
+} from '../components/ProposalListTable';
+
+interface OrganizationProposalsTableLoaderProps {
+	organization: Organization;
+	organizationId: string;
+	activeProposalId?: string | undefined;
+}
+
+const OrganizationProposalsTableLoader = ({
+	organization,
+	organizationId,
+	activeProposalId = undefined,
+}: OrganizationProposalsTableLoaderProps) => {
+	const emptyProposalArray: FrontEndProposal[] = [];
+	const [proposalState, setProposalState] = useState(emptyProposalArray);
+	const emptyRecord: Record<string, string> = {};
+	const [fieldsState, setFieldsState] = useState(emptyRecord);
+
+	const [fields] = useBaseFields();
+	const [proposals] = useProposalsByOrganizationId(
+		PROPOSALS_DEFAULT_PAGE,
+		PROPOSALS_DEFAULT_COUNT,
+		organizationId,
+	);
+	useEffect(() => {
+		if (fields && proposals) {
+			setFieldsState(mapFieldNames(fields));
+			setProposalState(mapProposals(fields, proposals.entries));
+		}
+
+		return () => {};
+	}, [fields, proposals]);
+
+	return (
+		<section id="organization-proposals">
+			<h2>Proposals</h2>
+			{proposalState.length > 0 ? (
+				<ProposalListTable
+					fieldNames={fieldsState}
+					proposals={proposalState}
+					rowClickDestination={
+						ProposalDetailDestinations.ORGANIZATION_PROPOSAL_PANEL
+					}
+					organizationId={organization.id}
+					activeProposalId={activeProposalId}
+				/>
+			) : (
+				<p className="quiet">
+					There are no proposals linked to this organization.
+				</p>
+			)}
+		</section>
+	);
+};
 
 const OrganizationListGridPanelLoader = () => {
 	const { organizationId } = useParams();
@@ -42,20 +100,15 @@ const OrganizationListGridPanelLoader = () => {
 };
 
 const OrganizationDetailPanelLoader = () => {
+	const { isAuthenticated } = useOidc();
 	const navigate = useNavigate();
 	const params = useParams();
 	const { provider, organizationId = 'missing', proposalId } = params;
+
+	const canSeeProviderPanel = isAuthenticated;
+	const canSeeProposalPanel = isAuthenticated;
+
 	const [organization] = useOrganization(organizationId);
-	const [fields] = useBaseFields();
-	const [proposals] = useProposalsByOrganizationId(
-		PROPOSALS_DEFAULT_PAGE,
-		PROPOSALS_DEFAULT_COUNT,
-		organizationId,
-	);
-	const emptyProposalArray: FrontEndProposal[] = [];
-	const [proposalState, setProposalState] = useState(emptyProposalArray);
-	const emptyRecord: Record<string, string> = {};
-	const [fieldsState, setFieldsState] = useState(emptyRecord);
 
 	useEffect(() => {
 		if (organization === null) {
@@ -63,15 +116,14 @@ const OrganizationDetailPanelLoader = () => {
 		} else {
 			document.title = `${organization.name} Organization Detail - Philanthropy Data Commons`;
 		}
-		if (fields && proposals) {
-			setFieldsState(mapFieldNames(fields));
-			setProposalState(mapProposals(fields, proposals.entries));
-		}
 
 		return () => {
 			document.title = 'Philanthropy Data Commons';
 		};
-	}, [fields, proposals, organization]);
+	}, [organization]);
+
+	const showProviderPanel = provider && canSeeProviderPanel;
+	const showProposalPanel = proposalId && canSeeProposalPanel;
 
 	if (organization === null) {
 		const dummyOrganization: Organization = {
@@ -80,16 +132,13 @@ const OrganizationDetailPanelLoader = () => {
 			name: 'Loading...',
 			createdAt: new Date('2024-03-06'),
 		};
+
 		return (
 			<>
 				<PanelGridItem key="detailPanel">
-					<OrganizationDetailPanel
-						organization={dummyOrganization}
-						proposals={proposalState}
-						proposalFields={fieldsState}
-					/>
+					<OrganizationDetailPanel organization={dummyOrganization} />
 				</PanelGridItem>
-				{provider && (
+				{showProviderPanel && (
 					<PanelGridItem key="platformPanel">
 						<DataPlatformProviderLoader
 							externalId={undefined}
@@ -103,17 +152,21 @@ const OrganizationDetailPanelLoader = () => {
 			</>
 		);
 	}
+
 	return (
 		<>
 			<PanelGridItem key="detailPanel">
-				<OrganizationDetailPanel
-					organization={organization}
-					proposals={proposalState}
-					proposalFields={fieldsState}
-					activeProposalId={proposalId}
-				/>
+				<OrganizationDetailPanel organization={organization}>
+					{isAuthenticated && (
+						<OrganizationProposalsTableLoader
+							organization={organization}
+							organizationId={organizationId}
+							activeProposalId={proposalId}
+						/>
+					)}
+				</OrganizationDetailPanel>
 			</PanelGridItem>
-			{provider && (
+			{showProviderPanel && (
 				<PanelGridItem key="platformPanel">
 					<DataPlatformProviderLoader
 						provider={provider}
@@ -124,14 +177,16 @@ const OrganizationDetailPanelLoader = () => {
 					/>
 				</PanelGridItem>
 			)}
-			{proposalId && (
-				<OrganizationProposalLoader
-					proposalId={proposalId}
-					organization={organization}
-					onClose={() => {
-						navigate(`/organizations/${organizationId}`);
-					}}
-				/>
+			{showProposalPanel && (
+				<PanelGridItem key="proposalPanel">
+					<OrganizationProposalLoader
+						proposalId={proposalId}
+						organization={organization}
+						onClose={() => {
+							navigate(`/organizations/${organizationId}`);
+						}}
+					/>
+				</PanelGridItem>
 			)}
 		</>
 	);

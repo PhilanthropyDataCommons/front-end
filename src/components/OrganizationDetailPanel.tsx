@@ -1,4 +1,5 @@
 import React from 'react';
+import { useOidc } from '@axa-fr/react-oidc';
 import {
 	ArrowRightStartOnRectangleIcon,
 	CircleStackIcon,
@@ -21,26 +22,21 @@ import {
 	DropdownMenuText,
 	DropdownTrigger,
 } from './Dropdown';
-import { FrontEndProposal } from '../interfaces/FrontEndProposal';
-import {
-	ProposalDetailDestinations,
-	ProposalListTable,
-} from './ProposalListTable';
 
 interface OrganizationDetailPanelProps {
 	organization: Organization;
-	proposals: FrontEndProposal[];
-	proposalFields: Record<string, string>;
-	activeProposalId?: string | undefined;
+	children?: React.ReactNode;
 }
 
 const OrganizationDetailPanel = ({
 	organization,
-	proposals,
-	proposalFields,
-	activeProposalId = undefined,
+	children = undefined,
 }: OrganizationDetailPanelProps) => {
 	const { id, name, employerIdentificationNumber } = organization;
+	const { isAuthenticated } = useOidc();
+
+	const showDataProviderMenu = isAuthenticated;
+
 	return (
 		<Panel>
 			<PanelHeader>
@@ -53,55 +49,38 @@ const OrganizationDetailPanel = ({
 					</PanelTitleTags>
 				</PanelTitleWrapper>
 				<PanelActions>
-					<Dropdown>
-						<DropdownTrigger>
-							<CircleStackIcon />
-							Data providers
-						</DropdownTrigger>
-						<DropdownMenu align="right">
-							<DropdownMenuText>
-								View applicant data from one of the data platform providers:
-							</DropdownMenuText>
-							<DropdownMenuLink
-								to={`/organizations/${id}/provider/candid`}
-								icon={<ArrowRightStartOnRectangleIcon />}
-								alignIcon="right"
-								key="candid"
-							>
-								Candid
-							</DropdownMenuLink>
-							<DropdownMenuLink
-								to={`/organizations/${id}/provider/charity-navigator`}
-								icon={<ArrowRightStartOnRectangleIcon />}
-								alignIcon="right"
-								key="charity-navigator"
-							>
-								Charity Navigator
-							</DropdownMenuLink>
-						</DropdownMenu>
-					</Dropdown>
+					{showDataProviderMenu && (
+						<Dropdown>
+							<DropdownTrigger>
+								<CircleStackIcon />
+								Data providers
+							</DropdownTrigger>
+							<DropdownMenu align="right">
+								<DropdownMenuText>
+									View applicant data from one of the data platform providers:
+								</DropdownMenuText>
+								<DropdownMenuLink
+									to={`/organizations/${id}/provider/candid`}
+									icon={<ArrowRightStartOnRectangleIcon />}
+									alignIcon="right"
+									key="candid"
+								>
+									Candid
+								</DropdownMenuLink>
+								<DropdownMenuLink
+									to={`/organizations/${id}/provider/charity-navigator`}
+									icon={<ArrowRightStartOnRectangleIcon />}
+									alignIcon="right"
+									key="charity-navigator"
+								>
+									Charity Navigator
+								</DropdownMenuLink>
+							</DropdownMenu>
+						</Dropdown>
+					)}
 				</PanelActions>
 			</PanelHeader>
-			<PanelBody>
-				<section id="organization-proposals">
-					<h2>Proposals</h2>
-					{proposals.length > 0 ? (
-						<ProposalListTable
-							fieldNames={proposalFields}
-							proposals={proposals}
-							rowClickDestination={
-								ProposalDetailDestinations.ORGANIZATION_PROPOSAL_PANEL
-							}
-							organizationId={id}
-							activeProposalId={activeProposalId}
-						/>
-					) : (
-						<p className="quiet">
-							There are no proposals linked to this organization.
-						</p>
-					)}
-				</section>
-			</PanelBody>
+			<PanelBody>{children}</PanelBody>
 		</Panel>
 	);
 };

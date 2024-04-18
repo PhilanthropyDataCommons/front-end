@@ -96,6 +96,13 @@ export const IconOnly: Story = {
 	},
 };
 
+export const TextLinkStyle: Story = {
+	args: {
+		children: 'Link-Style Button',
+		linkStyle: true,
+	},
+};
+
 export const Disabled: Story = {
 	args: {
 		children: 'Button',

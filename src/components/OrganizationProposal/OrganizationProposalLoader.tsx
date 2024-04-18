@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
 import { Organization } from '@pdc/sdk';
 import { useBaseFields, useProposal } from '../../pdc-api';
-import { PanelGridItem } from '../PanelGrid';
-import { OrganizationProposalPanel } from './OrganizationProposalPanel';
 import { mapProposalBaseFields, getTitle } from '../../utils/proposalFields';
+import { OrganizationProposalPanel } from './OrganizationProposalPanel';
 
 interface OrganizationProposalLoaderProps {
 	organization: Organization;
 	proposalId: string;
 	onClose(): void;
 }
+
 const OrganizationProposalLoader = ({
 	organization,
 	proposalId,
@@ -26,14 +26,12 @@ const OrganizationProposalLoader = ({
 
 	if (baseFields === null || proposal === null) {
 		return (
-			<PanelGridItem key="detailPanel">
-				<OrganizationProposalPanel
-					proposalId={proposalId}
-					version={0}
-					values={[]}
-					onClose={onClose}
-				/>
-			</PanelGridItem>
+			<OrganizationProposalPanel
+				proposalId={proposalId}
+				version={0}
+				values={[]}
+				onClose={onClose}
+			/>
 		);
 	}
 
@@ -42,15 +40,13 @@ const OrganizationProposalLoader = ({
 	const title = getTitle(baseFields, proposal);
 
 	return (
-		<PanelGridItem key="detailPanel">
-			<OrganizationProposalPanel
-				proposalId={proposalId}
-				version={version}
-				values={values}
-				onClose={onClose}
-				title={title}
-			/>
-		</PanelGridItem>
+		<OrganizationProposalPanel
+			proposalId={proposalId}
+			version={version}
+			values={values}
+			onClose={onClose}
+			title={title}
+		/>
 	);
 };
 
