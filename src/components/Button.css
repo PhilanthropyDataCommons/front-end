@@ -124,6 +124,12 @@
 	right: 3px;
 }
 
+.button--block {
+	display: flex;
+	justify-content: center;
+	inline-size: 100%;
+}
+
 .button--link-style {
 	--button--primary-color: var(--color--blue);
 	--button--primary-color: var(--color--blue--dark);
