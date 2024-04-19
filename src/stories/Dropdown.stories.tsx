@@ -9,6 +9,7 @@ import {
 	Dropdown,
 	DropdownTrigger,
 	DropdownMenu,
+	DropdownMenuButton,
 	DropdownMenuText,
 	DropdownMenuLink,
 	DropdownMenuLinkDescription,
@@ -108,6 +109,36 @@ export const WithIconInTrigger: Story = {
 				<DropdownMenuLink to="/" key="item3">
 					Item 3
 				</DropdownMenuLink>
+			</DropdownMenu>,
+		],
+	},
+	decorators: [
+		(Story) => (
+			<div style={{ height: '250px' }}>
+				<Story />
+			</div>
+		),
+	],
+};
+
+export const UsingButtons: Story = {
+	args: {
+		children: [
+			<DropdownTrigger>Toggle menu</DropdownTrigger>,
+			<DropdownMenu>
+				<DropdownMenuLink to="/" key="item1">
+					This is a link
+				</DropdownMenuLink>
+				<DropdownMenuButton
+					onClick={() => {
+						// We want a low-touch way of showing we clicked a button.
+						// eslint-disable-next-line no-alert
+						window.alert('You clicked a button.');
+					}}
+					key="item2"
+				>
+					This is a button
+				</DropdownMenuButton>
 			</DropdownMenu>,
 		],
 	},

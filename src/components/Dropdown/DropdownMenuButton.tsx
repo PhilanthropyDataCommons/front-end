@@ -1,16 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
-interface DropdownMenuLinkProps {
-	/**
-	 * Destination path or URL.
-	 */
-	to: string;
+interface DropdownMenuButtonProps {
 	children: React.ReactNode;
-	/**
-	 * Skip client-side routing and let the browser load the URL like a normal `<a href>`.
-	 */
-	reloadDocument?: boolean;
 	/**
 	 * Optional Heroicon element, to prepend (left) or append (right) to menu link.
 	 */
@@ -20,34 +11,37 @@ interface DropdownMenuLinkProps {
 	 */
 	alignIcon?: 'left' | 'right';
 	className?: string;
+	onClick?(): void;
 }
 
 /**
- * A `<Link>` element inside a dropdown menu.
+ * A `<Button>` element inside a dropdown menu.
  */
-export const DropdownMenuLink = ({
-	to,
+export const DropdownMenuButton = ({
 	children,
-	reloadDocument = false,
 	icon = undefined,
 	alignIcon = 'left',
 	className = '',
-}: DropdownMenuLinkProps) => {
+	onClick = undefined,
+}: DropdownMenuButtonProps) => {
 	const handleClick = (e: React.SyntheticEvent) => {
 		const $target = e.nativeEvent.target as HTMLLinkElement;
 		$target.closest('.dropdown')?.removeAttribute('open');
+
+		if (onClick) {
+			onClick();
+		}
 	};
 
 	return (
-		<Link
-			to={to}
+		<button
 			className={`dropdown-menu-item ${icon ? `has-icon align-icon--${alignIcon}` : ''} ${className}`.trim()}
 			onClick={handleClick}
-			reloadDocument={reloadDocument}
+			type="button"
 		>
 			{icon && alignIcon === 'left' && icon}
 			<span>{children}</span>
 			{icon && alignIcon === 'right' && icon}
-		</Link>
+		</button>
 	);
 };
