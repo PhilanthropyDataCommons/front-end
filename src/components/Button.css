@@ -71,6 +71,12 @@
 	--button--primary-color--accent: var(--color--gray--darker);
 	--button--contrast-color: var(--color--gray--lighter);
 	--button--contrast-color--accent: var(--color--gray--light);
+
+	/* Special styling for non-inverted and non-bordered mode. */
+	&:not(.button--inverted, .button--bordered) {
+		--button--contrast-color: var(--color--gray--light);
+		--button--contrast-color--accent: var(--color--gray);
+	}
 }
 
 .button--color-blue {
