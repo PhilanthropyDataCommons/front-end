@@ -58,7 +58,7 @@ const Landing = () => {
 								inverted
 								block
 								onClick={() => {
-									login('/proposals').catch(logger.error);
+									login('/').catch(logger.error);
 								}}
 							>
 								<UserIcon className="icon" />
