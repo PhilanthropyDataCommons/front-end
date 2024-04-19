@@ -1,12 +1,7 @@
 import React from 'react';
 import './Button.css';
 
-interface ButtonProps {
-	/**
-	 * Contents of a `<Button>` can be a mix of strings and JSX elements,
-	 * and will be flex-aligned.
-	 */
-	children: React.ReactNode;
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	color?: 'gray' | 'blue' | 'red';
 	/**
 	 * Makes the button dark with light text.
@@ -24,11 +19,6 @@ interface ButtonProps {
 	 * Make the button occupy maximum available horizontal space.
 	 */
 	block?: boolean;
-	disabled?: boolean;
-	/**
-	 * Optional click handler
-	 */
-	onClick?: () => void;
 	/**
 	 * Sets the <button> type to "submit"
 	 */
@@ -37,24 +27,25 @@ interface ButtonProps {
 	 * Style the button like a text link
 	 */
 	linkStyle?: boolean;
-	title?: string;
+	className?: string;
 }
 
 /**
  * Primary UI component for user interaction.
+ *
+ * Extends the native `<button>` element, so all its props are available here.
  */
 export const Button = ({
-	children,
+	children = null,
 	color = 'gray',
 	inverted = false,
 	bordered = true,
 	notification = false,
 	block = false,
-	disabled = false,
-	onClick = () => true,
 	submit = false,
 	linkStyle = false,
-	title = undefined,
+	className = undefined,
+	...props
 }: ButtonProps) => {
 	const buttonClassNames = ['button', `button--color-${color}`];
 
@@ -78,13 +69,18 @@ export const Button = ({
 		buttonClassNames.push('button--link-style');
 	}
 
+	if (className !== undefined) {
+		buttonClassNames.push(className);
+	}
+
 	return (
 		<button
 			type={submit ? 'submit' : 'button'}
-			className={buttonClassNames.join(' ')}
-			disabled={disabled}
-			onClick={onClick}
-			title={title}
+			className={buttonClassNames.join(' ').trim()}
+			// We're extending a native element.
+			// This is precisely where prop-spreading is kosher.
+			// eslint-disable-next-line react/jsx-props-no-spreading
+			{...props}
 		>
 			{children}
 		</button>
