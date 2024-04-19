@@ -4,3 +4,13 @@
 
 	--panel--padding: var(--fixed-spacing--2x);
 }
+
+.launch-buttons {
+	display: flex;
+	gap: var(--fixed-spacing--1x);
+	flex-direction: column;
+
+	&.authenticated {
+		flex-direction: row;
+	}
+}
