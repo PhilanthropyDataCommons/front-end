@@ -84,8 +84,9 @@
 	--navbar-item--color: var(--color--blue);
 }
 
-.App-navbar__item:where(a, button, summary):is(:hover, :focus) {
+.App-navbar__item:where(a, button, summary):is(:hover, :focus-visible) {
 	--navbar-item--background-color: #0001;
+	--outline: none;
 }
 
 .App-navbar__item svg {

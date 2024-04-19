@@ -3,7 +3,7 @@
 	gap: 0;
 }
 
-.form-element-group > *:is(:focus, :active) {
+.form-element-group > *:is(:focus-visible, :active) {
 	z-index: 1;
 }
 
