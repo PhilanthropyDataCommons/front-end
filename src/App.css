@@ -101,6 +101,10 @@
 	color: var(--color--red);
 }
 
+.App-navbar .logout {
+	color: var(--color--red);
+}
+
 .App-main {
 	grid-area: main;
 	position: relative;
