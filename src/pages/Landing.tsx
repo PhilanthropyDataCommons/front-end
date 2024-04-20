@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useOidc } from '@axa-fr/react-oidc';
-import { DocumentTextIcon } from '@heroicons/react/24/outline';
-import { UserIcon } from '@heroicons/react/24/solid';
+import {
+	BuildingOffice2Icon,
+	DocumentTextIcon,
+	UserIcon,
+} from '@heroicons/react/24/outline';
 import { getLogger } from '../logger';
 import { Panel, PanelBody } from '../components/Panel';
 import { Button } from '../components/Button';
@@ -28,26 +31,50 @@ const Landing = () => {
 						Read more about the project here.
 					</OffsiteLink>
 				</p>
-				{isAuthenticated ? (
-					<Link
-						to="/proposals"
-						className="button button--color-blue button--inverted"
-					>
-						<DocumentTextIcon />
-						View proposals
-					</Link>
-				) : (
-					<Button
-						color="blue"
-						inverted
-						onClick={() => {
-							login('/proposals').catch(logger.error);
-						}}
-					>
-						<UserIcon className="icon" />
-						Log in
-					</Button>
-				)}
+				<div
+					className={`launch-buttons ${isAuthenticated ? 'authenticated' : ''}`}
+				>
+					{isAuthenticated ? (
+						<>
+							<Link
+								to="/organizations"
+								className="button button--color-blue button--inverted button--block"
+							>
+								<BuildingOffice2Icon />
+								View organizations
+							</Link>
+							<Link
+								to="/proposals"
+								className="button button--color-blue button--inverted button--block"
+							>
+								<DocumentTextIcon />
+								View proposals
+							</Link>
+						</>
+					) : (
+						<>
+							<Button
+								color="blue"
+								inverted
+								block
+								onClick={() => {
+									login('/').catch(logger.error);
+								}}
+							>
+								<UserIcon className="icon" />
+								Log in
+							</Button>
+							<Link
+								to="/organizations"
+								className="button button--color-gray button--block"
+							>
+								<BuildingOffice2Icon />
+								View public organization data
+							</Link>
+						</>
+					)}
+				</div>
+
 				<dl>
 					{!isAuthenticated && (
 						<Dli>

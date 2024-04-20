@@ -1,5 +1,9 @@
 # Recent Changes to the PDC
 
+## April 2024
+
+- Add Organizations to the PDC
+
 ## February 2024
 
 - Add bulk upload of proposal data via CSV

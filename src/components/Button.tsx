@@ -20,6 +20,10 @@ interface ButtonProps {
 	 * Adds a notification disc to the button.
 	 */
 	notification?: boolean;
+	/**
+	 * Make the button occupy maximum available horizontal space.
+	 */
+	block?: boolean;
 	disabled?: boolean;
 	/**
 	 * Optional click handler
@@ -45,6 +49,7 @@ export const Button = ({
 	inverted = false,
 	bordered = true,
 	notification = false,
+	block = false,
 	disabled = false,
 	onClick = () => true,
 	submit = false,
@@ -63,6 +68,10 @@ export const Button = ({
 
 	if (notification) {
 		buttonClassNames.push('button--notification');
+	}
+
+	if (block) {
+		buttonClassNames.push('button--block');
 	}
 
 	if (linkStyle) {
