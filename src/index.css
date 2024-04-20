@@ -48,6 +48,8 @@
 
 	--badge--background-color: var(--color--gray--darker);
 	--badge--color: white;
+
+	--outline: 2px solid var(--color--blue);
 }
 
 body {
@@ -66,6 +68,10 @@ body {
 *:before,
 *:after {
 	box-sizing: border-box;
+
+	&:focus-visible {
+		outline: var(--outline);
+	}
 }
 
 nav ul,

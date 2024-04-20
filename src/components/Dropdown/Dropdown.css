@@ -1,7 +1,8 @@
 :root {
 	--dropdown--menu--border-radius: 8px;
 	--dropdown--menu--spacing: var(--accessible-spacing--1x);
-	--dropdown--menu--width: 30ch;
+	--dropdown--menu--min-width: 20ch;
+	--dropdown--menu--max-width: 30ch;
 	--dropdown--menu-item--icon-size: 1.5em;
 }
 
@@ -44,7 +45,9 @@
 .dropdown-menu {
 	position: absolute;
 	z-index: 100;
-	width: var(--dropdown--menu--width);
+	inline-size: max-content;
+	min-inline-size: var(--dropdown--menu--min-width);
+	max-inline-size: var(--dropdown--menu--max-width);
 
 	background-color: white;
 	border-radius: var(--dropdown--menu--border-radius);
@@ -99,35 +102,44 @@
 	padding: var(--dropdown--menu--spacing);
 }
 
-.dropdown-menu-link {
+.dropdown-menu-item:where(button) {
+	all: unset;
+
+	&:focus-visible {
+		outline: var(--outline);
+	}
+}
+
+.dropdown-menu-item {
 	color: inherit;
 	font-weight: var(--font-weight--medium);
 	text-decoration: none;
 	padding: var(--dropdown--menu--spacing);
+	cursor: pointer;
 }
 
-.dropdown-menu-link.has-icon {
+.dropdown-menu-item.has-icon {
 	display: flex;
 	align-items: flex-start;
 	gap: var(--fixed-spacing--1x);
 }
 
-.dropdown-menu-link.has-icon.align-icon--right {
+.dropdown-menu-item.has-icon.align-icon--right {
 	justify-content: space-between;
 	gap: var(--fixed-spacing--2x);
 }
 
-.dropdown-menu-link .description {
+.dropdown-menu-item .description {
 	display: block;
 	font-weight: normal;
 	font-size: var(--font-size--sm);
 }
 
-.dropdown-menu-link:hover {
+.dropdown-menu-item:hover {
 	background-color: var(--color--gray--lighter);
 }
 
-.dropdown-menu-link > svg {
+.dropdown-menu-item > svg {
 	flex-shrink: 0;
 	height: var(--dropdown--menu-item--icon-size);
 	width: var(--dropdown--menu-item--icon-size);

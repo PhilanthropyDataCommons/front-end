@@ -54,8 +54,8 @@
 	pointer-events: none;
 }
 
-.file-picker button:focus {
-	outline: 2px solid blue;
+.file-picker button:focus-visible {
+	outline: var(--outline);
 }
 
 .file-picker input[type='file'] {

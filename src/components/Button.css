@@ -47,12 +47,8 @@
 	color: var(--button--primary-color);
 }
 
-.button:not(:disabled):is(:hover, :focus, :active) {
+.button:not(:disabled):is(:hover, :focus-visible, :active) {
 	background-color: var(--button--contrast-color--accent);
-}
-
-.button:not(:disabled, .button--link-style):active {
-	outline: 2px solid var(--button--primary-color--accent);
 }
 
 .button:disabled {
@@ -100,12 +96,8 @@
 	color: var(--button--contrast-color);
 }
 
-.button--inverted:not(:disabled):is(:hover, :focus, :active) {
+.button--inverted:not(:disabled):is(:hover, :focus-visible, :active) {
 	background-color: var(--button--primary-color--accent);
-}
-
-.button--inverted:not(:disabled):active {
-	outline: 2px solid var(--button--primary-color--accent);
 }
 
 .button--bordered {
@@ -153,7 +145,7 @@
 	text-decoration: underline;
 
 	&:hover,
-	&:focus {
+	&:focus-visible {
 		text-decoration: none;
 	}
 }
