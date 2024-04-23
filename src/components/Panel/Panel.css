@@ -85,6 +85,12 @@
 .panel-actions {
 	display: flex;
 	gap: var(--fixed-spacing--1x);
+	align-items: center;
+
+	&.switches {
+		padding-inline-end: var(--button--padding-x);
+		gap: var(--fixed-spacing--2x);
+	}
 }
 
 .panel-body {
