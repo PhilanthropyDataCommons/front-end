@@ -15,6 +15,7 @@ import { BaseFields } from '../components/BaseFields';
 import { BulkUploaderFilePicker } from '../components/BulkUploaderFilePicker';
 import { BulkUploadList } from '../components/BulkUploadList';
 import './AddData.css';
+import { UserProvider } from '../UserProvider';
 
 const REFRESH_BULK_UPLOADS_INTERVAL = 5000;
 
@@ -75,28 +76,30 @@ const AddDataLoader = () => {
 	}, [bulkUploadResponse, refreshBulkUploads]);
 
 	return (
-		<PanelGrid sidebarred>
-			<PanelGridItem>
-				<Panel>
-					<PanelHeader padded={false}>
-						<NavLink to="/add-data" className="new-bulk-upload-link">
-							<DocumentPlusIcon className="icon" />
-							New bulk upload
-						</NavLink>
-					</PanelHeader>
-					<PanelBody padded={false}>
-						<BulkUploadList uploads={bulkUploads} />
-					</PanelBody>
-				</Panel>
-			</PanelGridItem>
-			<PanelGridItem>
-				<NewBulkUploadPanel
-					apiUrl={new URL('/', process.env.REACT_APP_API_URL)}
-					bulkUploader={<BulkUploader onBulkUpload={refreshBulkUploads} />}
-					baseFieldsLoader={<BaseFieldsLoader />}
-				/>
-			</PanelGridItem>
-		</PanelGrid>
+		<UserProvider>
+			<PanelGrid sidebarred>
+				<PanelGridItem>
+					<Panel>
+						<PanelHeader padded={false}>
+							<NavLink to="/add-data" className="new-bulk-upload-link">
+								<DocumentPlusIcon className="icon" />
+								New bulk upload
+							</NavLink>
+						</PanelHeader>
+						<PanelBody padded={false}>
+							<BulkUploadList uploads={bulkUploads} />
+						</PanelBody>
+					</Panel>
+				</PanelGridItem>
+				<PanelGridItem>
+					<NewBulkUploadPanel
+						apiUrl={new URL('/', process.env.REACT_APP_API_URL)}
+						bulkUploader={<BulkUploader onBulkUpload={refreshBulkUploads} />}
+						baseFieldsLoader={<BaseFieldsLoader />}
+					/>
+				</PanelGridItem>
+			</PanelGrid>
+		</UserProvider>
 	);
 };
 

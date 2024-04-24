@@ -11,6 +11,7 @@ import { mapProposals } from '../map-proposals';
 import { PanelGrid, PanelGridItem } from '../components/PanelGrid';
 import { ProposalListTablePanel } from '../components/ProposalListTablePanel';
 import { mapFieldNames } from '../utils/baseFields';
+import { UserProvider } from '../UserProvider';
 
 const ProposalListLoader = () => {
 	const navigate = useNavigate();
@@ -46,16 +47,18 @@ const ProposalListLoader = () => {
 	const mappedProposals = mapProposals(fields, proposals.entries);
 
 	return (
-		<PanelGrid>
-			<PanelGridItem>
-				<ProposalListTablePanel
-					fieldNames={mapFieldNames(fields)}
-					proposals={mappedProposals}
-					searchQuery={query}
-					onSearch={handleSearch}
-				/>
-			</PanelGridItem>
-		</PanelGrid>
+		<UserProvider>
+			<PanelGrid>
+				<PanelGridItem>
+					<ProposalListTablePanel
+						fieldNames={mapFieldNames(fields)}
+						proposals={mappedProposals}
+						searchQuery={query}
+						onSearch={handleSearch}
+					/>
+				</PanelGridItem>
+			</PanelGrid>
+		</UserProvider>
 	);
 };
 

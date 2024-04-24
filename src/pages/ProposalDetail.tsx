@@ -131,10 +131,10 @@ const ProposalDetailLoader = () => {
 	const [baseFields] = useBaseFields();
 
 	return (
-		<PanelGrid sidebarred>
-			<ProposalListGridLoader baseFields={baseFields} />
-			<ProposalDetailPanelLoader baseFields={baseFields} />
-		</PanelGrid>
+			<PanelGrid sidebarred>
+				<ProposalListGridLoader baseFields={baseFields} />
+				<ProposalDetailPanelLoader baseFields={baseFields} />
+			</PanelGrid>
 	);
 };
 

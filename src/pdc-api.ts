@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useOidcFetch } from '@axa-fr/react-oidc';
-import { Organization, OrganizationBundle } from '@pdc/sdk';
+import { User, Organization, OrganizationBundle } from '@pdc/sdk';
 import { getLogger } from './logger';
 
 const logger = getLogger('pdc-api');
@@ -268,6 +268,14 @@ const useOrganizations = (page: string, count: string) =>
 		}),
 	);
 
+const useUser = (authenticationId: string) =>
+	usePdcApi<User>(
+		'/users',
+		new URLSearchParams({
+			_authenticationId: authenticationId,
+		}),
+	);
+
 export {
 	PROPOSALS_DEFAULT_COUNT,
 	PROPOSALS_DEFAULT_PAGE,
@@ -285,6 +293,7 @@ export {
 	useOrganizations,
 	useProviderData,
 	useRegisterBulkUploadCallback,
+	useUser,
 };
 
 export type { ApiBaseField, ApiBulkUpload, ApiProposal };
