@@ -18,6 +18,7 @@ const getConfiguration = (
 		redirect_uri: `${window.location.origin}/authentication/callback`,
 		silent_redirect_uri: `${window.location.origin}/authentication/silent-callback`,
 		scope: 'openid',
+        preload_user_info: true,
 	};
 };
 
