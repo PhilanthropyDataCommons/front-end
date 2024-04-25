@@ -11,8 +11,10 @@
 
 .toggle-switch {
 	display: inline-flex;
-	gap: 0.75ch;
+	gap: 1ch;
 	cursor: pointer;
+
+	font-weight: var(--font-weight--medium);
 
 	> input[type='checkbox'] {
 		all: unset;
