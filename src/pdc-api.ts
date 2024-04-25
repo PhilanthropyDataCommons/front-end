@@ -176,7 +176,11 @@ interface ApiBulkUploads {
 	total: number;
 }
 
-const useBulkUploads = () => usePdcApi<ApiBulkUploads>('/bulkUploads');
+const useBulkUploads = () =>
+	usePdcApi<ApiBulkUploads>(
+		'/bulkUploads',
+		new URLSearchParams({ createdBy: 'me' }),
+	);
 
 interface ApiProposal {
 	id: number;
