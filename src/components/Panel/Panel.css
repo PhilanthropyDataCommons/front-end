@@ -17,6 +17,7 @@
 
 	display: flex;
 	justify-content: space-between;
+	align-items: flex-start;
 	gap: var(--fixed-spacing--2x);
 }
 
@@ -90,6 +91,7 @@
 	&.switches {
 		padding-inline-end: var(--button--padding-x);
 		gap: var(--fixed-spacing--2x);
+		align-self: center;
 	}
 }
 
