@@ -136,7 +136,7 @@ const AppNavbar = () => {
 									from NPM.
 								</DropdownMenuLinkDescription>
 							</DropdownMenuLink>
-							{process.env.REACT_APP_SHOW_STORYBOOK === 'true' && (
+							{import.meta.env.VITE_REACT_APP_SHOW_STORYBOOK === 'true' && (
 								<DropdownMenuLink to="/storybook" reloadDocument>
 									Storybook
 									<DropdownMenuLinkDescription>

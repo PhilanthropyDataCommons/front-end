@@ -13,8 +13,8 @@ import './index.css';
 const logger = getLogger('index');
 
 const configuration = getConfiguration(
-	process.env.REACT_APP_OIDC_AUTHORITY,
-	process.env.REACT_APP_OIDC_CLIENT_ID,
+	import.meta.env.VITE_REACT_APP_OIDC_AUTHORITY,
+	import.meta.env.VITE_REACT_APP_OIDC_CLIENT_ID,
 );
 logger.debug(configuration, 'OIDC Configuration');
 
@@ -35,4 +35,4 @@ if (rootElement) {
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+// reportWebVitals();

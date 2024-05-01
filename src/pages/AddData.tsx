@@ -91,7 +91,7 @@ const AddDataLoader = () => {
 			</PanelGridItem>
 			<PanelGridItem>
 				<NewBulkUploadPanel
-					apiUrl={new URL('/', process.env.REACT_APP_API_URL)}
+					apiUrl={new URL('/', import.meta.env.VITE_REACT_APP_API_URL)}
 					bulkUploader={<BulkUploader onBulkUpload={refreshBulkUploads} />}
 					baseFieldsLoader={<BaseFieldsLoader />}
 				/>

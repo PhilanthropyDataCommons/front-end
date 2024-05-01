@@ -2,8 +2,8 @@ import pino from 'pino';
 import type { Logger } from 'pino';
 
 const level =
-	process.env.REACT_APP_LOG_LEVEL ??
-	(process.env.NODE_ENV === 'production' ? 'error' : 'info');
+	import.meta.env.VITE_REACT_APP_LOG_LEVEL ??
+	(import.meta.env.PROD ? 'error' : 'info');
 
 const logger = pino({
 	name: 'front-end',

@@ -2,6 +2,7 @@
 	"name": "front-end",
 	"version": "0.1.0",
 	"private": true,
+	"type": "module",
 	"dependencies": {
 		"@axa-fr/react-oidc": "^7.22.4",
 		"@fontsource/source-sans-pro": "^5.0.8",
@@ -23,7 +24,6 @@
 		"@storybook/addon-interactions": "^8.0.9",
 		"@storybook/addon-links": "^8.0.9",
 		"@storybook/blocks": "^8.0.5",
-		"@storybook/preset-create-react-app": "^8.0.9",
 		"@storybook/react": "^8.0.9",
 		"@storybook/react-webpack5": "^8.0.9",
 		"@storybook/test": "^8.0.5",
@@ -34,27 +34,32 @@
 		"@types/node": "^18.19.31",
 		"@types/react": "^18.3.1",
 		"@types/react-dom": "^18.3.0",
+		"@typescript-eslint/eslint-plugin": "^7.2.0",
+		"@typescript-eslint/parser": "^7.2.0",
+		"@vitejs/plugin-react": "^4.2.1",
 		"babel-plugin-named-exports-order": "^0.0.2",
+		"eslint": "^8.57.0",
 		"eslint-config-airbnb": "^19.0.4",
-		"eslint-config-airbnb-typescript": "^17.1.0",
+		"eslint-config-airbnb-typescript": "^18.0.0",
 		"eslint-config-prettier": "^9.1.0",
+		"eslint-plugin-react-hooks": "^4.6.0",
+		"eslint-plugin-react-refresh": "^0.4.6",
 		"prettier": "^3.2.5",
-		"react-scripts": "5.0.1",
 		"storybook": "^8.0.9",
-		"typescript": "^4.9.5"
+		"typescript": "^5.2.2",
+		"vite": "^5.2.10"
 	},
 	"scripts": {
-		"start": "react-scripts start",
+		"start": "vite",
 		"build": "npm run build:app && npm run build:storybook",
-		"build:app": "react-scripts build",
+		"build:app": "tsc && vite build",
 		"build:storybook": "storybook build -o build/storybook",
 		"storybook": "storybook dev -p 6006",
-		"test": "react-scripts test",
-		"lint:prettier": "prettier . --check",
-		"lint:eslint": "eslint ./src --ext .ts,.tsx,.js --max-warnings=0",
 		"lint": "npm run lint:eslint && npm run lint:prettier",
+		"lint:prettier": "prettier . --check",
+		"lint:eslint": "eslint . --ext ts,tsx,js --report-unused-disable-directives --max-warnings 0",
 		"format": "prettier . --write",
-		"eject": "react-scripts eject"
+		"preview": "vite preview"
 	},
 	"eslintConfig": {
 		"extends": [

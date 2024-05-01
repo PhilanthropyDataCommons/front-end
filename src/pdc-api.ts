@@ -5,7 +5,7 @@ import { getLogger } from './logger';
 
 const logger = getLogger('pdc-api');
 
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
 const throwIfResponseIsNotOk = (res: Response): Response => {
 	if (!res.ok) {
