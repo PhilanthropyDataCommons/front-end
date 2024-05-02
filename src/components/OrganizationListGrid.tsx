@@ -25,9 +25,7 @@ export const OrganizationListGrid = ({
 				key={organization.id}
 			>
 				<ListGridItemTitle>{organization.name}</ListGridItemTitle>
-				<ListGridItemDetails>
-					{organization.employerIdentificationNumber}
-				</ListGridItemDetails>
+				<ListGridItemDetails>{organization.taxId}</ListGridItemDetails>
 			</ListGridItem>
 		)}
 	/>
