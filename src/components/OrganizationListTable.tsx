@@ -25,12 +25,12 @@ const OrganizationListTableRow = ({
 	return (
 		<TableRow onClick={handleRowClick}>
 			<RowCell>{organization.name}</RowCell>
-			<RowCell>{organization.employerIdentificationNumber}</RowCell>
+			<RowCell>{organization.taxId}</RowCell>
 		</TableRow>
 	);
 };
 
-const DEFAULT_ORGANIZATION_COLUMNS = ['Name', 'EIN'];
+const DEFAULT_ORGANIZATION_COLUMNS = ['Name', 'Tax ID'];
 
 interface OrganizationListTableProps {
 	organizations: OrganizationBundle;

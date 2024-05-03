@@ -128,7 +128,7 @@ const OrganizationDetailPanelLoader = () => {
 	if (organization === null) {
 		const dummyOrganization: Organization = {
 			id: 0,
-			employerIdentificationNumber: '00-0000000',
+			taxId: '00-0000000',
 			name: 'Loading...',
 			createdAt: new Date('2024-03-06'),
 		};
@@ -170,7 +170,7 @@ const OrganizationDetailPanelLoader = () => {
 				<PanelGridItem key="platformPanel">
 					<DataPlatformProviderLoader
 						provider={provider}
-						externalId={organization.employerIdentificationNumber}
+						externalId={organization.taxId}
 						onClose={() => {
 							navigate(`/organizations/${organizationId}`);
 						}}

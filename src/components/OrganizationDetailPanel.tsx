@@ -32,7 +32,7 @@ const OrganizationDetailPanel = ({
 	organization,
 	children = undefined,
 }: OrganizationDetailPanelProps) => {
-	const { id, name, employerIdentificationNumber } = organization;
+	const { id, name, taxId } = organization;
 	const { isAuthenticated } = useOidc();
 
 	const showDataProviderMenu = isAuthenticated;
@@ -43,9 +43,7 @@ const OrganizationDetailPanel = ({
 				<PanelTitleWrapper>
 					<PanelTitle>{name}</PanelTitle>
 					<PanelTitleTags>
-						{employerIdentificationNumber && (
-							<PanelTag badge="EIN">{employerIdentificationNumber}</PanelTag>
-						)}
+						{taxId && <PanelTag badge="Tax ID">{taxId}</PanelTag>}
 					</PanelTitleTags>
 				</PanelTitleWrapper>
 				<PanelActions>

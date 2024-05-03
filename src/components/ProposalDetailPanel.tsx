@@ -39,7 +39,7 @@ const ProposalDetailPanel = ({
 					{applicant && (
 						<PanelTag icon={<BuildingOffice2Icon />}>{applicant}</PanelTag>
 					)}
-					{applicantId && <PanelTag badge="EIN">{applicantId}</PanelTag>}
+					{applicantId && <PanelTag badge="Tax ID">{applicantId}</PanelTag>}
 				</PanelTitleTags>
 			</PanelTitleWrapper>
 		</PanelHeader>
