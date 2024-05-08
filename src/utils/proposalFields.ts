@@ -1,8 +1,9 @@
-import { ApiBaseField, ApiProposal } from '../pdc-api';
+import type { BaseField } from '@pdc/sdk';
+import { ApiProposal } from '../pdc-api';
 import { PROPOSAL_NAME_CASCADE, PROPOSAL_NAME_FALLBACK } from './proposals';
 
 const mapProposalBaseFields = (
-	baseFields: ApiBaseField[],
+	baseFields: BaseField[],
 	proposal: ApiProposal,
 ) =>
 	(proposal.versions[0]?.fieldValues ?? []).map(
@@ -20,7 +21,7 @@ const mapProposalBaseFields = (
 	);
 
 const getValueOfBaseField = (
-	baseFields: ApiBaseField[],
+	baseFields: BaseField[],
 	proposal: ApiProposal,
 	baseFieldShortCode: string,
 ) => {
@@ -36,7 +37,7 @@ const getValueOfBaseField = (
 	return fieldValue?.value ?? undefined;
 };
 
-const getTitle = (baseFields: ApiBaseField[], proposal: ApiProposal) => {
+const getTitle = (baseFields: BaseField[], proposal: ApiProposal) => {
 	const titleKey = PROPOSAL_NAME_CASCADE.find((key) => {
 		const baseFieldValue = getValueOfBaseField(baseFields, proposal, key);
 		return (

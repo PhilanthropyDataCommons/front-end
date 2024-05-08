@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
+import { BaseField } from '@pdc/sdk';
 import { BaseFields } from '../components/BaseFields';
 
 const meta = {
@@ -19,12 +20,36 @@ export const Default: Story = {
 				label: 'Organization Name',
 				shortCode: 'organization_name',
 				description: 'Common name of the organization',
+				dataType: BaseField.DataTypeEnum.String,
+				createdAt: new Date(),
+				scope: BaseField.ScopeEnum.Proposal,
 			},
 			{
 				id: 2,
 				label: 'Proposal Summary',
 				shortCode: 'proposal_summary',
 				description: "Summary of the proposal's purpose",
+				dataType: BaseField.DataTypeEnum.String,
+				createdAt: new Date(),
+				scope: BaseField.ScopeEnum.Proposal,
+			},
+			{
+				id: 3,
+				label: 'Organization Contact',
+				shortCode: 'organization_contact',
+				description: 'Person contact regarding this organization',
+				dataType: BaseField.DataTypeEnum.String,
+				createdAt: new Date(),
+				scope: BaseField.ScopeEnum.Proposal,
+			},
+			{
+				id: 4,
+				label: 'Organization Budget',
+				shortCode: 'organization_budget',
+				description: 'Annual budget of the organization',
+				dataType: BaseField.DataTypeEnum.String,
+				createdAt: new Date(),
+				scope: BaseField.ScopeEnum.Proposal,
 			},
 		],
 	},

@@ -1,4 +1,5 @@
-import type { ApiBaseField, ApiProposal } from './pdc-api';
+import type { BaseField } from '@pdc/sdk';
+import type { ApiProposal } from './pdc-api';
 
 const extendMultimapReducer = (
 	multimap: Record<string, string[]>,
@@ -8,7 +9,7 @@ const extendMultimapReducer = (
 	...multimap,
 });
 
-const mapProposals = (fields: ApiBaseField[], proposals: ApiProposal[]) =>
+const mapProposals = (fields: BaseField[], proposals: ApiProposal[]) =>
 	proposals.map((proposal) => ({
 		id: proposal.id.toString(),
 		values: (proposal.versions[0]?.fieldValues ?? [])

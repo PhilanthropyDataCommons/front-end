@@ -1,30 +1,43 @@
-import { ApiBaseField, ApiProposal } from './pdc-api';
+import { BaseField } from '@pdc/sdk';
+import { ApiProposal } from './pdc-api';
 import { mapProposals } from './map-proposals';
 
-const baseFields: ApiBaseField[] = [
+const baseFields: BaseField[] = [
 	{
 		id: 1,
 		label: 'Organization Name',
 		shortCode: 'organization_name',
 		description: 'Common name of the organization',
+		scope: BaseField.ScopeEnum.Proposal,
+		dataType: BaseField.DataTypeEnum.String,
+		createdAt: new Date(),
 	},
 	{
 		id: 2,
 		label: 'Organization City',
 		shortCode: 'organization_city',
 		description: 'City of the organization',
+		scope: BaseField.ScopeEnum.Proposal,
+		dataType: BaseField.DataTypeEnum.String,
+		createdAt: new Date(),
 	},
 	{
 		id: 3,
 		label: 'Organization Contact',
 		shortCode: 'organization_contact',
 		description: 'Person contact regarding this organization',
+		scope: BaseField.ScopeEnum.Proposal,
+		dataType: BaseField.DataTypeEnum.String,
+		createdAt: new Date(),
 	},
 	{
 		id: 4,
 		label: 'Organization Budget',
 		shortCode: 'organization_budget',
 		description: 'Annual budget of the organization',
+		scope: BaseField.ScopeEnum.Proposal,
+		dataType: BaseField.DataTypeEnum.String,
+		createdAt: new Date(),
 	},
 ];
 

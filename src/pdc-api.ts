@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useOidcFetch } from '@axa-fr/react-oidc';
-import { Organization, OrganizationBundle } from '@pdc/sdk';
+import type { BaseField, Organization, OrganizationBundle } from '@pdc/sdk';
 import { getLogger } from './logger';
 
 const logger = getLogger('pdc-api');
@@ -154,14 +154,7 @@ const useRegisterBulkUploadCallback = () => {
 		});
 };
 
-interface ApiBaseField {
-	description: string;
-	id: number;
-	label: string;
-	shortCode: string;
-}
-
-const useBaseFields = () => usePdcApi<ApiBaseField[]>('/baseFields');
+const useBaseFields = () => usePdcApi<BaseField[]>('/baseFields');
 
 interface ApiBulkUpload {
 	id: number;
@@ -291,4 +284,4 @@ export {
 	useRegisterBulkUploadCallback,
 };
 
-export type { ApiBaseField, ApiBulkUpload, ApiProposal };
+export type { ApiBulkUpload, ApiProposal };
