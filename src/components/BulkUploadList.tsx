@@ -1,10 +1,10 @@
 import React from 'react';
+import type { BulkUpload } from '@pdc/sdk';
 import { BulkUploadListItem } from './BulkUploadListItem';
 import './BulkUploadList.css';
-import type { ApiBulkUpload } from '../pdc-api';
 
 interface BulkUploadListProps {
-	uploads: ApiBulkUpload[];
+	uploads: BulkUpload[];
 }
 
 export const BulkUploadList = ({ uploads }: BulkUploadListProps) => (

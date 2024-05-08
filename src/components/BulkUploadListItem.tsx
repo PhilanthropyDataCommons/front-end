@@ -6,28 +6,20 @@ import {
 	ClockIcon,
 	XCircleIcon,
 } from '@heroicons/react/24/outline';
+import { BulkUpload } from '@pdc/sdk';
 import { localizeDateTime, relativizeDateTime } from '../utils/datetime';
-import type { ApiBulkUpload } from '../pdc-api';
 import { EmailLink } from './EmailLink';
 import './BulkUploadListItem.css';
 
-enum BulkUploadStatuses {
-	PENDING = 'pending',
-	IN_PROGRESS = 'in_progress',
-	COMPLETED = 'completed',
-	CANCELED = 'canceled',
-	FAILED = 'failed',
-}
-
 interface BulkUploadListItemProps {
-	upload: ApiBulkUpload;
+	upload: BulkUpload;
 }
 
 export const BulkUploadListItem = ({ upload }: BulkUploadListItemProps) => {
 	const { id, fileName, fileSize, status, createdAt } = upload;
 
 	const relativeTimestamp = (
-		<time dateTime={createdAt} title={localizeDateTime(createdAt)}>
+		<time dateTime={createdAt.toString()} title={localizeDateTime(createdAt)}>
 			{relativizeDateTime(createdAt)}
 		</time>
 	);
@@ -44,7 +36,7 @@ export const BulkUploadListItem = ({ upload }: BulkUploadListItemProps) => {
 	const metadata = [];
 
 	switch (status) {
-		case BulkUploadStatuses.PENDING:
+		case BulkUpload.StatusEnum.Pending:
 			icon = <ClockIcon className="icon" />;
 			metadata.push(
 				relativeTimestamp,
@@ -52,19 +44,19 @@ export const BulkUploadListItem = ({ upload }: BulkUploadListItemProps) => {
 				'Waiting to process…',
 			);
 			break;
-		case BulkUploadStatuses.IN_PROGRESS:
+		case BulkUpload.StatusEnum.InProgress:
 			icon = <ArrowPathIcon className="icon rotating" />;
 			metadata.push(relativeTimestamp, formattedFileSize, 'Processing…');
 			break;
-		case BulkUploadStatuses.COMPLETED:
+		case BulkUpload.StatusEnum.Completed:
 			icon = <CheckCircleIcon className="icon" />;
 			metadata.push(relativeTimestamp, formattedFileSize);
 			break;
-		case BulkUploadStatuses.CANCELED:
+		case BulkUpload.StatusEnum.Canceled:
 			icon = <XCircleIcon className="icon" />;
 			metadata.push(<>Canceled {relativeTimestamp}</>, formattedFileSize);
 			break;
-		case BulkUploadStatuses.FAILED:
+		case BulkUpload.StatusEnum.Failed:
 			icon = <XCircleIcon className="icon" />;
 			metadata.push(
 				<>Failed {relativeTimestamp}</>,

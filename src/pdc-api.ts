@@ -1,6 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useOidcFetch } from '@axa-fr/react-oidc';
-import type { BaseField, Organization, OrganizationBundle } from '@pdc/sdk';
+import type {
+	BaseField,
+	BulkUpload,
+	WritableBulkUpload,
+	Organization,
+	OrganizationBundle,
+} from '@pdc/sdk';
 import { getLogger } from './logger';
 
 const logger = getLogger('pdc-api');
@@ -127,23 +133,9 @@ const uploadUsingPresignedPost = async (
 	}).then(throwIfResponseIsNotOk);
 };
 
-interface ApiBulkUploadsPostRequest {
-	fileName: string;
-	sourceKey: string;
-}
-
-interface ApiBulkUploadsPostResponse {
-	id: number;
-	fileName: string;
-	fileSize: number;
-	sourceKey: string;
-	status: string;
-	createdAt: string;
-}
-
 const useRegisterBulkUploadCallback = () => {
-	const api = usePdcCallbackApi<ApiBulkUploadsPostResponse>('/bulkUploads');
-	return (params: ApiBulkUploadsPostRequest) =>
+	const api = usePdcCallbackApi<BulkUpload>('/bulkUploads');
+	return (params: WritableBulkUpload) =>
 		api({
 			method: 'post',
 			headers: {
@@ -156,16 +148,8 @@ const useRegisterBulkUploadCallback = () => {
 
 const useBaseFields = () => usePdcApi<BaseField[]>('/baseFields');
 
-interface ApiBulkUpload {
-	id: number;
-	fileName: string;
-	fileSize: number;
-	status: string;
-	createdAt: string;
-}
-
 interface ApiBulkUploads {
-	entries: ApiBulkUpload[];
+	entries: BulkUpload[];
 	total: number;
 }
 
@@ -284,4 +268,4 @@ export {
 	useRegisterBulkUploadCallback,
 };
 
-export type { ApiBulkUpload, ApiProposal };
+export type { ApiProposal };
