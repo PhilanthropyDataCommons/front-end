@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import type { BaseField } from '@pdc/sdk';
+import type { BaseField, Proposal } from '@pdc/sdk';
 import {
-	ApiProposal,
 	PROPOSALS_DEFAULT_COUNT,
 	PROPOSALS_DEFAULT_PAGE,
 	PROPOSALS_DEFAULT_QUERY,
@@ -53,7 +52,7 @@ const ProposalListGridLoader = ({
 	);
 };
 
-const getApplicant = (baseFields: BaseField[], proposal: ApiProposal) => {
+const getApplicant = (baseFields: BaseField[], proposal: Proposal) => {
 	const applicantNameKey = PROPOSAL_APPLICANT_NAME_CASCADE.find((key) => {
 		const baseFieldValue = getValueOfBaseField(baseFields, proposal, key);
 		return (

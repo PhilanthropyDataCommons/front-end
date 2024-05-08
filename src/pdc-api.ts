@@ -6,6 +6,8 @@ import type {
 	WritableBulkUpload,
 	Organization,
 	OrganizationBundle,
+	Proposal,
+	ProposalBundle,
 } from '@pdc/sdk';
 import { getLogger } from './logger';
 
@@ -159,39 +161,20 @@ const useBulkUploads = () =>
 		new URLSearchParams({ createdBy: 'me' }),
 	);
 
-interface ApiProposal {
-	id: number;
-	versions: {
-		version: number;
-		fieldValues: {
-			applicationFormField: {
-				baseFieldId: number;
-				position: number;
-			};
-			value: string;
-		}[];
-	}[];
-}
-
 const useProposal = (proposalId: string) =>
-	usePdcApi<ApiProposal>(
+	usePdcApi<Proposal>(
 		`/proposals/${proposalId}`,
 		new URLSearchParams({
 			includeFieldsAndValues: 'true',
 		}),
 	);
 
-interface ApiProposals {
-	entries: ApiProposal[];
-	total: number;
-}
-
 const PROPOSALS_DEFAULT_PAGE = '1';
 const PROPOSALS_DEFAULT_COUNT = '1000';
 const PROPOSALS_DEFAULT_QUERY = '';
 
 const useProposals = (page: string, count: string, query: string) =>
-	usePdcApi<ApiProposals>(
+	usePdcApi<ProposalBundle>(
 		'/proposals',
 		new URLSearchParams({
 			_page: page,
@@ -205,7 +188,7 @@ const useProposalsByOrganizationId = (
 	count: string,
 	organizationId: string,
 ) =>
-	usePdcApi<ApiProposals>(
+	usePdcApi<ProposalBundle>(
 		'/proposals',
 		new URLSearchParams({
 			_page: page,
@@ -267,5 +250,3 @@ export {
 	useProviderData,
 	useRegisterBulkUploadCallback,
 };
-
-export type { ApiProposal };
