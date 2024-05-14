@@ -6,6 +6,9 @@ import type {
 	WritableBulkUpload,
 	Organization,
 	OrganizationBundle,
+	PresignedPostRequest,
+	WritablePresignedPostRequest,
+	PresignedPostRequestPresignedPost,
 	Proposal,
 	ProposalBundle,
 } from '@pdc/sdk';
@@ -86,29 +89,18 @@ const usePdcCallbackApi = <T>(
 	);
 };
 
-interface ApiPresignedPostRequest {
-	fileType: string;
-	fileSize: number;
-}
-
-interface PresignedPost {
-	url: string;
-	fields: Record<string, string> & {
-		key: string;
-	};
-}
-
-interface ApiPresignedPostResponse {
-	fileType: string;
-	fileSize: number;
-	presignedPost: PresignedPost;
-}
+/* The SDK generator isn't correctly omitting `presignedPost` from the writeable type.
+ * Until that's fixed, we need to generate our own stand-in that omits it.
+ * https://github.com/PhilanthropyDataCommons/service/issues/1012
+ */
+type FixedWritablePresignedPostRequest = Omit<
+	WritablePresignedPostRequest,
+	'presignedPost'
+>;
 
 const usePresignedPostCallback = () => {
-	const api = usePdcCallbackApi<ApiPresignedPostResponse>(
-		'/presignedPostRequests',
-	);
-	return (params: ApiPresignedPostRequest) =>
+	const api = usePdcCallbackApi<PresignedPostRequest>('/presignedPostRequests');
+	return (params: FixedWritablePresignedPostRequest) =>
 		api({
 			method: 'post',
 			headers: {
@@ -121,10 +113,15 @@ const usePresignedPostCallback = () => {
 
 const uploadUsingPresignedPost = async (
 	file: File,
-	presignedPost: PresignedPost,
+	presignedPost: PresignedPostRequestPresignedPost,
 ) => {
 	const formData = new FormData();
 	Object.entries(presignedPost.fields).forEach(([key, value]) =>
+		/* eslint-disable-next-line @typescript-eslint/no-unsafe-argument --
+		 *
+		 * SDK incorrectly defines this type.
+		 * https://github.com/PhilanthropyDataCommons/service/issues/1011
+		 */
 		formData.append(key, value),
 	);
 	formData.append('Content-Type', file.type || 'application/octet-stream');
