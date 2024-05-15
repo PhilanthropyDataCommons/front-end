@@ -110,20 +110,19 @@ const usePresignedPostCallback = () => {
 			body: JSON.stringify(params),
 		});
 };
+const isStringOrBlob = (value: unknown): value is string | Blob =>
+	typeof value === 'string' || value instanceof Blob;
 
 const uploadUsingPresignedPost = async (
 	file: File,
 	presignedPost: PresignedPostRequestPresignedPost,
 ) => {
 	const formData = new FormData();
-	Object.entries(presignedPost.fields).forEach(([key, value]) =>
-		/* eslint-disable-next-line @typescript-eslint/no-unsafe-argument --
-		 *
-		 * SDK incorrectly defines this type.
-		 * https://github.com/PhilanthropyDataCommons/service/issues/1011
-		 */
-		formData.append(key, value),
-	);
+	Object.entries(presignedPost.fields).forEach(([key, value]) => {
+		if (isStringOrBlob(value)) {
+			formData.append(key, value);
+		}
+	});
 	formData.append('Content-Type', file.type || 'application/octet-stream');
 	formData.append('file', file);
 	return fetch(presignedPost.url, {
