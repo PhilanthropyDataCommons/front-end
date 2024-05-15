@@ -1,12 +1,11 @@
-import { ApiBaseField } from '../pdc-api';
-
+import type { BaseField } from '@pdc/sdk';
 /**
  * Iterates through a list of basefields, pairing labels with shortcodes
  * Returns a Record<String,String> map of shortcodes to labels
- * @param  {ApiBaseField[]} fields an array of ApiBaseFields
+ * @param  {BaseField[]} fields an array of BaseFields
  * @return {Record<string,string>} a map between basefield shortcodes and labels
  */
-const mapFieldNames = (fields: ApiBaseField[]) =>
+const mapFieldNames = (fields: BaseField[]) =>
 	Object.fromEntries(fields.map(({ label, shortCode }) => [shortCode, label]));
 
 export { mapFieldNames };

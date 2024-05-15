@@ -1,6 +1,17 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useOidcFetch } from '@axa-fr/react-oidc';
-import { Organization, OrganizationBundle } from '@pdc/sdk';
+import type {
+	BaseField,
+	BulkUpload,
+	WritableBulkUpload,
+	Organization,
+	OrganizationBundle,
+	PresignedPostRequest,
+	WritablePresignedPostRequest,
+	PresignedPostRequestPresignedPost,
+	Proposal,
+	ProposalBundle,
+} from '@pdc/sdk';
 import { getLogger } from './logger';
 
 const logger = getLogger('pdc-api');
@@ -78,29 +89,18 @@ const usePdcCallbackApi = <T>(
 	);
 };
 
-interface ApiPresignedPostRequest {
-	fileType: string;
-	fileSize: number;
-}
-
-interface PresignedPost {
-	url: string;
-	fields: Record<string, string> & {
-		key: string;
-	};
-}
-
-interface ApiPresignedPostResponse {
-	fileType: string;
-	fileSize: number;
-	presignedPost: PresignedPost;
-}
+/* The SDK generator isn't correctly omitting `presignedPost` from the writeable type.
+ * Until that's fixed, we need to generate our own stand-in that omits it.
+ * https://github.com/PhilanthropyDataCommons/service/issues/1012
+ */
+type FixedWritablePresignedPostRequest = Omit<
+	WritablePresignedPostRequest,
+	'presignedPost'
+>;
 
 const usePresignedPostCallback = () => {
-	const api = usePdcCallbackApi<ApiPresignedPostResponse>(
-		'/presignedPostRequests',
-	);
-	return (params: ApiPresignedPostRequest) =>
+	const api = usePdcCallbackApi<PresignedPostRequest>('/presignedPostRequests');
+	return (params: FixedWritablePresignedPostRequest) =>
 		api({
 			method: 'post',
 			headers: {
@@ -113,10 +113,15 @@ const usePresignedPostCallback = () => {
 
 const uploadUsingPresignedPost = async (
 	file: File,
-	presignedPost: PresignedPost,
+	presignedPost: PresignedPostRequestPresignedPost,
 ) => {
 	const formData = new FormData();
 	Object.entries(presignedPost.fields).forEach(([key, value]) =>
+		/* eslint-disable-next-line @typescript-eslint/no-unsafe-argument --
+		 *
+		 * SDK incorrectly defines this type.
+		 * https://github.com/PhilanthropyDataCommons/service/issues/1011
+		 */
 		formData.append(key, value),
 	);
 	formData.append('Content-Type', file.type || 'application/octet-stream');
@@ -127,23 +132,9 @@ const uploadUsingPresignedPost = async (
 	}).then(throwIfResponseIsNotOk);
 };
 
-interface ApiBulkUploadsPostRequest {
-	fileName: string;
-	sourceKey: string;
-}
-
-interface ApiBulkUploadsPostResponse {
-	id: number;
-	fileName: string;
-	fileSize: number;
-	sourceKey: string;
-	status: string;
-	createdAt: string;
-}
-
 const useRegisterBulkUploadCallback = () => {
-	const api = usePdcCallbackApi<ApiBulkUploadsPostResponse>('/bulkUploads');
-	return (params: ApiBulkUploadsPostRequest) =>
+	const api = usePdcCallbackApi<BulkUpload>('/bulkUploads');
+	return (params: WritableBulkUpload) =>
 		api({
 			method: 'post',
 			headers: {
@@ -154,25 +145,10 @@ const useRegisterBulkUploadCallback = () => {
 		});
 };
 
-interface ApiBaseField {
-	description: string;
-	id: number;
-	label: string;
-	shortCode: string;
-}
-
-const useBaseFields = () => usePdcApi<ApiBaseField[]>('/baseFields');
-
-interface ApiBulkUpload {
-	id: number;
-	fileName: string;
-	fileSize: number;
-	status: string;
-	createdAt: string;
-}
+const useBaseFields = () => usePdcApi<BaseField[]>('/baseFields');
 
 interface ApiBulkUploads {
-	entries: ApiBulkUpload[];
+	entries: BulkUpload[];
 	total: number;
 }
 
@@ -182,39 +158,20 @@ const useBulkUploads = () =>
 		new URLSearchParams({ createdBy: 'me' }),
 	);
 
-interface ApiProposal {
-	id: number;
-	versions: {
-		version: number;
-		fieldValues: {
-			applicationFormField: {
-				baseFieldId: number;
-				position: number;
-			};
-			value: string;
-		}[];
-	}[];
-}
-
 const useProposal = (proposalId: string) =>
-	usePdcApi<ApiProposal>(
+	usePdcApi<Proposal>(
 		`/proposals/${proposalId}`,
 		new URLSearchParams({
 			includeFieldsAndValues: 'true',
 		}),
 	);
 
-interface ApiProposals {
-	entries: ApiProposal[];
-	total: number;
-}
-
 const PROPOSALS_DEFAULT_PAGE = '1';
 const PROPOSALS_DEFAULT_COUNT = '1000';
 const PROPOSALS_DEFAULT_QUERY = '';
 
 const useProposals = (page: string, count: string, query: string) =>
-	usePdcApi<ApiProposals>(
+	usePdcApi<ProposalBundle>(
 		'/proposals',
 		new URLSearchParams({
 			_page: page,
@@ -228,7 +185,7 @@ const useProposalsByOrganizationId = (
 	count: string,
 	organizationId: string,
 ) =>
-	usePdcApi<ApiProposals>(
+	usePdcApi<ProposalBundle>(
 		'/proposals',
 		new URLSearchParams({
 			_page: page,
@@ -290,5 +247,3 @@ export {
 	useProviderData,
 	useRegisterBulkUploadCallback,
 };
-
-export type { ApiBaseField, ApiBulkUpload, ApiProposal };

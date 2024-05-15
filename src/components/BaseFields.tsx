@@ -1,5 +1,5 @@
 import React from 'react';
-import { ApiBaseField } from '../pdc-api';
+import type { BaseField } from '@pdc/sdk';
 import {
 	Table,
 	TableHead,
@@ -10,7 +10,7 @@ import {
 } from './Table';
 
 interface BaseFieldListTableRowProps {
-	field: ApiBaseField;
+	field: BaseField;
 }
 
 const BaseFieldListTableRow = ({ field }: BaseFieldListTableRowProps) => (
@@ -24,7 +24,7 @@ const BaseFieldListTableRow = ({ field }: BaseFieldListTableRowProps) => (
 );
 
 interface BaseFieldsProps {
-	fields: ApiBaseField[];
+	fields: BaseField[];
 }
 
 export const BaseFields = ({ fields }: BaseFieldsProps) => (
