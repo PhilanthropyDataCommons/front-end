@@ -4,6 +4,7 @@ import type {
 	BaseField,
 	BulkUpload,
 	WritableBulkUpload,
+	BulkUploadBundle,
 	Organization,
 	OrganizationBundle,
 	PlatformProviderResponse,
@@ -138,13 +139,8 @@ const useRegisterBulkUploadCallback = () => {
 
 const useBaseFields = () => usePdcApi<BaseField[]>('/baseFields');
 
-interface ApiBulkUploads {
-	entries: BulkUpload[];
-	total: number;
-}
-
 const useBulkUploads = () =>
-	usePdcApi<ApiBulkUploads>(
+	usePdcApi<BulkUploadBundle>(
 		'/bulkUploads',
 		new URLSearchParams({ createdBy: 'me' }),
 	);
