@@ -4,12 +4,13 @@ import type {
 	BaseField,
 	BulkUpload,
 	WritableBulkUpload,
+	BulkUploadBundle,
 	Organization,
 	OrganizationBundle,
 	PlatformProviderResponse,
+	PresignedPost,
 	PresignedPostRequest,
 	WritablePresignedPostRequest,
-	PresignedPostRequestPresignedPost,
 	Proposal,
 	ProposalBundle,
 } from '@pdc/sdk';
@@ -90,18 +91,9 @@ const usePdcCallbackApi = <T>(
 	);
 };
 
-/* The SDK generator isn't correctly omitting `presignedPost` from the writeable type.
- * Until that's fixed, we need to generate our own stand-in that omits it.
- * https://github.com/PhilanthropyDataCommons/service/issues/1012
- */
-type FixedWritablePresignedPostRequest = Omit<
-	WritablePresignedPostRequest,
-	'presignedPost'
->;
-
 const usePresignedPostCallback = () => {
 	const api = usePdcCallbackApi<PresignedPostRequest>('/presignedPostRequests');
-	return (params: FixedWritablePresignedPostRequest) =>
+	return (params: WritablePresignedPostRequest) =>
 		api({
 			method: 'post',
 			headers: {
@@ -116,7 +108,7 @@ const isStringOrBlob = (value: unknown): value is string | Blob =>
 
 const uploadUsingPresignedPost = async (
 	file: File,
-	presignedPost: PresignedPostRequestPresignedPost,
+	presignedPost: PresignedPost,
 ) => {
 	const formData = new FormData();
 	Object.entries(presignedPost.fields).forEach(([key, value]) => {
@@ -147,13 +139,8 @@ const useRegisterBulkUploadCallback = () => {
 
 const useBaseFields = () => usePdcApi<BaseField[]>('/baseFields');
 
-interface ApiBulkUploads {
-	entries: BulkUpload[];
-	total: number;
-}
-
 const useBulkUploads = () =>
-	usePdcApi<ApiBulkUploads>(
+	usePdcApi<BulkUploadBundle>(
 		'/bulkUploads',
 		new URLSearchParams({ createdBy: 'me' }),
 	);
