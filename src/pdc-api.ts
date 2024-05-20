@@ -6,6 +6,7 @@ import type {
 	WritableBulkUpload,
 	Organization,
 	OrganizationBundle,
+	PlatformProviderResponse,
 	PresignedPostRequest,
 	WritablePresignedPostRequest,
 	PresignedPostRequestPresignedPost,
@@ -192,13 +193,6 @@ const useProposalsByOrganizationId = (
 			organization: organizationId,
 		}),
 	);
-
-interface PlatformProviderResponse {
-	createdAt: string;
-	externalId: string;
-	platformProvider: string;
-	data: object;
-}
 
 const useProviderData = (externalId: string) =>
 	usePdcApi<PlatformProviderResponse[]>(
