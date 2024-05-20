@@ -5,23 +5,11 @@ const mapProposalBaseFields = (baseFields: BaseField[], proposal: Proposal) =>
 	(proposal.versions[0]?.fieldValues ?? []).map(
 		({ applicationFormField, value }) => {
 			const baseField = baseFields.find(
-				/* eslint-disable-next-line @typescript-eslint/no-unsafe-member-access --
-				 *
-				 * Due to an issue with the @pdc-sdk package, the `ApplicationFormField`
-				 * type accomodates the `any` type. This leads to an unsafe member
-				 * access error with ESLint, hence the disables.
-				 * https://github.com/PhilanthropyDataCommons/service/issues/1004
-				 */
 				({ id }) => id === applicationFormField.baseFieldId,
 			);
 			return {
 				shortCode: baseField?.shortCode ?? 'missing',
 				fieldName: baseField?.label ?? 'missing',
-				/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access --
-				 *
-				 * See explanation above.
-				 * https://github.com/PhilanthropyDataCommons/service/issues/1004
-				 */
 				position: applicationFormField.position,
 				value,
 			};
@@ -40,11 +28,6 @@ const getValueOfBaseField = (
 		return undefined;
 	}
 	const fieldValue = proposal.versions[0]?.fieldValues.find(
-		/* eslint-disable-next-line @typescript-eslint/no-unsafe-member-access --
-		 *
-		 * See explanation above.
-		 * https://github.com/PhilanthropyDataCommons/service/issues/1004
-		 */
 		({ applicationFormField }) => applicationFormField.baseFieldId === field.id,
 	);
 	return fieldValue?.value ?? undefined;

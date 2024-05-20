@@ -1,43 +1,51 @@
 import { Proposal, BaseField } from '@pdc/sdk';
 import { mapProposals } from './map-proposals';
 
+const baseFieldOrgName: BaseField = {
+	id: 1,
+	label: 'Organization Name',
+	shortCode: 'organization_name',
+	description: 'Common name of the organization',
+	scope: BaseField.ScopeEnum.Proposal,
+	dataType: BaseField.DataTypeEnum.String,
+	createdAt: new Date(),
+};
+
+const baseFieldOrgCity: BaseField = {
+	id: 2,
+	label: 'Organization City',
+	shortCode: 'organization_city',
+	description: 'City of the organization',
+	scope: BaseField.ScopeEnum.Proposal,
+	dataType: BaseField.DataTypeEnum.String,
+	createdAt: new Date(),
+};
+
+const baseFieldOrgContact: BaseField = {
+	id: 3,
+	label: 'Organization Contact',
+	shortCode: 'organization_contact',
+	description: 'Person contact regarding this organization',
+	scope: BaseField.ScopeEnum.Proposal,
+	dataType: BaseField.DataTypeEnum.String,
+	createdAt: new Date(),
+};
+
+const baseFieldOrgBudget: BaseField = {
+	id: 4,
+	label: 'Organization Budget',
+	shortCode: 'organization_budget',
+	description: 'Annual budget of the organization',
+	scope: BaseField.ScopeEnum.Proposal,
+	dataType: BaseField.DataTypeEnum.String,
+	createdAt: new Date(),
+};
+
 const baseFields: BaseField[] = [
-	{
-		id: 1,
-		label: 'Organization Name',
-		shortCode: 'organization_name',
-		description: 'Common name of the organization',
-		scope: BaseField.ScopeEnum.Proposal,
-		dataType: BaseField.DataTypeEnum.String,
-		createdAt: new Date(),
-	},
-	{
-		id: 2,
-		label: 'Organization City',
-		shortCode: 'organization_city',
-		description: 'City of the organization',
-		scope: BaseField.ScopeEnum.Proposal,
-		dataType: BaseField.DataTypeEnum.String,
-		createdAt: new Date(),
-	},
-	{
-		id: 3,
-		label: 'Organization Contact',
-		shortCode: 'organization_contact',
-		description: 'Person contact regarding this organization',
-		scope: BaseField.ScopeEnum.Proposal,
-		dataType: BaseField.DataTypeEnum.String,
-		createdAt: new Date(),
-	},
-	{
-		id: 4,
-		label: 'Organization Budget',
-		shortCode: 'organization_budget',
-		description: 'Annual budget of the organization',
-		scope: BaseField.ScopeEnum.Proposal,
-		dataType: BaseField.DataTypeEnum.String,
-		createdAt: new Date(),
-	},
+	baseFieldOrgName,
+	baseFieldOrgCity,
+	baseFieldOrgContact,
+	baseFieldOrgBudget,
 ];
 
 const proposals: Proposal[] = [
@@ -66,6 +74,7 @@ const proposals: Proposal[] = [
 							baseFieldId: 1,
 							position: 0,
 							createdAt: new Date(),
+							baseField: baseFieldOrgName,
 						},
 						createdAt: new Date(),
 					},
@@ -83,6 +92,7 @@ const proposals: Proposal[] = [
 							baseFieldId: 2,
 							position: 1,
 							createdAt: new Date(),
+							baseField: baseFieldOrgCity,
 						},
 						createdAt: new Date(),
 					},
@@ -100,6 +110,7 @@ const proposals: Proposal[] = [
 							baseFieldId: 1,
 							position: 0,
 							createdAt: new Date(),
+							baseField: baseFieldOrgContact,
 						},
 						createdAt: new Date(),
 					},
@@ -117,6 +128,7 @@ const proposals: Proposal[] = [
 							baseFieldId: 4,
 							position: 3,
 							createdAt: new Date(),
+							baseField: baseFieldOrgBudget,
 						},
 						createdAt: new Date(),
 					},
@@ -149,11 +161,6 @@ test('maps values to the expected place', () => {
 	const proposalFieldValueIndex =
 		proposals[0]?.versions[0]?.fieldValues.findIndex(
 			(fieldValue) =>
-				// Due to an issue with the @pdc-sdk package, the ApplicationFormField
-				// type accomodates the 'any' type. This leads to an unsafe member
-				// access error with eslint, hence the disable. See service issue #1004
-				// https://github.com/PhilanthropyDataCommons/service/issues/1004
-				// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 				fieldValue.applicationFormField.baseFieldId === targetBaseFieldId,
 		);
 
