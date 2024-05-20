@@ -17,7 +17,7 @@ const mapPathsToValues = (paths: string[][], data: object) =>
 			JSONPath<JSONPathAll>({
 				json: data,
 				path,
-				preventEval: true,
+				eval: false,
 				resultType: 'all',
 			}),
 		)
@@ -39,14 +39,14 @@ const providers = {
 			applicant: JSONPath<string>({
 				json: data,
 				path: ['$', 'summary', 'organization_name'],
-				preventEval: true,
+				eval: false,
 				resultType: 'value',
 				wrap: false,
 			}),
 			url: JSONPath<string>({
 				json: data,
 				path: ['$', 'summary', 'gs_public_report'],
-				preventEval: true,
+				eval: false,
 				resultType: 'value',
 				wrap: false,
 			}),
@@ -86,14 +86,14 @@ const providers = {
 			applicant: JSONPath<string>({
 				json: data,
 				path: ['$', 'title'],
-				preventEval: true,
+				eval: false,
 				resultType: 'value',
 				wrap: false,
 			}),
 			url: `https://www.charitynavigator.org${JSONPath<string>({
 				json: data,
 				path: ['$', 'url'],
-				preventEval: true,
+				eval: false,
 				resultType: 'value',
 				wrap: false,
 			})}`,
