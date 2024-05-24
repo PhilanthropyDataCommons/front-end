@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Organization, OrganizationBundle } from '@pdc/sdk';
 import { TableRow, RowCell } from './Table';

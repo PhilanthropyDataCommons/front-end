@@ -1,4 +1,3 @@
-import React from 'react';
 import prettyBytes from 'pretty-bytes';
 import {
 	ArrowPathIcon,

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowsPointingOutIcon } from '@heroicons/react/24/solid';
 import { ClosablePanel, PanelTitle } from '../Panel';
