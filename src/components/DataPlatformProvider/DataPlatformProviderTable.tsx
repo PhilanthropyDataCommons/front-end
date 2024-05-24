@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { CodeBracketSquareIcon as SolidBracketIcon } from '@heroicons/react/24/solid';
 import { CodeBracketSquareIcon as OutlineBracketIcon } from '@heroicons/react/24/outline';
 import {

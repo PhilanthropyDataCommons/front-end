@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Organization } from '@pdc/sdk';
 import { useBaseFields, useProposal } from '../../pdc-api';
 import { mapProposalBaseFields, getTitle } from '../../utils/proposalFields';
