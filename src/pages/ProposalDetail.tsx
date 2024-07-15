@@ -61,8 +61,8 @@ const getApplicant = (baseFields: BaseField[], proposal: Proposal) => {
 	});
 
 	return applicantNameKey
-		? getValueOfBaseField(baseFields, proposal, applicantNameKey) ??
-				PROPOSAL_APPLICANT_NAME_FALLBACK
+		? (getValueOfBaseField(baseFields, proposal, applicantNameKey) ??
+				PROPOSAL_APPLICANT_NAME_FALLBACK)
 		: PROPOSAL_APPLICANT_NAME_FALLBACK;
 };
 
