@@ -42,8 +42,8 @@ const getTitle = (baseFields: BaseField[], proposal: Proposal) => {
 	});
 
 	return titleKey
-		? getValueOfBaseField(baseFields, proposal, titleKey) ??
-				PROPOSAL_NAME_FALLBACK
+		? (getValueOfBaseField(baseFields, proposal, titleKey) ??
+				PROPOSAL_NAME_FALLBACK)
 		: PROPOSAL_NAME_FALLBACK;
 };
 
