@@ -1,4 +1,3 @@
-import React from 'react';
 import type { BaseField } from '@pdc/sdk';
 import {
 	Table,

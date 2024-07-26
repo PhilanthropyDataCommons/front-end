@@ -1,3 +1,4 @@
+import { expect, test } from 'vitest';
 import { getConfiguration } from './oidc-config';
 
 test('configuration fails with missing authority', () => {

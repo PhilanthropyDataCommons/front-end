@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { DocumentPlusIcon } from '@heroicons/react/24/outline';
 import {
@@ -91,7 +91,7 @@ const AddDataLoader = () => {
 			</PanelGridItem>
 			<PanelGridItem>
 				<NewBulkUploadPanel
-					apiUrl={new URL('/', process.env.REACT_APP_API_URL)}
+					apiUrl={new URL('/', import.meta.env.VITE_API_URL)}
 					bulkUploader={<BulkUploader onBulkUpload={refreshBulkUploads} />}
 					baseFieldsLoader={<BaseFieldsLoader />}
 				/>

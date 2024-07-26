@@ -1,4 +1,3 @@
-import React from 'react';
 import { JSONPath } from 'jsonpath-plus';
 import { titleCase } from 'title-case';
 import { useProviderData } from '../../pdc-api';

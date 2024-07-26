@@ -15,7 +15,7 @@ import './BulkUploaderFilePicker.css';
 import { Spinner } from './Spinner';
 
 interface FilePickerMessageProps {
-	text: React.ReactNode;
+	text?: React.ReactNode;
 	icon?: React.ReactNode | null;
 	additionalText?: React.ReactNode | null;
 	resetLink?: boolean;

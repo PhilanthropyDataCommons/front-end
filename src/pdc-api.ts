@@ -18,7 +18,7 @@ import { getLogger } from './logger';
 
 const logger = getLogger('pdc-api');
 
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = import.meta.env.VITE_API_URL;
 
 const throwIfResponseIsNotOk = (res: Response): Response => {
 	if (!res.ok) {
@@ -48,17 +48,6 @@ const usePdcApi = <T>(
 			.then((res) => res.json())
 			.then(setResponse)
 			.catch((e) => logError(e, path, params));
-
-		/* eslint-disable-next-line react-hooks/exhaustive-deps --
-		 *
-		 * fetch should not be a dependency, because although it or its internal
-		 * state may change from render to render, such changes are not relevant:
-		 * a change in the way we make a request should not trigger an API request
-		 *
-		 * params is a dependency, but as an object - and often a newly-created
-		 * object - depending on it directly causes spurious renders; instead, use
-		 * its string value, which should be stable
-		 */
 	}, [path, params.toString()]);
 
 	useEffect(() => {
@@ -81,12 +70,6 @@ const usePdcCallbackApi = <T>(
 				.then((res) => res.json())
 				.catch((e) => logError(e, path, options));
 		},
-		/* eslint-disable-next-line react-hooks/exhaustive-deps --
-		 *
-		 * fetch should not be a dependency, because although it or its internal
-		 * state may change from render to render, such changes are not relevant:
-		 * a change in the way we make a request should not trigger an API request
-		 */
 		[path],
 	);
 };

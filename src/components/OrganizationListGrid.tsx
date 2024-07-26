@@ -1,4 +1,3 @@
-import React from 'react';
 import { OrganizationBundle } from '@pdc/sdk';
 import {
 	ListGrid,

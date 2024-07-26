@@ -1,4 +1,3 @@
-import React from 'react';
 import prettyBytes from 'pretty-bytes';
 import {
 	ArrowPathIcon,
@@ -90,7 +89,7 @@ export const BulkUploadListItem = ({ upload }: BulkUploadListItemProps) => {
 						{datum}
 					</>
 				),
-			null,
+			'',
 		);
 
 	return (
