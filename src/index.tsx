@@ -13,8 +13,8 @@ import './index.css';
 const logger = getLogger('index');
 
 const configuration = getConfiguration(
-	process.env.REACT_APP_OIDC_AUTHORITY,
-	process.env.REACT_APP_OIDC_CLIENT_ID,
+	import.meta.env.VITE_OIDC_AUTHORITY,
+	import.meta.env.VITE_OIDC_CLIENT_ID,
 );
 logger.debug(configuration, 'OIDC Configuration');
 

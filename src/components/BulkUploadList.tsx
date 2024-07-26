@@ -1,4 +1,3 @@
-import React from 'react';
 import type { BulkUpload } from '@pdc/sdk';
 import { BulkUploadListItem } from './BulkUploadListItem';
 import './BulkUploadList.css';

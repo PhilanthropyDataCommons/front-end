@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FrontEndProposal } from '../interfaces/FrontEndProposal';
 import { Panel, PanelHeader, PanelBody, PanelActions } from './Panel';
 import {

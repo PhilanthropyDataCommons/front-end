@@ -4,7 +4,7 @@ import './ToggleSwitch.css';
 interface ToggleSwitchProps {
 	children: React.ReactNode;
 	checked?: boolean;
-	onChange?(): void;
+	onChange?: () => void;
 }
 
 /**

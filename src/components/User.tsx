@@ -1,4 +1,3 @@
-import React from 'react';
 import { useOidc, useOidcUser, OidcUserStatus } from '@axa-fr/react-oidc';
 import {
 	PowerIcon,

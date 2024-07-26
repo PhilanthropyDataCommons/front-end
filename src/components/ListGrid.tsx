@@ -64,7 +64,7 @@ interface ListGridProps<T> {
 	/**
 	 * Render method expected to return a `ListGridItem`.
 	 */
-	renderItem(item: T): React.ReactNode;
+	renderItem: (item: T) => React.ReactNode;
 }
 
 const ListGrid = <T,>({ items, renderItem }: ListGridProps<T>) => {
@@ -83,4 +83,10 @@ const ListGrid = <T,>({ items, renderItem }: ListGridProps<T>) => {
 	return <div ref={listGridRef}>{items.map((item) => renderItem(item))}</div>;
 };
 
-export { ListGrid, ListGridItem, ListGridItemTitle, ListGridItemDetails };
+export {
+	ListGrid,
+	ListGridItem,
+	ListGridItemTitle,
+	ListGridItemDetails,
+	type ListGridProps,
+};
