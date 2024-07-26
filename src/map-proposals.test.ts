@@ -1,3 +1,4 @@
+import { expect, test } from 'vitest';
 import { Proposal, BaseField } from '@pdc/sdk';
 import { mapProposals } from './map-proposals';
 

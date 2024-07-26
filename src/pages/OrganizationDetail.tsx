@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useOidc } from '@axa-fr/react-oidc';
 import { Organization } from '@pdc/sdk';

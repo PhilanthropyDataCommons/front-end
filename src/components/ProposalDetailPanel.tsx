@@ -1,4 +1,3 @@
-import React from 'react';
 import { BuildingOffice2Icon } from '@heroicons/react/24/solid';
 import {
 	Panel,

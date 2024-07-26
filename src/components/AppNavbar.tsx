@@ -1,4 +1,3 @@
-import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useOidc } from '@axa-fr/react-oidc';
 import {
@@ -136,7 +135,7 @@ const AppNavbar = () => {
 									from NPM.
 								</DropdownMenuLinkDescription>
 							</DropdownMenuLink>
-							{process.env.REACT_APP_SHOW_STORYBOOK === 'true' && (
+							{import.meta.env.VITE_SHOW_STORYBOOK === 'true' && (
 								<DropdownMenuLink to="/storybook" reloadDocument>
 									Storybook
 									<DropdownMenuLinkDescription>
