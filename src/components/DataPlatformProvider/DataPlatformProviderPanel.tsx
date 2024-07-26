@@ -1,4 +1,3 @@
-import React from 'react';
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid';
 import { ClosablePanel, PanelTitle, PanelTitleTags } from '../Panel';
 import { OffsiteLink } from '../OffsiteLink';

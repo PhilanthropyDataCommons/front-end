@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import React from 'react';
 
 import { PanelGrid, PanelGridItem } from '../components/PanelGrid';
 import { Panel, PanelBody } from '../components/Panel';

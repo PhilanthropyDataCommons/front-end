@@ -1,4 +1,3 @@
-import React from 'react';
 import { AppNavbar } from './AppNavbar';
 import logo from '../images/pdc-logo.png';
 

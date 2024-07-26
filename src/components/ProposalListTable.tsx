@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FrontEndProposal } from '../interfaces/FrontEndProposal';
 import { getPreferredProposalApplicantNameValues } from '../utils/proposals';
@@ -13,7 +12,7 @@ enum ProposalDetailDestinations {
 interface ProposalListTableRowProps {
 	columns: string[];
 	proposal: FrontEndProposal;
-	rowClickDestination: ProposalDetailDestinations;
+	rowClickDestination?: ProposalDetailDestinations;
 	organizationId?: number;
 	active?: boolean;
 }
@@ -32,14 +31,14 @@ const ProposalListTableRow = ({
 	const handleRowClick = () => {
 		if (userHasNotSelectedText()) {
 			switch (rowClickDestination) {
-				case 'organizationProposalPanel':
+				case ProposalDetailDestinations.ORGANIZATION_PROPOSAL_PANEL:
 					if (organizationId) {
 						navigate(
 							`/organizations/${organizationId}/proposals/${proposal.id}`,
 						);
 					}
 					break;
-				case 'proposalDetailPage':
+				case ProposalDetailDestinations.PROPOSAL_DETAIL_PAGE:
 				default:
 					navigate(`/proposals/${proposal.id}`);
 					break;
