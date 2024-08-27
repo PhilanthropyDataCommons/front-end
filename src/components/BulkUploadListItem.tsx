@@ -79,19 +79,13 @@ export const BulkUploadListItem = ({ upload }: BulkUploadListItemProps) => {
 
 	const metadataElements = metadata
 		.filter((datum) => datum !== null)
-		.reduce(
-			(accumulator, datum) =>
-				accumulator === null ? (
-					datum
-				) : (
-					<>
-						{accumulator}
-						{METADATA_DELIMITER}
-						{datum}
-					</>
-				),
-			null,
-		);
+		.reduce((accumulator, datum) => (
+			<>
+				{accumulator}
+				{METADATA_DELIMITER}
+				{datum}
+			</>
+		));
 
 	return (
 		<div className={`bulk-upload-list-item ${status}`}>
