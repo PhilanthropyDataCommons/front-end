@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { FrontEndProposal } from '../interfaces/FrontEndProposal';
 import { Panel, PanelHeader, PanelBody, PanelActions } from './Panel';
-import { ProposalListTable } from './ProposalListTable';
+import {
+	ProposalDetailDestinations,
+	ProposalListTable,
+} from './ProposalListTable';
 import { Search } from './Search';
 import { ToggleSwitch } from './ToggleSwitch';
 
@@ -55,6 +58,9 @@ export const ProposalListTablePanel = ({
 						fieldNames={fieldNames}
 						proposals={proposals}
 						wrap={wrap}
+						rowClickDestination={
+							ProposalDetailDestinations.PROPOSAL_DETAIL_PAGE
+						}
 					/>
 				) : (
 					<div className="quiet">{generateFallbackMessage()}</div>

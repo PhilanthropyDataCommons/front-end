@@ -21,7 +21,7 @@ interface ProposalListTableRowProps {
 const ProposalListTableRow = ({
 	proposal,
 	columns,
-	rowClickDestination = ProposalDetailDestinations.PROPOSAL_DETAIL_PAGE,
+	rowClickDestination,
 	organizationId = undefined,
 	active = false,
 }: ProposalListTableRowProps) => {
@@ -65,7 +65,7 @@ const ProposalListTableRow = ({
 interface ProposalListTableProps {
 	fieldNames: Record<string, string>;
 	proposals: FrontEndProposal[];
-	rowClickDestination?: ProposalDetailDestinations;
+	rowClickDestination: ProposalDetailDestinations;
 	organizationId?: number;
 	wrap?: boolean;
 	columns?: string[];
@@ -97,7 +97,7 @@ const ProposalListTable = ({
 	proposals,
 	columns = DEFAULT_PROPOSAL_COLUMNS,
 	wrap = false,
-	rowClickDestination = ProposalDetailDestinations.PROPOSAL_DETAIL_PAGE,
+	rowClickDestination,
 	organizationId = undefined,
 	activeProposalId = undefined,
 }: ProposalListTableProps) => (

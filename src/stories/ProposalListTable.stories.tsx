@@ -1,7 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 
-import { ProposalListTable } from '../components/ProposalListTable';
+import {
+	ProposalListTable,
+	ProposalDetailDestinations,
+} from '../components/ProposalListTable';
 
 const meta = {
 	component: ProposalListTable,
@@ -171,5 +174,6 @@ export const Default: Story = {
 			'proposal_end_date',
 			'proposal_location_of_work',
 		],
+		rowClickDestination: ProposalDetailDestinations.PROPOSAL_DETAIL_PAGE,
 	},
 };
