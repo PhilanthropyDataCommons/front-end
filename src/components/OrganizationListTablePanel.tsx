@@ -1,4 +1,3 @@
-import React from 'react';
 import { OrganizationBundle } from '@pdc/sdk';
 import { Panel, PanelBody } from './Panel';
 import { OrganizationListTable } from './OrganizationListTable';

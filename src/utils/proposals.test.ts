@@ -1,3 +1,4 @@
+import { expect, test } from 'vitest';
 import { FrontEndProposal } from '../interfaces/FrontEndProposal';
 import {
 	PROPOSAL_APPLICANT_NAME_CASCADE,

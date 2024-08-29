@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import React from 'react';
 
 import { Panel, PanelBody } from '../components/Panel';
 import {
@@ -7,9 +6,10 @@ import {
 	ListGridItem,
 	ListGridItemTitle,
 	ListGridItemDetails,
+	ListGridProps,
 } from '../components/ListGrid';
 
-const meta = {
+const meta: Meta<ListGridProps<SampleGridItem>> = {
 	component: ListGrid,
 	tags: ['autodocs'],
 	decorators: [
@@ -23,7 +23,7 @@ const meta = {
 			</div>
 		),
 	],
-} satisfies Meta<typeof ListGrid>;
+};
 
 export default meta;
 

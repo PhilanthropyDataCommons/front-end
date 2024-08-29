@@ -1,4 +1,3 @@
-import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { useOidc } from '@axa-fr/react-oidc';
 import { Button } from './Button';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { FrontEndProposal } from '../interfaces/FrontEndProposal';
 import { Panel, PanelBody } from './Panel';
 import { ProposalListGrid } from './ProposalListGrid';

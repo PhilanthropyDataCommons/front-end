@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { PanelGrid, PanelGridItem } from '../components/PanelGrid';
 import { OrganizationListTablePanel } from '../components/OrganizationListTablePanel';
 import {

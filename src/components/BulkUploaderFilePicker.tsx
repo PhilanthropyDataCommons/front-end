@@ -22,7 +22,7 @@ interface FilePickerMessageProps {
 }
 
 const FilePickerMessage = ({
-	text = '',
+	text,
 	icon = null,
 	additionalText = null,
 	resetLink = false,

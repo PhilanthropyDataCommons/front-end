@@ -6,7 +6,7 @@ interface ListTableProps<T> {
 	fieldNames?: Record<string, string>;
 	items: T[];
 	wrap?: boolean;
-	renderItem(item: T): React.ReactNode;
+	renderItem: (item: T) => React.ReactNode;
 }
 
 export const ListTable = <T,>({

@@ -11,7 +11,7 @@ interface DropdownMenuButtonProps {
 	 */
 	alignIcon?: 'left' | 'right';
 	className?: string;
-	onClick?(): void;
+	onClick?: () => void;
 }
 
 /**
