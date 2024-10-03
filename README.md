@@ -43,8 +43,9 @@ The environment variables documented in `.env.example`
 will need to be configured in your deployment system;
 the values must be present at build time.
 
-This app can be deployed to Netlify:
+This app can be deployed to multiple platform services:
 
+[![Deploy to DO](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/PhilanthropyDataCommons/front-end/tree/main)
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/PhilanthropyDataCommons/front-end)
 
 ## Available Scripts
