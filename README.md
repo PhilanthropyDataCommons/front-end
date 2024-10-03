@@ -42,3 +42,7 @@ Then run `npm start`.
 The environment variables documented in `.env.example`
 will need to be configured in your deployment system;
 the values must be present at build time.
+
+This app can be deployed to Netlify:
+
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/PhilanthropyDataCommons/front-end)
