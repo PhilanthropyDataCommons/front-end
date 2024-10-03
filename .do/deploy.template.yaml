@@ -21,7 +21,7 @@ spec:
           scope: BUILD_TIME
           value: your-client-id
       github:
-        branch: main
+        branch: digitalocean-app-test
         deploy_on_push: true
         repo: PhilanthropyDataCommons/front-end
       name: front-end

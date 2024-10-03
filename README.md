@@ -45,8 +45,8 @@ the values must be present at build time.
 
 This app can be deployed to multiple platform services:
 
-[![Deploy to DO](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/PhilanthropyDataCommons/front-end/tree/main)
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/PhilanthropyDataCommons/front-end)
+[![Deploy to DO](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/PhilanthropyDataCommons/front-end/tree/digitalocean-app-test)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/PhilanthropyDataCommons/front-end/tree/digitalocean-app-test)
 
 ## Available Scripts
 
