@@ -1,0 +1,28 @@
+spec:
+  ingress:
+    rules:
+      - component:
+          name: front-end
+        match:
+          path:
+            prefix: /
+  name: pdc-front-end
+  static_sites:
+    - catchall_document: index.html
+      environment_slug: node-js
+      envs:
+        - key: VITE_API_URL
+          scope: BUILD_TIME
+          value: https://api.example.org
+        - key: VITE_OIDC_AUTHORITY
+          scope: BUILD_TIME
+          value: https://auth.example.org/realms/pdc
+        - key: VITE_OIDC_CLIENT_ID
+          scope: BUILD_TIME
+          value: your-client-id
+      github:
+        branch: main
+        deploy_on_push: true
+        repo: PhilanthropyDataCommons/front-end
+      name: front-end
+      source_dir: /

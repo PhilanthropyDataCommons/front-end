@@ -1,0 +1,19 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[[redirects]]
+  from = "https://pilot.philanthropydatacommons.org/*"
+  to = "https://app.philanthropydatacommons.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[template.environment]
+  VITE_API_URL = "https://api.example.com"
+  VITE_OIDC_AUTHORITY = "https://auth.example.com/realms/example"
+  VITE_OIDC_CLIENT_ID = "example-front-end"

@@ -136,7 +136,7 @@ const AppNavbar = () => {
 								</DropdownMenuLinkDescription>
 							</DropdownMenuLink>
 							{import.meta.env.VITE_SHOW_STORYBOOK === 'true' && (
-								<DropdownMenuLink to="/storybook" reloadDocument>
+								<DropdownMenuLink to="/storybook/" reloadDocument>
 									Storybook
 									<DropdownMenuLinkDescription>
 										View our UI component library. (Only relevant to PDC front
