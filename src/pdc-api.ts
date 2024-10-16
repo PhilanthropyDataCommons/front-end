@@ -177,7 +177,7 @@ const useProposalsByOrganizationId = (
 		new URLSearchParams({
 			_page: page,
 			_count: count,
-			organization: organizationId,
+			changemaker: organizationId,
 		}),
 	);
 
@@ -191,7 +191,7 @@ const useProviderData = (externalId: string) =>
 
 const useOrganization = (organizationId: string) =>
 	usePdcApi<Organization>(
-		`/organizations/${organizationId}`,
+		`/changemakers/${organizationId}`,
 		new URLSearchParams({
 			includeFieldsAndValues: 'true',
 		}),
@@ -202,7 +202,7 @@ const ORGANIZATIONS_DEFAULT_COUNT = '100';
 
 const useOrganizations = (page: string, count: string) =>
 	usePdcApi<OrganizationBundle>(
-		'/organizations',
+		'/changemakers',
 		new URLSearchParams({
 			_page: page,
 			_count: count,
