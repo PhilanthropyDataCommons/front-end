@@ -1,51 +1,51 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useOidc } from '@axa-fr/react-oidc';
-import { Organization } from '@pdc/sdk';
+import { Changemaker } from '@pdc/sdk';
 import { FrontEndProposal } from '../interfaces/FrontEndProposal';
 import { mapProposals } from '../map-proposals';
 import { mapFieldNames } from '../utils/baseFields';
 import { DataPlatformProviderLoader } from '../components/DataPlatformProvider/DataPlatformProviderLoader';
 import { PanelGrid, PanelGridItem } from '../components/PanelGrid';
 import {
-	useOrganization,
-	useOrganizations,
-	ORGANIZATIONS_DEFAULT_PAGE,
-	ORGANIZATIONS_DEFAULT_COUNT,
+	useChangemaker,
+	useChangemakers,
+	CHANGEMAKERS_DEFAULT_PAGE,
+	CHANGEMAKERS_DEFAULT_COUNT,
 	PROPOSALS_DEFAULT_PAGE,
 	PROPOSALS_DEFAULT_COUNT,
 	useBaseFields,
-	useProposalsByOrganizationId,
+	useProposalsByChangemakerId,
 } from '../pdc-api';
-import { OrganizationDetailPanel } from '../components/OrganizationDetailPanel';
-import { OrganizationListGridPanel } from '../components/OrganizationListGridPanel';
-import { OrganizationProposalLoader } from '../components/OrganizationProposal/OrganizationProposalLoader';
+import { ChangemakerDetailPanel } from '../components/ChangemakerDetailPanel';
+import { ChangemakerListGridPanel } from '../components/ChangemakerListGridPanel';
+import { ChangemakerProposalLoader } from '../components/ChangemakerProposal/ChangemakerProposalLoader';
 import {
 	ProposalListTable,
 	ProposalDetailDestinations,
 } from '../components/ProposalListTable';
 
-interface OrganizationProposalsTableLoaderProps {
-	organization: Organization;
-	organizationId: string;
+interface ChangemakerProposalsTableLoaderProps {
+	changemaker: Changemaker;
+	changemakerId: string;
 	activeProposalId?: string | undefined;
 }
 
-const OrganizationProposalsTableLoader = ({
-	organization,
-	organizationId,
+const ChangemakerProposalsTableLoader = ({
+	changemaker,
+	changemakerId,
 	activeProposalId = undefined,
-}: OrganizationProposalsTableLoaderProps) => {
+}: ChangemakerProposalsTableLoaderProps) => {
 	const emptyProposalArray: FrontEndProposal[] = [];
 	const [proposalState, setProposalState] = useState(emptyProposalArray);
 	const emptyRecord: Record<string, string> = {};
 	const [fieldsState, setFieldsState] = useState(emptyRecord);
 
 	const [fields] = useBaseFields();
-	const [proposals] = useProposalsByOrganizationId(
+	const [proposals] = useProposalsByChangemakerId(
 		PROPOSALS_DEFAULT_PAGE,
 		PROPOSALS_DEFAULT_COUNT,
-		organizationId,
+		changemakerId,
 	);
 	useEffect(() => {
 		if (fields && proposals) {
@@ -57,76 +57,76 @@ const OrganizationProposalsTableLoader = ({
 	}, [fields, proposals]);
 
 	return (
-		<section id="organization-proposals">
+		<section id="changemaker-proposals">
 			<h2>Proposals</h2>
 			{proposalState.length > 0 ? (
 				<ProposalListTable
 					fieldNames={fieldsState}
 					proposals={proposalState}
 					rowClickDestination={
-						ProposalDetailDestinations.ORGANIZATION_PROPOSAL_PANEL
+						ProposalDetailDestinations.CHANGEMAKER_PROPOSAL_PANEL
 					}
-					organizationId={organization.id}
+					changemakerId={changemaker.id}
 					activeProposalId={activeProposalId}
 				/>
 			) : (
 				<p className="quiet">
-					There are no proposals linked to this organization.
+					There are no proposals linked to this changemaker.
 				</p>
 			)}
 		</section>
 	);
 };
 
-const OrganizationListGridPanelLoader = () => {
-	const { organizationId } = useParams();
-	const [organizations] = useOrganizations(
-		ORGANIZATIONS_DEFAULT_PAGE,
-		ORGANIZATIONS_DEFAULT_COUNT,
+const ChangemakerListGridPanelLoader = () => {
+	const { changemakerId } = useParams();
+	const [changemakers] = useChangemakers(
+		CHANGEMAKERS_DEFAULT_PAGE,
+		CHANGEMAKERS_DEFAULT_COUNT,
 	);
 
-	if (organizations === null) {
+	if (changemakers === null) {
 		return <div>Loading data...</div>;
 	}
 
 	return (
 		<PanelGridItem key="detailPanel">
-			<OrganizationListGridPanel
-				organizations={organizations}
-				activeOrganizationId={organizationId}
+			<ChangemakerListGridPanel
+				changemakers={changemakers}
+				activeChangemakerId={changemakerId}
 			/>
 		</PanelGridItem>
 	);
 };
 
-const OrganizationDetailPanelLoader = () => {
+const ChangemakerDetailPanelLoader = () => {
 	const { isAuthenticated } = useOidc();
 	const navigate = useNavigate();
 	const params = useParams();
-	const { provider, organizationId = 'missing', proposalId } = params;
+	const { provider, changemakerId = 'missing', proposalId } = params;
 
 	const canSeeProviderPanel = isAuthenticated;
 	const canSeeProposalPanel = isAuthenticated;
 
-	const [organization] = useOrganization(organizationId);
+	const [changemaker] = useChangemaker(changemakerId);
 
 	useEffect(() => {
-		if (organization === null) {
+		if (changemaker === null) {
 			document.title = 'Loading... - Philanthropy Data Commons';
 		} else {
-			document.title = `${organization.name} Organization Detail - Philanthropy Data Commons`;
+			document.title = `${changemaker.name} Changemaker Detail - Philanthropy Data Commons`;
 		}
 
 		return () => {
 			document.title = 'Philanthropy Data Commons';
 		};
-	}, [organization]);
+	}, [changemaker]);
 
 	const showProviderPanel = provider && canSeeProviderPanel;
 	const showProposalPanel = proposalId && canSeeProposalPanel;
 
-	if (organization === null) {
-		const dummyOrganization: Organization = {
+	if (changemaker === null) {
+		const dummyChangemaker: Changemaker = {
 			id: 0,
 			taxId: '00-0000000',
 			name: 'Loading...',
@@ -136,14 +136,14 @@ const OrganizationDetailPanelLoader = () => {
 		return (
 			<>
 				<PanelGridItem key="detailPanel">
-					<OrganizationDetailPanel organization={dummyOrganization} />
+					<ChangemakerDetailPanel changemaker={dummyChangemaker} />
 				</PanelGridItem>
 				{showProviderPanel && (
 					<PanelGridItem key="platformPanel">
 						<DataPlatformProviderLoader
 							externalId={undefined}
 							onClose={() => {
-								navigate(`/organizations/${organizationId}`);
+								navigate(`/changemakers/${changemakerId}`);
 							}}
 							provider={provider}
 						/>
@@ -156,34 +156,34 @@ const OrganizationDetailPanelLoader = () => {
 	return (
 		<>
 			<PanelGridItem key="detailPanel">
-				<OrganizationDetailPanel organization={organization}>
+				<ChangemakerDetailPanel changemaker={changemaker}>
 					{isAuthenticated && (
-						<OrganizationProposalsTableLoader
-							organization={organization}
-							organizationId={organizationId}
+						<ChangemakerProposalsTableLoader
+							changemaker={changemaker}
+							changemakerId={changemakerId}
 							activeProposalId={proposalId}
 						/>
 					)}
-				</OrganizationDetailPanel>
+				</ChangemakerDetailPanel>
 			</PanelGridItem>
 			{showProviderPanel && (
 				<PanelGridItem key="platformPanel">
 					<DataPlatformProviderLoader
 						provider={provider}
-						externalId={organization.taxId}
+						externalId={changemaker.taxId}
 						onClose={() => {
-							navigate(`/organizations/${organizationId}`);
+							navigate(`/changemakers/${changemakerId}`);
 						}}
 					/>
 				</PanelGridItem>
 			)}
 			{showProposalPanel && (
 				<PanelGridItem key="proposalPanel">
-					<OrganizationProposalLoader
+					<ChangemakerProposalLoader
 						proposalId={proposalId}
-						organization={organization}
+						changemaker={changemaker}
 						onClose={() => {
-							navigate(`/organizations/${organizationId}`);
+							navigate(`/changemakers/${changemakerId}`);
 						}}
 					/>
 				</PanelGridItem>
@@ -192,11 +192,11 @@ const OrganizationDetailPanelLoader = () => {
 	);
 };
 
-const OrganizationDetailLoader = () => (
+const ChangemakerDetailLoader = () => (
 	<PanelGrid sidebarred>
-		<OrganizationListGridPanelLoader />
-		<OrganizationDetailPanelLoader />
+		<ChangemakerListGridPanelLoader />
+		<ChangemakerDetailPanelLoader />
 	</PanelGrid>
 );
 
-export { OrganizationDetailLoader as OrganizationDetail };
+export { ChangemakerDetailLoader as ChangemakerDetail };

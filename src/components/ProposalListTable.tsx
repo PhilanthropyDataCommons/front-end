@@ -6,14 +6,14 @@ import { ListTable } from './ListTable';
 
 enum ProposalDetailDestinations {
 	PROPOSAL_DETAIL_PAGE = 'proposalDetailPage',
-	ORGANIZATION_PROPOSAL_PANEL = 'organizationProposalPanel',
+	CHANGEMAKER_PROPOSAL_PANEL = 'changemakerProposalPanel',
 }
 
 interface ProposalListTableRowProps {
 	columns: string[];
 	proposal: FrontEndProposal;
 	rowClickDestination: ProposalDetailDestinations;
-	organizationId?: number;
+	changemakerId?: number;
 	active?: boolean;
 }
 
@@ -21,7 +21,7 @@ const ProposalListTableRow = ({
 	proposal,
 	columns,
 	rowClickDestination,
-	organizationId = undefined,
+	changemakerId = undefined,
 	active = false,
 }: ProposalListTableRowProps) => {
 	const navigate = useNavigate();
@@ -31,11 +31,9 @@ const ProposalListTableRow = ({
 	const handleRowClick = () => {
 		if (userHasNotSelectedText()) {
 			switch (rowClickDestination) {
-				case ProposalDetailDestinations.ORGANIZATION_PROPOSAL_PANEL:
-					if (organizationId) {
-						navigate(
-							`/organizations/${organizationId}/proposals/${proposal.id}`,
-						);
+				case ProposalDetailDestinations.CHANGEMAKER_PROPOSAL_PANEL:
+					if (changemakerId) {
+						navigate(`/changemakers/${changemakerId}/proposals/${proposal.id}`);
 					}
 					break;
 				case ProposalDetailDestinations.PROPOSAL_DETAIL_PAGE:
@@ -65,7 +63,7 @@ interface ProposalListTableProps {
 	fieldNames: Record<string, string>;
 	proposals: FrontEndProposal[];
 	rowClickDestination: ProposalDetailDestinations;
-	organizationId?: number;
+	changemakerId?: number;
 	wrap?: boolean;
 	columns?: string[];
 	activeProposalId?: string | undefined;
@@ -97,7 +95,7 @@ const ProposalListTable = ({
 	columns = DEFAULT_PROPOSAL_COLUMNS,
 	wrap = false,
 	rowClickDestination,
-	organizationId = undefined,
+	changemakerId = undefined,
 	activeProposalId = undefined,
 }: ProposalListTableProps) => (
 	<ListTable
@@ -111,7 +109,7 @@ const ProposalListTable = ({
 				proposal={proposal}
 				columns={columns}
 				rowClickDestination={rowClickDestination}
-				organizationId={organizationId}
+				changemakerId={changemakerId}
 				active={activeProposalId === proposal.id}
 			/>
 		)}

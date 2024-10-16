@@ -4,13 +4,13 @@ import { ClosablePanel, PanelTitle } from '../Panel';
 import { ProposalTable } from '../ProposalTable';
 import { Button } from '../Button';
 
-interface OrganizationProposalPanelActionsProps {
+interface ChangemakerProposalPanelActionsProps {
 	proposalId: string;
 }
 
-const OrganizationProposalPanelActions = ({
+const ChangemakerProposalPanelActions = ({
 	proposalId,
-}: OrganizationProposalPanelActionsProps) => {
+}: ChangemakerProposalPanelActionsProps) => {
 	const navigate = useNavigate();
 	const handleClick = () => {
 		navigate(`/proposals/${proposalId}`);
@@ -26,7 +26,7 @@ const OrganizationProposalPanelActions = ({
 	);
 };
 
-interface OrganizationProposalPanelProps {
+interface ChangemakerProposalPanelProps {
 	proposalId: string;
 	version: number;
 	values: {
@@ -39,21 +39,21 @@ interface OrganizationProposalPanelProps {
 	title?: string;
 }
 
-const OrganizationProposalPanel = ({
+const ChangemakerProposalPanel = ({
 	proposalId,
 	version,
 	values,
 	onClose,
 	title = 'Untitled Proposal',
-}: OrganizationProposalPanelProps) => (
+}: ChangemakerProposalPanelProps) => (
 	<ClosablePanel
 		title={<PanelTitle>{title}</PanelTitle>}
 		onClose={onClose}
 		padded={false}
-		actions={<OrganizationProposalPanelActions proposalId={proposalId} />}
+		actions={<ChangemakerProposalPanelActions proposalId={proposalId} />}
 	>
 		<ProposalTable version={version} values={values} />
 	</ClosablePanel>
 );
 
-export { OrganizationProposalPanel };
+export { ChangemakerProposalPanel };

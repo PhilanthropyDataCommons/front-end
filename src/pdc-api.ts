@@ -5,8 +5,8 @@ import type {
 	BulkUpload,
 	WritableBulkUpload,
 	BulkUploadBundle,
-	Organization,
-	OrganizationBundle,
+	Changemaker,
+	ChangemakerBundle,
 	PlatformProviderResponse,
 	PresignedPost,
 	PresignedPostRequest,
@@ -168,17 +168,17 @@ const useProposals = (page: string, count: string, query: string) =>
 		}),
 	);
 
-const useProposalsByOrganizationId = (
+const useProposalsByChangemakerId = (
 	page: string,
 	count: string,
-	organizationId: string,
+	changemakerId: string,
 ) =>
 	usePdcApi<ProposalBundle>(
 		'/proposals',
 		new URLSearchParams({
 			_page: page,
 			_count: count,
-			organization: organizationId,
+			changemaker: changemakerId,
 		}),
 	);
 
@@ -190,20 +190,20 @@ const useProviderData = (externalId: string) =>
 		}),
 	);
 
-const useOrganization = (organizationId: string) =>
-	usePdcApi<Organization>(
-		`/organizations/${organizationId}`,
+const useChangemaker = (changemakerId: string) =>
+	usePdcApi<Changemaker>(
+		`/changemakers/${changemakerId}`,
 		new URLSearchParams({
 			includeFieldsAndValues: 'true',
 		}),
 	);
 
-const ORGANIZATIONS_DEFAULT_PAGE = '1';
-const ORGANIZATIONS_DEFAULT_COUNT = '100';
+const CHANGEMAKERS_DEFAULT_PAGE = '1';
+const CHANGEMAKERS_DEFAULT_COUNT = '100';
 
-const useOrganizations = (page: string, count: string) =>
-	usePdcApi<OrganizationBundle>(
-		'/organizations',
+const useChangemakers = (page: string, count: string) =>
+	usePdcApi<ChangemakerBundle>(
+		'/changemakers',
 		new URLSearchParams({
 			_page: page,
 			_count: count,
@@ -216,17 +216,17 @@ export {
 	PROPOSALS_DEFAULT_COUNT,
 	PROPOSALS_DEFAULT_PAGE,
 	PROPOSALS_DEFAULT_QUERY,
-	ORGANIZATIONS_DEFAULT_COUNT,
-	ORGANIZATIONS_DEFAULT_PAGE,
+	CHANGEMAKERS_DEFAULT_COUNT,
+	CHANGEMAKERS_DEFAULT_PAGE,
 	uploadUsingPresignedPost,
 	useBaseFields,
 	useBulkUploads,
 	usePresignedPostCallback,
 	useProposal,
 	useProposals,
-	useProposalsByOrganizationId,
-	useOrganization,
-	useOrganizations,
+	useProposalsByChangemakerId,
+	useChangemaker,
+	useChangemakers,
 	useProviderData,
 	useRegisterBulkUploadCallback,
 	useSystemSource,

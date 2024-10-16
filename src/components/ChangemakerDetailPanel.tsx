@@ -4,7 +4,7 @@ import {
 	ArrowRightStartOnRectangleIcon,
 	CircleStackIcon,
 } from '@heroicons/react/24/outline';
-import { Organization } from '@pdc/sdk';
+import { Changemaker } from '@pdc/sdk';
 import {
 	Panel,
 	PanelActions,
@@ -23,16 +23,16 @@ import {
 	DropdownTrigger,
 } from './Dropdown';
 
-interface OrganizationDetailPanelProps {
-	organization: Organization;
+interface ChangemakerDetailPanelProps {
+	changemaker: Changemaker;
 	children?: React.ReactNode;
 }
 
-const OrganizationDetailPanel = ({
-	organization,
+const ChangemakerDetailPanel = ({
+	changemaker,
 	children = undefined,
-}: OrganizationDetailPanelProps) => {
-	const { id, name, taxId } = organization;
+}: ChangemakerDetailPanelProps) => {
+	const { id, name, taxId } = changemaker;
 	const { isAuthenticated } = useOidc();
 
 	const showDataProviderMenu = isAuthenticated;
@@ -58,7 +58,7 @@ const OrganizationDetailPanel = ({
 									View applicant data from one of the data platform providers:
 								</DropdownMenuText>
 								<DropdownMenuLink
-									to={`/organizations/${id}/provider/candid`}
+									to={`/changemakers/${id}/provider/candid`}
 									icon={<ArrowRightStartOnRectangleIcon />}
 									alignIcon="right"
 									key="candid"
@@ -66,7 +66,7 @@ const OrganizationDetailPanel = ({
 									Candid
 								</DropdownMenuLink>
 								<DropdownMenuLink
-									to={`/organizations/${id}/provider/charity-navigator`}
+									to={`/changemakers/${id}/provider/charity-navigator`}
 									icon={<ArrowRightStartOnRectangleIcon />}
 									alignIcon="right"
 									key="charity-navigator"
@@ -83,4 +83,4 @@ const OrganizationDetailPanel = ({
 	);
 };
 
-export { OrganizationDetailPanel };
+export { ChangemakerDetailPanel };

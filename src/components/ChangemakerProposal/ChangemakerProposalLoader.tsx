@@ -1,32 +1,32 @@
 import { useEffect } from 'react';
-import { Organization } from '@pdc/sdk';
+import { Changemaker } from '@pdc/sdk';
 import { useBaseFields, useProposal } from '../../pdc-api';
 import { mapProposalBaseFields, getTitle } from '../../utils/proposalFields';
-import { OrganizationProposalPanel } from './OrganizationProposalPanel';
+import { ChangemakerProposalPanel } from './ChangemakerProposalPanel';
 
-interface OrganizationProposalLoaderProps {
-	organization: Organization;
+interface ChangemakerProposalLoaderProps {
+	changemaker: Changemaker;
 	proposalId: string;
 	onClose: () => void;
 }
 
-const OrganizationProposalLoader = ({
-	organization,
+const ChangemakerProposalLoader = ({
+	changemaker,
 	proposalId,
 	onClose,
-}: OrganizationProposalLoaderProps) => {
+}: ChangemakerProposalLoaderProps) => {
 	const [baseFields] = useBaseFields();
 	const [proposal] = useProposal(proposalId);
 	useEffect(() => {
-		document.title = `${organization.name} Proposal Detail - Philanthropy Data Commons`;
+		document.title = `${changemaker.name} Proposal Detail - Philanthropy Data Commons`;
 		return () => {
 			document.title = 'Philanthropy Data Commons';
 		};
-	}, [organization.name]);
+	}, [changemaker.name]);
 
 	if (baseFields === null || proposal === null) {
 		return (
-			<OrganizationProposalPanel
+			<ChangemakerProposalPanel
 				proposalId={proposalId}
 				version={0}
 				values={[]}
@@ -40,7 +40,7 @@ const OrganizationProposalLoader = ({
 	const title = getTitle(baseFields, proposal);
 
 	return (
-		<OrganizationProposalPanel
+		<ChangemakerProposalPanel
 			proposalId={proposalId}
 			version={version}
 			values={values}
@@ -50,4 +50,4 @@ const OrganizationProposalLoader = ({
 	);
 };
 
-export { OrganizationProposalLoader };
+export { ChangemakerProposalLoader };
