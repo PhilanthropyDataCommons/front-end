@@ -1,5 +1,9 @@
 # Recent Changes to the PDC
 
+## October 2024
+
+- Refactor Organizations to Changemakers
+
 ## April 2024
 
 - Add Organizations to the PDC

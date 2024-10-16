@@ -5,8 +5,8 @@ import { AddData } from './pages/AddData';
 import { NotFound } from './pages/NotFound';
 import { ProposalDetail } from './pages/ProposalDetail';
 import { ProposalList } from './pages/ProposalList';
-import { OrganizationDetail } from './pages/OrganizationDetail';
-import { OrganizationList } from './pages/OrganizationList';
+import { ChangemakerDetail } from './pages/ChangemakerDetail';
+import { ChangemakerList } from './pages/ChangemakerList';
 import { Landing } from './pages/Landing';
 import './App.css';
 
@@ -17,20 +17,20 @@ const router = createBrowserRouter([
 			{ path: '/', Component: Landing },
 			{ path: '/add-data', Component: withOidcSecure(AddData) },
 			{
-				path: '/organizations/:organizationId',
-				Component: OrganizationDetail,
+				path: '/changemakers/:changemakerId',
+				Component: ChangemakerDetail,
 			},
 			{
-				path: '/organizations/:organizationId/provider/:provider',
-				Component: withOidcSecure(OrganizationDetail),
+				path: '/changemakers/:changemakerId/provider/:provider',
+				Component: withOidcSecure(ChangemakerDetail),
 			},
 			{
-				path: '/organizations/:organizationId/proposals/:proposalId',
-				Component: withOidcSecure(OrganizationDetail),
+				path: '/changemakers/:changemakerId/proposals/:proposalId',
+				Component: withOidcSecure(ChangemakerDetail),
 			},
 			{
-				path: '/organizations',
-				Component: OrganizationList,
+				path: '/changemakers',
+				Component: ChangemakerList,
 			},
 			{
 				path: '/proposals/:proposalId',

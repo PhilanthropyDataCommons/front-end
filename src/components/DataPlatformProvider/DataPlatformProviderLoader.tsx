@@ -186,14 +186,7 @@ const ProviderPanelLoader = ({
 		return <NoData onClose={onClose} provider={provider} />;
 	}
 	const { parse, name } = providers[provider];
-	/* eslint-disable-next-line @typescript-eslint/no-unsafe-argument --
-	 *
-	 * The `data` property on a `PlatformProviderResponse` gets typed as `any`
-	 * by the SDK generator, but this is a bug in the generator. We can re-enable
-	 * this rule once the upstream bug is fixed.
-	 *
-	 * See: https://github.com/PhilanthropyDataCommons/service/issues/1013#issuecomment-2120839690
-	 */
+
 	const { applicant, url, values } = parse(selectedProviderData.data);
 	return (
 		<DataPlatformProviderPanel
