@@ -21,7 +21,7 @@ export const Default: Story = {
 				shortCode: 'organization_name',
 				description: 'Common name of the organization',
 				dataType: BaseField.DataTypeEnum.String,
-				createdAt: new Date(),
+				createdAt: new Date().toISOString(),
 				scope: BaseField.ScopeEnum.Proposal,
 			},
 			{
@@ -30,7 +30,7 @@ export const Default: Story = {
 				shortCode: 'proposal_summary',
 				description: "Summary of the proposal's purpose",
 				dataType: BaseField.DataTypeEnum.String,
-				createdAt: new Date(),
+				createdAt: new Date().toISOString(),
 				scope: BaseField.ScopeEnum.Proposal,
 			},
 			{
@@ -39,7 +39,7 @@ export const Default: Story = {
 				shortCode: 'organization_contact',
 				description: 'Person contact regarding this organization',
 				dataType: BaseField.DataTypeEnum.String,
-				createdAt: new Date(),
+				createdAt: new Date().toISOString(),
 				scope: BaseField.ScopeEnum.Proposal,
 			},
 			{
@@ -48,7 +48,7 @@ export const Default: Story = {
 				shortCode: 'organization_budget',
 				description: 'Annual budget of the organization',
 				dataType: BaseField.DataTypeEnum.String,
-				createdAt: new Date(),
+				createdAt: new Date().toISOString(),
 				scope: BaseField.ScopeEnum.Proposal,
 			},
 		],

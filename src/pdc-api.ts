@@ -13,6 +13,7 @@ import type {
 	WritablePresignedPostRequest,
 	Proposal,
 	ProposalBundle,
+	Source
 } from '@pdc/sdk';
 import { getLogger } from './logger';
 
@@ -209,6 +210,8 @@ const useOrganizations = (page: string, count: string) =>
 		}),
 	);
 
+const useSystemSource = () => usePdcApi<Source>('/sources/1');
+
 export {
 	PROPOSALS_DEFAULT_COUNT,
 	PROPOSALS_DEFAULT_PAGE,
@@ -226,4 +229,5 @@ export {
 	useOrganizations,
 	useProviderData,
 	useRegisterBulkUploadCallback,
+	useSystemSource,
 };

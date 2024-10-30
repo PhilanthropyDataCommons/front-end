@@ -130,7 +130,7 @@ const OrganizationDetailPanelLoader = () => {
 			id: 0,
 			taxId: '00-0000000',
 			name: 'Loading...',
-			createdAt: new Date('2024-03-06'),
+			createdAt: new Date('2024-03-06').toISOString(),
 		};
 
 		return (

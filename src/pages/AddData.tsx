@@ -7,6 +7,7 @@ import {
 	useBulkUploads,
 	usePresignedPostCallback,
 	useRegisterBulkUploadCallback,
+	useSystemSource,
 } from '../pdc-api';
 import { PanelGrid, PanelGridItem } from '../components/PanelGrid';
 import { Panel, PanelBody, PanelHeader } from '../components/Panel';
@@ -31,9 +32,13 @@ interface BulkUploaderProps {
 	onBulkUpload: () => void;
 }
 const BulkUploader = ({ onBulkUpload }: BulkUploaderProps) => {
+	const [systemSource] = useSystemSource();
 	const createPresignedPost = usePresignedPostCallback();
 	const registerBulkUpload = useRegisterBulkUploadCallback();
 	const handleUpload = async (file: File) => {
+		if (systemSource?.id == null) {
+			throw new Error('No System Source Available');
+		}
 		const { presignedPost } = await createPresignedPost({
 			fileType: file.type || 'application/octet-stream',
 			fileSize: file.size,
@@ -44,6 +49,7 @@ const BulkUploader = ({ onBulkUpload }: BulkUploaderProps) => {
 		await registerBulkUpload({
 			fileName: file.name,
 			sourceKey: presignedPost.fields.key,
+			sourceId: systemSource.id,
 		});
 
 		onBulkUpload();
