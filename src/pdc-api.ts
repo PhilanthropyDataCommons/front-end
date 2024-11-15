@@ -13,7 +13,7 @@ import type {
 	WritablePresignedPostRequest,
 	Proposal,
 	ProposalBundle,
-	Source
+	Source,
 } from '@pdc/sdk';
 import { getLogger } from './logger';
 
@@ -126,7 +126,7 @@ const uploadUsingPresignedPost = async (
 };
 
 const useRegisterBulkUploadCallback = () => {
-	const api = usePdcCallbackApi<BulkUpload>('/bulkUploads');
+	const api = usePdcCallbackApi<BulkUpload>('/tasks/bulkUploads');
 	return (params: WritableBulkUpload) =>
 		api({
 			method: 'post',
@@ -142,7 +142,7 @@ const useBaseFields = () => usePdcApi<BaseField[]>('/baseFields');
 
 const useBulkUploads = () =>
 	usePdcApi<BulkUploadBundle>(
-		'/bulkUploads',
+		'/tasks/bulkUploads',
 		new URLSearchParams({ createdBy: 'me' }),
 	);
 
