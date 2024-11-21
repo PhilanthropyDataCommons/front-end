@@ -36,11 +36,11 @@ const Landing = () => {
 					{isAuthenticated ? (
 						<>
 							<Link
-								to="/organizations"
+								to="/changemakers"
 								className="button button--color-blue button--inverted button--block"
 							>
 								<BuildingOffice2Icon />
-								View organizations
+								View changemakers
 							</Link>
 							<Link
 								to="/proposals"
@@ -64,11 +64,11 @@ const Landing = () => {
 								Log in
 							</Button>
 							<Link
-								to="/organizations"
+								to="/changemakers"
 								className="button button--color-gray button--block"
 							>
 								<BuildingOffice2Icon />
-								View public organization data
+								View public changemaker data
 							</Link>
 						</>
 					)}

@@ -30,7 +30,7 @@ const AppNavbar = () => {
 		<nav className="App-navbar">
 			<ul>
 				<li>
-					<NavLink to="/organizations" className="App-navbar__item">
+					<NavLink to="/changemakers" className="App-navbar__item">
 						{({ isActive }) => (
 							<>
 								{isActive ? (
@@ -38,7 +38,7 @@ const AppNavbar = () => {
 								) : (
 									<BuildingOffice2IconOutline />
 								)}
-								Organizations
+								Changemakers
 							</>
 						)}
 					</NavLink>

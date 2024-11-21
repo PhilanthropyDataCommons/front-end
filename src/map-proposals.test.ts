@@ -9,7 +9,7 @@ const baseFieldOrgName: BaseField = {
 	description: 'Common name of the organization',
 	scope: BaseField.ScopeEnum.Proposal,
 	dataType: BaseField.DataTypeEnum.String,
-	createdAt: new Date(),
+	createdAt: new Date().toISOString(),
 };
 
 const baseFieldOrgCity: BaseField = {
@@ -19,7 +19,7 @@ const baseFieldOrgCity: BaseField = {
 	description: 'City of the organization',
 	scope: BaseField.ScopeEnum.Proposal,
 	dataType: BaseField.DataTypeEnum.String,
-	createdAt: new Date(),
+	createdAt: new Date().toISOString(),
 };
 
 const baseFieldOrgContact: BaseField = {
@@ -29,7 +29,7 @@ const baseFieldOrgContact: BaseField = {
 	description: 'Person contact regarding this organization',
 	scope: BaseField.ScopeEnum.Proposal,
 	dataType: BaseField.DataTypeEnum.String,
-	createdAt: new Date(),
+	createdAt: new Date().toISOString(),
 };
 
 const baseFieldOrgBudget: BaseField = {
@@ -39,7 +39,7 @@ const baseFieldOrgBudget: BaseField = {
 	description: 'Annual budget of the organization',
 	scope: BaseField.ScopeEnum.Proposal,
 	dataType: BaseField.DataTypeEnum.String,
-	createdAt: new Date(),
+	createdAt: new Date().toISOString(),
 };
 
 const baseFields: BaseField[] = [
@@ -74,10 +74,10 @@ const proposals: Proposal[] = [
 							label: 'Organization Name',
 							baseFieldId: 1,
 							position: 0,
-							createdAt: new Date(),
+							createdAt: new Date().toISOString(),
 							baseField: baseFieldOrgName,
 						},
-						createdAt: new Date(),
+						createdAt: new Date().toISOString(),
 					},
 					{
 						id: 1,
@@ -92,10 +92,10 @@ const proposals: Proposal[] = [
 							label: 'Organization Location',
 							baseFieldId: 2,
 							position: 1,
-							createdAt: new Date(),
+							createdAt: new Date().toISOString(),
 							baseField: baseFieldOrgCity,
 						},
-						createdAt: new Date(),
+						createdAt: new Date().toISOString(),
 					},
 					{
 						id: 1,
@@ -110,10 +110,10 @@ const proposals: Proposal[] = [
 							label: 'Submitter Name',
 							baseFieldId: 1,
 							position: 0,
-							createdAt: new Date(),
+							createdAt: new Date().toISOString(),
 							baseField: baseFieldOrgContact,
 						},
-						createdAt: new Date(),
+						createdAt: new Date().toISOString(),
 					},
 					{
 						id: 1,
@@ -128,17 +128,18 @@ const proposals: Proposal[] = [
 							label: 'Label',
 							baseFieldId: 4,
 							position: 3,
-							createdAt: new Date(),
+							createdAt: new Date().toISOString(),
 							baseField: baseFieldOrgBudget,
 						},
-						createdAt: new Date(),
+						createdAt: new Date().toISOString(),
 					},
 				],
-				createdAt: new Date(),
+				sourceId: 1,
+				createdAt: new Date().toISOString(),
 			},
 		],
-		createdAt: new Date(),
-		createdBy: 1,
+		createdAt: new Date().toISOString(),
+		createdBy: '1',
 	},
 ];
 
