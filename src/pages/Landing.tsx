@@ -79,9 +79,9 @@ const Landing = () => {
 						<Dli>
 							<dt>Need an account?</dt>
 							<dd>
-								Email Jim McGowan:{' '}
+								Email Jonathan Mergy:{' '}
 								<EmailLink
-									to="jimmcgowan@opentechstrategies.com"
+									to="jmergy@philanthropydatacommons.org"
 									subject="PDC account"
 								/>
 							</dd>
