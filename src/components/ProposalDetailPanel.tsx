@@ -21,6 +21,7 @@ interface ProposalDetailPanelProps {
 		position: number;
 		value: string;
 	}[];
+	source: string | undefined;
 }
 
 const ProposalDetailPanel = ({
@@ -29,6 +30,7 @@ const ProposalDetailPanel = ({
 	applicantId,
 	version,
 	values,
+	source,
 }: ProposalDetailPanelProps) => (
 	<Panel>
 		<PanelHeader>
@@ -39,6 +41,7 @@ const ProposalDetailPanel = ({
 						<PanelTag icon={<BuildingOffice2Icon />}>{applicant}</PanelTag>
 					)}
 					{applicantId && <PanelTag badge="Tax ID">{applicantId}</PanelTag>}
+					{source && <PanelTag badge="Source">{source}</PanelTag>}
 				</PanelTitleTags>
 			</PanelTitleWrapper>
 		</PanelHeader>

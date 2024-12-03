@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { ArrowsPointingOutIcon } from '@heroicons/react/24/solid';
-import { ClosablePanel, PanelTitle } from '../Panel';
+import { ClosablePanel, PanelTag, PanelTitle } from '../Panel';
 import { ProposalTable } from '../ProposalTable';
 import { Button } from '../Button';
 
@@ -35,6 +35,7 @@ interface ChangemakerProposalPanelProps {
 		position: number;
 		value: string;
 	}[];
+	source: string | undefined;
 	onClose: () => void;
 	title?: string;
 }
@@ -43,6 +44,7 @@ const ChangemakerProposalPanel = ({
 	proposalId,
 	version,
 	values,
+	source,
 	onClose,
 	title = 'Untitled Proposal',
 }: ChangemakerProposalPanelProps) => (
@@ -51,6 +53,7 @@ const ChangemakerProposalPanel = ({
 		onClose={onClose}
 		padded={false}
 		actions={<ChangemakerProposalPanelActions proposalId={proposalId} />}
+		tags={source ? <PanelTag badge="Source">{source}</PanelTag> : undefined}
 	>
 		<ProposalTable version={version} values={values} />
 	</ClosablePanel>
