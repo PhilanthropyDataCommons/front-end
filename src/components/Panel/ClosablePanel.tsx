@@ -5,12 +5,14 @@ import { Panel } from './Panel';
 import { PanelHeader } from './PanelHeader';
 import { PanelActions } from './PanelActions';
 import { PanelTitleWrapper } from './PanelTitleWrapper';
+import { PanelTitleTags } from './PanelTitleTags';
 import { PanelBody } from './PanelBody';
 
 interface ClosablePanelProps {
 	children: React.ReactNode;
 	onClose: () => void;
 	title: React.ReactNode;
+	tags?: React.ReactNode;
 	/**
 	 * Controls whether the panel body has internal padding.
 	 */
@@ -22,12 +24,14 @@ const ClosablePanel = ({
 	children,
 	onClose,
 	title,
+	tags = undefined,
 	padded = true,
 	actions = undefined,
 }: ClosablePanelProps) => (
 	<Panel>
 		<PanelHeader>
 			<PanelTitleWrapper>{title}</PanelTitleWrapper>
+			{tags && <PanelTitleTags> {tags} </PanelTitleTags>}
 			<PanelActions>
 				{actions}
 				<Button onClick={onClose} color="red" title="Close this panel">

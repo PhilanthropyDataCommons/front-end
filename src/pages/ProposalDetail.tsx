@@ -98,6 +98,7 @@ const ProposalDetailPanelLoader = ({
 					applicantId="00-0000000"
 					version={0}
 					values={[]}
+					source={undefined}
 				/>
 			</PanelGridItem>
 		);
@@ -112,6 +113,7 @@ const ProposalDetailPanelLoader = ({
 	);
 	const version = proposal.versions[0]?.version ?? 0;
 	const values = mapProposalBaseFields(baseFields, proposal);
+	const source = proposal.versions[0]?.source?.label ?? undefined;
 
 	return (
 		<PanelGridItem key="detailPanel">
@@ -121,6 +123,7 @@ const ProposalDetailPanelLoader = ({
 				applicantId={applicantId}
 				version={version}
 				values={values}
+				source={source}
 			/>
 		</PanelGridItem>
 	);
