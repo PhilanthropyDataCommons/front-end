@@ -1,9 +1,9 @@
-import type { BulkUpload } from '@pdc/sdk';
+import type { BulkUploadTask } from '@pdc/sdk';
 import { BulkUploadListItem } from './BulkUploadListItem';
 import './BulkUploadList.css';
 
 interface BulkUploadListProps {
-	uploads: BulkUpload[];
+	uploads: BulkUploadTask[];
 }
 
 export const BulkUploadList = ({ uploads }: BulkUploadListProps) => (

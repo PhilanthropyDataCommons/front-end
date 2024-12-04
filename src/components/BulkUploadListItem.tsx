@@ -5,13 +5,13 @@ import {
 	ClockIcon,
 	XCircleIcon,
 } from '@heroicons/react/24/outline';
-import { BulkUpload } from '@pdc/sdk';
+import { BulkUploadTask } from '@pdc/sdk';
 import { localizeDateTime, relativizeDateTime } from '../utils/datetime';
 import { EmailLink } from './EmailLink';
 import './BulkUploadListItem.css';
 
 interface BulkUploadListItemProps {
-	upload: BulkUpload;
+	upload: BulkUploadTask;
 }
 
 export const BulkUploadListItem = ({ upload }: BulkUploadListItemProps) => {
@@ -35,7 +35,7 @@ export const BulkUploadListItem = ({ upload }: BulkUploadListItemProps) => {
 	const metadata = [];
 
 	switch (status) {
-		case BulkUpload.StatusEnum.Pending:
+		case BulkUploadTask.StatusEnum.Pending:
 			icon = <ClockIcon className="icon" />;
 			metadata.push(
 				relativeTimestamp,
@@ -43,19 +43,19 @@ export const BulkUploadListItem = ({ upload }: BulkUploadListItemProps) => {
 				'Waiting to process…',
 			);
 			break;
-		case BulkUpload.StatusEnum.InProgress:
+		case BulkUploadTask.StatusEnum.InProgress:
 			icon = <ArrowPathIcon className="icon rotating" />;
 			metadata.push(relativeTimestamp, formattedFileSize, 'Processing…');
 			break;
-		case BulkUpload.StatusEnum.Completed:
+		case BulkUploadTask.StatusEnum.Completed:
 			icon = <CheckCircleIcon className="icon" />;
 			metadata.push(relativeTimestamp, formattedFileSize);
 			break;
-		case BulkUpload.StatusEnum.Canceled:
+		case BulkUploadTask.StatusEnum.Canceled:
 			icon = <XCircleIcon className="icon" />;
 			metadata.push(<>Canceled {relativeTimestamp}</>, formattedFileSize);
 			break;
-		case BulkUpload.StatusEnum.Failed:
+		case BulkUploadTask.StatusEnum.Failed:
 			icon = <XCircleIcon className="icon" />;
 			metadata.push(
 				<>Failed {relativeTimestamp}</>,

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { BulkUpload } from '@pdc/sdk';
+import { BulkUploadTask } from '@pdc/sdk';
 import { BulkUploadListItem } from '../components/BulkUploadListItem';
 
 const meta = {
@@ -19,7 +19,7 @@ export const Default: Story = {
 			sourceKey: 'abc123',
 			fileName: 'NormalFile.csv',
 			fileSize: 10000000,
-			status: BulkUpload.StatusEnum.Completed,
+			status: BulkUploadTask.StatusEnum.Completed,
 			createdAt: new Date().toISOString(),
 			createdBy: '00000000-00000000-00000000-00000000',
 			sourceId: 1,
@@ -34,7 +34,7 @@ export const Pending: Story = {
 			sourceKey: 'abc123',
 			fileName: 'WaitingToProcessFile.csv',
 			fileSize: 100,
-			status: BulkUpload.StatusEnum.Pending,
+			status: BulkUploadTask.StatusEnum.Pending,
 			createdAt: new Date().toISOString(),
 			createdBy: '00000000-00000000-00000000-00000000',
 			sourceId: 1,
@@ -49,7 +49,7 @@ export const InProgress: Story = {
 			sourceKey: 'abc123',
 			fileName: 'ProcessingFile.csv',
 			fileSize: 1950,
-			status: BulkUpload.StatusEnum.InProgress,
+			status: BulkUploadTask.StatusEnum.InProgress,
 			createdAt: new Date().toISOString(),
 			createdBy: '00000000-00000000-00000000-00000000',
 			sourceId: 1,
@@ -64,7 +64,7 @@ export const Canceled: Story = {
 			sourceKey: 'abc123',
 			fileName: 'CanceledFile.csv',
 			fileSize: 1000000,
-			status: BulkUpload.StatusEnum.Canceled,
+			status: BulkUploadTask.StatusEnum.Canceled,
 			createdAt: new Date().toISOString(),
 			createdBy: '00000000-00000000-00000000-00000000',
 			sourceId: 1,
@@ -79,7 +79,7 @@ export const Failed: Story = {
 			sourceKey: 'abc123',
 			fileName: 'BadFile.csv',
 			fileSize: 1000000,
-			status: BulkUpload.StatusEnum.Failed,
+			status: BulkUploadTask.StatusEnum.Failed,
 			createdAt: new Date().toISOString(),
 			createdBy: '00000000-00000000-00000000-00000000',
 			sourceId: 1,

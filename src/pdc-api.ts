@@ -2,9 +2,9 @@ import { useCallback, useEffect, useState } from 'react';
 import { useOidcFetch } from '@axa-fr/react-oidc';
 import type {
 	BaseField,
-	BulkUpload,
-	WritableBulkUpload,
-	BulkUploadBundle,
+	BulkUploadTask,
+	WritableBulkUploadTask,
+	BulkUploadTaskBundle,
 	Changemaker,
 	ChangemakerBundle,
 	PlatformProviderResponse,
@@ -126,8 +126,8 @@ const uploadUsingPresignedPost = async (
 };
 
 const useRegisterBulkUploadCallback = () => {
-	const api = usePdcCallbackApi<BulkUpload>('/tasks/bulkUploads');
-	return (params: WritableBulkUpload) =>
+	const api = usePdcCallbackApi<BulkUploadTask>('/tasks/bulkUploads');
+	return (params: WritableBulkUploadTask) =>
 		api({
 			method: 'post',
 			headers: {
@@ -141,7 +141,7 @@ const useRegisterBulkUploadCallback = () => {
 const useBaseFields = () => usePdcApi<BaseField[]>('/baseFields');
 
 const useBulkUploads = () =>
-	usePdcApi<BulkUploadBundle>(
+	usePdcApi<BulkUploadTaskBundle>(
 		'/tasks/bulkUploads',
 		new URLSearchParams({ createdBy: 'me' }),
 	);
