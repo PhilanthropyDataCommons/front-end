@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useOidc } from '@axa-fr/react-oidc';
-import { Changemaker } from '@pdc/sdk';
+import { Changemaker, Source } from '@pdc/sdk';
 import { FrontEndProposal } from '../interfaces/FrontEndProposal';
 import { mapProposals } from '../map-proposals';
 import { mapFieldNames } from '../utils/baseFields';
@@ -14,8 +14,11 @@ import {
 	CHANGEMAKERS_DEFAULT_COUNT,
 	PROPOSALS_DEFAULT_PAGE,
 	PROPOSALS_DEFAULT_COUNT,
+	SOURCES_DEFAULT_PAGE,
+	SOURCES_DEFAULT_COUNT,
 	useBaseFields,
 	useProposalsByChangemakerId,
+	useSources,
 } from '../pdc-api';
 import { ChangemakerDetailPanel } from '../components/ChangemakerDetailPanel';
 import { ChangemakerListGridPanel } from '../components/ChangemakerListGridPanel';
@@ -24,6 +27,7 @@ import {
 	ProposalListTable,
 	ProposalDetailDestinations,
 } from '../components/ProposalListTable';
+import { ChangemakerFieldsTable } from '../components/ChangemakerFieldsTable';
 
 interface ChangemakerProposalsTableLoaderProps {
 	changemaker: Changemaker;
@@ -58,6 +62,8 @@ const ChangemakerProposalsTableLoader = ({
 
 	return (
 		<section id="changemaker-proposals">
+			<h2>Changemaker Fields</h2>
+			<ChangemakerFieldsTable changemaker={changemaker} />
 			<h2>Proposals</h2>
 			{proposalState.length > 0 ? (
 				<ProposalListTable
@@ -131,6 +137,7 @@ const ChangemakerDetailPanelLoader = () => {
 			taxId: '00-0000000',
 			name: 'Loading...',
 			createdAt: new Date('2024-03-06').toISOString(),
+			fields: [],
 		};
 
 		return (

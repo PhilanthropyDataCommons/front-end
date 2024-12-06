@@ -14,6 +14,8 @@ import type {
 	Proposal,
 	ProposalBundle,
 	Source,
+	SourceBundle,
+	ProposalVersion,
 } from '@pdc/sdk';
 import { getLogger } from './logger';
 
@@ -212,12 +214,29 @@ const useChangemakers = (page: string, count: string) =>
 
 const useSystemSource = () => usePdcApi<Source>('/sources/1');
 
+const SOURCES_DEFAULT_PAGE = '1';
+const SOURCES_DEFAULT_COUNT = '100';
+
+const useSources = (page: string, count: string) =>
+	usePdcApi<SourceBundle>(
+		'/sources',
+		new URLSearchParams({
+			_page: page,
+			_count: count,
+		}),
+	);
+
+const useProposalVersion = (proposalVersionId: number) =>
+	usePdcApi<ProposalVersion>(`/proposalVersions/${proposalVersionId}`);
+
 export {
 	PROPOSALS_DEFAULT_COUNT,
 	PROPOSALS_DEFAULT_PAGE,
 	PROPOSALS_DEFAULT_QUERY,
 	CHANGEMAKERS_DEFAULT_COUNT,
 	CHANGEMAKERS_DEFAULT_PAGE,
+	SOURCES_DEFAULT_PAGE,
+	SOURCES_DEFAULT_COUNT,
 	uploadUsingPresignedPost,
 	useBaseFields,
 	useBulkUploads,
@@ -230,4 +249,6 @@ export {
 	useProviderData,
 	useRegisterBulkUploadCallback,
 	useSystemSource,
+	useSources,
+	useProposalVersion,
 };
