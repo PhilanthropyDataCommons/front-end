@@ -31,11 +31,13 @@ const ChangemakerProposalLoader = ({
 				version={0}
 				values={[]}
 				onClose={onClose}
+				source={undefined}
 			/>
 		);
 	}
 
 	const version = proposal.versions[0]?.version ?? 0;
+	const source = proposal.versions[0]?.source?.label ?? undefined;
 	const values = mapProposalBaseFields(baseFields, proposal);
 	const title = getTitle(baseFields, proposal);
 
@@ -44,6 +46,7 @@ const ChangemakerProposalLoader = ({
 			proposalId={proposalId}
 			version={version}
 			values={values}
+			source={source}
 			onClose={onClose}
 			title={title}
 		/>
