@@ -3,6 +3,9 @@ import { FrontEndProposal } from '../interfaces/FrontEndProposal';
 import { getPreferredProposalApplicantNameValues } from '../utils/proposals';
 import { TableRow, RowCell } from './Table';
 import { ListTable } from './ListTable';
+import { getLogger } from '../logger';
+
+const logger = getLogger('ProposalListTable');
 
 enum ProposalDetailDestinations {
 	PROPOSAL_DETAIL_PAGE = 'proposalDetailPage',
@@ -33,12 +36,14 @@ const ProposalListTableRow = ({
 			switch (rowClickDestination) {
 				case ProposalDetailDestinations.CHANGEMAKER_PROPOSAL_PANEL:
 					if (changemakerId) {
-						navigate(`/changemakers/${changemakerId}/proposals/${proposal.id}`);
+						navigate(
+							`/changemakers/${changemakerId}/proposals/${proposal.id}`,
+						)?.catch(logger.error);
 					}
 					break;
 				case ProposalDetailDestinations.PROPOSAL_DETAIL_PAGE:
 				default:
-					navigate(`/proposals/${proposal.id}`);
+					navigate(`/proposals/${proposal.id}`)?.catch(logger.error);
 					break;
 			}
 		}

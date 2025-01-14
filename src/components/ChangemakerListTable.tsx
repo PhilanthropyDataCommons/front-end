@@ -2,6 +2,9 @@ import { useNavigate } from 'react-router-dom';
 import { Changemaker, ChangemakerBundle } from '@pdc/sdk';
 import { TableRow, RowCell } from './Table';
 import { ListTable } from './ListTable';
+import { getLogger } from '../logger';
+
+const logger = getLogger('ChangemakerListTable');
 
 interface ChangemakerListTableRowProps {
 	changemaker: Changemaker;
@@ -14,7 +17,7 @@ const ChangemakerListTableRow = ({
 
 	const userHasNotSelectedText = () => {
 		if (window.getSelection()?.isCollapsed) {
-			navigate(`/changemakers/${changemaker.id}`);
+			navigate(`/changemakers/${changemaker.id}`)?.catch(logger.error);
 		}
 	};
 

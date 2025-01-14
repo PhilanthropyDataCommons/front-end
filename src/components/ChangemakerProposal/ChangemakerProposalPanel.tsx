@@ -3,6 +3,9 @@ import { ArrowsPointingOutIcon } from '@heroicons/react/24/solid';
 import { ClosablePanel, PanelTag, PanelTitle } from '../Panel';
 import { ProposalTable } from '../ProposalTable';
 import { Button } from '../Button';
+import { getLogger } from '../../logger';
+
+const logger = getLogger('ChangemakerProposalPanel');
 
 interface ChangemakerProposalPanelActionsProps {
 	proposalId: string;
@@ -13,7 +16,7 @@ const ChangemakerProposalPanelActions = ({
 }: ChangemakerProposalPanelActionsProps) => {
 	const navigate = useNavigate();
 	const handleClick = () => {
-		navigate(`/proposals/${proposalId}`);
+		navigate(`/proposals/${proposalId}`)?.catch(logger.error);
 	};
 	return (
 		<Button

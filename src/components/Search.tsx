@@ -3,9 +3,12 @@ import { Link } from 'react-router-dom';
 import { Button } from './Button';
 import { FormElementGroup } from './FormElementGroup';
 import './Search.css';
+import { getLogger } from '../logger';
+
+const logger = getLogger('Search');
 
 interface SearchProps {
-	onSearch: (query: string) => void;
+	onSearch: (query: string) => void | Promise<void>;
 	initialQuery?: string;
 }
 
@@ -18,7 +21,7 @@ export const Search = ({ onSearch, initialQuery = '' }: SearchProps) => {
 			method="get"
 			onSubmit={(e) => {
 				e.preventDefault();
-				onSearch(query);
+				onSearch(query)?.catch(logger.error);
 			}}
 		>
 			<FormElementGroup>
