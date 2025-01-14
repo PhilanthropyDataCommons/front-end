@@ -24,6 +24,9 @@ import {
 	ProposalListTable,
 	ProposalDetailDestinations,
 } from '../components/ProposalListTable';
+import { getLogger } from '../logger';
+
+const logger = getLogger('ChangemakerDetail');
 
 interface ChangemakerProposalsTableLoaderProps {
 	changemaker: Changemaker;
@@ -143,7 +146,7 @@ const ChangemakerDetailPanelLoader = () => {
 						<DataPlatformProviderLoader
 							externalId={undefined}
 							onClose={() => {
-								navigate(`/changemakers/${changemakerId}`);
+								navigate(`/changemakers/${changemakerId}`)?.catch(logger.error);
 							}}
 							provider={provider}
 						/>
@@ -172,7 +175,7 @@ const ChangemakerDetailPanelLoader = () => {
 						provider={provider}
 						externalId={changemaker.taxId}
 						onClose={() => {
-							navigate(`/changemakers/${changemakerId}`);
+							navigate(`/changemakers/${changemakerId}`)?.catch(logger.error);
 						}}
 					/>
 				</PanelGridItem>
@@ -183,7 +186,7 @@ const ChangemakerDetailPanelLoader = () => {
 						proposalId={proposalId}
 						changemaker={changemaker}
 						onClose={() => {
-							navigate(`/changemakers/${changemakerId}`);
+							navigate(`/changemakers/${changemakerId}`)?.catch(logger.error);
 						}}
 					/>
 				</PanelGridItem>

@@ -11,7 +11,7 @@ import { ToggleSwitch } from './ToggleSwitch';
 interface ProposalListTablePanelProps {
 	fieldNames: Record<string, string>;
 	proposals: FrontEndProposal[];
-	onSearch: (query: string) => void;
+	onSearch: (query: string) => void | Promise<void>;
 	searchQuery?: string;
 	loading?: boolean;
 }
