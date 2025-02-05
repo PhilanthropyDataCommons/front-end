@@ -3,7 +3,7 @@ updates:
   - package-ecosystem: 'npm'
     directory: '/'
     schedule:
-      interval: 'weekly'
+      interval: 'monthly'
       timezone: 'America/Los_Angeles'
       time: '01:00'
       day: 'monday'
@@ -34,6 +34,6 @@ updates:
   - package-ecosystem: 'github-actions'
     directory: '.github/workflows'
     schedule:
-      interval: 'daily'
+      interval: 'monthly'
       timezone: 'America/Los_Angeles'
       time: '12:00'
