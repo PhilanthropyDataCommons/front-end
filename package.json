@@ -3,7 +3,7 @@
 	"version": "0.1.0",
 	"private": true,
 	"dependencies": {
-		"@axa-fr/react-oidc": "^7.25.0",
+		"@axa-fr/react-oidc": "^7.25.3",
 		"@fontsource/source-sans-pro": "^5.1.0",
 		"@heroicons/react": "^2.2.0",
 		"@pdc/sdk": "^0.16.1",
