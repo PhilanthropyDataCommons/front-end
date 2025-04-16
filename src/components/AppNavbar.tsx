@@ -2,13 +2,11 @@ import { NavLink } from 'react-router-dom';
 import { useOidc } from '@axa-fr/react-oidc';
 import {
 	CommandLineIcon as CommandLineIconOutline,
-	DocumentTextIcon as DocumentTextIconOutline,
 	InformationCircleIcon as InformationCircleIconOutline,
 	SquaresPlusIcon as SquaresPlusIconOutline,
 } from '@heroicons/react/24/outline';
 import {
 	CommandLineIcon as CommandLineIconSolid,
-	DocumentTextIcon as DocumentTextIconSolid,
 	InformationCircleIcon as InformationCircleIconSolid,
 	SquaresPlusIcon as SquaresPlusIconSolid,
 } from '@heroicons/react/24/solid';
@@ -28,36 +26,20 @@ const AppNavbar = () => {
 		<nav className="App-navbar">
 			<ul>
 				{isAuthenticated && (
-					<>
-						<li>
-							<NavLink to="/proposals" className="App-navbar__item">
-								{({ isActive }) => (
-									<>
-										{isActive ? (
-											<DocumentTextIconSolid />
-										) : (
-											<DocumentTextIconOutline />
-										)}
-										Proposals
-									</>
-								)}
-							</NavLink>
-						</li>
-						<li>
-							<NavLink to="/add-data" className="App-navbar__item">
-								{({ isActive }) => (
-									<>
-										{isActive ? (
-											<SquaresPlusIconSolid />
-										) : (
-											<SquaresPlusIconOutline />
-										)}
-										Add Data
-									</>
-								)}
-							</NavLink>
-						</li>
-					</>
+					<li>
+						<NavLink to="/add-data" className="App-navbar__item">
+							{({ isActive }) => (
+								<>
+									{isActive ? (
+										<SquaresPlusIconSolid />
+									) : (
+										<SquaresPlusIconOutline />
+									)}
+									Add Data
+								</>
+							)}
+						</NavLink>
+					</li>
 				)}
 				<li>
 					<Dropdown name="navbar-dropdown">
