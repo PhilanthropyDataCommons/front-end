@@ -1,14 +1,12 @@
 import { NavLink } from 'react-router-dom';
 import { useOidc } from '@axa-fr/react-oidc';
 import {
-	BuildingOffice2Icon as BuildingOffice2IconOutline,
 	CommandLineIcon as CommandLineIconOutline,
 	DocumentTextIcon as DocumentTextIconOutline,
 	InformationCircleIcon as InformationCircleIconOutline,
 	SquaresPlusIcon as SquaresPlusIconOutline,
 } from '@heroicons/react/24/outline';
 import {
-	BuildingOffice2Icon as BuildingOffice2IconSolid,
 	CommandLineIcon as CommandLineIconSolid,
 	DocumentTextIcon as DocumentTextIconSolid,
 	InformationCircleIcon as InformationCircleIconSolid,
@@ -29,20 +27,6 @@ const AppNavbar = () => {
 	return (
 		<nav className="App-navbar">
 			<ul>
-				<li>
-					<NavLink to="/changemakers" className="App-navbar__item">
-						{({ isActive }) => (
-							<>
-								{isActive ? (
-									<BuildingOffice2IconSolid />
-								) : (
-									<BuildingOffice2IconOutline />
-								)}
-								Changemakers
-							</>
-						)}
-					</NavLink>
-				</li>
 				{isAuthenticated && (
 					<>
 						<li>

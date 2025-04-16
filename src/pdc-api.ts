@@ -5,9 +5,6 @@ import type {
 	BulkUpload,
 	WritableBulkUpload,
 	BulkUploadBundle,
-	Changemaker,
-	ChangemakerBundle,
-	PlatformProviderResponse,
 	PresignedPost,
 	PresignedPostRequest,
 	WritablePresignedPostRequest,
@@ -168,66 +165,18 @@ const useProposals = (page: string, count: string, query: string) =>
 		}),
 	);
 
-const useProposalsByChangemakerId = (
-	page: string,
-	count: string,
-	changemakerId: string,
-) =>
-	usePdcApi<ProposalBundle>(
-		'/proposals',
-		new URLSearchParams({
-			_page: page,
-			_count: count,
-			changemaker: changemakerId,
-		}),
-	);
-
-const useProviderData = (externalId: string) =>
-	usePdcApi<PlatformProviderResponse[]>(
-		'/platformProviderResponses',
-		new URLSearchParams({
-			externalId,
-		}),
-	);
-
-const useChangemaker = (changemakerId: string) =>
-	usePdcApi<Changemaker>(
-		`/changemakers/${changemakerId}`,
-		new URLSearchParams({
-			includeFieldsAndValues: 'true',
-		}),
-	);
-
-const CHANGEMAKERS_DEFAULT_PAGE = '1';
-const CHANGEMAKERS_DEFAULT_COUNT = '100';
-
-const useChangemakers = (page: string, count: string) =>
-	usePdcApi<ChangemakerBundle>(
-		'/changemakers',
-		new URLSearchParams({
-			_page: page,
-			_count: count,
-		}),
-	);
-
 const useSystemSource = () => usePdcApi<Source>('/sources/1');
 
 export {
 	PROPOSALS_DEFAULT_COUNT,
 	PROPOSALS_DEFAULT_PAGE,
 	PROPOSALS_DEFAULT_QUERY,
-	CHANGEMAKERS_DEFAULT_COUNT,
-	CHANGEMAKERS_DEFAULT_PAGE,
 	uploadUsingPresignedPost,
 	useBaseFields,
 	useBulkUploads,
 	usePresignedPostCallback,
 	useProposal,
 	useProposals,
-	useProposalsByChangemakerId,
-	useChangemaker,
-	useChangemakers,
-	useProviderData,
 	useRegisterBulkUploadCallback,
 	useSystemSource,
 };

@@ -5,8 +5,6 @@ import { AddData } from './pages/AddData';
 import { NotFound } from './pages/NotFound';
 import { ProposalDetail } from './pages/ProposalDetail';
 import { ProposalList } from './pages/ProposalList';
-import { ChangemakerDetail } from './pages/ChangemakerDetail';
-import { ChangemakerList } from './pages/ChangemakerList';
 import { Landing } from './pages/Landing';
 import './App.css';
 
@@ -16,22 +14,6 @@ const router = createBrowserRouter([
 		children: [
 			{ path: '/', Component: Landing },
 			{ path: '/add-data', Component: withOidcSecure(AddData) },
-			{
-				path: '/changemakers/:changemakerId',
-				Component: ChangemakerDetail,
-			},
-			{
-				path: '/changemakers/:changemakerId/provider/:provider',
-				Component: withOidcSecure(ChangemakerDetail),
-			},
-			{
-				path: '/changemakers/:changemakerId/proposals/:proposalId',
-				Component: withOidcSecure(ChangemakerDetail),
-			},
-			{
-				path: '/changemakers',
-				Component: ChangemakerList,
-			},
 			{
 				path: '/proposals/:proposalId',
 				Component: withOidcSecure(ProposalDetail),

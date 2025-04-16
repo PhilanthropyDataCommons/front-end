@@ -9,14 +9,12 @@ const logger = getLogger('ProposalListTable');
 
 enum ProposalDetailDestinations {
 	PROPOSAL_DETAIL_PAGE = 'proposalDetailPage',
-	CHANGEMAKER_PROPOSAL_PANEL = 'changemakerProposalPanel',
 }
 
 interface ProposalListTableRowProps {
 	columns: string[];
 	proposal: FrontEndProposal;
 	rowClickDestination: ProposalDetailDestinations;
-	changemakerId?: number;
 	active?: boolean;
 }
 
@@ -24,7 +22,6 @@ const ProposalListTableRow = ({
 	proposal,
 	columns,
 	rowClickDestination,
-	changemakerId = undefined,
 	active = false,
 }: ProposalListTableRowProps) => {
 	const navigate = useNavigate();
@@ -34,13 +31,6 @@ const ProposalListTableRow = ({
 	const handleRowClick = () => {
 		if (userHasNotSelectedText()) {
 			switch (rowClickDestination) {
-				case ProposalDetailDestinations.CHANGEMAKER_PROPOSAL_PANEL:
-					if (changemakerId) {
-						navigate(
-							`/changemakers/${changemakerId}/proposals/${proposal.id}`,
-						)?.catch(logger.error);
-					}
-					break;
 				case ProposalDetailDestinations.PROPOSAL_DETAIL_PAGE:
 				default:
 					navigate(`/proposals/${proposal.id}`)?.catch(logger.error);
@@ -68,7 +58,6 @@ interface ProposalListTableProps {
 	fieldNames: Record<string, string>;
 	proposals: FrontEndProposal[];
 	rowClickDestination: ProposalDetailDestinations;
-	changemakerId?: number;
 	wrap?: boolean;
 	columns?: string[];
 	activeProposalId?: string | undefined;
@@ -100,7 +89,6 @@ const ProposalListTable = ({
 	columns = DEFAULT_PROPOSAL_COLUMNS,
 	wrap = false,
 	rowClickDestination,
-	changemakerId = undefined,
 	activeProposalId = undefined,
 }: ProposalListTableProps) => (
 	<ListTable
@@ -114,7 +102,6 @@ const ProposalListTable = ({
 				proposal={proposal}
 				columns={columns}
 				rowClickDestination={rowClickDestination}
-				changemakerId={changemakerId}
 				active={activeProposalId === proposal.id}
 			/>
 		)}
