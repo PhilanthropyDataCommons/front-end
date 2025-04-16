@@ -1,15 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useOidcFetch } from '@axa-fr/react-oidc';
-import type {
-	BaseField,
-	BulkUpload,
-	WritableBulkUpload,
-	BulkUploadBundle,
-	PresignedPost,
-	PresignedPostRequest,
-	WritablePresignedPostRequest,
-	Source,
-} from '@pdc/sdk';
+import type { BaseField } from '@pdc/sdk';
 import { getLogger } from './logger';
 
 const logger = getLogger('pdc-api');
@@ -64,90 +55,6 @@ const usePdcApi = <T>(
 	return [response, fetchData];
 };
 
-const usePdcCallbackApi = <T>(
-	path: string,
-): ((options: RequestInit) => Promise<T>) => {
-	const { fetch } = useOidcFetch();
-
-	return useCallback(
-		(options: RequestInit) => {
-			const url = new URL(path, API_URL);
-			return fetch(url, options)
-				.then(throwIfResponseIsNotOk)
-				.then((res) => res.json())
-				.catch((e) => logError(e, path, options));
-		},
-		/* eslint-disable-next-line react-hooks/exhaustive-deps --
-		 *
-		 * fetch should not be a dependency, because although it or its internal
-		 * state may change from render to render, such changes are not relevant:
-		 * a change in the way we make a request should not trigger an API request
-		 */
-		[path],
-	);
-};
-
-const usePresignedPostCallback = () => {
-	const api = usePdcCallbackApi<PresignedPostRequest>('/presignedPostRequests');
-	return (params: WritablePresignedPostRequest) =>
-		api({
-			method: 'post',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(params),
-		});
-};
-const isStringOrBlob = (value: unknown): value is string | Blob =>
-	typeof value === 'string' || value instanceof Blob;
-
-const uploadUsingPresignedPost = async (
-	file: File,
-	presignedPost: PresignedPost,
-) => {
-	const formData = new FormData();
-	Object.entries(presignedPost.fields).forEach(([key, value]) => {
-		if (isStringOrBlob(value)) {
-			formData.append(key, value);
-		}
-	});
-	formData.append('Content-Type', file.type || 'application/octet-stream');
-	formData.append('file', file);
-	return fetch(presignedPost.url, {
-		method: 'post',
-		body: formData,
-	}).then(throwIfResponseIsNotOk);
-};
-
-const useRegisterBulkUploadCallback = () => {
-	const api = usePdcCallbackApi<BulkUpload>('/tasks/bulkUploads');
-	return (params: WritableBulkUpload) =>
-		api({
-			method: 'post',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(params),
-		});
-};
-
 const useBaseFields = () => usePdcApi<BaseField[]>('/baseFields');
 
-const useBulkUploads = () =>
-	usePdcApi<BulkUploadBundle>(
-		'/tasks/bulkUploads',
-		new URLSearchParams({ createdBy: 'me' }),
-	);
-
-const useSystemSource = () => usePdcApi<Source>('/sources/1');
-
-export {
-	uploadUsingPresignedPost,
-	useBaseFields,
-	useBulkUploads,
-	usePresignedPostCallback,
-	useRegisterBulkUploadCallback,
-	useSystemSource,
-};
+export { useBaseFields };
