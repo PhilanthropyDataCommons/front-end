@@ -8,8 +8,6 @@ import type {
 	PresignedPost,
 	PresignedPostRequest,
 	WritablePresignedPostRequest,
-	Proposal,
-	ProposalBundle,
 	Source,
 } from '@pdc/sdk';
 import { getLogger } from './logger';
@@ -143,40 +141,13 @@ const useBulkUploads = () =>
 		new URLSearchParams({ createdBy: 'me' }),
 	);
 
-const useProposal = (proposalId: string) =>
-	usePdcApi<Proposal>(
-		`/proposals/${proposalId}`,
-		new URLSearchParams({
-			includeFieldsAndValues: 'true',
-		}),
-	);
-
-const PROPOSALS_DEFAULT_PAGE = '1';
-const PROPOSALS_DEFAULT_COUNT = '1000';
-const PROPOSALS_DEFAULT_QUERY = '';
-
-const useProposals = (page: string, count: string, query: string) =>
-	usePdcApi<ProposalBundle>(
-		'/proposals',
-		new URLSearchParams({
-			_page: page,
-			_count: count,
-			_content: query,
-		}),
-	);
-
 const useSystemSource = () => usePdcApi<Source>('/sources/1');
 
 export {
-	PROPOSALS_DEFAULT_COUNT,
-	PROPOSALS_DEFAULT_PAGE,
-	PROPOSALS_DEFAULT_QUERY,
 	uploadUsingPresignedPost,
 	useBaseFields,
 	useBulkUploads,
 	usePresignedPostCallback,
-	useProposal,
-	useProposals,
 	useRegisterBulkUploadCallback,
 	useSystemSource,
 };

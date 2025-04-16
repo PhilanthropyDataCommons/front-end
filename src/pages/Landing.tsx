@@ -1,6 +1,5 @@
-import { Link } from 'react-router-dom';
 import { useOidc } from '@axa-fr/react-oidc';
-import { DocumentTextIcon, UserIcon } from '@heroicons/react/24/outline';
+import { UserIcon } from '@heroicons/react/24/outline';
 import { getLogger } from '../logger';
 import { Panel, PanelBody } from '../components/Panel';
 import { Button } from '../components/Button';
@@ -29,27 +28,19 @@ const Landing = () => {
 				<div
 					className={`launch-buttons ${isAuthenticated ? 'authenticated' : ''}`}
 				>
-					{isAuthenticated ? (
-						<Link
-							to="/proposals"
-							className="button button--color-blue button--inverted button--block"
-						>
-							<DocumentTextIcon />
-							View proposals
-						</Link>
-					) : (
-						<Button
-							color="blue"
-							inverted
-							block
-							onClick={() => {
-								login('/').catch(logger.error);
-							}}
-						>
-							<UserIcon className="icon" />
-							Log in
-						</Button>
-					)}
+					(!isAuthenticated ? (
+					<Button
+						color="blue"
+						inverted
+						block
+						onClick={() => {
+							login('/').catch(logger.error);
+						}}
+					>
+						<UserIcon className="icon" />
+						Log in
+					</Button>
+					))
 				</div>
 
 				<dl>

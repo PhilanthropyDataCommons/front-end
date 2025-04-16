@@ -3,6 +3,7 @@
 ## April 2025
 
 - Remove Changemaker interfaces
+- Remove Proposal interfaces
 
 ## October 2024
 
