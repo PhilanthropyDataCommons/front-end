@@ -1,10 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useOidc } from '@axa-fr/react-oidc';
-import {
-	BuildingOffice2Icon,
-	DocumentTextIcon,
-	UserIcon,
-} from '@heroicons/react/24/outline';
+import { DocumentTextIcon, UserIcon } from '@heroicons/react/24/outline';
 import { getLogger } from '../logger';
 import { Panel, PanelBody } from '../components/Panel';
 import { Button } from '../components/Button';
@@ -34,43 +30,25 @@ const Landing = () => {
 					className={`launch-buttons ${isAuthenticated ? 'authenticated' : ''}`}
 				>
 					{isAuthenticated ? (
-						<>
-							<Link
-								to="/changemakers"
-								className="button button--color-blue button--inverted button--block"
-							>
-								<BuildingOffice2Icon />
-								View changemakers
-							</Link>
-							<Link
-								to="/proposals"
-								className="button button--color-blue button--inverted button--block"
-							>
-								<DocumentTextIcon />
-								View proposals
-							</Link>
-						</>
+						<Link
+							to="/proposals"
+							className="button button--color-blue button--inverted button--block"
+						>
+							<DocumentTextIcon />
+							View proposals
+						</Link>
 					) : (
-						<>
-							<Button
-								color="blue"
-								inverted
-								block
-								onClick={() => {
-									login('/').catch(logger.error);
-								}}
-							>
-								<UserIcon className="icon" />
-								Log in
-							</Button>
-							<Link
-								to="/changemakers"
-								className="button button--color-gray button--block"
-							>
-								<BuildingOffice2Icon />
-								View public changemaker data
-							</Link>
-						</>
+						<Button
+							color="blue"
+							inverted
+							block
+							onClick={() => {
+								login('/').catch(logger.error);
+							}}
+						>
+							<UserIcon className="icon" />
+							Log in
+						</Button>
 					)}
 				</div>
 
