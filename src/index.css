@@ -16,11 +16,12 @@
 	--font-size: 16px;
 	--font-size--sm: 0.95rem;
 	--line-height: 1.4;
-	--font-family--sans-serif: 'Source Sans Pro', -apple-system,
-		BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
-		'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-	--font-family--monospace: source-code-pro, Menlo, Monaco, Consolas,
-		'Courier New', monospace;
+	--font-family--sans-serif:
+		'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+		'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+		'Helvetica Neue', sans-serif;
+	--font-family--monospace:
+		source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 	--font-weight--normal: 400;
 	--font-weight--medium: 600;
 	--font-weight--bold: 700;
