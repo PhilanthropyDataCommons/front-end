@@ -1,14 +1,11 @@
-import { NavLink } from 'react-router-dom';
 import { useOidc } from '@axa-fr/react-oidc';
 import {
 	CommandLineIcon as CommandLineIconOutline,
 	InformationCircleIcon as InformationCircleIconOutline,
-	SquaresPlusIcon as SquaresPlusIconOutline,
 } from '@heroicons/react/24/outline';
 import {
 	CommandLineIcon as CommandLineIconSolid,
 	InformationCircleIcon as InformationCircleIconSolid,
-	SquaresPlusIcon as SquaresPlusIconSolid,
 } from '@heroicons/react/24/solid';
 import { User } from './User';
 import {
@@ -25,22 +22,6 @@ const AppNavbar = () => {
 	return (
 		<nav className="App-navbar">
 			<ul>
-				{isAuthenticated && (
-					<li>
-						<NavLink to="/add-data" className="App-navbar__item">
-							{({ isActive }) => (
-								<>
-									{isActive ? (
-										<SquaresPlusIconSolid />
-									) : (
-										<SquaresPlusIconOutline />
-									)}
-									Add Data
-								</>
-							)}
-						</NavLink>
-					</li>
-				)}
 				<li>
 					<Dropdown name="navbar-dropdown">
 						<DropdownTrigger type="navbar-item">
