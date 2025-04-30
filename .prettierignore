@@ -1,3 +1,5 @@
 # Ignore artifacts. Prettier inherits ignore rules from .gitignore
 # https://prettier.io/docs/en/ignore.html
 build
+vueSrc/index.html
+oldSrc
