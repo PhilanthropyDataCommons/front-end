@@ -7,6 +7,8 @@
 		"@fontsource/source-sans-pro": "^5.2.5",
 		"@heroicons/react": "^2.2.0",
 		"@pdc/sdk": "^0.17.2",
+		"@vitejs/plugin-vue": "^5.2.3",
+		"@vue/compiler-sfc": "^3.5.13",
 		"dayjs": "^1.11.11",
 		"jsonpath-plus": "^10.3.0",
 		"pino": "^9.7.0",
@@ -15,6 +17,7 @@
 		"react-dom": "^18.3.1",
 		"react-router-dom": "^7.5.2",
 		"title-case": "^4.3.2",
+		"vue": "^3.5.13",
 		"web-vitals": "^4.2.4"
 	},
 	"engines": {
@@ -34,31 +37,36 @@
 		"@types/react": "^18.3.12",
 		"@types/react-dom": "^18.3.1",
 		"@typescript-eslint/eslint-plugin": "^7.17.0",
-		"@typescript-eslint/parser": "^7.17.0",
+		"@typescript-eslint/parser": "^7.18.0",
 		"@vitejs/plugin-react": "^4.3.4",
+		"@vue/eslint-config-airbnb-with-typescript": "^8.0.0",
+		"@vue/tsconfig": "^0.7.0",
 		"eslint": "^v8.57.1",
 		"eslint-config-airbnb": "^19.0.4",
 		"eslint-config-airbnb-typescript": "^18.0.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-react-hooks": "^4.6.2",
 		"eslint-plugin-react-refresh": "^0.4.19",
+		"eslint-plugin-vue": "^9.2.0",
 		"jsdom": "^26.1.0",
 		"prettier": "^3.5.3",
 		"storybook": "^8.1.3",
 		"typescript": "^5.5.3",
 		"vite": "^6.3.4",
-		"vitest": "^3.1.2"
+		"vitest": "^3.1.2",
+		"vue-eslint-parser": "^10.1.3",
+		"vue-tsc": "^2.2.10"
 	},
 	"scripts": {
 		"start": "vite",
-		"build": "npm run build:app && npm run build:storybook",
-		"build:app": "tsc && vite build",
+		"build": "npm run build:app",
+		"build:app": "vue-tsc && vite build",
 		"build:storybook": "storybook build -o dist/storybook",
 		"storybook": "storybook dev -p 6006",
 		"lint": "npm run lint:eslint && npm run lint:prettier",
 		"lint:prettier": "prettier . --check",
-		"lint:eslint": "eslint ./src --ext ts,tsx,js --report-unused-disable-directives --max-warnings 0",
-		"test": "vitest",
+		"lint:eslint": "eslint ./src --ext ts,vue --report-unused-disable-directives --max-warnings 0",
+		"test": "vitest --run",
 		"format": "prettier . --write",
 		"preview": "vite preview"
 	},
@@ -67,13 +75,18 @@
 			"plugin:@typescript-eslint/recommended",
 			"plugin:@typescript-eslint/recommended-requiring-type-checking",
 			"plugin:@typescript-eslint/strict",
-			"airbnb",
-			"airbnb/hooks",
-			"airbnb-typescript",
+			"plugin:vue/vue3-recommended",
+			"@vue/eslint-config-airbnb-with-typescript",
 			"prettier"
 		],
 		"parserOptions": {
-			"project": "./tsconfig.json"
+			"parser": "@typescript-eslint/parser",
+			"project": "./tsconfig.json",
+			"extraFileExtensions": [
+				".vue"
+			],
+			"ecmaVersion": 2022,
+			"sourceType": "module"
 		},
 		"ignorePatterns": [
 			"vite.config.js",
@@ -95,28 +108,7 @@
 					],
 					"optionalDependencies": false
 				}
-			],
-			"jsx-a11y/label-has-associated-control": [
-				"error",
-				{
-					"assert": "either"
-				}
-			],
-			"react/function-component-definition": [
-				"error",
-				{
-					"namedComponents": "arrow-function",
-					"unnamedComponents": "arrow-function"
-				}
-			],
-			"react/require-default-props": [
-				"error",
-				{
-					"functions": "defaultArguments"
-				}
-			],
-			"react/jsx-uses-react": "off",
-			"react/react-in-jsx-scope": "off"
+			]
 		},
 		"overrides": [
 			{
