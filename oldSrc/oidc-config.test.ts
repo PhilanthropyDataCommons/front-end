@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { getConfiguration } from '../src/tests/oidc-config';
+import { getConfiguration } from './oidc-config';
 
 test('configuration fails with missing authority', () => {
 	expect(() => getConfiguration(undefined, 'client-id')).toThrow(/authority/);
