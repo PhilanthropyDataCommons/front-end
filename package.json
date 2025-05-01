@@ -18,6 +18,7 @@
 		"react-router-dom": "^7.5.2",
 		"title-case": "^4.3.2",
 		"vue": "^3.5.13",
+		"vue-router": "^4.5.1",
 		"web-vitals": "^4.2.4"
 	},
 	"engines": {
