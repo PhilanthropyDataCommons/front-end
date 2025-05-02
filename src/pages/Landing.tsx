@@ -17,10 +17,11 @@ const Landing = () => {
 		<Panel className="landing-panel">
 			<PanelBody>
 				<h3 style={{ fontWeight: '600' }}>
-					Welcome to the Philanthropy Data Commons.
+					Philanthropy Data Commons Administrative Interface
 				</h3>
 				<p>
-					This site displays the data in the Philanthropy Data Commons.{' '}
+					This site provides administrative tools for the Philanthropy Data
+					Commons.{' '}
 					<OffsiteLink to="https://philanthropydatacommons.org">
 						Read more about the project here.
 					</OffsiteLink>
@@ -44,18 +45,6 @@ const Landing = () => {
 				</div>
 
 				<dl>
-					{!isAuthenticated && (
-						<Dli>
-							<dt>Need an account?</dt>
-							<dd>
-								Email Jonathan Mergy:{' '}
-								<EmailLink
-									to="jmergy@philanthropydatacommons.org"
-									subject="PDC account"
-								/>
-							</dd>
-						</Dli>
-					)}
 					<Dli>
 						<dt>Have questions or feedback?</dt>
 						<dd>
@@ -64,10 +53,11 @@ const Landing = () => {
 						</dd>
 					</Dli>
 					<Dli>
-						<dt>Recent improvements</dt>
+						<dt>Code Repository</dt>
 						<dd>
-							<OffsiteLink to="https://github.com/PhilanthropyDataCommons/front-end/blob/main/RECENT_CHANGES.md">
-								Read a summary of recent changes here.
+							<OffsiteLink to="https://github.com/PhilanthropyDataCommons/front-end">
+								Please visit our repository to raise any issues or feature
+								requests.
 							</OffsiteLink>
 						</dd>
 					</Dli>
