@@ -4,6 +4,7 @@
 	"private": true,
 	"dependencies": {
 		"@axa-fr/react-oidc": "^7.25.9",
+		"@dsb-norge/vue-keycloak-js": "^3.0.2",
 		"@fontsource/source-sans-pro": "^5.2.5",
 		"@heroicons/react": "^2.2.0",
 		"@heroicons/vue": "^2.2.0",
