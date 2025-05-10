@@ -1,6 +1,4 @@
-<template>
-	<h1>Welcome to the Philanthropy Data Commons.</h1>
-</template>
+<template></template>
 
 <style scoped>
 h1 {
