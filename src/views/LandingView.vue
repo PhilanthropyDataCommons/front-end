@@ -6,7 +6,19 @@ import Dli from '../components/Dli.vue';
 import EmailLink from '../components/EmailLink.vue';
 import OffSiteLink from '../components/OffSiteLink.vue';
 
-const isAuthenticated = false;
+import { computed } from 'vue';
+import { useKeycloak } from '@josempgon/vue-keycloak';
+
+const { hasRoles, isAuthenticated, keycloak } = useKeycloak();
+
+const hasAccess = computed(() => hasRoles(['RoleName']));
+console.log(keycloak.value);
+
+const logout = () => {
+	if (keycloak.value) {
+		keycloak.value.logout();
+	}
+};
 </script>
 
 <template>
@@ -25,6 +37,10 @@ const isAuthenticated = false;
 				<CustomButton color="blue" inverted block v-if="!isAuthenticated">
 					<UserIcon class="icon" />
 					Log in
+				</CustomButton>
+				<CustomButton color="blue" inverted block v-if="isAuthenticated" @click="logout">
+					<UserIcon class="icon" />
+					Log out
 				</CustomButton>
 			</div>
 

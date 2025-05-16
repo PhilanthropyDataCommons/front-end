@@ -4,9 +4,9 @@ import type { Component } from 'vue';
 
 const routes = [{ path: '/', component: LandingView as Component }];
 
-const router = createRouter({
+const initRouter = () => createRouter({
 	history: createWebHistory(),
 	routes,
 });
 
-export { router };
+export { initRouter };
