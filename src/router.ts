@@ -8,9 +8,10 @@ const routes = [
 	{ path: '/:pathMatch(.*)', component: NotFoundView as Component },
 ];
 
-const router = createRouter({
-	history: createWebHistory(),
-	routes,
-});
+const initRouter = () =>
+	createRouter({
+		history: createWebHistory(),
+		routes,
+	});
 
-export { router };
+export { initRouter };
