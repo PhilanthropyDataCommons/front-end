@@ -1,3 +1,28 @@
+<script setup lang="ts">
+interface ToggleSwitchProps {
+	checked?: boolean;
+	onChange?: () => void;
+}
+
+const { checked = false, onChange = undefined } =
+	defineProps<ToggleSwitchProps>();
+</script>
+
+<!-- Without an onChange handler, this can't be a controlled component, so we use
+`defaultChecked` instead. -->
+<template>
+	<label className="toggle-switch">
+		<input
+			type="checkbox"
+			:onChange="onChange"
+			:checked="onChange ? checked : undefined"
+			:defaultChecked="onChange ? undefined : checked"
+		/>
+		<span><slot></slot></span>
+	</label>
+</template>
+
+<style>
 :root {
 	--toggle-switch--width: 2.5em;
 	--toggle-switch--height: calc(1em * var(--line-height) * 1px);
@@ -65,3 +90,4 @@
 		}
 	}
 }
+</style>
