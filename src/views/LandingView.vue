@@ -6,11 +6,14 @@ import CustomButton from '../components/CustomButton.vue';
 import EmailLink from '../components/EmailLink.vue';
 import DliComponent from '../components/DliComponent.vue';
 import OffSiteLink from '../components/OffSiteLink.vue';
+import { getLogger } from '../logger';
+
+const logger = getLogger('<LandingView>');
 
 const { authenticated, login } = useKeycloak();
 
 const handleLogin = async () => {
-	await login?.();
+	await login?.().catch(logger.error);
 };
 </script>
 
