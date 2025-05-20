@@ -8,6 +8,10 @@ import './assets/main.css';
 import '@fontsource/source-sans-pro/400.css';
 import '@fontsource/source-sans-pro/600.css';
 import '@fontsource/source-sans-pro/700.css';
+import { getLogger } from './logger';
+import { reportWebVitals } from './reportWebVitals';
+
+const logger = getLogger('index');
 
 const keycloakOptions = getOptions(
 	import.meta.env.VITE_KEYCLOAK_AUTHORITY,
@@ -16,11 +20,15 @@ const keycloakOptions = getOptions(
 );
 const app = createApp(App as Component);
 
+logger.debug(keycloakOptions, 'Keycloak options');
+
 (async () => {
 	await vueKeycloak.install(app, keycloakOptions);
 
 	app.use(initRouter());
 	app.mount('#app');
 })().catch((error) => {
-	console.error('error initializing application', error);
+	logger.error('error initializing application', error);
 });
+
+reportWebVitals();

@@ -11,15 +11,18 @@ import {
 	DropdownMenu,
 	DropdownMenuButton,
 } from './Dropdown';
+import { getLogger } from '../logger';
+
+const logger = getLogger('<UserComponent>');
 
 const { isAuthenticated, keycloak, username } = useKeycloak();
 
 const login = async () => {
-	await keycloak.value?.login();
+	await keycloak.value?.login().catch(logger.error);
 };
 
 const logout = async () => {
-	await keycloak.value?.logout();
+	await keycloak.value?.logout().catch(logger.error);
 };
 </script>
 
