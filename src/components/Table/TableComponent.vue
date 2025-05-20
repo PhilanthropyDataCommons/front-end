@@ -1,3 +1,28 @@
+<script setup lang="ts">
+interface TableProps {
+	className?: string;
+	/**
+	 * Table body cells won't wrap and will have a max-width,
+	 * above which the text will be hidden.
+	 */
+	truncate?: boolean;
+}
+
+const { className = '', truncate = false } = defineProps<TableProps>();
+</script>
+
+<template>
+	<table
+		:border="0"
+		:cellPadding="0"
+		:cellSpacing="0"
+		:class="`table ${truncate ? 'truncate' : ''} ${className}`.trim()"
+	>
+		<slot> </slot>
+	</table>
+</template>
+
+<style>
 :root {
 	--table--border-width: 1px;
 }
@@ -123,3 +148,4 @@
 	width: var(--icon-size--text);
 	height: var(--icon-size--text);
 }
+</style>

@@ -1,3 +1,25 @@
+<script setup lang="ts">
+interface PanelGridProps {
+	/**
+	 * Makes the first panel sized properly for a sidebar.
+	 * Doesn't require any additional markup on the sidebar panel.
+	 */
+	sidebarred?: boolean;
+	className?: string;
+}
+
+const { sidebarred = false, className = '' } = defineProps<PanelGridProps>();
+</script>
+
+<template>
+	<div
+		:class="`panel-grid ${sidebarred ? 'sidebarred' : ''} ${className}`.trim()"
+	>
+		<slot></slot>
+	</div>
+</template>
+
+<style>
 .panel-grid {
 	position: absolute;
 	inset: 0;
@@ -28,3 +50,4 @@
 	inset: 0;
 	overflow: auto;
 }
+</style>
