@@ -2,6 +2,9 @@
 import { useKeycloak } from '@dsb-norge/vue-keycloak-js';
 import { useRoute } from 'vue-router';
 import CustomButton from './CustomButton.vue';
+import { getLogger } from '../logger';
+
+const logger = getLogger('<AppBanner>');
 
 const { authenticated, loginFn } = useKeycloak();
 const route = useRoute();
@@ -10,7 +13,7 @@ const isHomePage = route.path === '/';
 const showBanner = !authenticated && !isHomePage;
 
 const handleLogin = async () => {
-	await loginFn?.();
+	await loginFn?.()?.catch(logger.error);
 };
 </script>
 
