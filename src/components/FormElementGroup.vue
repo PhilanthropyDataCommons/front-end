@@ -1,3 +1,20 @@
+<script setup lang="ts">
+interface FormElementGroupProps {
+	direction?: 'horizontal' | 'vertical';
+	className?: string;
+}
+
+const { direction = 'horizontal', className = '' } =
+	defineProps<FormElementGroupProps>();
+</script>
+
+<template>
+	<div :class="`form-element-group ${direction} ${className}`.trim()">
+		<slot></slot>
+	</div>
+</template>
+
+<style>
 .form-element-group {
 	display: flex;
 	gap: 0;
@@ -50,3 +67,4 @@
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
 }
+</style>
