@@ -1,8 +1,11 @@
 import { createWebHistory, createRouter } from 'vue-router';
 import LandingView from '@/views/LandingView.vue';
-import type { Component } from 'vue';
+import NotFoundView from '@/views/NotFoundView.vue';
 
-const routes = [{ path: '/', component: LandingView as Component }];
+const routes = [
+	{ path: '/', component: LandingView },
+	{ path: '/:pathMatch(.*)', component: NotFoundView },
+];
 
 const router = createRouter({
 	history: createWebHistory(),
