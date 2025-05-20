@@ -1,3 +1,13 @@
+<template>
+	<div className="spinner">
+		<div />
+		<div />
+		<div />
+		<div />
+	</div>
+</template>
+
+<style>
 :root {
 	--spinner--size: var(--accessible-spacing--4x);
 	--spinner--weight: calc(var(--spinner--size) / 10);
@@ -44,3 +54,4 @@
 		transform: rotate(360deg);
 	}
 }
+</style>

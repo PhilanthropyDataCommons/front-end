@@ -1,24 +1,28 @@
-import React from 'react';
-
+<script setup lang="ts">
 interface ColumnHeadProps {
-	children?: React.ReactNode;
 	className?: string;
 	actions?: boolean;
 	actionAlignment?: 'left' | 'right';
 }
 
-export const ColumnHead = ({
-	children = null,
+const {
 	className = '',
 	actions = false,
 	actionAlignment = 'right',
-}: ColumnHeadProps) => (
+} = defineProps<ColumnHeadProps>();
+</script>
+
+<template>
 	<th
-		className={`
+		:class="
+			`
     ${className}
     ${actions ? `has-actions action-alignment--${actionAlignment}` : ''}
-  `.trim()}
+  `.trim()
+		"
 	>
-		<div className="column-head-wrapper">{children}</div>
+		<div class="column-head-wrapper">
+			<slot> </slot>
+		</div>
 	</th>
-);
+</template>
