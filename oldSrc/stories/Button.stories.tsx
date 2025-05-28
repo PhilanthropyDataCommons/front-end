@@ -16,6 +16,9 @@ export const Default: Story = {
 	args: {
 		children: 'Button',
 	},
+	slots:{
+		
+	}
 };
 
 export const Blue: Story = {

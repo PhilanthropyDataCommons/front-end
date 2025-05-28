@@ -41,6 +41,10 @@ const {
 	className = '',
 } = defineProps<CustomButtonProps>();
 
+defineSlots<{
+	default(): string;
+}>();
+
 const buttonClassNames = ['button', `button--color-${color}`];
 
 if (inverted) {
