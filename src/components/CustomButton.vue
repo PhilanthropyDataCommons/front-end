@@ -42,7 +42,8 @@ const {
 } = defineProps<CustomButtonProps>();
 
 defineSlots<{
-	default(): string;
+	/** Button Text Content */
+	default(): any;
 }>();
 
 const buttonClassNames = ['button', `button--color-${color}`];
