@@ -1,21 +1,16 @@
-import type { StorybookConfig } from '@storybook/react-vite';
+import type { StorybookConfig } from '@storybook/vue3-vite';
+
 const config: StorybookConfig = {
-	stories: ['../src/stories/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
-	addons: [
-		'@storybook/addon-links',
-		'@storybook/addon-essentials',
-		'@storybook/addon-interactions',
-	],
+	stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+	addons: ['@storybook/addon-onboarding', '@storybook/addon-docs'],
 	framework: {
-		name: '@storybook/react-vite',
-		options: {},
+		name: '@storybook/vue3-vite',
+		options: {
+			docgen: {
+				plugin: 'vue-component-meta',
+				tsconfig: 'tsconfig.app.json',
+			},
+		},
 	},
-	core: {
-		disableTelemetry: true,
-	},
-	docs: {
-		autodocs: 'tag',
-	},
-	staticDirs: ['../public'],
 };
 export default config;

@@ -1,33 +1,19 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/vue3-vite';
 
 import { PanelGrid, PanelGridItem } from '../components/PanelGrid';
-import { Panel, PanelBody } from '../components/Panel';
+import { PanelComponent, PanelBody } from '../components/Panel';
 
 const meta = {
 	component: PanelGrid,
 	tags: ['autodocs'],
-	decorators: [
-		(Story) => (
-			<div
-				style={{
-					position: 'relative',
-					width: '100%',
-					height: '400px',
-				}}
-			>
-				<Story />
-			</div>
-		),
-	],
 } satisfies Meta<typeof PanelGrid>;
 
 export default meta;
-
 type Story = StoryObj<typeof meta>;
 
-const panelGridItem = (
+const panelContent = `
 	<PanelGridItem>
-		<Panel>
+		<PanelComponent>
 			<PanelBody>
 				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
@@ -48,13 +34,13 @@ const panelGridItem = (
 				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 			</PanelBody>
-		</Panel>
+		</PanelComponent>
 	</PanelGridItem>
-);
+`;
 
-const sidebar = (
+const sidebarContent = `
 	<PanelGridItem>
-		<Panel>
+		<PanelComponent>
 			<PanelBody>
 				<p>Sidebar.</p>
 				<p>Sidebar.</p>
@@ -71,32 +57,74 @@ const sidebar = (
 				<p>Sidebar.</p>
 				<p>Sidebar.</p>
 			</PanelBody>
-		</Panel>
+		</PanelComponent>
 	</PanelGridItem>
-);
+`;
 
 export const Default: Story = {
-	args: {
-		children: [panelGridItem],
-	},
+	render: (args) => ({
+		components: { PanelGrid, PanelGridItem, PanelComponent, PanelBody },
+		setup() {
+			return { args, panelContent };
+		},
+		template: `
+			<div style="position: relative; width: 100%; height: 400px">
+				<PanelGrid>
+					${panelContent}
+				</PanelGrid>
+			</div>
+		`,
+	}),
 };
 
 export const TwoPanels: Story = {
-	args: {
-		children: [panelGridItem, panelGridItem],
-	},
+	render: (args) => ({
+		components: { PanelGrid, PanelGridItem, PanelComponent, PanelBody },
+		setup() {
+			return { args, panelContent };
+		},
+		template: `
+			<div style="position: relative; width: 100%; height: 400px">
+				<PanelGrid>
+					${panelContent}
+					${panelContent}
+				</PanelGrid>
+			</div>
+		`,
+	}),
 };
 
 export const PlusSidebar: Story = {
-	args: {
-		children: [sidebar, panelGridItem],
-		sidebarred: true,
-	},
+	render: (args) => ({
+		components: { PanelGrid, PanelGridItem, PanelComponent, PanelBody },
+		setup() {
+			return { args, sidebarContent, panelContent };
+		},
+		template: `
+			<div style="position: relative; width: 100%; height: 400px">
+				<PanelGrid :sidebarred="true">
+					${sidebarContent}
+					${panelContent}
+				</PanelGrid>
+			</div>
+		`,
+	}),
 };
 
 export const TwoPanelsPlusSidebar: Story = {
-	args: {
-		children: [sidebar, panelGridItem, panelGridItem],
-		sidebarred: true,
-	},
+	render: (args) => ({
+		components: { PanelGrid, PanelGridItem, PanelComponent, PanelBody },
+		setup() {
+			return { args, sidebarContent, panelContent };
+		},
+		template: `
+			<div style="position: relative; width: 100%; height: 400px">
+				<PanelGrid :sidebarred="true">
+					${sidebarContent}
+					${panelContent}
+					${panelContent}
+				</PanelGrid>
+			</div>
+		`,
+	}),
 };

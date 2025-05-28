@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/vue3-vite';
 
 import { BaseField } from '@pdc/sdk';
-import { BaseFields } from '../components/BaseFields';
+import BaseFields from '../components/BaseFields.vue';
 
 const meta = {
 	component: BaseFields,

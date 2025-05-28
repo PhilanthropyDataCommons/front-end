@@ -3,6 +3,8 @@ import { defineProps } from 'vue';
 
 interface CustomButtonProps {
 	color?: 'gray' | 'blue' | 'red';
+
+	disabled?: boolean;
 	/**
 	 * Makes the button dark with light text.
 	 */
@@ -39,6 +41,7 @@ const {
 	submit = false,
 	linkStyle = false,
 	className = '',
+	disabled = false,
 } = defineProps<CustomButtonProps>();
 
 const buttonClassNames = ['button', `button--color-${color}`];
@@ -72,6 +75,7 @@ if (className !== undefined) {
 	<button
 		:type="submit ? 'submit' : 'button'"
 		:class="buttonClassNames.join(' ').trim()"
+		:disabled="disabled"
 	>
 		<slot></slot>
 	</button>
