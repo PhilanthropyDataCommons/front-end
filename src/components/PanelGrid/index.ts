@@ -1,4 +1,4 @@
-import { PanelGrid } from './PanelGrid';
-import { PanelGridItem } from './PanelGridItem';
+import PanelGrid from './PanelGrid.vue';
+import PanelGridItem from './PanelGridItem.vue';
 
 export { PanelGrid, PanelGridItem };
