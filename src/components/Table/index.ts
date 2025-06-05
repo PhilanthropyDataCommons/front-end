@@ -1,15 +1,15 @@
-import { Table } from './Table';
-import { TableHead } from './TableHead';
-import { ColumnHead } from './ColumnHead';
-import { ColumnActions } from './ColumnActions';
-import { ColumnAction } from './ColumnAction';
-import { TableBody } from './TableBody';
-import { TableRow } from './TableRow';
-import { RowHead } from './RowHead';
-import { RowCell } from './RowCell';
+import TableComponent from './TableComponent.vue';
+import TableHead from './TableHead.vue';
+import ColumnHead from './ColumnHead.vue';
+import ColumnActions from './ColumnActions.vue';
+import ColumnAction from './ColumnAction.vue';
+import TableBody from './TableBody.vue';
+import TableRow from './TableRow.vue';
+import RowHead from './RowHead.vue';
+import RowCell from './RowCell.vue';
 
 export {
-	Table,
+	TableComponent,
 	TableHead,
 	ColumnHead,
 	ColumnActions,
