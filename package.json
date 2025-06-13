@@ -28,9 +28,9 @@
 		"node": ">=22"
 	},
 	"devDependencies": {
-		"@storybook/addon-docs": "^9.0.0",
-		"@storybook/addon-onboarding": "^9.0.0",
-		"@storybook/vue3-vite": "^9.0.0",
+		"@storybook/addon-docs": "^9.0.9",
+		"@storybook/addon-onboarding": "^9.0.9",
+		"@storybook/vue3-vite": "^9.0.9",
 		"@testing-library/react": "^16.2.0",
 		"@testing-library/user-event": "^14.6.1",
 		"@types/node": "^22.15.29",
