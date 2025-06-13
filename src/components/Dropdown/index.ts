@@ -1,13 +1,13 @@
-import { Dropdown } from './Dropdown';
-import { DropdownTrigger } from './DropdownTrigger';
-import { DropdownMenu } from './DropdownMenu';
-import { DropdownMenuButton } from './DropdownMenuButton';
-import { DropdownMenuText } from './DropdownMenuText';
-import { DropdownMenuLink } from './DropdownMenuLink';
-import { DropdownMenuLinkDescription } from './DropdownMenuLinkDescription';
+import DropdownComponent from './DropdownComponent.vue';
+import DropdownTrigger from './DropdownTrigger.vue';
+import DropdownMenu from './DropdownMenu.vue';
+import DropdownMenuButton from './DropdownMenuButton.vue';
+import DropdownMenuText from './DropdownMenuText.vue';
+import DropdownMenuLink from './DropdownMenuLink.vue';
+import DropdownMenuLinkDescription from './DropdownMenuLinkDescription.vue';
 
 export {
-	Dropdown,
+	DropdownComponent,
 	DropdownTrigger,
 	DropdownMenu,
 	DropdownMenuButton,

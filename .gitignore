@@ -118,3 +118,6 @@ dist
 # @axa-fr/react-oidc generated files
 /public/OidcServiceWorker.js
 /public/OidcTrustedDomains.js
+
+*storybook.log
+storybook-static

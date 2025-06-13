@@ -1,18 +1,25 @@
 {
+	"extends": "@vue/tsconfig/tsconfig.dom.json",
 	"compilerOptions": {
-		"target": "ES2022",
-		"useDefineForClassFields": true,
-		"lib": ["ES2022", "DOM", "DOM.Iterable"],
-		"module": "ESNext",
-		"skipLibCheck": true,
+		"baseUrl": ".",
+		"paths": {
+			"@/*": ["./src/*"]
+		},
+
+		"types": ["vite/client", "vue"],
 
 		/* Bundler mode */
-		"moduleResolution": "bundler",
-		"allowImportingTsExtensions": false,
+		"target": "ES2022",
+		"module": "ESNext",
+		"useDefineForClassFields": true,
+		"skipLibCheck": true,
 		"resolveJsonModule": true,
+		"moduleResolution": "bundler",
 		"isolatedModules": true,
 		"noEmit": true,
-		"jsx": "react-jsx",
+
+		"jsx": "preserve",
+		"jsxImportSource": "vue",
 
 		/* Linting */
 		"strict": true,
@@ -25,5 +32,12 @@
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true
 	},
-	"include": ["src"]
+
+	"include": [
+		"env.d.ts",
+		"src/**/*.ts",
+		"src/**/*.vue",
+		"src/tests/oidc-config.ts",
+		"src/shims-vue.d.ts"
+	]
 }
