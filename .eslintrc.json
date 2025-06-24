@@ -1,10 +1,10 @@
 {
+	"plugins": ["eslint-plugin-import"],
 	"extends": [
 		"plugin:@typescript-eslint/recommended",
 		"plugin:@typescript-eslint/recommended-requiring-type-checking",
 		"plugin:@typescript-eslint/strict",
 		"plugin:vue/vue3-recommended",
-		"@vue/eslint-config-airbnb-with-typescript",
 		"prettier",
 		"plugin:storybook/recommended"
 	],
@@ -35,7 +35,8 @@
 				],
 				"optionalDependencies": false
 			}
-		]
+		],
+		"@typescript-eslint/require-await": "off"
 	},
 	"overrides": [
 		{
