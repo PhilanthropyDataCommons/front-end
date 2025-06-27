@@ -12,9 +12,7 @@ updates:
       - dependency-name: '@types/node'
         update-types:
           - 'version-update:semver-major'
-      - dependency-name: '*eslint*'
-        update-types:
-          - 'version-update:semver-major'
+
     groups:
       storybook:
         dependency-type: 'development'
