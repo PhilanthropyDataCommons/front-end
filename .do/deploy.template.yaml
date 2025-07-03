@@ -14,10 +14,13 @@ spec:
         - key: VITE_API_URL
           scope: BUILD_TIME
           value: https://api.example.org
-        - key: VITE_OIDC_AUTHORITY
+        - key: VITE_KEYCLOAK_AUTHORITY
           scope: BUILD_TIME
-          value: https://auth.example.org/realms/pdc
-        - key: VITE_OIDC_CLIENT_ID
+          value: https://auth.example.org
+        - key: VITE_KEYCLOAK_REALM
+          scope: BUILD_TIME
+          value: example-realm
+        - key: VITE_KEYCLOAK_CLIENT_ID
           scope: BUILD_TIME
           value: your-client-id
       github:
