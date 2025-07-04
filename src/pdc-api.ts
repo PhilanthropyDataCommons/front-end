@@ -31,7 +31,10 @@ export function usePdcApi<T>(
 			const res = await fetch(url.toString(), {
 				headers: { Authorization: `Bearer ${token}` },
 			}).then(throwIfNotOk);
-
+			/*  eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion --
+			 * We are assuming here that the pdc-service being communicated with is functioning
+			 * correctly, such that if the request is successful, the response is valid JSON of the
+			 */
 			data.value = (await res.json()) as T;
 		} catch (err) {
 			logger.error(
