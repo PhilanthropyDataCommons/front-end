@@ -49,7 +49,6 @@ export default typescriptEslint.config(
 	},
 	{
 		rules: {
-			'@typescript-eslint/explicit-function-return-type': 'off',
 			'@typescript-eslint/no-unnecessary-condition': 'off',
 			'@typescript-eslint/no-unsafe-type-assertion': 'off',
 			'@typescript-eslint/strict-boolean-expressions': 'off',
