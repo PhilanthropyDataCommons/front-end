@@ -17,11 +17,11 @@ const logger = getLogger('<UserComponent>');
 
 const { authenticated, login, logoutFn, userName } = useKeycloak();
 
-const handleLogin = async () => {
+const handleLogin = async (): Promise<void> => {
 	await login?.().catch(logger.error);
 };
 
-const handleLogout = async () => {
+const handleLogout = async (): Promise<void> => {
 	await logoutFn?.()?.catch(logger.error);
 };
 </script>

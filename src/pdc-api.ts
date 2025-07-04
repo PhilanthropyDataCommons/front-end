@@ -1,24 +1,28 @@
 import { ref, onMounted, watch } from 'vue';
 import { useKeycloak } from '@dsb-norge/vue-keycloak-js';
-import type { BaseField } from '@pdc/sdk';
 import { getLogger } from '@/logger';
+import type { Ref } from 'vue';
+import type { BaseField } from '@pdc/sdk';
 
 const logger = getLogger('pdc-api');
 const API_URL = import.meta.env.VITE_API_URL;
 
 const { token } = useKeycloak();
 
-function throwIfNotOk(res: Response) {
+function throwIfNotOk(res: Response): Response {
 	if (!res.ok) {
 		throw new Error(`Response status: ${res.status} ${res.statusText}`);
 	}
 	return res;
 }
 
-export function usePdcApi<T>(path: string, params = new URLSearchParams()) {
-	const data = ref<T | null>(null);
+export function usePdcApi<T>(
+	path: string,
+	params = new URLSearchParams(),
+): { data: Ref<T | null>; fetchData: () => Promise<void> } {
+	const data: Ref<T | null> = ref(null);
 
-	const fetchData = async () => {
+	const fetchData = async (): Promise<void> => {
 		data.value = null;
 		try {
 			const url = new URL(path, API_URL);
@@ -44,6 +48,6 @@ export function usePdcApi<T>(path: string, params = new URLSearchParams()) {
 	return { data, fetchData };
 }
 
-export function useBaseFields() {
+export function useBaseFields(): ReturnType<typeof usePdcApi<BaseField[]>> {
 	return usePdcApi<BaseField[]>('/baseFields');
 }

@@ -12,7 +12,7 @@ const logger = getLogger('<LandingView>');
 
 const { authenticated, login } = useKeycloak();
 
-const handleLogin = async () => {
+const handleLogin = async (): Promise<void> => {
 	await login?.().catch(logger.error);
 };
 </script>

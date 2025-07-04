@@ -29,7 +29,7 @@ const {
 	className = '',
 } = defineProps<DropdownMenuLinkProps>();
 
-const handleClick = (e: Event) => {
+const handleClick = (e: Event): void => {
 	const $target = e.target as HTMLLinkElement;
 	$target.closest('.dropdown')?.removeAttribute('open');
 };

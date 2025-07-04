@@ -3,7 +3,7 @@ import type { Metric } from 'web-vitals';
 
 import { getLogger } from './logger';
 
-const reportWebVitals = () => {
+const reportWebVitals = (): void => {
 	const logger = getLogger('web-vitals');
 	const reportHandler: (metric: Metric) => void = (metric: Metric) =>
 		logger.info(metric);
