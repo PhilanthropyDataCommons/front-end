@@ -13,7 +13,7 @@ const isHomePage = route.path === '/';
 const showBanner = !authenticated && !isHomePage;
 
 const handleLogin = async (): Promise<void> => {
-	await loginFn?.()?.catch(logger.error);
+	await loginFn?.().catch(logger.error);
 };
 </script>
 
