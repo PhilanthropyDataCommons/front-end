@@ -5,8 +5,10 @@ import globals from 'globals';
 import typescriptEslint from 'typescript-eslint';
 import eslintPluginStorybook from 'eslint-plugin-storybook';
 import eslintPluginImport from 'eslint-plugin-import';
+import love from 'eslint-config-love';
 
 export default typescriptEslint.config(
+	love,
 	eslint.configs.recommended,
 	typescriptEslint.configs.recommended,
 	eslintPluginVue.configs['flat/recommended'],
@@ -25,6 +27,7 @@ export default typescriptEslint.config(
 			globals: globals.browser,
 			parserOptions: {
 				parser: typescriptEslint.parser,
+				extraFileExtensions: ['.vue'],
 			},
 		},
 		rules: {
@@ -42,6 +45,20 @@ export default typescriptEslint.config(
 				},
 			],
 			'@typescript-eslint/require-await': 'off',
+		},
+	},
+	{
+		rules: {
+			'@typescript-eslint/explicit-function-return-type': 'off',
+			'@typescript-eslint/no-unnecessary-condition': 'off',
+			'@typescript-eslint/no-unsafe-type-assertion': 'off',
+			'@typescript-eslint/strict-boolean-expressions': 'off',
+			'@typescript-eslint/switch-exhaustiveness-check': 'off',
+			'@typescript-eslint/prefer-nullish-coalescing': 'off',
+			'@typescript-eslint/use-unknown-in-catch-callback-variable': 'off',
+			'@typescript-eslint/prefer-destructuring': 'off',
+			'@typescript-eslint/no-unnecessary-type-parameters': 'off',
+			'@typescript-eslint/no-confusing-void-expression': 'off',
 		},
 	},
 	{
