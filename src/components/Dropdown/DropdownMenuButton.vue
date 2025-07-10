@@ -27,7 +27,7 @@ const handleClick = (e: MouseEvent): void => {
 		target.closest('.dropdown')?.removeAttribute('open');
 	}
 
-	if (onClick) {
+	if (onClick !== undefined) {
 		onClick();
 	}
 };

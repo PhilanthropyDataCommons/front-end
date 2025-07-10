@@ -49,7 +49,6 @@ export default typescriptEslint.config(
 	},
 	{
 		rules: {
-			'@typescript-eslint/strict-boolean-expressions': 'off',
 			'@typescript-eslint/switch-exhaustiveness-check': 'off',
 			'@typescript-eslint/prefer-nullish-coalescing': 'off',
 			'@typescript-eslint/use-unknown-in-catch-callback-variable': 'off',
