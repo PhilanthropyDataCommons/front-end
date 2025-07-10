@@ -49,7 +49,6 @@ export default typescriptEslint.config(
 	},
 	{
 		rules: {
-			'@typescript-eslint/no-unnecessary-type-parameters': 'off',
 			'@typescript-eslint/no-confusing-void-expression': 'off',
 		},
 	},
