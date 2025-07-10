@@ -5,8 +5,9 @@ import { getLogger } from './logger';
 
 const reportWebVitals = (): void => {
 	const logger = getLogger('web-vitals');
-	const reportHandler: (metric: Metric) => void = (metric: Metric) =>
+	const reportHandler: (metric: Metric) => void = (metric: Metric) => {
 		logger.info(metric);
+	};
 	onCLS(reportHandler);
 	onFCP(reportHandler);
 	onINP(reportHandler);

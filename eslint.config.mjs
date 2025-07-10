@@ -48,11 +48,6 @@ export default typescriptEslint.config(
 		},
 	},
 	{
-		rules: {
-			'@typescript-eslint/no-confusing-void-expression': 'off',
-		},
-	},
-	{
 		files: ['**/*.stories.*'],
 		rules: {
 			'import/no-anonymous-default-export': 'off',
