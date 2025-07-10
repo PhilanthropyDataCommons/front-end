@@ -49,7 +49,6 @@ export default typescriptEslint.config(
 	},
 	{
 		rules: {
-			'@typescript-eslint/prefer-nullish-coalescing': 'off',
 			'@typescript-eslint/use-unknown-in-catch-callback-variable': 'off',
 			'@typescript-eslint/prefer-destructuring': 'off',
 			'@typescript-eslint/no-unnecessary-type-parameters': 'off',
