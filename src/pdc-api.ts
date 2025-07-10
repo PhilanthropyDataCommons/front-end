@@ -5,7 +5,7 @@ import type { Ref } from 'vue';
 import type { BaseField } from '@pdc/sdk';
 
 const logger = getLogger('pdc-api');
-const API_URL = import.meta.env.VITE_API_URL;
+const { env: { VITE_API_URL } } = import.meta;
 
 const { token } = useKeycloak();
 
@@ -25,7 +25,7 @@ export function usePdcApi<T>(
 	const fetchData = async (): Promise<void> => {
 		data.value = null;
 		try {
-			const url = new URL(path, API_URL);
+			const url = new URL(path, VITE_API_URL);
 			url.search = params.toString();
 
 			const res = await fetch(url.toString(), {
