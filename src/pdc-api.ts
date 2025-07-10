@@ -5,7 +5,9 @@ import type { Ref } from 'vue';
 import type { BaseField } from '@pdc/sdk';
 
 const logger = getLogger('pdc-api');
-const API_URL = import.meta.env.VITE_API_URL;
+const {
+	env: { VITE_API_URL: API_URL },
+} = import.meta;
 
 const { token } = useKeycloak();
 
