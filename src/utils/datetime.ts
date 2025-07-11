@@ -13,7 +13,7 @@ dayjs.extend(relativeTime);
  * @param  {Date | string} timestamp Date object or string
  * @return {string} Input datetime, expressed relative to now
  */
-const relativizeDateTime = (timestamp: Date | string) =>
+const relativizeDateTime = (timestamp: Date | string): string =>
 	dayjs().to(dayjs(timestamp));
 
 /**
@@ -28,7 +28,7 @@ const relativizeDateTime = (timestamp: Date | string) =>
  * @param  {string} format DayJS format code (see docs)
  * @return {string} Liocal version of datetime in our preferred format
  */
-const localizeDateTime = (timestamp: Date | string, format = 'LLL') =>
+const localizeDateTime = (timestamp: Date | string, format = 'LLL'): string =>
 	dayjs(timestamp).format(format);
 
 export { localizeDateTime, relativizeDateTime };

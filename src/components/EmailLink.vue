@@ -23,15 +23,15 @@ const {
 } = defineProps<EmailLinkProps>();
 
 let params = '';
-if (subject || body) {
+if (subject !== undefined || body !== undefined) {
 	const paramObj: {
 		subject?: string;
 		body?: string;
 	} = {};
-	if (subject) {
+	if (subject !== undefined) {
 		paramObj.subject = subject;
 	}
-	if (body) {
+	if (body !== undefined) {
 		paramObj.body = body;
 	}
 

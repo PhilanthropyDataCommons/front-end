@@ -29,9 +29,11 @@ const {
 	className = '',
 } = defineProps<DropdownMenuLinkProps>();
 
-const handleClick = (e: Event) => {
-	const $target = e.target as HTMLLinkElement;
-	$target.closest('.dropdown')?.removeAttribute('open');
+const handleClick = (e: MouseEvent): void => {
+	const { target } = e;
+	if (target instanceof HTMLElement) {
+		target.closest('.dropdown')?.removeAttribute('open');
+	}
 };
 </script>
 

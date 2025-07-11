@@ -48,20 +48,6 @@ export default typescriptEslint.config(
 		},
 	},
 	{
-		rules: {
-			'@typescript-eslint/explicit-function-return-type': 'off',
-			'@typescript-eslint/no-unnecessary-condition': 'off',
-			'@typescript-eslint/no-unsafe-type-assertion': 'off',
-			'@typescript-eslint/strict-boolean-expressions': 'off',
-			'@typescript-eslint/switch-exhaustiveness-check': 'off',
-			'@typescript-eslint/prefer-nullish-coalescing': 'off',
-			'@typescript-eslint/use-unknown-in-catch-callback-variable': 'off',
-			'@typescript-eslint/prefer-destructuring': 'off',
-			'@typescript-eslint/no-unnecessary-type-parameters': 'off',
-			'@typescript-eslint/no-confusing-void-expression': 'off',
-		},
-	},
-	{
 		files: ['**/*.stories.*'],
 		rules: {
 			'import/no-anonymous-default-export': 'off',

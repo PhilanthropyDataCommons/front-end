@@ -14,7 +14,6 @@ switch (type) {
 	case 'button':
 		typeClassName = 'button button--bordered';
 		break;
-	default:
 }
 </script>
 

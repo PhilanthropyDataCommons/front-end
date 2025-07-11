@@ -66,9 +66,7 @@ if (linkStyle) {
 	buttonClassNames.push('button--link-style');
 }
 
-if (className !== undefined) {
-	buttonClassNames.push(className);
-}
+buttonClassNames.push(className);
 </script>
 
 <template>
