@@ -5,7 +5,7 @@ import type { BaseField } from '@pdc/sdk';
  * @param  {BaseField[]} fields an array of BaseFields
  * @return {Record<string,string>} a map between basefield shortcodes and labels
  */
-const mapFieldNames = (fields: BaseField[]) =>
+const mapFieldNames = (fields: BaseField[]): Record<string, string> =>
 	Object.fromEntries(fields.map(({ label, shortCode }) => [shortCode, label]));
 
 export { mapFieldNames };

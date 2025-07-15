@@ -29,7 +29,7 @@ logger.debug(keycloakOptions, 'Keycloak options');
 			app.use(initRouter()).mount('#app');
 		},
 	});
-})().catch((error) => {
+})().catch((error: unknown) => {
 	logger.error('error initializing application', error);
 });
 
