@@ -12,7 +12,7 @@ jobs:
           node-version-file: '.node-version'
       - name: Install dependencies
         run: npm ci
-      - name: Build
+      - name: Build applications
         env:
           DISABLE_ESLINT_PLUGIN: true
         run: npm run build

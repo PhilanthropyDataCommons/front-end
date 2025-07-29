@@ -1,0 +1,36 @@
+{
+	"exclude": [
+		"node_modules",
+		"apps/*/dist"
+	],
+	"compilerOptions": {
+		/* Bundler mode */
+		"target": "ES2022",
+		"module": "ESNext",
+		"useDefineForClassFields": true,
+		"skipLibCheck": true,
+		"resolveJsonModule": true,
+		"moduleResolution": "bundler",
+		"isolatedModules": true,
+		"noEmit": true,
+
+		"jsx": "preserve",
+
+		/* Linting */
+		"strict": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noFallthroughCasesInSwitch": true,
+		"noUncheckedIndexedAccess": true,
+		"strictNullChecks": true,
+		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+
+		"paths": {
+			"@pdc/*": [
+				"./apps/*/"
+			]
+		}
+	}
+}

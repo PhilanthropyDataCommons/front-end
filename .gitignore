@@ -44,10 +44,10 @@ jspm_packages/
 .pnp.js
 
 # testing
-/coverage
+coverage
 
 # production
-/build
+build
 
 # TypeScript v1 declaration files
 typings/
@@ -115,9 +115,9 @@ dist
 # TernJS port file
 .tern-port
 
-# @axa-fr/react-oidc generated files
-/public/OidcServiceWorker.js
-/public/OidcTrustedDomains.js
-
 *storybook.log
 storybook-static
+
+# workspace dists
+packages/*/dist/
+

@@ -1,6 +1,6 @@
 import { createWebHistory, createRouter } from 'vue-router';
-import LandingView from '@/views/LandingView.vue';
-import NotFoundView from '@/views/NotFoundView.vue';
+import LandingView from './views/LandingView.vue';
+import NotFoundView from './views/NotFoundView.vue';
 import type { Router } from 'vue-router';
 
 const routes = [

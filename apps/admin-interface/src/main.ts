@@ -1,6 +1,6 @@
 import { createApp } from 'vue';
-import { initRouter } from '@/router';
-import App from '@/App.vue';
+import { initRouter } from './router';
+import App from './App.vue';
 import type { Component } from 'vue';
 import VueKeycloak from '@dsb-norge/vue-keycloak-js';
 import { getOptions } from './keycloakConfig';
@@ -8,8 +8,8 @@ import './assets/main.css';
 import '@fontsource/source-sans-pro/400.css';
 import '@fontsource/source-sans-pro/600.css';
 import '@fontsource/source-sans-pro/700.css';
-import { getLogger } from './logger';
-import { reportWebVitals } from './reportWebVitals';
+import { getLogger } from '@/logger';
+import { reportWebVitals } from '@/reportWebVitals';
 
 const logger = getLogger('index');
 

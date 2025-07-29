@@ -1,6 +1,6 @@
 [build]
-  command = "npm run build"
-  publish = "dist"
+  command = "npm run build -w @pdc/admin-interface"
+  publish = "apps/admin-interface/dist"
 
 [[redirects]]
   from = "https://pilot.philanthropydatacommons.org/*"
