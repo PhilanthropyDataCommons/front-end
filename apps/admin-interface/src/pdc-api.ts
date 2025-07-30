@@ -1,6 +1,6 @@
 import { ref, onMounted, watch } from 'vue';
 import { useKeycloak } from '@dsb-norge/vue-keycloak-js';
-import { getLogger } from '@/logger';
+import { getLogger } from './logger';
 import type { Ref } from 'vue';
 import type { BaseField } from '@pdc/sdk';
 

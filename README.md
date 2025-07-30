@@ -1,15 +1,15 @@
-# Philanthropy Data Commons Front End
+# Philanthropy Data Commons Front End Monorepo
 
-A UI for interacting with the data stored in the PDC service.
+A Monorepo for applications interacting with the data stored in the PDC service.
 
 ## Dependencies
 
-The application depends on an
+Use of these applications depends on an
 Open ID Connect ("OIDC")
 identity provider ("IdP")
 for authentication.
 It should be agnostic about what kind of IdP is used.
-To use the front-end application,
+To use the applications,
 you will need to be able to log in.
 
 ## Configuration
@@ -29,13 +29,18 @@ and set the redirect URI to `/authentication/callback`.
 
 ### Development
 
-Run `npm install` from the top level of this tree.
+Application management is handled at the top level of the repository.
+To install all application dependencies, run `npm install` from
+the top level of the repository.
+
+To install a specific application's dependencies, run `npm install`
+from the application's directory.
 
 Copy the `.env.example` file to `.env.local`,
 and replace the placeholder values with your specifics.
 Your new `.env.local` file will not be picked up by git.
 
-Then run `npm start`.
+Then run `npm start -w {application-name}`, where `{application-name}` is the name of the application you want to start.
 
 ### Production
 
@@ -46,4 +51,3 @@ the values must be present at build time.
 This app can be deployed to multiple platform services:
 
 [![Deploy to DO](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/PhilanthropyDataCommons/front-end/tree/main)
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/PhilanthropyDataCommons/front-end)

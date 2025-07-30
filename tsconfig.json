@@ -1,43 +1,7 @@
 {
-	"extends": "@vue/tsconfig/tsconfig.dom.json",
+	"extends": "./tsconfig.build.json",
 	"compilerOptions": {
-		"baseUrl": ".",
-		"paths": {
-			"@/*": ["./src/*"]
-		},
-
-		"types": ["vite/client", "vue"],
-
-		/* Bundler mode */
-		"target": "ES2022",
-		"module": "ESNext",
-		"useDefineForClassFields": true,
-		"skipLibCheck": true,
-		"resolveJsonModule": true,
-		"moduleResolution": "bundler",
-		"isolatedModules": true,
-		"noEmit": true,
-
-		"jsx": "preserve",
-		"jsxImportSource": "vue",
-
-		/* Linting */
-		"strict": true,
-		"noUnusedLocals": true,
-		"noUnusedParameters": true,
-		"noFallthroughCasesInSwitch": true,
-		"noUncheckedIndexedAccess": true,
-		"strictNullChecks": true,
-		"allowSyntheticDefaultImports": true,
-		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true
+		"baseUrl": "./"
 	},
-
-	"include": [
-		"env.d.ts",
-		"src/**/*.ts",
-		"src/**/*.vue",
-		"src/tests/oidc-config.ts",
-		"src/shims-vue.d.ts"
-	]
+	"include": ["apps/**/*.ts"]
 }

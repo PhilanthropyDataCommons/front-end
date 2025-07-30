@@ -54,5 +54,17 @@ export default typescriptEslint.config(
 			'import/no-default-export': 'off',
 		},
 	},
+	{
+		files: ['apps/**'],
+		rules: {
+			'import/no-extraneous-dependencies': [
+				1,
+				{
+					devDependencies: true,
+					packageDir: ['.', '../..'],
+				},
+			],
+		},
+	},
 	eslintConfigPrettier,
 );
