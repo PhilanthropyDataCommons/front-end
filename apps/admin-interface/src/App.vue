@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router';
-import AppBanner from './components/AppBanner.vue';
-import AppHeader from './components/AppHeader.vue';
+import { AppBanner, AppHeader } from '@pdc/components';
 </script>
 <template>
 	<div class="App">

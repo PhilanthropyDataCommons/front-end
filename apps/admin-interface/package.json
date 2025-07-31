@@ -28,9 +28,9 @@
 		"lint:prettier": "prettier . --check --ignore-path ../../.gitignore",
 		"lint:eslint": "eslint ./src --report-unused-disable-directives --max-warnings 0",
 		"test": "vitest --run",
-		"format": "prettier .  --ignore-path ../../.gitignore",
+		"format": "prettier . --write  --ignore-path ../../.gitignore",
 		"preview": "vite preview",
-		"storybook": "storybook dev -p 6006",
+		"storybook": "storybook dev -p 6007",
 		"build-storybook": "storybook build"
 	},
 	"browserslist": {

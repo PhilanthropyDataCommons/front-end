@@ -1,0 +1,12 @@
+{
+	"extends": "../../tsconfig.json",
+	"compilerOptions": {
+		"declaration": true,
+		"declarationDir": "./dist",
+		"outDir": "./dist",
+		"rootDir": "./src",
+		"types": ["vite/client", "vue"]
+	},
+	"include": ["src/**/*", "env.d.ts"],
+	"exclude": ["node_modules", "dist"]
+}

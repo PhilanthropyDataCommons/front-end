@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { UserIcon } from '@heroicons/vue/24/outline';
 import { useKeycloak } from '@dsb-norge/vue-keycloak-js';
-import { PanelComponent, PanelBody } from '../components/Panel';
-import CustomButton from '../components/CustomButton.vue';
-import EmailLink from '../components/EmailLink.vue';
-import DliComponent from '../components/DliComponent.vue';
-import OffSiteLink from '../components/OffSiteLink.vue';
-import { getLogger } from '../logger';
-
+import {
+	PanelComponent,
+	PanelBody,
+	CustomButton,
+	EmailLink,
+	DliComponent,
+	OffSiteLink,
+} from '@pdc/components';
+import { getLogger } from '@pdc/utilities';
 const logger = getLogger('<LandingView>');
 
 const { authenticated, login } = useKeycloak();
