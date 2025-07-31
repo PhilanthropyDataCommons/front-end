@@ -1,0 +1,18 @@
+{
+	"extends": ["../../tsconfig.build.json", "@vue/tsconfig/tsconfig.dom.json"],
+	"compilerOptions": {
+		"baseUrl": ".",
+		"types": ["vite/client", "vue"],
+		"jsxImportSource": "vue",
+		"paths": {
+			"@/*": ["./src/*"]
+		}
+	},
+	"include": [
+		"env.d.ts",
+		"src/**/*.ts",
+		"src/**/*.vue",
+		"src/tests/oidc-config.ts",
+		"src/shims-vue.d.ts"
+	]
+}

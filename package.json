@@ -9,7 +9,6 @@
 		"node": ">=22"
 	},
 	"scripts": {
-		"start": "npm run start --workspace=apps",
 		"test": "npm run test --workspace=apps",
 		"lint": "npm run lint --workspace=apps",
 		"build": "npm run build --workspace=apps"
