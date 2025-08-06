@@ -19,7 +19,7 @@
 		"@heroicons/vue": "^2.2.0",
 		"@pdc/sdk": "^0.19.1",
 		"@vitejs/plugin-vue": "^6.0.0",
-		"@vue/compiler-sfc": "^3.5.13",
+		"@vue/compiler-sfc": "^3.5.18",
 		"dayjs": "^1.11.11",
 		"jsonpath-plus": "^10.3.0",
 		"pino": "^9.7.0",
