@@ -1,5 +1,5 @@
 {
-	"name": "@pdc/admin-interface",
+	"name": "@pdc/bulk-uploader",
 	"version": "0.0.0",
 	"private": true,
 	"dependencies": {

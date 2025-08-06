@@ -3,15 +3,16 @@
 	"version": "0.1.0",
 	"private": true,
 	"workspaces": [
-		"apps/*"
+		"apps/*",
+		"packages/*"
 	],
 	"engines": {
 		"node": ">=22"
 	},
 	"scripts": {
-		"start": "npm run start --workspace=apps",
+		"start": "npm run start --workspace=apps ",
 		"test": "npm run test --workspace=apps",
-		"lint": "npm run lint --workspace=apps",
+		"lint": "npm run lint --workspace=apps --workspace=packages",
 		"build": "npm run build --workspace=apps"
 	},
 	"devDependencies": {

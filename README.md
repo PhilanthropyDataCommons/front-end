@@ -1,6 +1,6 @@
 # Philanthropy Data Commons Front End Monorepo
 
-A Monorepo for applications interacting with the data stored in the PDC service.
+A monorepo for applications interacting with the data stored in the PDC service.
 
 ## Dependencies
 

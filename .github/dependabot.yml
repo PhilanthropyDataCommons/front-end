@@ -28,6 +28,21 @@ updates:
     schedule:
       interval: 'weekly'
 
+  - package-ecosystem: 'npm'
+    directory: '/apps/bulk-uploader'
+    schedule:
+      interval: 'weekly'
+
+  - package-ecosystem: 'npm'
+    directory: '/packages/components'
+    schedule:
+      interval: 'weekly'
+
+  - package-ecosystem: 'npm'
+    directory: '/packages/utilities'
+    schedule:
+      interval: 'weekly'
+
   - package-ecosystem: 'github-actions'
     directory: '.github/workflows'
     schedule:

@@ -1,0 +1,245 @@
+:root {
+	--color--gray--darker: #343434;
+	--color--gray--dark: #444;
+	--color--gray--medium-dark: #757575;
+	--color--gray--medium: #bbb;
+	--color--gray: #d7d7d7;
+	--color--gray--light: #efefef;
+	--color--gray--lighter: #fafafa;
+	--color--blue--dark: #0b5c96;
+	--color--blue: #1176bc;
+	--color--blue--lighter: #e7f5fe;
+	--color--green: #007f20;
+	--color--red--dark: #701f1f;
+	--color--red: #892929;
+
+	--font-size: 16px;
+	--font-size--sm: 0.95rem;
+	--line-height: 1.4;
+	--font-family--sans-serif:
+		'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+		'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+		'Helvetica Neue', sans-serif;
+	--font-family--monospace:
+		source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+	--font-weight--normal: 400;
+	--font-weight--medium: 600;
+	--font-weight--bold: 700;
+
+	/* These spacings shouldn't increase with font-size. They have no accessibility impact. */
+	--fixed-spacing--1x: 10px;
+	--fixed-spacing--2x: calc(2 * var(--fixed-spacing--1x));
+	--fixed-spacing--3x: calc(3 * var(--fixed-spacing--1x));
+	--fixed-spacing--4x: calc(4 * var(--fixed-spacing--1x));
+	--fixed-spacing--halfx: calc(var(--fixed-spacing--1x) / 2);
+
+	/* These spacings should increase with font-size. They have an accessibility impact. */
+	--accessible-spacing--1x: 0.625rem;
+	--accessible-spacing--2x: calc(2 * var(--accessible-spacing--1x));
+	--accessible-spacing--3x: calc(3 * var(--accessible-spacing--1x));
+	--accessible-spacing--4x: calc(4 * var(--accessible-spacing--1x));
+	--accessible-spacing--halfx: calc(var(--accessible-spacing--1x) / 2);
+
+	--transition-duration: 200ms;
+	/* `cursor` should be faster than the standard duration,
+     for things like hover events. */
+	--transition-duration--cursor: 100ms;
+
+	--icon-size--text: 1.25em;
+
+	--badge--background-color: var(--color--gray--darker);
+	--badge--color: white;
+
+	--outline: 2px solid var(--color--blue);
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	background-color: var(--color--gray--light);
+	color: black;
+	font-family: var(--font-family--sans-serif);
+	font-weight: var(--font-weight--normal);
+	line-height: var(--line-height);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*:before,
+*:after {
+	box-sizing: border-box;
+
+	&:focus-visible {
+		outline: var(--outline);
+	}
+}
+
+nav ul,
+nav ol,
+nav li {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+img {
+	display: block;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	margin: 1rem 0;
+	padding: 0;
+	font-weight: var(--font-weight--normal);
+	line-height: 1.2;
+
+	&:first-child {
+		margin-block-start: 0;
+	}
+
+	&:last-child {
+		margin-block-end: 0;
+	}
+}
+
+h1 {
+	font-size: 1.75rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+}
+
+h3 {
+	font-size: 1.3rem;
+}
+
+h4 {
+	font-size: 1.15rem;
+}
+
+h5 {
+	font-weight: var(--font-weight--medium);
+	font-size: 1rem;
+}
+
+h6 {
+	font-size: 0.95rem;
+	font-weight: var(--font-weight--medium);
+}
+
+/*
+  Our implementation of DLs assumes you will wrap each DT/DD pair in a
+  custom `<Dli>` component, which generates the following markup:
+  <dl>
+    <div class="dli">
+      <dt></dt>
+      <dd></dd>
+    </div>
+  </dl>
+*/
+dl {
+	margin: var(--accessible-spacing--2x) 0;
+	padding: 0;
+
+	display: flex;
+	flex-direction: column;
+	gap: var(--accessible-spacing--2x);
+}
+
+dl:first-child {
+	margin-top: 0;
+}
+
+dl:last-child {
+	margin-bottom: 0;
+}
+
+dl > .dli > dt {
+	font-weight: var(--font-weight--medium);
+}
+
+dl > .dli > dt,
+dl > .dli > dd {
+	margin: 0;
+	padding: 0;
+}
+
+code {
+	font-size: 0.85em;
+	/* em, not rem, so it is relative to its context. */
+	font-family: var(--font-family--monospace);
+	background-color: var(--color--gray--light);
+	border-radius: 0.5ch;
+	padding: 0.5ch;
+}
+
+code.short-code {
+	display: block;
+	background-color: transparent;
+	border-radius: 0;
+	padding: 0;
+	max-width: 50ch;
+	word-wrap: break-word;
+}
+
+.quiet {
+	color: var(--color--gray--medium-dark);
+}
+
+.badge {
+	background-color: var(--badge--background-color);
+	color: var(--badge--color);
+	font-size: var(--font-size--sm);
+	padding: 0 0.25em;
+	border-radius: 2px;
+}
+
+.rotating {
+	animation: rotating 1.2s linear infinite;
+}
+
+@keyframes rotating {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+.label {
+	font-size: var(--font-size--sm);
+	font-weight: var(--font-weight--medium);
+	text-transform: uppercase;
+	margin-block: 0;
+}
+
+a.no-visited {
+	color: var(--color--blue--dark);
+}
+
+.has-icon {
+	--icon-wrapper--flex-type: flex;
+
+	display: var(--icon-wrapper--flex-type);
+	align-items: center;
+	gap: 0.5ch;
+}
+
+a.has-icon {
+	--icon-wrapper--flex-type: inline-flex;
+}
+
+.icon {
+	flex-shrink: 0;
+	width: var(--icon-size--text);
+	height: var(--icon-size--text);
+	color: inherit;
+}
