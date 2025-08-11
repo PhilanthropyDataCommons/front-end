@@ -3,7 +3,7 @@ export { default as DliComponent } from './components/DliComponent.vue';
 export { default as EmailLink } from './components/EmailLink.vue';
 export { default as OffSiteLink } from './components/OffSiteLink.vue';
 export { default as UserComponent } from './components/UserComponent.vue';
-
+export { default as SidePanel } from './components/SidePanel.vue';
 export {
 	DropdownComponent,
 	DropdownTrigger,

@@ -1,8 +1,20 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router';
+import { SidePanel } from '@pdc/components';
+import { CircleStackIcon } from '@heroicons/vue/24/outline';
+import { CircleStackIcon as CircleStackIconSolid } from '@heroicons/vue/24/solid';
+const navLinks = [
+	{
+		icon: CircleStackIcon,
+		activeIcon: CircleStackIconSolid,
+		label: 'Base Fields',
+		destination: '/',
+	},
+];
 </script>
 <template>
 	<div class="App">
+		<SidePanel :nav-links="navLinks" />
 		<main class="App-main">
 			<RouterView v-slot="{ Component }">
 				<component :is="Component" />
@@ -23,17 +35,12 @@ import { RouterView } from 'vue-router';
 .App {
 	position: absolute;
 	inset: 0;
-
-	display: grid;
-	grid-template:
-		'banner' min-content
-		'header' min-content
-		'main' 1fr
-		/ auto;
+	display: flex;
+	height: 100vh;
 }
 
 .App-main {
-	grid-area: main;
+	flex: 1;
 	position: relative;
 	margin: var(--app-main--space-around);
 }
