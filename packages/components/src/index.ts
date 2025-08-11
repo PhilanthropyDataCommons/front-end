@@ -21,3 +21,10 @@ export {
 	PanelHeaderAction,
 	PanelHeaderActionsWrapper,
 } from './components/Panel';
+
+export {
+	DataUploadComponent,
+	DataUploadSection,
+	FileUploadInput,
+	DataSubmissionInput,
+} from './components/DataUpload';
