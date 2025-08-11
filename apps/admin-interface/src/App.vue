@@ -3,6 +3,10 @@ import { RouterView } from 'vue-router';
 import { SidePanel } from '@pdc/components';
 import { CircleStackIcon } from '@heroicons/vue/24/outline';
 import { CircleStackIcon as CircleStackIconSolid } from '@heroicons/vue/24/solid';
+import { useKeycloak } from '@dsb-norge/vue-keycloak-js';
+
+const { authenticated } = useKeycloak();
+
 const navLinks = [
 	{
 		icon: CircleStackIcon,
@@ -14,7 +18,7 @@ const navLinks = [
 </script>
 <template>
 	<div class="App">
-		<SidePanel :nav-links="navLinks" />
+		<SidePanel v-if="authenticated" :nav-links="navLinks" />
 		<main class="App-main">
 			<RouterView v-slot="{ Component }">
 				<component :is="Component" />

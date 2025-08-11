@@ -15,13 +15,9 @@ export {
 } from './components/Dropdown';
 
 export {
-	ClosablePanel,
 	PanelComponent,
 	PanelHeader,
-	PanelActions,
-	PanelTitleWrapper,
-	PanelTitle,
-	PanelTitleTags,
-	PanelTag,
 	PanelBody,
+	PanelHeaderAction,
+	PanelHeaderActionsWrapper,
 } from './components/Panel';
