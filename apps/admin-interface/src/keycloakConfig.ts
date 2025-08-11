@@ -30,7 +30,7 @@ const getOptions = (
 		},
 		init: {
 			onLoad: 'check-sso',
-			redirectUri: `${window.location.origin}/`,
+			redirectUri: window.location.href,
 			scope: 'openid',
 			checkLoginIframe: false,
 		},
