@@ -17,7 +17,7 @@
 		"@dsb-norge/vue-keycloak-js": "^3.0.3",
 		"@fontsource/source-sans-pro": "^5.2.5",
 		"@heroicons/vue": "^2.2.0",
-		"@pdc/sdk": "^0.19.1",
+		"@pdc/sdk": "^0.22.1",
 		"@vitejs/plugin-vue": "^6.0.1",
 		"@vue/compiler-sfc": "^3.5.18",
 		"dayjs": "^1.11.11",
