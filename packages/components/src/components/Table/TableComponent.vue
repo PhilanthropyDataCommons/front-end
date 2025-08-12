@@ -1,0 +1,151 @@
+<script setup lang="ts">
+interface TableProps {
+	className?: string;
+	/**
+	 * Table body cells won't wrap and will have a max-width,
+	 * above which the text will be hidden.
+	 */
+	truncate?: boolean;
+}
+
+const { className = '', truncate = false } = defineProps<TableProps>();
+</script>
+
+<template>
+	<table
+		:border="0"
+		:cellPadding="0"
+		:cellSpacing="0"
+		:class="`table ${truncate ? 'truncate' : ''} ${className}`.trim()"
+	>
+		<slot> </slot>
+	</table>
+</template>
+
+<style>
+:root {
+	--table--border-width: 1px;
+}
+
+.table {
+	width: 100%;
+}
+
+.table thead {
+	background-color: white;
+}
+
+.table thead.fixed {
+	position: sticky;
+	top: 0;
+}
+
+/* When the panel-body is the first child of the panel --
+   that is to say, when we compose a panel with no panel-header --
+   we want to offset our table's sticky positioning so that
+   the top border of the table scrolls out of panel and avoids a
+   phantom shadow-darkening effect. */
+.panel > .panel-body:first-child > .table thead.fixed {
+	top: calc(-1 * var(--table--border-width));
+}
+
+.panel > .panel-body:first-child > .table:first-child thead.fixed {
+	top: 0;
+}
+
+.panel > .panel-body:first-child > .table:first-child thead.fixed th {
+	border-top: 0;
+}
+
+.table thead th {
+	border-top: var(--table--border-width) solid var(--color--gray--medium);
+	border-bottom: var(--table--border-width) solid var(--color--gray--medium);
+	vertical-align: bottom;
+	white-space: nowrap;
+}
+
+.table tbody th {
+	min-width: 25%;
+}
+
+.table th,
+.table td {
+	text-align: left;
+	padding: var(--accessible-spacing--1x);
+	border-right: var(--table--border-width) solid var(--color--gray--light);
+	border-bottom: var(--table--border-width) solid var(--color--gray--light);
+}
+
+/* The last column should stretch to the table edge and have no right border. */
+.table th:last-child,
+.table td:last-child {
+	width: 100%;
+	border-right: none;
+}
+
+/* The last body row should have a darker bottom border. */
+.table tbody tr:last-child th,
+.table tbody tr:last-child td {
+	border-bottom: var(--table--border-width) solid var(--color--gray--medium);
+}
+
+.table tbody th,
+.table tbody td {
+	vertical-align: top;
+}
+
+/* Truncated tables don't wrap table body contents. */
+.table.truncate tbody td {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 60ch;
+}
+
+.table .clickable {
+	cursor: pointer;
+}
+
+.table .clickable:not(.active):hover {
+	background-color: var(--color--gray--lighter);
+}
+
+.table .active {
+	background-color: var(--color--blue--lighter);
+}
+
+.table .has-actions .column-head-wrapper {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: var(--accessible-spacing--1x);
+}
+
+/* This is the default, but supplying it anyway. */
+.table .has-actions.action-alignment--right .column-head-wrapper {
+	justify-content: space-between;
+}
+
+.table .has-actions.action-alignment--left .column-head-wrapper {
+	justify-content: start;
+}
+
+.column-actions {
+	display: flex;
+	align-items: center;
+	gap: var(--accessible-spacing--halfx);
+}
+
+.column-action {
+	all: unset;
+
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+}
+
+.column-action .icon {
+	width: var(--icon-size--text);
+	height: var(--icon-size--text);
+}
+</style>

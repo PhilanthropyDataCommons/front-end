@@ -28,3 +28,17 @@ export {
 	FileUploadInput,
 	DataSubmissionInput,
 } from './components/DataUpload';
+
+export {
+	TableComponent,
+	TableHead,
+	ColumnHead,
+	ColumnActions,
+	ColumnAction,
+	TableBody,
+	TableRow,
+	RowHead,
+	RowCell,
+} from './components/Table';
+
+export { default as ListTable } from './components/ListTable.vue';
