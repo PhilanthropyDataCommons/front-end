@@ -32,7 +32,7 @@ const { className = '', truncate = false } = defineProps<TableProps>();
 }
 
 .table thead {
-	background-color: white;
+	background-color: var(--color--gray--light);
 }
 
 .table thead.fixed {
@@ -58,8 +58,6 @@ const { className = '', truncate = false } = defineProps<TableProps>();
 }
 
 .table thead th {
-	border-top: var(--table--border-width) solid var(--color--gray--medium);
-	border-bottom: var(--table--border-width) solid var(--color--gray--medium);
 	vertical-align: bottom;
 	white-space: nowrap;
 }
@@ -72,7 +70,7 @@ const { className = '', truncate = false } = defineProps<TableProps>();
 .table td {
 	text-align: left;
 	padding: var(--accessible-spacing--1x);
-	border-right: var(--table--border-width) solid var(--color--gray--light);
+
 	border-bottom: var(--table--border-width) solid var(--color--gray--light);
 }
 

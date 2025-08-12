@@ -5,47 +5,37 @@ import {
 	PanelHeader,
 	PanelHeaderAction,
 	PanelHeaderActionsWrapper,
-	ListTable,
+	TableComponent,
+	TableHead,
+	TableBody,
 	TableRow,
-	RowHead,
+	ColumnHead,
 	RowCell,
 } from '@pdc/components';
+import BulkUploadStatus from '@/components/BulkUploadStatus.vue';
 import { RouterLink } from 'vue-router';
 import { PlusIcon } from '@heroicons/vue/24/outline';
-import { onMounted, h } from 'vue';
+import { ArrowLongRightIcon } from '@heroicons/vue/24/solid';
+import { onMounted, ref } from 'vue';
 import { useBulkUploads } from '../pdc-api';
-import type { BulkUploadTask } from '@pdc/sdk';
 
 const { data: bulkUploads, fetchData: fetchBulkUploads } = useBulkUploads();
+const isLoading = ref(true);
 
 onMounted(async () => {
-	await fetchBulkUploads();
-	console.log(bulkUploads.value);
+	try {
+		await fetchBulkUploads();
+		console.log('Bulk uploads loaded:', bulkUploads.value);
+	} catch (error) {
+		console.error('Failed to load bulk uploads:', error);
+	} finally {
+		isLoading.value = false;
+	}
 });
-
-// Define columns to display
-const columns = ['fileName', 'status', 'createdAt', 'createdBy'];
-
-const fieldNames = {
-	fileName: 'File Name',
-	status: 'Status',
-	createdAt: 'Created At',
-	createdBy: 'Created By',
-};
-
-// Render function for each bulk upload row
-const renderBulkUpload = (upload: BulkUploadTask) => {
-	return h(TableRow, { key: upload.id }, [
-		h(RowHead, upload.fileName),
-		h(RowCell, upload.status),
-		h(RowCell, new Date(upload.createdAt).toLocaleDateString()),
-		h(RowCell, upload.createdBy),
-	]);
-};
 </script>
 
 <template>
-	<PanelComponent padded>
+	<PanelComponent>
 		<PanelHeader>
 			<h1>Bulk Uploads</h1>
 			<PanelHeaderActionsWrapper>
@@ -55,17 +45,57 @@ const renderBulkUpload = (upload: BulkUploadTask) => {
 				</PanelHeaderAction>
 			</PanelHeaderActionsWrapper>
 		</PanelHeader>
-		<PanelBody>
-			<ListTable
-				v-if="bulkUploads"
-				:columns="columns"
-				:field-names="fieldNames"
-				:items="bulkUploads"
-				:render-item="renderBulkUpload"
-				:wrap="false"
-			/>
+		<PanelBody :padded="false">
+			<div v-if="isLoading" class="text-center py-8 text-gray-500">
+				<p>Loading bulk uploads...</p>
+			</div>
+
+			<TableComponent v-else-if="bulkUploads && bulkUploads.entries.length > 0">
+				<TableHead fixed>
+					<TableRow>
+						<ColumnHead>ID</ColumnHead>
+						<ColumnHead>Timestamp</ColumnHead>
+						<ColumnHead>Uploader</ColumnHead>
+						<ColumnHead>Records added</ColumnHead>
+						<ColumnHead>Result</ColumnHead>
+						<ColumnHead></ColumnHead>
+					</TableRow>
+				</TableHead>
+				<TableBody>
+					<TableRow v-for="upload in bulkUploads.entries" :key="upload.id">
+						<RowCell>{{ upload.id }}</RowCell>
+						<RowCell>{{ new Date(upload.createdAt).toUTCString() }}</RowCell>
+						<RowCell>{{ upload.funder?.name }}</RowCell>
+						<RowCell>TBD</RowCell>
+						<RowCell> <BulkUploadStatus :status="upload.status" /></RowCell>
+						<RowCell>
+							<RouterLink :to="`/bulk-uploads/${upload.id}`">
+								<ArrowLongRightIcon class="icon black" />
+							</RouterLink>
+						</RowCell>
+					</TableRow>
+				</TableBody>
+			</TableComponent>
+
+			<div v-else>
+				<p>No bulk uploads found</p>
+			</div>
 		</PanelBody>
 	</PanelComponent>
 </template>
 
-<style></style>
+<style scoped>
+.black {
+	color: black;
+}
+
+/* Override table cell width restrictions to fit content */
+:deep(.table td) {
+	white-space: nowrap;
+	width: auto;
+}
+
+:deep(.table td:last-child) {
+	width: auto;
+}
+</style>

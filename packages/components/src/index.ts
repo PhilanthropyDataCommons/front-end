@@ -18,13 +18,13 @@ export {
 	PanelComponent,
 	PanelHeader,
 	PanelBody,
+	PanelSection,
 	PanelHeaderAction,
 	PanelHeaderActionsWrapper,
 } from './components/Panel';
 
 export {
 	DataUploadComponent,
-	DataUploadSection,
 	FileUploadInput,
 	DataSubmissionInput,
 } from './components/DataUpload';

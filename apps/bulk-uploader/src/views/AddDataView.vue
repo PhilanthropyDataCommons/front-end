@@ -6,7 +6,7 @@ import {
 	PanelHeaderAction,
 	PanelHeaderActionsWrapper,
 	DataUploadComponent,
-	DataUploadSection,
+	PanelSection,
 	FileUploadInput,
 	DataSubmissionInput,
 } from '@pdc/components';
@@ -19,7 +19,9 @@ import {
 	useRegisterBulkUploadCallback,
 	uploadUsingPresignedPost,
 } from '../pdc-api';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const bulkUpload = ref<File | null>(null);
 
 watch(bulkUpload, (newFile, oldFile) => {
@@ -48,14 +50,14 @@ const handleBulkUpload = async (file: File) => {
 
 	await uploadUsingPresignedPost(file, presignedPost);
 
-	await registerBulkUpload({
+	const bulkUploadResult = await registerBulkUpload({
 		fileName: file.name,
 		sourceKey: presignedPost.fields.key,
 		sourceId: systemSource.value.id,
 		funderShortCode: 'pdc',
 	});
 
-	console.log('Bulk upload completed successfully');
+	await router.push(`/bulk-uploads/${bulkUploadResult.id}`);
 };
 </script>
 
@@ -66,13 +68,13 @@ const handleBulkUpload = async (file: File) => {
 			<PanelHeaderActionsWrapper>
 				<PanelHeaderAction>
 					<ArrowLeftIcon class="icon" />
-					<RouterLink to="/">Back to bulk uploads</RouterLink>
+					<RouterLink to="/bulk-uploads">Back to bulk uploads</RouterLink>
 				</PanelHeaderAction>
 			</PanelHeaderActionsWrapper>
 		</PanelHeader>
 		<PanelBody>
 			<DataUploadComponent>
-				<DataUploadSection>
+				<PanelSection>
 					<template #header>
 						<h3 class="font-medium">Select File to Upload</h3>
 						<p class="text-color-gray-medium-dark">
@@ -92,8 +94,8 @@ const handleBulkUpload = async (file: File) => {
 							</template>
 						</FileUploadInput>
 					</template>
-				</DataUploadSection>
-				<DataUploadSection>
+				</PanelSection>
+				<PanelSection>
 					<template #header>
 						<h3 class="font-medium">Ready to upload</h3>
 						<p class="text-color-gray-medium-dark">
@@ -105,7 +107,7 @@ const handleBulkUpload = async (file: File) => {
 							:handleSubmit="() => bulkUpload && handleBulkUpload(bulkUpload)"
 						/>
 					</template>
-				</DataUploadSection>
+				</PanelSection>
 			</DataUploadComponent>
 		</PanelBody>
 	</PanelComponent>
