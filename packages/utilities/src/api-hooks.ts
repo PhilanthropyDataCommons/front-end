@@ -12,9 +12,8 @@ const logger = getLogger('pdc-api');
  */
 const API_URL = import.meta.env.VITE_API_URL;
 
-const { token } = useKeycloak();
-
-function throwIfNotOk(res: Response): Response {
+// Token will be accessed inside functions where useKeycloak can be called
+export function throwIfNotOk(res: Response): Response {
 	if (!res.ok) {
 		throw new Error(`Response status: ${res.status} ${res.statusText}`);
 	}
@@ -30,6 +29,7 @@ export function usePdcApi<T>(
 	const fetchData = async (): Promise<void> => {
 		data.value = null;
 		try {
+			const { token } = useKeycloak();
 			const url = new URL(path, API_URL);
 			url.search = params.toString();
 
@@ -54,4 +54,27 @@ export function usePdcApi<T>(
 	watch(() => params.toString(), fetchData);
 
 	return { data, fetchData };
+}
+
+export function usePdcCallbackApi<T>(
+	path: string,
+): (options: RequestInit) => Promise<T> {
+	return async (options: RequestInit): Promise<T> => {
+		try {
+			const { token } = useKeycloak();
+			const url = new URL(path, API_URL);
+			const res = await fetch(url.toString(), {
+				...options,
+				headers: {
+					Authorization: `Bearer ${token}`,
+					...options.headers,
+				},
+			}).then(throwIfNotOk);
+
+			return (await res.json()) as T;
+		} catch (error) {
+			logger.error({ error, params: options }, `Error calling ${path}`);
+			throw error;
+		}
+	};
 }

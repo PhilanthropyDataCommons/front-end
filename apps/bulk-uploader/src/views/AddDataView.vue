@@ -12,16 +12,51 @@ import {
 } from '@pdc/components';
 import { RouterLink } from 'vue-router';
 import { ArrowLeftIcon } from '@heroicons/vue/24/outline';
-import { ref, watch } from 'vue';
+import { ref, watch, onMounted } from 'vue';
+import {
+	useSystemSource,
+	usePresignedPostCallback,
+	useRegisterBulkUploadCallback,
+	uploadUsingPresignedPost,
+} from '../pdc-api';
 
 const bulkUpload = ref<File | null>(null);
 
 watch(bulkUpload, (newFile, oldFile) => {
 	console.log('File changed:', {
 		oldFile: oldFile?.name || null,
-		newFile: newFile || null
+		newFile: newFile || null,
 	});
 });
+
+const { data: systemSource, fetchData: fetchSystemSource } = useSystemSource();
+const createPresignedPost = usePresignedPostCallback();
+const registerBulkUpload = useRegisterBulkUploadCallback();
+
+onMounted(async () => {
+	await fetchSystemSource();
+});
+const handleBulkUpload = async (file: File) => {
+	if (!systemSource.value?.id) {
+		throw new Error('No System Source Available');
+	}
+	console.log(systemSource);
+	const { presignedPost } = await createPresignedPost({
+		fileType: file.type || 'application/octet-stream',
+		fileSize: file.size,
+	});
+
+	await uploadUsingPresignedPost(file, presignedPost);
+
+	await registerBulkUpload({
+		fileName: file.name,
+		sourceKey: presignedPost.fields.key,
+		sourceId: systemSource.value.id,
+		funderShortCode: 'pdc',
+	});
+
+	console.log('Bulk upload completed successfully');
+};
 </script>
 
 <template>
@@ -66,7 +101,9 @@ watch(bulkUpload, (newFile, oldFile) => {
 						</p>
 					</template>
 					<template #content>
-						<DataSubmissionInput :handleSubmit="() => {}" />
+						<DataSubmissionInput
+							:handleSubmit="() => bulkUpload && handleBulkUpload(bulkUpload)"
+						/>
 					</template>
 				</DataUploadSection>
 			</DataUploadComponent>
