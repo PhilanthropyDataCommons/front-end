@@ -63,3 +63,8 @@ export const useRegisterBulkUploadCallback = () => {
 			body: JSON.stringify(params),
 		});
 };
+
+
+export function useBulkUploads(): ReturnType<typeof usePdcApi<BulkUploadTask[]>> {
+	return usePdcApi<BulkUploadTask[]>('/tasks/bulkUploads');
+}
