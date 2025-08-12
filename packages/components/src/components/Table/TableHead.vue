@@ -12,3 +12,7 @@ const { className = '', fixed = false } = defineProps<TableHeadProps>();
 		<slot> </slot>
 	</thead>
 </template>
+
+<style scoped>
+
+</style>

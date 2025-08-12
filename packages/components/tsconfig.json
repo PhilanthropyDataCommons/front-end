@@ -5,7 +5,10 @@
 		"declarationDir": "./dist",
 		"outDir": "./dist",
 		"rootDir": "./src",
-		"types": ["vite/client", "vue"]
+		"types": ["vite/client", "vue"],
+		"paths": {
+			"@/*": ["./src/*"]
+		}
 	},
 	"include": ["src/**/*", "env.d.ts"],
 	"exclude": ["node_modules", "dist"]

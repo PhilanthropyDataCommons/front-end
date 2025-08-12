@@ -15,7 +15,7 @@ import {
 import BulkUploadStatus from '@/components/BulkUploadStatus.vue';
 import { RouterLink } from 'vue-router';
 import { PlusIcon } from '@heroicons/vue/24/outline';
-import { ArrowLongRightIcon } from '@heroicons/vue/24/solid';
+import { ArrowRightIcon } from '@heroicons/vue/24/solid';
 import { onMounted, ref } from 'vue';
 import { useBulkUploads } from '../pdc-api';
 
@@ -70,7 +70,7 @@ onMounted(async () => {
 						<RowCell> <BulkUploadStatus :status="upload.status" /></RowCell>
 						<RowCell>
 							<RouterLink :to="`/bulk-uploads/${upload.id}`">
-								<ArrowLongRightIcon class="icon black" />
+								<ArrowRightIcon class="icon black" />
 							</RouterLink>
 						</RowCell>
 					</TableRow>

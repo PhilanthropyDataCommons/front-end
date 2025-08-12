@@ -1,5 +1,13 @@
 import { usePdcApi, usePdcCallbackApi, throwIfNotOk } from '@pdc/utilities';
-import type { BaseField, Source } from '@pdc/sdk';
+import type {
+	ApplicationFormBundle,
+	BaseField,
+	ChangemakerBundle,
+	DataProviderBundle,
+	FunderBundle,
+	Source,
+	SourceBundle,
+} from '@pdc/sdk';
 import type {
 	PresignedPostRequest,
 	WritablePresignedPostRequest,
@@ -65,17 +73,67 @@ export const useRegisterBulkUploadCallback = () => {
 		});
 };
 
-// export function useBulkUpload(
-// 	id: string,
-// ): ReturnType<typeof usePdcApi<BulkUploadTask>> {
-// 	return usePdcApi<BulkUploadTask>(`/tasks/bulkUpload/${id}`);
-// }
-
 export function useBulkUploads(): ReturnType<
 	typeof usePdcApi<BulkUploadTaskBundle>
 > {
 	return usePdcApi<BulkUploadTaskBundle>(
 		'/tasks/bulkUploads',
+		new URLSearchParams({
+			_page: '1',
+			_count: '100',
+		}),
+	);
+}
+
+export function useSources(): ReturnType<typeof usePdcApi<SourceBundle>> {
+	return usePdcApi<SourceBundle>(
+		'/sources',
+		new URLSearchParams({
+			_page: '1',
+			_count: '100',
+		}),
+	);
+}
+
+export function useFunders(): ReturnType<typeof usePdcApi<FunderBundle>> {
+	return usePdcApi<FunderBundle>(
+		'/funders',
+		new URLSearchParams({
+			_page: '1',
+			_count: '100',
+		}),
+	);
+}
+
+export function useDataProviders(): ReturnType<
+	typeof usePdcApi<DataProviderBundle>
+> {
+	return usePdcApi<DataProviderBundle>(
+		'/dataProviders',
+		new URLSearchParams({
+			_page: '1',
+			_count: '100',
+		}),
+	);
+}
+
+export function useChangemakers(): ReturnType<
+	typeof usePdcApi<ChangemakerBundle>
+> {
+	return usePdcApi<ChangemakerBundle>(
+		'/changemakers',
+		new URLSearchParams({
+			_page: '1',
+			_count: '100',
+		}),
+	);
+}
+
+export function useApplicationForms(): ReturnType<
+	typeof usePdcApi<ApplicationFormBundle>
+> {
+	return usePdcApi<ApplicationFormBundle>(
+		'/applicationForms',
 		new URLSearchParams({
 			_page: '1',
 			_count: '100',

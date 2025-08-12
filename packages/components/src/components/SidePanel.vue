@@ -12,11 +12,11 @@
 				v-for="link in navLinks"
 				:key="link.label"
 				class="side-panel-nav-item"
-				:class="{ active: link.destination === $route.path }"
+				:class="{ active: link.destination === $route.path || link.active }"
 			>
 				<component
 					:is="link.activeIcon"
-					v-if="link.destination === $route.path"
+					v-if="link.destination === $route.path || link.active"
 					class="side-panel-nav-item-icon"
 				/>
 				<component :is="link.icon" v-else class="side-panel-nav-item-icon" />
@@ -42,6 +42,7 @@ interface SidePanelLinkProps {
 		activeIcon: FunctionalComponent<HTMLAttributes & VNodeProps>;
 		label: string;
 		destination: string;
+		active?: boolean;
 	}>;
 }
 const { navLinks = undefined } = defineProps<SidePanelLinkProps>();
@@ -51,10 +52,12 @@ const { navLinks = undefined } = defineProps<SidePanelLinkProps>();
 .side-panel {
 	width: 100%;
 	max-width: 240px;
-	height: 100vh;
 	flex-shrink: 0;
 	display: flex;
 	flex-direction: column;
+	position: sticky;
+	top: 0;
+	height: 100vh;
 	background-color: var(--color--white);
 	padding: var(--fixed-spacing--2x);
 

@@ -98,7 +98,7 @@ buttonClassNames.push(className);
 }
 
 .button {
-	/* Nuclear unset of browser defaults: we want to completely define button styles. */
+
 	all: unset;
 	box-sizing: border-box;
 	cursor: pointer;
@@ -122,7 +122,7 @@ buttonClassNames.push(className);
 	align-items: center;
 	gap: calc(var(--button--padding-x) / 2);
 
-	/* Standard, default theme. */
+
 	--button--border-color: var(--button--primary-color);
 	--button--notification-color: var(--button--primary-color);
 	background-color: var(--button--contrast-color);

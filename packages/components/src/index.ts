@@ -27,6 +27,7 @@ export {
 	DataUploadComponent,
 	FileUploadInput,
 	DataSubmissionInput,
+	SelectInput,
 } from './components/DataUpload';
 
 export {

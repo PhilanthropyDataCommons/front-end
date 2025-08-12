@@ -14,6 +14,7 @@
 			id="file-input"
 			type="file"
 			@change="handleFileSelect"
+			accept=".csv"
 			class="hidden-input"
 		/>
 		<div class="file-upload-instructions">
@@ -57,7 +58,7 @@ function removeFile() {
 	min-height: 120px;
 	padding: var(--accessible-spacing--2x);
 	background-color: var(--color--white);
-	border: 2px solid var(--color--gray--medium);
+	border: 2px solid var(--color--gray--light);
 	border-radius: var(--fixed-spacing--halfx);
 	cursor: pointer;
 	transition:

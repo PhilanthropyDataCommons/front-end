@@ -1,4 +1,4 @@
 import DataUploadComponent from './DataUploadComponent.vue';
-import { FileUploadInput, DataSubmissionInput } from './inputs';
+import { FileUploadInput, DataSubmissionInput, SelectInput } from './inputs';
 
-export { DataUploadComponent, FileUploadInput, DataSubmissionInput };
+export { DataUploadComponent, FileUploadInput, DataSubmissionInput, SelectInput };
