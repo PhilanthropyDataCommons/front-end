@@ -24,12 +24,12 @@ import {
 	ColumnHead,
 } from './Table';
 
-interface ListTableProps<T> {
+export interface ListTableProps<T> {
 	columns: string[];
 	fieldNames?: Record<string, string>;
 	items: T[];
 	wrap?: boolean;
-	renderItem: (item: T) => any; // Vue render function or component
+	renderItem: (item: T) => any;
 }
 
 const {
@@ -39,4 +39,7 @@ const {
 	renderItem,
 	wrap = false,
 } = defineProps<ListTableProps<T>>();
+
+	console.log(items);
+
 </script>

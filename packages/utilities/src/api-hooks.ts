@@ -32,7 +32,7 @@ export function usePdcApi<T>(
 			const { token } = useKeycloak();
 			const url = new URL(path, API_URL);
 			url.search = params.toString();
-
+			console.log(url.toString());
 			const res = await fetch(url.toString(), {
 				headers: { Authorization: `Bearer ${token}` },
 			}).then(throwIfNotOk);

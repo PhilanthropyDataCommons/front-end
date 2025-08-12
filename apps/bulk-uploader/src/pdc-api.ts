@@ -6,6 +6,7 @@ import type {
 	PresignedPost,
 	BulkUploadTask,
 	WritableBulkUploadTask,
+	BulkUploadTaskBundle,
 } from '@pdc/sdk';
 
 export function useBaseFields(): ReturnType<typeof usePdcApi<BaseField[]>> {
@@ -64,7 +65,20 @@ export const useRegisterBulkUploadCallback = () => {
 		});
 };
 
+// export function useBulkUpload(
+// 	id: string,
+// ): ReturnType<typeof usePdcApi<BulkUploadTask>> {
+// 	return usePdcApi<BulkUploadTask>(`/tasks/bulkUpload/${id}`);
+// }
 
-export function useBulkUploads(): ReturnType<typeof usePdcApi<BulkUploadTask[]>> {
-	return usePdcApi<BulkUploadTask[]>('/tasks/bulkUploads');
+export function useBulkUploads(): ReturnType<
+	typeof usePdcApi<BulkUploadTaskBundle>
+> {
+	return usePdcApi<BulkUploadTaskBundle>(
+		'/tasks/bulkUploads',
+		new URLSearchParams({
+			_page: '1',
+			_count: '100',
+		}),
+	);
 }
