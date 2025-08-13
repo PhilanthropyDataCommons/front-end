@@ -11,7 +11,6 @@ import {
 } from '@pdc/components';
 import { getLogger } from '@pdc/utilities';
 const logger = getLogger('<LandingView>');
-
 const { authenticated, login } = useKeycloak();
 
 const handleLogin = async (): Promise<void> => {
