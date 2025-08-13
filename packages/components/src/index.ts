@@ -21,3 +21,14 @@ export {
 	PanelHeaderAction,
 	PanelHeaderActionsWrapper,
 } from './components/Panel';
+
+export {
+	ColumnAction,
+	ColumnActions,
+	ColumnHead,
+	RowCell,
+	TableBody,
+	TableComponent,
+	TableHead,
+	TableRow,
+} from './components/Table';
