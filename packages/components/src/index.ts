@@ -32,3 +32,10 @@ export {
 	TableHead,
 	TableRow,
 } from './components/Table';
+
+export {
+	DataSubmissionInput,
+	FileUploadInput,
+	SelectInput,
+	RadioInput,
+} from './components/DataInputs';
