@@ -22,11 +22,9 @@ const handleLogin = async (): Promise<void> => {
 <template>
 	<PanelComponent class="landing-panel">
 		<PanelBody>
-			<h3 style="font-weight: 600">
-				Philanthropy Data Commons Administrative Interface
-			</h3>
+			<h3 style="font-weight: 600">Philanthropy Data Commons Bulk Uploader</h3>
 			<p>
-				This site provides administrative tools for the Philanthropy Data
+				This site provides tools for uploading data to the Philanthropy Data
 				Commons. {{ ' ' }}
 				<OffSiteLink to="https://philanthropydatacommons.org">
 					Read more about the project here.
@@ -73,7 +71,6 @@ const handleLogin = async (): Promise<void> => {
 
 	--panel--padding: var(--fixed-spacing--2x);
 }
-
 .launch-buttons {
 	display: flex;
 	gap: var(--fixed-spacing--1x);
