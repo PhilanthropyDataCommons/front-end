@@ -38,10 +38,9 @@ const navLinks = [
 }
 
 .App {
-	position: absolute;
+	position: relative;
 	inset: 0;
 	display: flex;
-	height: 100vh;
 }
 
 .App-main {

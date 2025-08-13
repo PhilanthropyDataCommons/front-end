@@ -51,10 +51,12 @@ const { navLinks = undefined } = defineProps<SidePanelLinkProps>();
 .side-panel {
 	width: 100%;
 	max-width: 240px;
-	height: 100vh;
 	flex-shrink: 0;
 	display: flex;
 	flex-direction: column;
+	position: sticky;
+	top: 0;
+	height: 100vh;
 	background-color: var(--color--white);
 	padding: var(--fixed-spacing--2x);
 
