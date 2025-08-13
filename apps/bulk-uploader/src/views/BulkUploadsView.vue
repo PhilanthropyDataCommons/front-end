@@ -52,7 +52,10 @@ onMounted(async () => {
 				<p>Loading bulk uploads...</p>
 			</div>
 
-			<TableComponent v-else-if="bulkUploads && bulkUploads.entries.length > 0">
+			<TableComponent
+				v-else-if="bulkUploads && bulkUploads.entries.length > 0"
+				truncate
+			>
 				<TableHead fixed>
 					<TableRow>
 						<ColumnHead>ID</ColumnHead>

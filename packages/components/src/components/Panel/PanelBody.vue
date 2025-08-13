@@ -15,9 +15,15 @@ const {
 <template>
 	<div
 		:class="
-			`panel-body ${padded ? 'panel-body--padded' : ''} ${dataPanel ? 'panel-body--data-panel' : ''} ${className}`.trim()
+			`panel-body mt-20 ${padded ? 'panel-body--padded' : ''} ${dataPanel ? 'panel-body--data-panel' : ''} ${className}`.trim()
 		"
 	>
 		<slot></slot>
 	</div>
 </template>
+
+<style>
+.mt-20 {
+	margin-top: 20px;
+}
+</style>

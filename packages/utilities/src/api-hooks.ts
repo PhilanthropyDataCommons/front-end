@@ -53,3 +53,27 @@ export function usePdcApi<T>(
 
 	return { data, fetchData };
 }
+
+export function usePdcCallbackApi<T>(
+	path: string,
+): (options: RequestInit) => Promise<T> {
+	return async (options: RequestInit): Promise<T> => {
+		try {
+			const { token } = useKeycloak();
+			const url = new URL(path, API_URL);
+			const res = await fetch(url.toString(), {
+				...options,
+				headers: {
+					Authorization: `Bearer ${token}`,
+					...Object.fromEntries(Object.entries(options.headers ?? {})),
+				},
+			}).then(throwIfNotOk);
+
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Assuming valid JSON response from API
+			return (await res.json()) as T;
+		} catch (error) {
+			logger.error({ error, params: options }, `Error calling ${path}`);
+			throw error;
+		}
+	};
+}
