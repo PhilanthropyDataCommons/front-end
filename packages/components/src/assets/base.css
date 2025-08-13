@@ -161,12 +161,12 @@ dl:last-child {
 	margin-bottom: 0;
 }
 
-dl > .dli > dt {
+dl>.dli>dt {
 	font-weight: var(--font-weight--medium);
 }
 
-dl > .dli > dt,
-dl > .dli > dd {
+dl>.dli>dt,
+dl>.dli>dd {
 	margin: 0;
 	padding: 0;
 }
@@ -243,4 +243,8 @@ a.has-icon {
 	width: var(--icon-size--text);
 	height: var(--icon-size--text);
 	color: inherit;
+}
+
+.text-color-gray-medium-dark {
+	color: var(--color--gray--medium-dark);
 }
