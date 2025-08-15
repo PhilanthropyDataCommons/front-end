@@ -29,7 +29,7 @@ logger.debug(keycloakOptions, 'Keycloak options');
 		},
 	});
 })().catch((error: unknown) => {
-	logger.error('error initializing application', error);
+	logger.error({ error }, 'error initializing application');
 });
 
 reportWebVitals();
