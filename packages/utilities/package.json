@@ -5,10 +5,13 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"lint": "npm run lint:eslint && npm run lint:prettier",
+		"lint": "npm run lint:eslint && npm run lint:prettier && npm run lint:tsc",
 		"lint:prettier": "prettier . --check --ignore-path ../../.gitignore",
 		"lint:eslint": "eslint ./src --report-unused-disable-directives --max-warnings 0",
-		"format": "prettier . --write  --ignore-path ../../.gitignore"
+		"lint:tsc": "vue-tsc --noEmit",
+		"format": "npm run format:prettier && npm run format:eslint",
+		"format:prettier": "prettier . --write  --ignore-path ../../.gitignore",
+		"format:eslint": "eslint --fix || true"
 	},
 	"exports": {
 		".": "./src/index.ts"

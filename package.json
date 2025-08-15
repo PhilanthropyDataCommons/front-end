@@ -10,10 +10,14 @@
 		"node": ">=22"
 	},
 	"scripts": {
-		"start": "npm run start --workspace=apps ",
-		"test": "npm run test --workspace=apps",
-		"lint": "npm run lint --workspace=apps --workspace=packages",
-		"build": "npm run build --workspace=apps"
+		"start": "npm run start --workspace=apps",
+		"test": "npm run --workspaces --if-present test",
+		"lint": "npm run lint:eslint && npm run lint:prettier && npm run lint:tsc",
+		"lint:eslint": "npm run --workspaces --if-present lint:eslint",
+		"lint:prettier": "npm run --workspaces --if-present lint:prettier",
+		"lint:tsc": "npm run --workspaces --if-present lint:tsc",
+		"format": "npm run --workspaces --if-present format",
+		"build": "npm run --workspaces --if-present build"
 	},
 	"devDependencies": {
 		"@storybook/addon-docs": "^9.1.1",
