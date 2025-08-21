@@ -12,9 +12,7 @@ const logger = getLogger('pdc-api');
  */
 const API_URL = import.meta.env.VITE_API_URL;
 
-const { token } = useKeycloak();
-
-function throwIfNotOk(res: Response): Response {
+export function throwIfNotOk(res: Response): Response {
 	if (!res.ok) {
 		throw new Error(`Response status: ${res.status} ${res.statusText}`);
 	}
@@ -30,9 +28,9 @@ export function usePdcApi<T>(
 	const fetchData = async (): Promise<void> => {
 		data.value = null;
 		try {
+			const { token } = useKeycloak();
 			const url = new URL(path, API_URL);
 			url.search = params.toString();
-
 			const res = await fetch(url.toString(), {
 				headers: { Authorization: `Bearer ${token}` },
 			}).then(throwIfNotOk);
