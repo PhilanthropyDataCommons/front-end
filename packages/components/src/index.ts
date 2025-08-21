@@ -20,6 +20,7 @@ export {
 	PanelBody,
 	PanelHeaderAction,
 	PanelHeaderActionsWrapper,
+	PanelSection,
 } from './components/Panel';
 
 export {
