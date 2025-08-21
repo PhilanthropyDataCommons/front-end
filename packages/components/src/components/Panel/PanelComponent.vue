@@ -31,7 +31,12 @@ const { className = '', padded = false } = defineProps<PanelProps>();
 .panel-body {
 	background-color: white;
 	border-radius: 5px;
-	box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
+}
+
+.panel-body--data-panel {
+	display: flex;
+	flex-direction: column;
+	gap: var(--fixed-spacing--4x);
 }
 
 .panel-body--padded {
