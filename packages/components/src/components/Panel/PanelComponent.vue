@@ -1,5 +1,5 @@
 <script setup lang="ts">
-interface PanelProps {
+export interface PanelProps {
 	className?: string;
 	padded?: boolean;
 }
@@ -26,16 +26,6 @@ const { className = '', padded = false } = defineProps<PanelProps>();
 .panel-padded {
 	padding-left: calc(var(--panel--padding) * 4);
 	padding-right: calc(var(--panel--padding) * 4);
-}
-
-.panel-body {
-	background-color: white;
-	border-radius: 5px;
-	box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
-}
-
-.panel-body--padded {
-	padding: calc(var(--panel--padding));
 }
 
 .panel-header {
