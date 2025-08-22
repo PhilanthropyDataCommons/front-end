@@ -20,4 +20,23 @@ export {
 	PanelBody,
 	PanelHeaderAction,
 	PanelHeaderActionsWrapper,
+	PanelSection,
 } from './components/Panel';
+
+export {
+	ColumnAction,
+	ColumnActions,
+	ColumnHead,
+	RowCell,
+	TableBody,
+	TableComponent,
+	TableHead,
+	TableRow,
+} from './components/Table';
+
+export {
+	DataSubmissionInput,
+	FileUploadInput,
+	SelectInput,
+	RadioInput,
+} from './components/DataInputs';
