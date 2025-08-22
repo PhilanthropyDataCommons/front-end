@@ -16,3 +16,9 @@ const { className = '', padded = true } = defineProps<PanelHeaderProps>();
 		<slot></slot>
 	</div>
 </template>
+
+<style scoped>
+.panel-header :deep(h1) {
+	margin: 0;
+}
+</style>
