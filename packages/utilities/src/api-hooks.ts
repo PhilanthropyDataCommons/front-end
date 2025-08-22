@@ -12,9 +12,7 @@ const logger = getLogger('pdc-api');
  */
 const API_URL = import.meta.env.VITE_API_URL;
 
-const { token } = useKeycloak();
-
-function throwIfNotOk(res: Response): Response {
+export function throwIfNotOk(res: Response): Response {
 	if (!res.ok) {
 		throw new Error(`Response status: ${res.status} ${res.statusText}`);
 	}
@@ -30,9 +28,9 @@ export function usePdcApi<T>(
 	const fetchData = async (): Promise<void> => {
 		data.value = null;
 		try {
+			const { token } = useKeycloak();
 			const url = new URL(path, API_URL);
 			url.search = params.toString();
-
 			const res = await fetch(url.toString(), {
 				headers: { Authorization: `Bearer ${token}` },
 			}).then(throwIfNotOk);
@@ -54,4 +52,28 @@ export function usePdcApi<T>(
 	watch(() => params.toString(), fetchData);
 
 	return { data, fetchData };
+}
+
+export function usePdcCallbackApi<T>(
+	path: string,
+): (options: RequestInit) => Promise<T> {
+	return async (options: RequestInit): Promise<T> => {
+		try {
+			const { token } = useKeycloak();
+			const url = new URL(path, API_URL);
+			const res = await fetch(url.toString(), {
+				...options,
+				headers: {
+					Authorization: `Bearer ${token}`,
+					...Object.fromEntries(Object.entries(options.headers ?? {})),
+				},
+			}).then(throwIfNotOk);
+
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Assuming valid JSON response from API
+			return (await res.json()) as T;
+		} catch (error) {
+			logger.error({ error, params: options }, `Error calling ${path}`);
+			throw error;
+		}
+	};
 }

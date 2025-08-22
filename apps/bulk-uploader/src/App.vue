@@ -12,7 +12,7 @@ const navLinks = [
 		icon: ArrowUpCircleIcon,
 		activeIcon: ArrowUpCircleIconSolid,
 		label: 'Bulk Uploads',
-		destination: '/',
+		destination: '/bulk-uploads',
 	},
 ];
 </script>

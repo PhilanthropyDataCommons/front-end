@@ -244,3 +244,7 @@ a.has-icon {
 	height: var(--icon-size--text);
 	color: inherit;
 }
+
+.text-color-gray-medium-dark {
+	color: var(--color--gray--medium-dark);
+}

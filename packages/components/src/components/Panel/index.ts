@@ -3,6 +3,7 @@ import PanelHeader from './PanelHeader.vue';
 import PanelHeaderAction from './PanelHeaderAction.vue';
 import PanelHeaderActionsWrapper from './PanelHeaderActionsWrapper.vue';
 import PanelBody from './PanelBody.vue';
+import PanelSection from './PanelSection.vue';
 
 export {
 	PanelComponent,
@@ -10,4 +11,5 @@ export {
 	PanelHeaderAction,
 	PanelHeaderActionsWrapper,
 	PanelBody,
+	PanelSection,
 };
