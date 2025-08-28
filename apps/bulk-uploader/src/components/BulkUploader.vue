@@ -69,9 +69,6 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 				<PanelSection>
 					<template #header>
 						<h3>Select File to Upload</h3>
-						<p class="text-color-gray-medium-dark">
-							File format guidance and instructions here.
-						</p>
 					</template>
 					<template #content>
 						<FileUploadInput
