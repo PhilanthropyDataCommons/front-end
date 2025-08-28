@@ -1,5 +1,6 @@
 :root {
 	--color--gray--darker: #343434;
+	--color--black: #000;
 	--color--gray--dark: #444;
 	--color--gray--medium-dark: #757575;
 	--color--gray--medium: #bbb;
@@ -243,4 +244,8 @@ a.has-icon {
 	width: var(--icon-size--text);
 	height: var(--icon-size--text);
 	color: inherit;
+}
+
+.text-color-gray-medium-dark {
+	color: var(--color--gray--medium-dark);
 }
