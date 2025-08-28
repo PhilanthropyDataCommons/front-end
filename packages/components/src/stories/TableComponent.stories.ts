@@ -104,7 +104,7 @@ export const Default: Story = {
 				</PanelHeaderAction>
 			</PanelHeaderActionsWrapper>
 		</PanelHeader>
-		<PanelBody :padded="false">
+		<PanelBody>
 			<TableComponent
 
 			>
@@ -161,7 +161,7 @@ export const TruncatedTable: Story = {
 				</PanelHeaderAction>
 			</PanelHeaderActionsWrapper>
 		</PanelHeader>
-		<PanelBody :padded="false">
+		<PanelBody>
 			<TableComponent
 				truncate
 			>
@@ -223,7 +223,7 @@ export const WithTwoActions: Story = {
 				</PanelHeaderAction>
 			</PanelHeaderActionsWrapper>
 		</PanelHeader>
-		<PanelBody :padded="false">
+		<PanelBody >
 			<TableComponent truncate>
 				<TableHead fixed>
 					<TableRow>
@@ -269,7 +269,7 @@ export const WithNoActions: Story = {
 		<PanelHeader>
 			<h1>Base Fields</h1>
 		</PanelHeader>
-		<PanelBody :padded="false">
+		<PanelBody>
 			<TableComponent truncate>
 				<TableHead fixed>
 					<TableRow>

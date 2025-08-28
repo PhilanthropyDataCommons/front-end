@@ -21,7 +21,7 @@ const handleLogin = async (): Promise<void> => {
 
 <template>
 	<PanelComponent class="landing-panel">
-		<PanelBody>
+		<PanelBody variant="padded">
 			<h3 style="font-weight: 600">Philanthropy Data Commons Bulk Uploader</h3>
 			<p>
 				This site provides tools for uploading data to the Philanthropy Data
