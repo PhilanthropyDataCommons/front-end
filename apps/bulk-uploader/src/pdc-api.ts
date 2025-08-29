@@ -2,8 +2,8 @@ import { usePdcApi, usePdcCallbackApi, throwIfNotOk } from '@pdc/utilities';
 import type {
 	BulkUploadTaskBundle,
 	Source,
-	PresignedPostRequest,
-	WritablePresignedPostRequest,
+	File,
+	WritableFile,
 	PresignedPost,
 	WritableBulkUploadTask,
 	BulkUploadTask,
@@ -33,8 +33,8 @@ export function useSystemSource(): ReturnType<typeof usePdcApi<Source>> {
 }
 
 export const usePresignedPostCallback = () => {
-	const api = usePdcCallbackApi<PresignedPostRequest>('/presignedPostRequests');
-	return async (params: WritablePresignedPostRequest) =>
+	const api = usePdcCallbackApi<File>('/files');
+	return async (params: WritableFile) =>
 		await api({
 			method: 'POST',
 			headers: {

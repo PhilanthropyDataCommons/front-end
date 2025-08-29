@@ -3,9 +3,9 @@ import { useRouter } from 'vue-router';
 import { ref, onMounted } from 'vue';
 import {
 	useSystemSource,
-	usePresignedPostCallback,
+	useFileUploadCallback,
 	useRegisterBulkUploadCallback,
-	uploadUsingPresignedPost,
+	uploadFile,
 	useSources,
 	useFunders,
 	useBaseFields,
@@ -29,7 +29,7 @@ const { data: systemSource, fetchData: fetchSystemSource } = useSystemSource();
 const { data: baseFields, fetchData: fetchBaseFields } = useBaseFields();
 const isLoading = ref(true);
 
-const createPresignedPost = usePresignedPostCallback();
+const createFileUpload = useFileUploadCallback();
 const registerBulkUpload = useRegisterBulkUploadCallback();
 
 const defaultFunderShortCode = 'pdc';
@@ -48,12 +48,14 @@ const handleBulkUpload = async (file: File): Promise<void> => {
 	if (systemSource.value?.id == null) {
 		throw new Error('No System Source Available');
 	}
-	const { presignedPost } = await createPresignedPost({
+
+
+	const { fileUpload } = await createFileUpload({
 		fileType: file.type !== '' ? file.type : 'application/octet-stream',
 		fileSize: file.size,
 	});
 
-	await uploadUsingPresignedPost(file, presignedPost);
+	await uploadFile(file, fileUpload);
 	const selectedSourceId =
 		sourceId.value !== null && sourceId.value !== ''
 			? Number(sourceId.value)
@@ -62,7 +64,7 @@ const handleBulkUpload = async (file: File): Promise<void> => {
 		funderShortCode.value ?? defaultFunderShortCode;
 	const bulkUploadResult = await registerBulkUpload({
 		fileName: file.name,
-		sourceKey: presignedPost.fields.key,
+		sourceKey: fileUpload.fields.key,
 		sourceId: selectedSourceId,
 		funderShortCode: selectedFunderShortCode,
 	});
