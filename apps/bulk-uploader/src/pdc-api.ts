@@ -2,8 +2,8 @@ import { usePdcApi, usePdcCallbackApi, throwIfNotOk } from '@pdc/utilities';
 import type {
 	BulkUploadTaskBundle,
 	Source,
-	PresignedPostRequest,
-	WritablePresignedPostRequest,
+	ModelFile,
+	WritableModelFile,
 	PresignedPost,
 	WritableBulkUploadTask,
 	BulkUploadTask,
@@ -11,6 +11,10 @@ import type {
 	FunderBundle,
 	BaseField,
 } from '@pdc/sdk';
+
+type fileUploadResponse = ModelFile & {
+	presignedPost: PresignedPost;
+};
 
 const DEFAULT_ENTITY_PAGE = 1;
 const DEFAULT_ENTITY_COUNT = 200;
@@ -32,9 +36,9 @@ export function useSystemSource(): ReturnType<typeof usePdcApi<Source>> {
 	return usePdcApi<Source>('/sources/1');
 }
 
-export const usePresignedPostCallback = () => {
-	const api = usePdcCallbackApi<PresignedPostRequest>('/presignedPostRequests');
-	return async (params: WritablePresignedPostRequest) =>
+export const useFileUploadCallback = () => {
+	const api = usePdcCallbackApi<fileUploadResponse>('/files');
+	return async (params: WritableModelFile) =>
 		await api({
 			method: 'POST',
 			headers: {
@@ -63,7 +67,6 @@ export const uploadUsingPresignedPost = async (
 		file.type !== '' ? file.type : 'application/octet-stream',
 	);
 	formData.append('file', file);
-
 	return await fetch(presignedPost.url, {
 		method: 'POST',
 		body: formData,
