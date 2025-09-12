@@ -29,7 +29,7 @@ const { data: systemSource, fetchData: fetchSystemSource } = useSystemSource();
 const { data: baseFields, fetchData: fetchBaseFields } = useBaseFields();
 const isLoading = ref(true);
 
-const createPresignedPost = useFileUploadCallback();
+const createPdcFile = useFileUploadCallback();
 const registerBulkUpload = useRegisterBulkUploadCallback();
 
 const defaultFunderShortCode = 'pdc';
@@ -48,13 +48,13 @@ const handleBulkUpload = async (file: File): Promise<void> => {
 	if (systemSource.value?.id == null) {
 		throw new Error('No System Source Available');
 	}
-	const { presignedPost, storageKey } = await createPresignedPost({
+	const proposalsDataFile = await createPdcFile({
 		mimeType: file.type !== '' ? file.type : 'application/octet-stream',
 		size: file.size,
 		name: file.name,
 	});
 
-	await uploadUsingPresignedPost(file, presignedPost);
+	await uploadUsingPresignedPost(file, proposalsDataFile.presignedPost);
 
 	const selectedSourceId =
 		sourceId.value !== null && sourceId.value !== ''
@@ -64,8 +64,7 @@ const handleBulkUpload = async (file: File): Promise<void> => {
 		funderShortCode.value ?? defaultFunderShortCode;
 
 	const bulkUploadResult = await registerBulkUpload({
-		fileName: file.name,
-		sourceKey: storageKey,
+		proposalsDataFileId: proposalsDataFile.id,
 		sourceId: selectedSourceId,
 		funderShortCode: selectedFunderShortCode,
 	});

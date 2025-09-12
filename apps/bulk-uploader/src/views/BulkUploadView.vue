@@ -99,9 +99,7 @@ onUnmounted(() => {
 							<h4>Original File</h4>
 							<div class="file-download">
 								<DocumentPlusIcon class="icon" />
-								<p :href="bulkUpload.fileName" target="_blank">
-									TO DO: IMPLEMENT
-								</p>
+								<p>TO DO: IMPLEMENT</p>
 							</div>
 						</div>
 						<h4>Job ID</h4>
