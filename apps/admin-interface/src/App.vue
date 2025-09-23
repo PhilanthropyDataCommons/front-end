@@ -12,7 +12,7 @@ const navLinks = [
 		icon: CircleStackIcon,
 		activeIcon: CircleStackIconSolid,
 		label: 'Base Fields',
-		destination: '/',
+		destination: '/basefields',
 	},
 ];
 </script>
