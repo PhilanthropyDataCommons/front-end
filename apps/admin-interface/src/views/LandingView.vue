@@ -21,13 +21,13 @@ const handleLogin = async (): Promise<void> => {
 
 <template>
 	<PanelComponent class="landing-panel">
-		<PanelBody>
+		<PanelBody variant="padded">
 			<h3 style="font-weight: 600">
-				Philanthropy Data Commons Administrative Interface
+				Philanthropy Data Commons Basefields Administrative Interface
 			</h3>
 			<p>
-				This site provides administrative tools for the Philanthropy Data
-				Commons. {{ ' ' }}
+				This site provides administrative tools for basefields in the
+				Philanthropy Data Commons.
 				<OffSiteLink to="https://philanthropydatacommons.org">
 					Read more about the project here.
 				</OffSiteLink>
