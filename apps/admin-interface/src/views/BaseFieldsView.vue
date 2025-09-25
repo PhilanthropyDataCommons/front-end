@@ -83,7 +83,7 @@ onMounted(async () => {
 						<TableRowCell>{{ baseField.category }}</TableRowCell>
 						<TableRowCell>{{ baseField.valueRelevanceHours }}</TableRowCell>
 						<TableRowCell class="arrow-icon">
-							<RouterLink :to="`/basefields/`">
+							<RouterLink :to="`/basefields/${baseField.shortCode}`">
 								<ArrowRightIcon class="icon text-black" />
 							</RouterLink>
 						</TableRowCell>
