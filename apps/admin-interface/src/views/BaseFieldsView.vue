@@ -17,17 +17,20 @@ import { PlusIcon } from '@heroicons/vue/24/outline';
 import { ArrowRightIcon } from '@heroicons/vue/24/solid';
 import { onMounted, ref } from 'vue';
 import { useBaseFields } from '../pdc-api';
-import { getLogger } from '@pdc/utilities';
+import { getLogger, dateCompare } from '@pdc/utilities';
+import type { BaseField } from '@pdc/sdk';
 
 const logger = getLogger('<BaseFieldsView>');
 
 const { data: baseFields, fetchData: fetchBaseFields } = useBaseFields();
 const isLoading = ref(true);
 const caughtError = ref(false);
-
+const baseFieldsArray = ref<BaseField[]>([]);
 onMounted(async () => {
 	try {
 		await fetchBaseFields();
+		baseFieldsArray.value = baseFields.value ?? [];
+		baseFieldsArray.value.sort((a, b) => dateCompare(a.createdAt, b.createdAt));
 	} catch (error: unknown) {
 		logger.error({ error }, 'Failed to load basefields');
 		caughtError.value = true;
@@ -44,7 +47,7 @@ onMounted(async () => {
 			<PanelHeaderActionsWrapper>
 				<PanelHeaderAction>
 					<PlusIcon class="icon" />
-					<RouterLink to="/add-data">New base field</RouterLink>
+					<RouterLink to="/basefields/add">New base field</RouterLink>
 				</PanelHeaderAction>
 			</PanelHeaderActionsWrapper>
 		</PanelHeader>
@@ -83,7 +86,7 @@ onMounted(async () => {
 						<TableRowCell>{{ baseField.category }}</TableRowCell>
 						<TableRowCell>{{ baseField.valueRelevanceHours }}</TableRowCell>
 						<TableRowCell class="arrow-icon">
-							<RouterLink :to="`/basefields/`">
+							<RouterLink :to="`/basefields/${baseField.shortCode}`">
 								<ArrowRightIcon class="icon text-black" />
 							</RouterLink>
 						</TableRowCell>
