@@ -69,6 +69,10 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 				<PanelSection>
 					<template #header>
 						<h3>Select File to Upload</h3>
+						<p class="text-color-gray-medium-dark">
+							A bulk-upload must have a valid email address in the
+							proposal_submitter_email address column.
+						</p>
 					</template>
 					<template #content>
 						<FileUploadInput
