@@ -49,7 +49,7 @@ onMounted(async () => {
 			<PanelHeaderActionsWrapper>
 				<PanelHeaderAction>
 					<PlusIcon class="icon" />
-					<RouterLink to="/add-data">New base field</RouterLink>
+					<RouterLink to="/basefields/add">New base field</RouterLink>
 				</PanelHeaderAction>
 			</PanelHeaderActionsWrapper>
 		</PanelHeader>
