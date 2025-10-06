@@ -64,7 +64,7 @@ export const uploadUsingPresignedPost = async (
 	});
 	formData.append(
 		'Content-Type',
-		file.type !== '' ? file.type : 'application/octet-stream',
+		file.type === '' ? 'application/octet-stream' : file.type,
 	);
 	formData.append('file', file);
 	return await fetch(presignedPost.url, {

@@ -45,7 +45,6 @@ export default typescriptEslint.config(
 				},
 			],
 			'@typescript-eslint/require-await': 'off',
-			'no-negated-condition': 'off',
 		},
 	},
 	{

@@ -49,7 +49,7 @@ const handleBulkUpload = async (file: File): Promise<void> => {
 		throw new Error('No System Source Available');
 	}
 	const proposalsDataFile = await createPdcFile({
-		mimeType: file.type !== '' ? file.type : 'application/octet-stream',
+		mimeType: file.type === '' ? 'application/octet-stream' : file.type,
 		size: file.size,
 		name: file.name,
 	});
