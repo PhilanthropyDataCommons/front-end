@@ -9,8 +9,8 @@ import {
 	FileUploadInput,
 	DataSubmitButton,
 	SelectInput,
+	ErrorMessage,
 } from '@pdc/components';
-import { XCircleIcon } from '@heroicons/vue/24/outline';
 import { getLogger } from '@pdc/utilities';
 import { ref } from 'vue';
 
@@ -32,6 +32,7 @@ const emit = defineEmits<{
 
 const logger = getLogger('BulkUploader');
 const hadError = ref(false);
+const errorMessage = ref('');
 
 const handleFormSubmit = async (event: Event): Promise<void> => {
 	event.preventDefault();
@@ -46,6 +47,8 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 		logger.info('Bulk upload submitted successfully');
 	} catch (error) {
 		logger.error({ error }, 'Failed to submit bulk upload');
+		errorMessage.value =
+			error instanceof Error ? error.message : 'An error occurred while submitting the bulk upload.';
 		hadError.value = true;
 	}
 };
@@ -161,10 +164,7 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 						<DataSubmitButton :disabled="props.bulkUpload === null">
 							Submit
 						</DataSubmitButton>
-						<div v-if="hadError" class="error-message">
-							<XCircleIcon class="icon" />
-							<p>An error occurred while submitting the bulk upload.</p>
-						</div>
+						<ErrorMessage v-if="hadError" :message="errorMessage" />
 					</template>
 				</PanelSection>
 			</form>
