@@ -49,7 +49,7 @@ const { className = '', truncate = false } = defineProps<TableProps>();
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	max-width: 30ch;
+	max-width: 20ch;
 }
 
 .table .clickable {
