@@ -3,13 +3,13 @@ import {
 	PanelComponent,
 	PanelBody,
 	PanelHeader,
-	PanelHeaderAction,
+	BackButton,
 	PanelHeaderActionsWrapper,
 	PanelSection,
 } from '@pdc/components';
 import BulkUploadStatus from '@/components/BulkUploadStatus.vue';
-import { RouterLink, useRoute } from 'vue-router';
-import { ArrowLeftIcon, DocumentPlusIcon } from '@heroicons/vue/24/outline';
+import { useRoute } from 'vue-router';
+import { DocumentPlusIcon } from '@heroicons/vue/24/outline';
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useBulkUploads } from '../pdc-api';
 import { BulkUploadTask as BulkUploadTaskType } from '@pdc/sdk';
@@ -82,10 +82,7 @@ onUnmounted(() => {
 			</div>
 
 			<PanelHeaderActionsWrapper>
-				<PanelHeaderAction>
-					<ArrowLeftIcon class="icon" />
-					<RouterLink to="/bulk-uploads">Back to bulk uploads</RouterLink>
-				</PanelHeaderAction>
+				<BackButton to="/bulk-uploads" label="Back to bulk uploads" />
 			</PanelHeaderActionsWrapper>
 		</PanelHeader>
 		<PanelBody variant="data-panel-padded">

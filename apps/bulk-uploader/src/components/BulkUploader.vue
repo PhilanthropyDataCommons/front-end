@@ -4,15 +4,13 @@ import {
 	PanelComponent,
 	PanelBody,
 	PanelHeader,
-	PanelHeaderAction,
 	PanelHeaderActionsWrapper,
 	PanelSection,
 	FileUploadInput,
 	DataSubmitButton,
 	SelectInput,
 } from '@pdc/components';
-import { ArrowLeftIcon, XCircleIcon } from '@heroicons/vue/24/outline';
-import { RouterLink } from 'vue-router';
+import { XCircleIcon } from '@heroicons/vue/24/outline';
 import { getLogger } from '@pdc/utilities';
 import { ref } from 'vue';
 
@@ -58,10 +56,7 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 		<PanelHeader>
 			<h1>New Bulk Upload</h1>
 			<PanelHeaderActionsWrapper>
-				<PanelHeaderAction>
-					<ArrowLeftIcon class="icon" />
-					<RouterLink to="/bulk-uploads">Back to bulk uploads</RouterLink>
-				</PanelHeaderAction>
+				<BackButton to="/bulk-uploads" label="Back to bulk uploads" />
 			</PanelHeaderActionsWrapper>
 		</PanelHeader>
 		<PanelBody variant="data-panel-padded">

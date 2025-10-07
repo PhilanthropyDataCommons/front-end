@@ -4,6 +4,7 @@ export { default as EmailLink } from './components/EmailLink.vue';
 export { default as OffSiteLink } from './components/OffSiteLink.vue';
 export { default as UserComponent } from './components/UserComponent.vue';
 export { default as SidePanel } from './components/SidePanel.vue';
+export { default as BackButton } from './components/BackButton.vue';
 export {
 	DropdownComponent,
 	DropdownTrigger,
