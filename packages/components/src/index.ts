@@ -41,4 +41,7 @@ export {
 	FileUploadInput,
 	SelectInput,
 	RadioInput,
+	TextInput,
+	InputHeader,
+	InputInstructions,
 } from './components/DataInputs';
