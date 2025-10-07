@@ -67,6 +67,7 @@ const handleBulkUpload = async (file: File): Promise<void> => {
 		proposalsDataFileId: proposalsDataFile.id,
 		sourceId: selectedSourceId,
 		funderShortCode: selectedFunderShortCode,
+		logs: [],
 	});
 
 	await router.push(`/bulk-uploads/${bulkUploadResult.id}`);
