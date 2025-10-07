@@ -4,15 +4,13 @@ import {
 	PanelComponent,
 	PanelBody,
 	PanelHeader,
-	PanelHeaderAction,
 	PanelHeaderActionsWrapper,
 	PanelSection,
 	FileUploadInput,
 	DataSubmitButton,
 	SelectInput,
+	ErrorMessage,
 } from '@pdc/components';
-import { ArrowLeftIcon, XCircleIcon } from '@heroicons/vue/24/outline';
-import { RouterLink } from 'vue-router';
 import { getLogger } from '@pdc/utilities';
 import { ref } from 'vue';
 
@@ -34,6 +32,7 @@ const emit = defineEmits<{
 
 const logger = getLogger('BulkUploader');
 const hadError = ref(false);
+const errorMessage = ref('');
 
 const handleFormSubmit = async (event: Event): Promise<void> => {
 	event.preventDefault();
@@ -48,6 +47,10 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 		logger.info('Bulk upload submitted successfully');
 	} catch (error) {
 		logger.error({ error }, 'Failed to submit bulk upload');
+		errorMessage.value =
+			error instanceof Error
+				? error.message
+				: 'An error occurred while submitting the bulk upload.';
 		hadError.value = true;
 	}
 };
@@ -58,10 +61,7 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 		<PanelHeader>
 			<h1>New Bulk Upload</h1>
 			<PanelHeaderActionsWrapper>
-				<PanelHeaderAction>
-					<ArrowLeftIcon class="icon" />
-					<RouterLink to="/bulk-uploads">Back to bulk uploads</RouterLink>
-				</PanelHeaderAction>
+				<BackButton to="/bulk-uploads" label="Back to bulk uploads" />
 			</PanelHeaderActionsWrapper>
 		</PanelHeader>
 		<PanelBody variant="data-panel-padded">
@@ -82,14 +82,10 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 									emit('update:bulk-upload', value ?? null)
 							"
 						>
-							<template #file-upload-header>
-								<h4>Choose File</h4>
-							</template>
-							<template #file-upload-instructions>
-								<p class="text-color-gray-medium-dark">
-									Drag and drop a CSV file into the box above, or click it to
-									use the file picker.
-								</p>
+							<template #header>Choose File</template>
+							<template #instructions>
+								Drag and drop a CSV file into the box above, or click it to use
+								the file picker.
 							</template>
 						</FileUploadInput>
 					</template>
@@ -112,14 +108,10 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 									emit('update:source-id', value ?? null)
 							"
 						>
-							<template #select-input-header>
-								<h4>Source</h4>
-							</template>
-							<template #select-input-instructions>
-								<p class="text-color-gray-medium-dark">
-									If blank, the default source in the pdc instance will be used
-									for the bulk upload.
-								</p>
+							<template #header>Source</template>
+							<template #instructions>
+								If blank, the default source in the pdc instance will be used
+								for the bulk upload.
 							</template>
 						</SelectInput>
 						<SelectInput
@@ -135,14 +127,10 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 									emit('update:funder-short-code', value ?? null)
 							"
 						>
-							<template #select-input-header>
-								<h4>Funder</h4>
-							</template>
-							<template #select-input-instructions>
-								<p class="text-color-gray-medium-dark">
-									If blank, the system funder shortcode will be used (default is
-									`{{ defaultFunderShortCode }}`)
-								</p>
+							<template #header>Funder</template>
+							<template #instructions>
+								If blank, the system funder shortcode will be used (default is
+								`{{ defaultFunderShortCode }}`)
 							</template>
 						</SelectInput>
 					</template>
@@ -166,10 +154,7 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 						<DataSubmitButton :disabled="props.bulkUpload === null">
 							Submit
 						</DataSubmitButton>
-						<div v-if="hadError" class="error-message">
-							<XCircleIcon class="icon" />
-							<p>An error occurred while submitting the bulk upload.</p>
-						</div>
+						<ErrorMessage v-if="hadError" :message="errorMessage" />
 					</template>
 				</PanelSection>
 			</form>

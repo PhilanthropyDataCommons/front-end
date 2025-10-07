@@ -1,8 +1,9 @@
 <template>
 	<div class="file-upload-container">
-		<div class="file-upload-header">
-			<slot class="header" name="file-upload-header"></slot>
-		</div>
+		<InputHeader>
+			<template #header><slot name="header"></slot></template>
+		</InputHeader>
+
 		<label for="file-input" class="file-upload-area">
 			<div v-if="!file" class="upload-text">Select a file to upload</div>
 			<div v-else class="uploaded-file">
@@ -17,13 +18,17 @@
 			accept=".csv"
 			@change="handleFileSelect"
 		/>
-		<div class="file-upload-instructions">
-			<slot name="file-upload-instructions"></slot>
-		</div>
+
+		<InputInstructions>
+			<template #instructions><slot name="instructions"></slot></template>
+		</InputInstructions>
 	</div>
 </template>
 
 <script setup lang="ts">
+import InputHeader from './InputHeader.vue';
+import InputInstructions from './InputInstructions.vue';
+
 const file = defineModel<File | null>();
 
 const emit = defineEmits<{

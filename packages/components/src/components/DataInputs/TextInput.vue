@@ -1,19 +1,10 @@
 <template>
-	<div class="select-input-container">
+	<div class="text-input-container">
 		<InputHeader>
 			<template #header><slot name="header"></slot></template>
 		</InputHeader>
 
-		<select v-model="modelValue">
-			<option value=""></option>
-			<option
-				v-for="option in options"
-				:key="option.value"
-				:value="option.value"
-			>
-				{{ option.label }}
-			</option>
-		</select>
+		<input v-model="modelValue" type="text" />
 
 		<InputInstructions>
 			<template #instructions><slot name="instructions"></slot></template>
@@ -26,14 +17,10 @@ import InputHeader from './InputHeader.vue';
 import InputInstructions from './InputInstructions.vue';
 
 const modelValue = defineModel<string | null>();
-export interface SelectInputProps {
-	options?: Array<{ label: string | undefined; value: string | undefined }>;
-}
-const { options = undefined } = defineProps<SelectInputProps>();
 </script>
 
 <style scoped>
-select {
+input {
 	margin-top: var(--accessible-spacing--1x);
 
 	border: 2px solid var(--color--gray--light);
@@ -43,9 +30,5 @@ select {
 	padding: 10px;
 	transition: 0.4s;
 	font-size: var(--font-size);
-}
-
-select::picker-icon {
-	width: 40px;
 }
 </style>
