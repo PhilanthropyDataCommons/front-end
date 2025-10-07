@@ -48,7 +48,9 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 	} catch (error) {
 		logger.error({ error }, 'Failed to submit bulk upload');
 		errorMessage.value =
-			error instanceof Error ? error.message : 'An error occurred while submitting the bulk upload.';
+			error instanceof Error
+				? error.message
+				: 'An error occurred while submitting the bulk upload.';
 		hadError.value = true;
 	}
 };
@@ -80,14 +82,10 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 									emit('update:bulk-upload', value ?? null)
 							"
 						>
-							<template #file-upload-header>
-								<h4>Choose File</h4>
-							</template>
-							<template #file-upload-instructions>
-								<p class="text-color-gray-medium-dark">
-									Drag and drop a CSV file into the box above, or click it to
-									use the file picker.
-								</p>
+							<template #header>Choose File</template>
+							<template #instructions>
+								Drag and drop a CSV file into the box above, or click it to use
+								the file picker.
 							</template>
 						</FileUploadInput>
 					</template>
@@ -110,14 +108,10 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 									emit('update:source-id', value ?? null)
 							"
 						>
-							<template #select-input-header>
-								<h4>Source</h4>
-							</template>
-							<template #select-input-instructions>
-								<p class="text-color-gray-medium-dark">
-									If blank, the default source in the pdc instance will be used
-									for the bulk upload.
-								</p>
+							<template #header>Source</template>
+							<template #instructions>
+								If blank, the default source in the pdc instance will be used
+								for the bulk upload.
 							</template>
 						</SelectInput>
 						<SelectInput
@@ -133,14 +127,10 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 									emit('update:funder-short-code', value ?? null)
 							"
 						>
-							<template #select-input-header>
-								<h4>Funder</h4>
-							</template>
-							<template #select-input-instructions>
-								<p class="text-color-gray-medium-dark">
-									If blank, the system funder shortcode will be used (default is
-									`{{ defaultFunderShortCode }}`)
-								</p>
+							<template #header>Funder</template>
+							<template #instructions>
+								If blank, the system funder shortcode will be used (default is
+								`{{ defaultFunderShortCode }}`)
 							</template>
 						</SelectInput>
 					</template>

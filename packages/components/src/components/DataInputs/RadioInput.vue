@@ -1,8 +1,8 @@
 <template>
 	<div class="radio-input-container">
-		<div class="radio-input-header">
-			<slot class="header" name="radio-input-header"></slot>
-		</div>
+		<InputHeader>
+			<template #header><slot name="header"></slot></template>
+		</InputHeader>
 
 		<fieldset>
 			<div
@@ -27,13 +27,17 @@
 				</p>
 			</div>
 		</fieldset>
-		<div class="radio-input-instructions">
-			<slot name="radio-input-instructions"></slot>
-		</div>
+
+		<InputInstructions>
+			<template #instructions><slot name="instructions"></slot></template>
+		</InputInstructions>
 	</div>
 </template>
 
 <script setup lang="ts">
+import InputHeader from './InputHeader.vue';
+import InputInstructions from './InputInstructions.vue';
+
 export interface RadioInputProps {
 	options?: Array<{ label: string; value: string; description?: string }>;
 	name?: string;
@@ -73,10 +77,6 @@ legend {
 
 label {
 	font-size: 20px;
-}
-
-.text-color-gray-medium-dark {
-	color: var(--color--gray--medium-dark);
 }
 
 .radio-input-container {
