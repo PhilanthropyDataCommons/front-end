@@ -28,9 +28,10 @@ const { data: funders } = useFunders();
 const { data: systemSource, fetchData: fetchSystemSource } = useSystemSource();
 const { data: baseFields, fetchData: fetchBaseFields } = useBaseFields();
 const isLoading = ref(true);
+const uploadError = ref<Response | null>(null);
 
 const createPdcFile = useFileUploadCallback();
-const registerBulkUpload = useRegisterBulkUploadCallback();
+const registerBulkUpload = useRegisterBulkUploadCallback(uploadError);
 
 const defaultFunderShortCode = 'pdc';
 
@@ -62,7 +63,6 @@ const handleBulkUpload = async (file: File): Promise<void> => {
 			: systemSource.value.id;
 	const selectedFunderShortCode =
 		funderShortCode.value ?? defaultFunderShortCode;
-
 	const bulkUploadResult = await registerBulkUpload({
 		proposalsDataFileId: proposalsDataFile.id,
 		sourceId: selectedSourceId,
@@ -72,7 +72,6 @@ const handleBulkUpload = async (file: File): Promise<void> => {
 		attachmentsArchiveFile: null,
 		logs: [],
 	});
-
 	await router.push(`/bulk-uploads/${bulkUploadResult.id}`);
 };
 </script>
@@ -86,6 +85,7 @@ const handleBulkUpload = async (file: File): Promise<void> => {
 		:funders="funders"
 		:handle-bulk-upload="handleBulkUpload"
 		:default-funder-short-code="defaultFunderShortCode"
+		:upload-error="uploadError"
 	/>
 	<BaseFieldsTable :base-fields="baseFields" :is-loading="isLoading" />
 </template>
