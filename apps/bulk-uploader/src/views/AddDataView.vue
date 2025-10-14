@@ -67,6 +67,9 @@ const handleBulkUpload = async (file: File): Promise<void> => {
 		proposalsDataFileId: proposalsDataFile.id,
 		sourceId: selectedSourceId,
 		funderShortCode: selectedFunderShortCode,
+		/* @ts-expect-error  -- The bulk upload task should be typed as null, but is coming through as undefined due to an sdk issue. */
+		attachmentsArchiveFileId: null,
+		attachmentsArchiveFile: null,
 		logs: [],
 	});
 
