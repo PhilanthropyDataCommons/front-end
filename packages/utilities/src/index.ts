@@ -3,3 +3,4 @@ export { reportWebVitals } from './reportWebVitals';
 export { usePdcApi, usePdcCallbackApi, throwIfNotOk } from './api-hooks';
 export { localizeDateTime, relativizeDateTime } from './utils/datetime';
 export { dateCompare } from './utils/dateCompare';
+export const JSON_INDENTATION_LEVEL = 2;

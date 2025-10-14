@@ -12,8 +12,15 @@ const logger = getLogger('pdc-api');
  */
 const API_URL = import.meta.env.VITE_API_URL;
 
-export function throwIfNotOk(res: Response): Response {
+export function throwIfNotOk(
+	res: Response,
+	error?: Ref<Response | null>,
+): Response {
 	if (!res.ok) {
+		if (error !== undefined) {
+			const errorRef = error;
+			errorRef.value = res.clone();
+		}
 		throw new Error(`Response status: ${res.status} ${res.statusText}`);
 	}
 	return res;
@@ -56,6 +63,7 @@ export function usePdcApi<T>(
 
 export function usePdcCallbackApi<T>(
 	path: string,
+	error?: Ref<Response | null>,
 ): (options: RequestInit) => Promise<T> {
 	return async (options: RequestInit): Promise<T> => {
 		try {
@@ -67,7 +75,7 @@ export function usePdcCallbackApi<T>(
 					Authorization: `Bearer ${token}`,
 					...Object.fromEntries(Object.entries(options.headers ?? {})),
 				},
-			}).then(throwIfNotOk);
+			}).then((res) => throwIfNotOk(res, error));
 
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Assuming valid JSON response from API
 			return (await res.json()) as T;

@@ -11,7 +11,7 @@ import {
 	SelectInput,
 	ErrorMessage,
 } from '@pdc/components';
-import { getLogger } from '@pdc/utilities';
+import { getLogger, JSON_INDENTATION_LEVEL } from '@pdc/utilities';
 import { ref } from 'vue';
 
 const props = defineProps<{
@@ -22,6 +22,7 @@ const props = defineProps<{
 	funders: FunderBundle | null;
 	defaultFunderShortCode: string;
 	handleBulkUpload: (file: File) => Promise<void>;
+	uploadError?: Response | null;
 }>();
 
 const emit = defineEmits<{
@@ -47,10 +48,19 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 		logger.info('Bulk upload submitted successfully');
 	} catch (error) {
 		logger.error({ error }, 'Failed to submit bulk upload');
-		errorMessage.value =
-			error instanceof Error
-				? error.message
-				: 'An error occurred while submitting the bulk upload.';
+
+		if (props.uploadError !== null && props.uploadError !== undefined) {
+			const errorData: unknown = await props.uploadError
+				.json()
+				.catch(() => null);
+			errorMessage.value =
+				errorData !== null && errorData !== undefined
+					? JSON.stringify(errorData, null, JSON_INDENTATION_LEVEL)
+					: `Error ${props.uploadError.status}: ${props.uploadError.statusText}`;
+		} else {
+			errorMessage.value =
+				error instanceof Error ? error.message : 'Upload failed';
+		}
 		hadError.value = true;
 	}
 };
@@ -154,7 +164,7 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 						<DataSubmitButton :disabled="props.bulkUpload === null">
 							Submit
 						</DataSubmitButton>
-						<ErrorMessage v-if="hadError" :message="errorMessage" />
+						<ErrorMessage v-if="hadError" :message="errorMessage" mode="json" />
 					</template>
 				</PanelSection>
 			</form>

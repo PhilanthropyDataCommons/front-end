@@ -12,6 +12,7 @@ import type {
 	BaseField,
 	UserBundle,
 } from '@pdc/sdk';
+import type { Ref } from 'vue';
 
 type fileUploadResponse = ModelFile & {
 	presignedPost: PresignedPost;
@@ -74,8 +75,8 @@ export const uploadUsingPresignedPost = async (
 	}).then(throwIfNotOk);
 };
 
-export const useRegisterBulkUploadCallback = () => {
-	const api = usePdcCallbackApi<BulkUploadTask>('/tasks/bulkUploads');
+export const useRegisterBulkUploadCallback = (error?: Ref<Response | null>) => {
+	const api = usePdcCallbackApi<BulkUploadTask>('/tasks/bulkUploads', error);
 	return async (params: WritableBulkUploadTask) =>
 		await api({
 			method: 'POST',
