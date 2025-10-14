@@ -1,7 +1,7 @@
-import type { KeycloakConfig, KeycloakInitOptions } from 'keycloak-js';
+import type { KeycloakServerConfig, KeycloakInitOptions } from 'keycloak-js';
 
 interface VueKeycloakConfig {
-	config: KeycloakConfig;
+	config: KeycloakServerConfig;
 	init: KeycloakInitOptions;
 }
 
