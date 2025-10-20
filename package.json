@@ -21,7 +21,7 @@
 	},
 	"devDependencies": {
 		"@storybook/addon-docs": "^9.1.10",
-		"@storybook/addon-onboarding": "^9.1.10",
+		"@storybook/addon-onboarding": "^9.1.13",
 		"@storybook/vue3-vite": "^9.1.10",
 		"@testing-library/user-event": "^14.6.1",
 		"@types/node": "^22.18.10",
