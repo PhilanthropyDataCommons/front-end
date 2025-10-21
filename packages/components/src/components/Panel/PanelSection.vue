@@ -22,7 +22,10 @@
 .panel-section-content {
 	flex: 1;
 	width: 50%;
-	margin-top: 0;
+}
+
+.panel-section-header {
+	margin-right: var(--fixed-spacing--2x);
 }
 
 .panel-section-header :deep(h3) {

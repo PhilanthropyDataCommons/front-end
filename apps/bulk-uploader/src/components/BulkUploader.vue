@@ -16,16 +16,18 @@ import { ref } from 'vue';
 
 const props = defineProps<{
 	bulkUpload: File | null;
+	attachmentsUpload: File | null;
 	sourceId: string | null;
 	funderShortCode: string | null;
 	sources: SourceBundle | null;
 	funders: FunderBundle | null;
 	defaultFunderShortCode: string;
-	handleBulkUpload: (file: File) => Promise<void>;
+	handleBulkUpload: (file: File, attachmentsFile: File | null) => Promise<void>;
 }>();
 
 const emit = defineEmits<{
 	'update:bulk-upload': [file: File | null];
+	'update:attachments-upload': [file: File | null];
 	'update:source-id': [sourceId: string | null];
 	'update:funder-short-code': [funderShortCode: string | null];
 }>();
@@ -43,7 +45,7 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 	}
 
 	try {
-		await props.handleBulkUpload(props.bulkUpload);
+		await props.handleBulkUpload(props.bulkUpload, props.attachmentsUpload);
 		logger.info('Bulk upload submitted successfully');
 	} catch (error) {
 		logger.error({ error }, 'Failed to submit bulk upload');
@@ -68,14 +70,16 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 			<form @submit="handleFormSubmit">
 				<PanelSection>
 					<template #header>
-						<h3>Select File to Upload</h3>
+						<h3>Select CSV File to Upload</h3>
 						<p class="text-color-gray-medium-dark">
-							A bulk-upload must have a valid email address in the
+							A bulk-upload CSV must have a valid email address in the
 							proposal_submitter_email address column.
 						</p>
 					</template>
 					<template #content>
 						<FileUploadInput
+							id="bulk-upload-file-input"
+							accept=".csv"
 							:model-value="props.bulkUpload"
 							@update:model-value="
 								(value: File | null | undefined) =>
@@ -84,8 +88,33 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 						>
 							<template #header>Choose File</template>
 							<template #instructions>
-								Drag and drop a CSV file into the box above, or click it to use
-								the file picker.
+								Click the button to use the file picker.
+							</template>
+						</FileUploadInput>
+					</template>
+				</PanelSection>
+				<PanelSection>
+					<template #header>
+						<h3>Base Field File Attachments (Optional)</h3>
+						<p class="text-color-gray-medium-dark">
+							A zip file containing the file attachments for basefields. The
+							bulk upload CSV file must refer to the files by their relative
+							path from the root of the zip file.
+						</p>
+					</template>
+					<template #content>
+						<FileUploadInput
+							id="attachments-file-input"
+							accept=".zip"
+							:model-value="props.attachmentsUpload"
+							@update:model-value="
+								(value: File | null | undefined) =>
+									emit('update:attachments-upload', value ?? null)
+							"
+						>
+							<template #header>Choose Attachments File</template>
+							<template #instructions>
+								Click the button to use the file picker.
 							</template>
 						</FileUploadInput>
 					</template>
