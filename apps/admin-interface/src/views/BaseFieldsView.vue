@@ -73,7 +73,7 @@ onMounted(async () => {
 						<TableColumnHead>Short code</TableColumnHead>
 						<TableColumnHead>Data type</TableColumnHead>
 						<TableColumnHead>Category</TableColumnHead>
-						<TableColumnHead>Relevance Duration</TableColumnHead>
+						<TableColumnHead>Relevance Duration (hours)</TableColumnHead>
 						<TableColumnHead></TableColumnHead>
 					</TableRow>
 				</TableHead>

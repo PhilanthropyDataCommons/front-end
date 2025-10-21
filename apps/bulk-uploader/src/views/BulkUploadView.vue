@@ -117,7 +117,7 @@ onUnmounted(() => {
 						<h4>Upload Result</h4>
 						<p><BulkUploadStatus :status="bulkUpload.status" /></p>
 						<h4>Errors Encountered</h4>
-						<p>TODO: Implement</p>
+						<pre>{{ bulkUpload.logs }}</pre>
 						<h4>Proposals Added</h4>
 						<p>TODO: Implement</p>
 					</div>

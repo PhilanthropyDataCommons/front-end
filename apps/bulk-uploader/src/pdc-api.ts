@@ -10,6 +10,7 @@ import type {
 	SourceBundle,
 	FunderBundle,
 	BaseField,
+	UserBundle,
 } from '@pdc/sdk';
 
 type fileUploadResponse = ModelFile & {
@@ -118,6 +119,19 @@ export function useBaseFields(
 ): ReturnType<typeof usePdcApi<BaseField[]>> {
 	return usePdcApi<BaseField[]>(
 		'/baseFields',
+		new URLSearchParams({
+			_page: page.toString(),
+			_count: count.toString(),
+		}),
+	);
+}
+
+export function useUsers(
+	page: number = DEFAULT_ENTITY_PAGE,
+	count: number = DEFAULT_ENTITY_COUNT,
+): ReturnType<typeof usePdcApi<UserBundle>> {
+	return usePdcApi<UserBundle>(
+		'/users',
 		new URLSearchParams({
 			_page: page.toString(),
 			_count: count.toString(),
