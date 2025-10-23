@@ -13,11 +13,13 @@ import {
 import { getLogger } from '@pdc/utilities';
 import BulkUploader from '../components/BulkUploader.vue';
 import BaseFieldsTable from '../components/BaseFieldsTable.vue';
+import type { FileUploadResponse } from '../pdc-api';
 
 const logger = getLogger('<AddDataView>');
 
 const router = useRouter();
 const bulkUpload = ref<File | null>(null);
+const attachmentsUpload = ref<File | null>(null);
 
 const sourceId = ref<string | null>(null);
 const funderShortCode = ref<string | null>(null);
@@ -34,6 +36,29 @@ const registerBulkUpload = useRegisterBulkUploadCallback();
 
 const defaultFunderShortCode = 'pdc';
 
+const getMimeType = (file: File): string =>
+	file.type === '' ? 'application/octet-stream' : file.type;
+
+const uploadFile = async (file: File): Promise<FileUploadResponse> => {
+	const pdcFile = await createPdcFile({
+		mimeType: getMimeType(file),
+		size: file.size,
+		name: file.name,
+	});
+	await uploadUsingPresignedPost(file, pdcFile.presignedPost);
+	return pdcFile;
+};
+
+const getSelectedSourceId = (): number => {
+	if (sourceId.value !== null && sourceId.value !== '') {
+		return Number(sourceId.value);
+	}
+	if (systemSource.value?.id == null) {
+		throw new Error('No System Source Available');
+	}
+	return systemSource.value.id;
+};
+
 onMounted(async () => {
 	await fetchSystemSource();
 	try {
@@ -44,31 +69,21 @@ onMounted(async () => {
 		isLoading.value = false;
 	}
 });
-const handleBulkUpload = async (file: File): Promise<void> => {
-	if (systemSource.value?.id == null) {
-		throw new Error('No System Source Available');
-	}
-	const proposalsDataFile = await createPdcFile({
-		mimeType: file.type === '' ? 'application/octet-stream' : file.type,
-		size: file.size,
-		name: file.name,
-	});
 
-	await uploadUsingPresignedPost(file, proposalsDataFile.presignedPost);
-
-	const selectedSourceId =
-		sourceId.value !== null && sourceId.value !== ''
-			? Number(sourceId.value)
-			: systemSource.value.id;
-	const selectedFunderShortCode =
-		funderShortCode.value ?? defaultFunderShortCode;
+const handleBulkUpload = async (
+	file: File,
+	attachmentsFile: File | null = null,
+): Promise<void> => {
+	const proposalsDataFile = await uploadFile(file);
+	const attachmentsDataFile =
+		attachmentsFile === null ? null : await uploadFile(attachmentsFile);
 
 	const bulkUploadResult = await registerBulkUpload({
 		proposalsDataFileId: proposalsDataFile.id,
-		sourceId: selectedSourceId,
-		funderShortCode: selectedFunderShortCode,
+		sourceId: getSelectedSourceId(),
+		funderShortCode: funderShortCode.value ?? defaultFunderShortCode,
 		/* @ts-expect-error  -- The bulk upload task should be typed as null, but is coming through as undefined due to an sdk issue. */
-		attachmentsArchiveFileId: null,
+		attachmentsArchiveFileId: attachmentsDataFile?.id ?? null,
 		attachmentsArchiveFile: null,
 		logs: [],
 	});
@@ -80,6 +95,7 @@ const handleBulkUpload = async (file: File): Promise<void> => {
 <template>
 	<BulkUploader
 		v-model:bulk-upload="bulkUpload"
+		v-model:attachments-upload="attachmentsUpload"
 		v-model:source-id="sourceId"
 		v-model:funder-short-code="funderShortCode"
 		:sources="sources"

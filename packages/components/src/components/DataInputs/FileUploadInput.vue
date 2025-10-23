@@ -4,7 +4,7 @@
 			<template #header><slot name="header"></slot></template>
 		</InputHeader>
 
-		<label for="file-input" class="file-upload-area">
+		<label :for="props.id" class="file-upload-area">
 			<div v-if="!file" class="upload-text">Select a file to upload</div>
 			<div v-else class="uploaded-file">
 				<span class="file-name">{{ file.name }}</span>
@@ -12,10 +12,10 @@
 			</div>
 		</label>
 		<input
-			id="file-input"
+			:id="props.id"
 			class="hidden-input"
 			type="file"
-			accept=".csv"
+			:accept="props.accept"
 			@change="handleFileSelect"
 		/>
 
@@ -28,6 +28,11 @@
 <script setup lang="ts">
 import InputHeader from './InputHeader.vue';
 import InputInstructions from './InputInstructions.vue';
+
+const props = defineProps<{
+	accept?: string;
+	id: string;
+}>();
 
 const file = defineModel<File | null>();
 

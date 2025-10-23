@@ -13,7 +13,7 @@ import type {
 	UserBundle,
 } from '@pdc/sdk';
 
-type fileUploadResponse = ModelFile & {
+export type FileUploadResponse = ModelFile & {
 	presignedPost: PresignedPost;
 };
 
@@ -38,7 +38,7 @@ export function useSystemSource(): ReturnType<typeof usePdcApi<Source>> {
 }
 
 export const useFileUploadCallback = () => {
-	const api = usePdcCallbackApi<fileUploadResponse>('/files');
+	const api = usePdcCallbackApi<FileUploadResponse>('/files');
 	return async (params: WritableModelFile) =>
 		await api({
 			method: 'POST',
