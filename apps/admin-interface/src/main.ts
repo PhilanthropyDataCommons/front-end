@@ -7,12 +7,11 @@ import './assets/main.css';
 import '@fontsource/source-sans-pro/400.css';
 import '@fontsource/source-sans-pro/600.css';
 import '@fontsource/source-sans-pro/700.css';
-import { getOptions } from './keycloakConfig';
-import { getLogger, reportWebVitals } from '@pdc/utilities';
+import { getLogger, reportWebVitals, getKeycloakOptions } from '@pdc/utilities';
 
 const logger = getLogger('index');
 
-const keycloakOptions = getOptions(
+const keycloakOptions = getKeycloakOptions(
 	import.meta.env.VITE_KEYCLOAK_AUTHORITY,
 	import.meta.env.VITE_KEYCLOAK_CLIENT_ID,
 	import.meta.env.VITE_KEYCLOAK_REALM,
