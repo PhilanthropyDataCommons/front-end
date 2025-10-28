@@ -5,7 +5,7 @@ interface VueKeycloakConfig {
 	init: KeycloakInitOptions;
 }
 
-const getOptions = (
+const getKeycloakOptions = (
 	authority?: string,
 	clientId?: string,
 	realm?: string,
@@ -37,4 +37,4 @@ const getOptions = (
 	};
 };
 
-export { getOptions };
+export { getKeycloakOptions, type VueKeycloakConfig };

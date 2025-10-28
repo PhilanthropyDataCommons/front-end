@@ -9,6 +9,7 @@
 		"lint:prettier": "prettier . --check --ignore-path ../../.gitignore",
 		"lint:eslint": "eslint ./src --report-unused-disable-directives --max-warnings 0",
 		"lint:tsc": "vue-tsc --noEmit",
+		"test": "vitest --run",
 		"format": "npm run format:prettier && npm run format:eslint",
 		"format:prettier": "prettier . --write  --ignore-path ../../.gitignore",
 		"format:eslint": "eslint --fix || true"
