@@ -13,4 +13,18 @@ const createAppRouter = (routes: RouteRecordRaw[]): Router =>
 		routes,
 	});
 
-export { createAppRouter };
+const setupAuthGuard = (
+	router: Router,
+	keycloak: { authenticated?: boolean },
+): void => {
+	router.beforeEach((to, _from, next) => {
+		const isAuthenticated = keycloak.authenticated ?? false;
+		if (to.meta.requiresAuth === true && !isAuthenticated) {
+			next('/');
+		} else {
+			next();
+		}
+	});
+};
+
+export { createAppRouter, setupAuthGuard };

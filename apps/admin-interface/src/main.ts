@@ -7,7 +7,8 @@ import './assets/main.css';
 import '@fontsource/source-sans-pro/400.css';
 import '@fontsource/source-sans-pro/600.css';
 import '@fontsource/source-sans-pro/700.css';
-import { getLogger, reportWebVitals, getKeycloakOptions } from '@pdc/utilities';
+import { getLogger, reportWebVitals, getKeycloakOptions, setupAuthGuard } from '@pdc/utilities';
+import { useKeycloak } from '@dsb-norge/vue-keycloak-js';
 
 const logger = getLogger('index');
 
@@ -17,6 +18,7 @@ const keycloakOptions = getKeycloakOptions(
 	import.meta.env.VITE_KEYCLOAK_REALM,
 );
 const app = createApp(App as Component);
+const router = initRouter();
 
 logger.debug(keycloakOptions, 'Keycloak options');
 
@@ -24,7 +26,8 @@ logger.debug(keycloakOptions, 'Keycloak options');
 	app.use(VueKeycloak, {
 		...keycloakOptions,
 		onReady: () => {
-			app.use(initRouter()).mount('#app');
+			setupAuthGuard(router, useKeycloak());
+			app.use(router).mount('#app');
 		},
 	});
 })().catch((error: unknown) => {
