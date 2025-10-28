@@ -1,10 +1,10 @@
-import { createWebHistory, createRouter } from 'vue-router';
 import LandingView from './views/LandingView.vue';
 import NotFoundView from './views/NotFoundView.vue';
 import type { Router } from 'vue-router';
 import BaseFieldsView from './views/BaseFieldsView.vue';
 import EditBaseFieldView from './views/EditBaseFieldView.vue';
 import AddBaseFieldView from './views/AddBaseFieldView.vue';
+import { createAppRouter } from '@pdc/utilities';
 const routes = [
 	{ path: '/', component: LandingView },
 	{ path: '/basefields', component: BaseFieldsView },
@@ -13,10 +13,6 @@ const routes = [
 	{ path: '/:pathMatch(.*)', component: NotFoundView },
 ];
 
-const initRouter = (): Router =>
-	createRouter({
-		history: createWebHistory(),
-		routes,
-	});
+const initRouter = (): Router => createAppRouter(routes);
 
 export { initRouter };
