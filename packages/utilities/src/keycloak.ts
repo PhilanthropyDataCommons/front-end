@@ -30,7 +30,7 @@ const getKeycloakOptions = (
 		},
 		init: {
 			onLoad: 'check-sso',
-			redirectUri: `${window.location.origin}/`,
+			redirectUri: `${window.location.origin}${window.location.pathname}${window.location.search}`,
 			scope: 'openid',
 			checkLoginIframe: false,
 		},
