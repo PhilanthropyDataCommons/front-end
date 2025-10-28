@@ -4,4 +4,4 @@ export { usePdcApi, usePdcCallbackApi, throwIfNotOk } from './api-hooks';
 export { localizeDateTime, relativizeDateTime } from './utils/datetime';
 export { dateCompare } from './utils/dateCompare';
 export { getKeycloakOptions } from './keycloak';
-export { createAppRouter } from './router';
+export { createAppRouter, setupAuthGuard } from './router';

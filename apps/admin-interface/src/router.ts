@@ -7,9 +7,21 @@ import AddBaseFieldView from './views/AddBaseFieldView.vue';
 import { createAppRouter } from '@pdc/utilities';
 const routes = [
 	{ path: '/', component: LandingView },
-	{ path: '/basefields', component: BaseFieldsView },
-	{ path: '/basefields/:shortCode', component: EditBaseFieldView },
-	{ path: '/basefields/add', component: AddBaseFieldView },
+	{
+		path: '/basefields',
+		component: BaseFieldsView,
+		meta: { requiresAuth: true },
+	},
+	{
+		path: '/basefields/:shortCode',
+		component: EditBaseFieldView,
+		meta: { requiresAuth: true },
+	},
+	{
+		path: '/basefields/add',
+		component: AddBaseFieldView,
+		meta: { requiresAuth: true },
+	},
 	{ path: '/:pathMatch(.*)', component: NotFoundView },
 ];
 

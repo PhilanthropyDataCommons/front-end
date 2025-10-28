@@ -7,9 +7,17 @@ import AddDataView from './views/AddDataView.vue';
 import { createAppRouter } from '@pdc/utilities';
 const routes = [
 	{ path: '/', component: LandingView },
-	{ path: '/bulk-uploads', component: BulkUploadsView },
-	{ path: '/add-data', component: AddDataView },
-	{ path: '/bulk-uploads/:id', component: BulkUploadView },
+	{
+		path: '/bulk-uploads',
+		component: BulkUploadsView,
+		meta: { requiresAuth: true },
+	},
+	{ path: '/add-data', component: AddDataView, meta: { requiresAuth: true } },
+	{
+		path: '/bulk-uploads/:id',
+		component: BulkUploadView,
+		meta: { requiresAuth: true },
+	},
 	{ path: '/:pathMatch(.*)', component: NotFoundView },
 ];
 
