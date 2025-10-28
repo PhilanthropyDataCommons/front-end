@@ -70,11 +70,7 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 			<form @submit="handleFormSubmit">
 				<PanelSection>
 					<template #header>
-						<h3>Select CSV File to Upload</h3>
-						<p class="text-color-gray-medium-dark">
-							A bulk-upload CSV must have a valid email address in the
-							proposal_submitter_email address column.
-						</p>
+						<h3>Upload CSV File</h3>
 					</template>
 					<template #content>
 						<FileUploadInput
@@ -88,7 +84,8 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 						>
 							<template #header>Choose File</template>
 							<template #instructions>
-								Click the button to use the file picker.
+								A bulk-upload CSV must have a valid email address in the
+								proposal_submitter_email address column.
 							</template>
 						</FileUploadInput>
 					</template>
@@ -97,9 +94,7 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 					<template #header>
 						<h3>Base Field File Attachments (Optional)</h3>
 						<p class="text-color-gray-medium-dark">
-							A zip file containing the file attachments for basefields. The
-							bulk upload CSV file must refer to the files by their relative
-							path from the root of the zip file.
+							A zip file containing the file attachments for basefields.
 						</p>
 					</template>
 					<template #content>
@@ -114,7 +109,8 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 						>
 							<template #header>Choose Attachments File</template>
 							<template #instructions>
-								Click the button to use the file picker.
+								The bulk upload CSV file must refer to the files by their
+								relative path from the root of the zip file.
 							</template>
 						</FileUploadInput>
 					</template>
@@ -170,12 +166,6 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 							<h3>Ready to upload</h3>
 							<p class="text-color-gray-medium-dark">
 								All required data has been provided.
-							</p>
-						</div>
-						<div v-else>
-							<h3>Not quite ready</h3>
-							<p class="text-color-gray-medium-dark">
-								Please select a file above.
 							</p>
 						</div>
 					</template>
