@@ -39,7 +39,7 @@ export function useSystemSource(): ReturnType<typeof usePdcApi<Source>> {
 
 export const useFileUploadCallback = () => {
 	const api = usePdcCallbackApi<FileUploadResponse>('/files');
-	return async (params: WritableModelFile) =>
+	return async (params: Omit<WritableModelFile, 'downloadUrl'>) =>
 		await api({
 			method: 'POST',
 			headers: {
