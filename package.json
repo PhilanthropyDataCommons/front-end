@@ -33,7 +33,7 @@
 		"@vue/tsconfig": "^0.8.1",
 		"eslint-config-love": "^133.0.0",
 		"eslint-plugin-import": "^2.32.0",
-		"eslint-plugin-storybook": "^9.1.13",
+		"eslint-plugin-storybook": "^9.1.15",
 		"eslint-plugin-vue": "^10.5.1",
 		"jsdom": "^27.0.0",
 		"keycloak-js": "^26.2.1",
