@@ -5,7 +5,7 @@ interface VueKeycloakConfig {
 	init: KeycloakInitOptions;
 }
 
-const getOptions = (
+const getKeycloakOptions = (
 	authority?: string,
 	clientId?: string,
 	realm?: string,
@@ -30,11 +30,11 @@ const getOptions = (
 		},
 		init: {
 			onLoad: 'check-sso',
-			redirectUri: `${window.location.origin}/`,
+			redirectUri: `${window.location.origin}${window.location.pathname}${window.location.search}`,
 			scope: 'openid',
 			checkLoginIframe: false,
 		},
 	};
 };
 
-export { getOptions };
+export { getKeycloakOptions, type VueKeycloakConfig };
