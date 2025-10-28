@@ -16,30 +16,22 @@ import BulkUploadStatus from '../components/BulkUploadStatus.vue';
 import { RouterLink } from 'vue-router';
 import { PlusIcon } from '@heroicons/vue/24/outline';
 import { ArrowRightIcon } from '@heroicons/vue/24/solid';
-import { computed, onMounted, ref } from 'vue';
-import { useBulkUploads, useUsers } from '../pdc-api';
+import { onMounted, ref } from 'vue';
+import { useBulkUploads } from '../pdc-api';
 import { getLogger, localizeDateTime } from '@pdc/utilities';
 
 const logger = getLogger('<BulkUploadsView>');
 
 const { data: bulkUploads, fetchData: fetchBulkUploads } = useBulkUploads();
-const { data: users, fetchData: fetchUsers } = useUsers();
 const isLoading = ref(true);
 const caughtError = ref(false);
 
-const getUserById = computed(
-	() => (id: string) =>
-		users.value?.entries.find((user) => user.keycloakUserId === id),
-);
-
 onMounted(async () => {
 	try {
-		await Promise.all([fetchBulkUploads(), fetchUsers()]);
+		await Promise.all([fetchBulkUploads()]);
 	} catch (error: unknown) {
 		if (error instanceof Error) {
 			logger.error({ error }, `Failed to load data: ${error.message}`);
-		} else {
-			logger.error({ error }, 'Failed to load bulk uploads and users');
 		}
 		caughtError.value = true;
 	} finally {
@@ -92,7 +84,7 @@ onMounted(async () => {
 							localizeDateTime(upload.createdAt)
 						}}</TableRowCell>
 						<TableRowCell>{{
-							getUserById(upload.createdBy)?.keycloakUserName ?? ''
+							upload.createdByUser.keycloakUserName
 						}}</TableRowCell>
 						<TableRowCell>TBD</TableRowCell>
 						<TableRowCell>

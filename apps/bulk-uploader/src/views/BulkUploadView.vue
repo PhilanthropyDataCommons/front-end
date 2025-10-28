@@ -104,7 +104,7 @@ onUnmounted(() => {
 						<h4>Timestamp</h4>
 						<p>{{ localizeDateTime(bulkUpload.createdAt) }}</p>
 						<h4>Uploader</h4>
-						<p>{{ bulkUpload.createdBy }}</p>
+						<p>{{ bulkUpload.createdByUser.keycloakUserName }}</p>
 					</div>
 				</template>
 			</PanelSection>
