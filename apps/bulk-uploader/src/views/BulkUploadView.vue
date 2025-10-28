@@ -14,7 +14,7 @@ import { ref, onMounted, onUnmounted } from 'vue';
 import { useBulkUploads } from '../pdc-api';
 import { BulkUploadTask as BulkUploadTaskType } from '@pdc/sdk';
 import type { BulkUploadTask } from '@pdc/sdk';
-import { getLogger, localizeDateTime } from '@pdc/utilities';
+import { getLogger, localizeDateTime, generateS3Url } from '@pdc/utilities';
 
 const logger = getLogger('BulkUploadView');
 
@@ -92,11 +92,13 @@ onUnmounted(() => {
 				</template>
 				<template #content>
 					<div>
-						<div class="disabled">
+						<div>
 							<h4>Original File</h4>
 							<div class="file-download">
 								<DocumentPlusIcon class="icon" />
-								<p>TO DO: IMPLEMENT</p>
+								<a :href="generateS3Url(bulkUpload)" target="_blank">{{
+									generateS3Url(bulkUpload)
+								}}</a>
 							</div>
 						</div>
 						<h4>Job ID</h4>
