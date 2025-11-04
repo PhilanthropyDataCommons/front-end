@@ -11,12 +11,13 @@ import {
 	TableRow,
 	TableColumnHead,
 	TableRowCell,
+	useTableSort,
 } from '@pdc/components';
 import BulkUploadStatus from '../components/BulkUploadStatus.vue';
 import { RouterLink } from 'vue-router';
 import { PlusIcon } from '@heroicons/vue/24/outline';
 import { ArrowRightIcon } from '@heroicons/vue/24/solid';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, computed } from 'vue';
 import { useBulkUploads } from '../pdc-api';
 import { getLogger, localizeDateTime } from '@pdc/utilities';
 
@@ -38,6 +39,13 @@ onMounted(async () => {
 		isLoading.value = false;
 	}
 });
+
+const bulkUploadsEntries = computed(() => bulkUploads.value?.entries ?? []);
+const { sortedData, handleSort, getSortDirection } = useTableSort(
+	bulkUploadsEntries,
+	'createdAt',
+	'desc',
+);
 </script>
 
 <template>
@@ -69,16 +77,40 @@ onMounted(async () => {
 			>
 				<TableHead fixed>
 					<TableRow>
-						<TableColumnHead>ID</TableColumnHead>
-						<TableColumnHead>Timestamp</TableColumnHead>
-						<TableColumnHead>Uploader</TableColumnHead>
+						<TableColumnHead
+							sortable
+							:sort-direction="getSortDirection('id')"
+							:on-sort="() => handleSort('id')"
+						>
+							ID
+						</TableColumnHead>
+						<TableColumnHead
+							sortable
+							:sort-direction="getSortDirection('createdAt')"
+							:on-sort="() => handleSort('createdAt')"
+						>
+							Timestamp
+						</TableColumnHead>
+						<TableColumnHead
+							sortable
+							:sort-direction="getSortDirection('createdByUser')"
+							:on-sort="() => handleSort('createdByUser')"
+						>
+							Uploader
+						</TableColumnHead>
 						<TableColumnHead>Records added</TableColumnHead>
-						<TableColumnHead>Result</TableColumnHead>
+						<TableColumnHead
+							sortable
+							:sort-direction="getSortDirection('status')"
+							:on-sort="() => handleSort('status')"
+						>
+							Result
+						</TableColumnHead>
 						<TableColumnHead></TableColumnHead>
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					<TableRow v-for="upload in bulkUploads.entries" :key="upload.id">
+					<TableRow v-for="upload in sortedData" :key="upload.id">
 						<TableRowCell>{{ upload.id }}</TableRowCell>
 						<TableRowCell>{{
 							localizeDateTime(upload.createdAt)

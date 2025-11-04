@@ -9,6 +9,7 @@ import {
 	TableBody,
 	TableColumnHead,
 	TableRowCell,
+	useTableSort,
 } from '@pdc/components';
 import { BaseField } from '@pdc/sdk';
 import { computed } from 'vue';
@@ -20,13 +21,17 @@ export interface BaseFieldsTableProps {
 
 const props = defineProps<BaseFieldsTableProps>();
 
-const publicBaseFields = computed(() =>
-	props.baseFields?.filter(
-		(baseField) =>
-			baseField.sensitivityClassification ===
-			BaseField.SensitivityClassificationEnum.Public,
-	),
+const publicBaseFields = computed(
+	() =>
+		props.baseFields?.filter(
+			(baseField) =>
+				baseField.sensitivityClassification ===
+				BaseField.SensitivityClassificationEnum.Public,
+		) ?? [],
 );
+
+const { sortedData, handleSort, getSortDirection } =
+	useTableSort(publicBaseFields);
 </script>
 
 <template>
@@ -45,18 +50,45 @@ const publicBaseFields = computed(() =>
 			>
 				<TableHead fixed>
 					<TableRow>
-						<TableColumnHead>Label</TableColumnHead>
-						<TableColumnHead>Description</TableColumnHead>
-						<TableColumnHead>Short code</TableColumnHead>
-						<TableColumnHead>Data type</TableColumnHead>
-						<TableColumnHead>Category</TableColumnHead>
+						<TableColumnHead
+							sortable
+							:sort-direction="getSortDirection('label')"
+							:on-sort="() => handleSort('label')"
+						>
+							Label
+						</TableColumnHead>
+						<TableColumnHead
+							sortable
+							:sort-direction="getSortDirection('description')"
+							:on-sort="() => handleSort('description')"
+						>
+							Description
+						</TableColumnHead>
+						<TableColumnHead
+							sortable
+							:sort-direction="getSortDirection('shortCode')"
+							:on-sort="() => handleSort('shortCode')"
+						>
+							Short code
+						</TableColumnHead>
+						<TableColumnHead
+							sortable
+							:sort-direction="getSortDirection('dataType')"
+							:on-sort="() => handleSort('dataType')"
+						>
+							Data type
+						</TableColumnHead>
+						<TableColumnHead
+							sortable
+							:sort-direction="getSortDirection('category')"
+							:on-sort="() => handleSort('category')"
+						>
+							Category
+						</TableColumnHead>
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					<TableRow
-						v-for="baseField in publicBaseFields"
-						:key="baseField.label"
-					>
+					<TableRow v-for="baseField in sortedData" :key="baseField.label">
 						<TableRowCell>{{ baseField.label }}</TableRowCell>
 						<TableRowCell>{{ baseField.description }}</TableRowCell>
 						<TableRowCell>{{ baseField.shortCode }}</TableRowCell>
