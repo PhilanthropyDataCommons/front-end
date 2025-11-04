@@ -10,8 +10,11 @@ import {
 	DataSubmitButton,
 	SelectInput,
 	ErrorMessage,
+	PanelHeaderAction,
+	OffSiteLink,
 } from '@pdc/components';
 import { getLogger } from '@pdc/utilities';
+import { DocumentPlusIcon } from '@heroicons/vue/24/outline';
 import { ref } from 'vue';
 
 const props = defineProps<{
@@ -63,7 +66,18 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 		<PanelHeader>
 			<h1>New Bulk Upload</h1>
 			<PanelHeaderActionsWrapper>
-				<BackButton to="/bulk-uploads" label="Back to bulk uploads" />
+				<PanelHeaderAction>
+					<BackButton to="/bulk-uploads" label="Back to bulk uploads" />
+				</PanelHeaderAction>
+				<PanelHeaderAction>
+					<DocumentPlusIcon class="icon" />
+					<OffSiteLink
+						to="https://api.philanthropydatacommons.org/static/bulkUpload.csv"
+						class="download-csv-text"
+					>
+						Download CSV template
+					</OffSiteLink>
+				</PanelHeaderAction>
 			</PanelHeaderActionsWrapper>
 		</PanelHeader>
 		<PanelBody variant="data-panel-padded">
