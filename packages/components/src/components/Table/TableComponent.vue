@@ -63,4 +63,8 @@ const { className = '', truncate = false } = defineProps<TableProps>();
 .table .active {
 	background-color: var(--color--blue--lighter);
 }
+
+.table tbody tr:hover {
+	background-color: var(--color--gray);
+}
 </style>

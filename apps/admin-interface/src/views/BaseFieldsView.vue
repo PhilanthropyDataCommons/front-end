@@ -13,8 +13,7 @@ import {
 	TableRowCell,
 } from '@pdc/components';
 import { RouterLink } from 'vue-router';
-import { PlusIcon } from '@heroicons/vue/24/outline';
-import { ArrowRightIcon } from '@heroicons/vue/24/solid';
+import { PlusIcon, PencilSquareIcon } from '@heroicons/vue/24/outline';
 import { onMounted, ref } from 'vue';
 import { useBaseFields } from '../pdc-api';
 import { getLogger, dateCompare } from '@pdc/utilities';
@@ -85,9 +84,9 @@ onMounted(async () => {
 						<TableRowCell>{{ baseField.dataType }}</TableRowCell>
 						<TableRowCell>{{ baseField.category }}</TableRowCell>
 						<TableRowCell>{{ baseField.valueRelevanceHours }}</TableRowCell>
-						<TableRowCell class="arrow-icon">
+						<TableRowCell class="pencil-icon">
 							<RouterLink :to="`/basefields/${baseField.shortCode}`">
-								<ArrowRightIcon class="icon text-black" />
+								<PencilSquareIcon class="icon text-black" />
 							</RouterLink>
 						</TableRowCell>
 					</TableRow>
@@ -116,7 +115,7 @@ onMounted(async () => {
 	width: auto;
 }
 
-.arrow-icon {
+.pencil-icon {
 	padding-left: 100px;
 }
 </style>
