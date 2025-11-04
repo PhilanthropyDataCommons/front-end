@@ -12,6 +12,7 @@ import {
 	TableColumnHead,
 	TableRowCell,
 	OffSiteLink,
+	useTableSort,
 } from '@pdc/components';
 import { DocumentPlusIcon } from '@heroicons/vue/24/outline';
 import { BaseField } from '@pdc/sdk';
@@ -29,7 +30,11 @@ const publicBaseFields = computed(() =>
 		(baseField) =>
 			baseField.sensitivityClassification ===
 			BaseField.SensitivityClassificationEnum.Public,
-	),
+	) ?? [],
+);
+
+const { sortedData, handleSort, getSortDirection } = useTableSort(
+	publicBaseFields,
 );
 </script>
 
@@ -60,18 +65,45 @@ const publicBaseFields = computed(() =>
 			>
 				<TableHead fixed>
 					<TableRow>
-						<TableColumnHead>Label</TableColumnHead>
-						<TableColumnHead>Description</TableColumnHead>
-						<TableColumnHead>Short code</TableColumnHead>
-						<TableColumnHead>Data type</TableColumnHead>
-						<TableColumnHead>Category</TableColumnHead>
+						<TableColumnHead
+							sortable
+							:sortDirection="getSortDirection('label')"
+							:onSort="() => handleSort('label')"
+						>
+							Label
+						</TableColumnHead>
+						<TableColumnHead
+							sortable
+							:sortDirection="getSortDirection('description')"
+							:onSort="() => handleSort('description')"
+						>
+							Description
+						</TableColumnHead>
+						<TableColumnHead
+							sortable
+							:sortDirection="getSortDirection('shortCode')"
+							:onSort="() => handleSort('shortCode')"
+						>
+							Short code
+						</TableColumnHead>
+						<TableColumnHead
+							sortable
+							:sortDirection="getSortDirection('dataType')"
+							:onSort="() => handleSort('dataType')"
+						>
+							Data type
+						</TableColumnHead>
+						<TableColumnHead
+							sortable
+							:sortDirection="getSortDirection('category')"
+							:onSort="() => handleSort('category')"
+						>
+							Category
+						</TableColumnHead>
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					<TableRow
-						v-for="baseField in publicBaseFields"
-						:key="baseField.label"
-					>
+					<TableRow v-for="baseField in sortedData" :key="baseField.label">
 						<TableRowCell>{{ baseField.label }}</TableRowCell>
 						<TableRowCell>{{ baseField.description }}</TableRowCell>
 						<TableRowCell>{{ baseField.shortCode }}</TableRowCell>

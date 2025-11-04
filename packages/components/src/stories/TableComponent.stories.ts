@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { BaseField } from '@pdc/sdk';
+import { ref } from 'vue';
 import {
 	TableComponent,
 	TableHead,
@@ -7,6 +8,7 @@ import {
 	TableRow,
 	TableRowCell,
 	TableColumnHead,
+	useTableSort,
 } from '../components/Table';
 import {
 	PanelComponent,
@@ -282,6 +284,100 @@ export const WithNoActions: Story = {
 				</TableHead>
 				<TableBody>
 					<TableRow v-for="field in baseFields" :key="field.shortCode">
+						<TableRowCell>{{ field.label }}</TableRowCell>
+						<TableRowCell>{{ field.description }}</TableRowCell>
+						<TableRowCell>{{ field.shortCode }}</TableRowCell>
+						<TableRowCell>{{ field.dataType }}</TableRowCell>
+						<TableRowCell>{{ field.category }}</TableRowCell>
+					</TableRow>
+				</TableBody>
+			</TableComponent>
+		</PanelBody>
+	</PanelComponent>`,
+	}),
+};
+
+export const SortableTable: Story = {
+	render: (args) => ({
+		components: {
+			TableComponent,
+			PanelComponent,
+			PanelHeader,
+			PanelBody,
+			PanelHeaderActionsWrapper,
+			PanelHeaderAction,
+			TableHead,
+			TableBody,
+			TableRow,
+			TableColumnHead,
+			TableRowCell,
+			DocumentPlusIcon,
+		},
+		setup() {
+			const baseFieldsRef = ref(sampleBaseFields);
+			const { sortedData, handleSort, getSortDirection } =
+				useTableSort<BaseField>(baseFieldsRef.value);
+
+			return {
+				args,
+				sortedData,
+				handleSort,
+				getSortDirection,
+			};
+		},
+		template: `<PanelComponent>
+		<PanelHeader>
+			<h1>Sortable Base Fields</h1>
+			<PanelHeaderActionsWrapper class="disabled">
+				<PanelHeaderAction>
+					<DocumentPlusIcon class="icon" />
+					<p class="download-csv-text">Download CSV template</p>
+				</PanelHeaderAction>
+			</PanelHeaderActionsWrapper>
+		</PanelHeader>
+		<PanelBody>
+			<TableComponent truncate>
+				<TableHead fixed>
+					<TableRow>
+						<TableColumnHead
+							sortable
+							:sortDirection="getSortDirection('label')"
+							:onSort="() => handleSort('label')"
+						>
+							Label
+						</TableColumnHead>
+						<TableColumnHead
+							sortable
+							:sortDirection="getSortDirection('description')"
+							:onSort="() => handleSort('description')"
+						>
+							Description
+						</TableColumnHead>
+						<TableColumnHead
+							sortable
+							:sortDirection="getSortDirection('shortCode')"
+							:onSort="() => handleSort('shortCode')"
+						>
+							Short code
+						</TableColumnHead>
+						<TableColumnHead
+							sortable
+							:sortDirection="getSortDirection('dataType')"
+							:onSort="() => handleSort('dataType')"
+						>
+							Data type
+						</TableColumnHead>
+						<TableColumnHead
+							sortable
+							:sortDirection="getSortDirection('category')"
+							:onSort="() => handleSort('category')"
+						>
+							Category
+						</TableColumnHead>
+					</TableRow>
+				</TableHead>
+				<TableBody>
+					<TableRow v-for="field in sortedData" :key="field.shortCode">
 						<TableRowCell>{{ field.label }}</TableRowCell>
 						<TableRowCell>{{ field.description }}</TableRowCell>
 						<TableRowCell>{{ field.shortCode }}</TableRowCell>

@@ -11,12 +11,13 @@ import {
 	TableRow,
 	TableColumnHead,
 	TableRowCell,
+	useTableSort,
 } from '@pdc/components';
 import { RouterLink } from 'vue-router';
 import { PlusIcon, PencilSquareIcon } from '@heroicons/vue/24/outline';
 import { onMounted, ref } from 'vue';
 import { useBaseFields } from '../pdc-api';
-import { getLogger, dateCompare } from '@pdc/utilities';
+import { getLogger } from '@pdc/utilities';
 import type { BaseField } from '@pdc/sdk';
 
 const logger = getLogger('<BaseFieldsView>');
@@ -25,11 +26,11 @@ const { data: baseFields, fetchData: fetchBaseFields } = useBaseFields();
 const isLoading = ref(true);
 const caughtError = ref(false);
 const baseFieldsArray = ref<BaseField[]>([]);
+
 onMounted(async () => {
 	try {
 		await fetchBaseFields();
 		baseFieldsArray.value = baseFields.value ?? [];
-		baseFieldsArray.value.sort((a, b) => dateCompare(a.createdAt, b.createdAt));
 	} catch (error: unknown) {
 		logger.error({ error }, 'Failed to load basefields');
 		caughtError.value = true;
@@ -37,6 +38,12 @@ onMounted(async () => {
 		isLoading.value = false;
 	}
 });
+
+const { sortedData, handleSort, getSortDirection } = useTableSort(
+	baseFieldsArray,
+	'createdAt',
+	'asc',
+);
 </script>
 
 <template>
@@ -67,17 +74,53 @@ onMounted(async () => {
 			>
 				<TableHead fixed>
 					<TableRow>
-						<TableColumnHead>Label</TableColumnHead>
-						<TableColumnHead>Description</TableColumnHead>
-						<TableColumnHead>Short code</TableColumnHead>
-						<TableColumnHead>Data type</TableColumnHead>
-						<TableColumnHead>Category</TableColumnHead>
-						<TableColumnHead>Relevance Duration (hours)</TableColumnHead>
+						<TableColumnHead
+							sortable
+							:sortDirection="getSortDirection('label')"
+							:onSort="() => handleSort('label')"
+						>
+							Label
+						</TableColumnHead>
+						<TableColumnHead
+							sortable
+							:sortDirection="getSortDirection('description')"
+							:onSort="() => handleSort('description')"
+						>
+							Description
+						</TableColumnHead>
+						<TableColumnHead
+							sortable
+							:sortDirection="getSortDirection('shortCode')"
+							:onSort="() => handleSort('shortCode')"
+						>
+							Short code
+						</TableColumnHead>
+						<TableColumnHead
+							sortable
+							:sortDirection="getSortDirection('dataType')"
+							:onSort="() => handleSort('dataType')"
+						>
+							Data type
+						</TableColumnHead>
+						<TableColumnHead
+							sortable
+							:sortDirection="getSortDirection('category')"
+							:onSort="() => handleSort('category')"
+						>
+							Category
+						</TableColumnHead>
+						<TableColumnHead
+							sortable
+							:sortDirection="getSortDirection('valueRelevanceHours')"
+							:onSort="() => handleSort('valueRelevanceHours')"
+						>
+							Relevance Duration (hours)
+						</TableColumnHead>
 						<TableColumnHead></TableColumnHead>
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					<TableRow v-for="baseField in baseFields" :key="baseField.shortCode">
+					<TableRow v-for="baseField in sortedData" :key="baseField.shortCode">
 						<TableRowCell>{{ baseField.label }}</TableRowCell>
 						<TableRowCell>{{ baseField.description }}</TableRowCell>
 						<TableRowCell>{{ baseField.shortCode }}</TableRowCell>
