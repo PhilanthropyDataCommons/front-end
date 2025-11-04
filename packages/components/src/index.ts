@@ -34,7 +34,10 @@ export {
 	TableComponent,
 	TableHead,
 	TableRow,
+	useTableSort,
 } from './components/Table';
+
+export type { SortDirection, SortConfig } from './components/Table';
 
 export {
 	DataSubmitButton,

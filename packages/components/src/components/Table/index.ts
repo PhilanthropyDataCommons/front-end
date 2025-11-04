@@ -17,3 +17,6 @@ export {
 	TableRow,
 	TableRowCell,
 };
+
+export { useTableSort } from './useTableSort';
+export type { SortDirection, SortConfig } from './types';
