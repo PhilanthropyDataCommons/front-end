@@ -14,8 +14,7 @@ import {
 } from '@pdc/components';
 import BulkUploadStatus from '../components/BulkUploadStatus.vue';
 import { RouterLink } from 'vue-router';
-import { PlusIcon } from '@heroicons/vue/24/outline';
-import { ArrowRightIcon } from '@heroicons/vue/24/solid';
+import { PlusIcon, PencilSquareIcon } from '@heroicons/vue/24/outline';
 import { onMounted, ref } from 'vue';
 import { useBulkUploads } from '../pdc-api';
 import { getLogger, localizeDateTime } from '@pdc/utilities';
@@ -90,9 +89,9 @@ onMounted(async () => {
 						<TableRowCell>
 							<BulkUploadStatus :status="upload.status"
 						/></TableRowCell>
-						<TableRowCell class="arrow-icon">
+						<TableRowCell class="pencil-icon">
 							<RouterLink :to="`/bulk-uploads/${upload.id}`">
-								<ArrowRightIcon class="icon text-black" />
+								<PencilSquareIcon class="icon text-black" />
 							</RouterLink>
 						</TableRowCell>
 					</TableRow>
@@ -121,7 +120,7 @@ onMounted(async () => {
 	width: auto;
 }
 
-.arrow-icon {
+.pencil-icon {
 	padding-left: 100px;
 }
 </style>
