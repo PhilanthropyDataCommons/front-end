@@ -45,6 +45,13 @@ const handleLogout = async (): Promise<void> => {
 	gap: var(--fixed-spacing--2x);
 	align-items: flex-start;
 }
+.user-component-item-text {
+	white-space: normal;
+	overflow-wrap: anywhere;
+	word-break: break-word;
+	min-width: 0;
+	flex: 1 1 auto;
+}
 .user-component-item {
 	display: flex;
 	align-items: center;
@@ -55,6 +62,8 @@ const handleLogout = async (): Promise<void> => {
 .user-component-item-icon {
 	width: 20px;
 	height: 20px;
+	flex: 0 0 20px;
+	flex-shrink: 0;
 }
 button {
 	background: none;
