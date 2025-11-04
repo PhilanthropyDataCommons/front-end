@@ -2,8 +2,6 @@
 import {
 	PanelComponent,
 	PanelHeader,
-	PanelHeaderActionsWrapper,
-	PanelHeaderAction,
 	PanelBody,
 	TableComponent,
 	TableHead,
@@ -11,9 +9,7 @@ import {
 	TableBody,
 	TableColumnHead,
 	TableRowCell,
-	OffSiteLink,
 } from '@pdc/components';
-import { DocumentPlusIcon } from '@heroicons/vue/24/outline';
 import { BaseField } from '@pdc/sdk';
 import { computed } from 'vue';
 
@@ -37,17 +33,6 @@ const publicBaseFields = computed(() =>
 	<PanelComponent padded>
 		<PanelHeader>
 			<h1>Base Fields</h1>
-			<PanelHeaderActionsWrapper>
-				<PanelHeaderAction>
-					<DocumentPlusIcon class="icon" />
-					<OffSiteLink
-						to="https://api.philanthropydatacommons.org/static/bulkUpload.csv"
-						class="download-csv-text"
-					>
-						Download CSV template
-					</OffSiteLink>
-				</PanelHeaderAction>
-			</PanelHeaderActionsWrapper>
 		</PanelHeader>
 		<PanelBody :padded="false">
 			<div v-if="isLoading" class="text-center py-8 text-gray-500">
