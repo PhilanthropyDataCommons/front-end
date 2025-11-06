@@ -8,4 +8,9 @@
 
 <script setup lang="ts"></script>
 
-<style scoped></style>
+<style scoped>
+.input-instructions p {
+	margin-top: var(--accessible-spacing--halfx);
+	margin-bottom: var(--accessible-spacing--halfx);
+}
+</style>

@@ -3,7 +3,9 @@
 		<InputHeader>
 			<template #header><slot name="header"></slot></template>
 		</InputHeader>
-
+		<InputInstructions>
+			<template #instructions><slot name="instructions"></slot></template>
+		</InputInstructions>
 		<select v-model="modelValue">
 			<option value=""></option>
 			<option
@@ -14,10 +16,6 @@
 				{{ option.label }}
 			</option>
 		</select>
-
-		<InputInstructions>
-			<template #instructions><slot name="instructions"></slot></template>
-		</InputInstructions>
 	</div>
 </template>
 
