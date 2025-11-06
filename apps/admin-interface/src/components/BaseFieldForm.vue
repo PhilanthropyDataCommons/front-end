@@ -12,6 +12,7 @@ import {
 	RadioInput,
 	BackButton,
 	ErrorMessage,
+	OffSiteLink,
 } from '@pdc/components';
 import { getLogger } from '@pdc/utilities';
 import { ref, computed } from 'vue';
@@ -169,10 +170,17 @@ const updateField = (field: string, value: string | number | null): void => {
 						</RelevanceDurationInput>
 						<CautionZone>
 							<template #description>
-								Choose these settings thoughtfully, as changing them later may
-								trigger data loss or break external integrations. Read
-								descriptions carefully and confirm your selections before
-								saving.
+								<p>
+									Choose these settings thoughtfully, as changing them later may
+									trigger data loss or break external integrations.
+									<OffSiteLink
+										to="https://github.com/PhilanthropyDataCommons/front-end/tree/main/docs/SENSITIVITY_CLASSIFICATIONS.md"
+										target-blank
+										>Read these descriptions of sensitivity classification
+										levels carefully</OffSiteLink
+									>
+									and confirm your selections before saving.
+								</p>
 							</template>
 							<template #default="{ isUnlocked }">
 								<RadioInput

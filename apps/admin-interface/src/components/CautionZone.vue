@@ -20,7 +20,9 @@ const isUnlocked = ref(false);
 					{{ isUnlocked ? 'Lock' : 'Unlock' }}
 				</button>
 			</div>
-			<slot name="description" />
+			<div class="caution-zone-description">
+				<slot name="description" />
+			</div>
 		</div>
 		<div class="content-wrapper" :class="{ disabled: !isUnlocked }">
 			<slot :is-unlocked="isUnlocked" />
@@ -83,5 +85,9 @@ const isUnlocked = ref(false);
 .content-wrapper.disabled {
 	opacity: 0.5;
 	pointer-events: none;
+}
+.caution-zone-description {
+	display: block;
+	line-height: 1.5;
 }
 </style>
