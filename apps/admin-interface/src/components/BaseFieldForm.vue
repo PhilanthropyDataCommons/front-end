@@ -33,6 +33,7 @@ const logger = getLogger('BaseFieldForm');
 const hadError = ref(false);
 const errorMessage = ref('');
 const initialLabel = ref(props.baseField.label);
+const hasFormBeenEdited = ref(false);
 
 const handleFormSubmit = async (event: Event): Promise<void> => {
 	event.preventDefault();
@@ -61,6 +62,7 @@ const isFormValid = computed((): boolean => {
 const updateField = (field: string, value: string | number | null): void => {
 	hadError.value = false;
 	errorMessage.value = '';
+	hasFormBeenEdited.value = true;
 	emit('update:base-field', { ...props.baseField, [field]: value });
 };
 </script>
@@ -224,7 +226,7 @@ const updateField = (field: string, value: string | number | null): void => {
 						</div>
 					</template>
 					<template #content>
-						<DataSubmitButton :disabled="!isFormValid">{{
+						<DataSubmitButton :disabled="!isFormValid || !hasFormBeenEdited">{{
 							props.isCreating ? 'Create Base Field' : 'Save Changes'
 						}}</DataSubmitButton>
 						<ErrorMessage v-if="hadError" :message="errorMessage" />
