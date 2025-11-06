@@ -167,13 +167,6 @@ const updateField = (field: string, value: string | number | null): void => {
 								How long values in this field remain relevant
 							</template>
 						</RelevanceDurationInput>
-					</template>
-				</PanelSection>
-				<PanelSection>
-					<template #header>
-						<h3>Sensitivity Classification</h3>
-					</template>
-					<template #content>
 						<CautionZone>
 							<template #description>
 								Choose these settings thoughtfully, as changing them later may
@@ -201,7 +194,7 @@ const updateField = (field: string, value: string | number | null): void => {
 										}
 									"
 								>
-									<template #header>Classification Level</template>
+									<template #header>Sensitivity Classification Level</template>
 									<template #instructions>
 										Select the appropriate sensitivity level for this field
 									</template>
@@ -210,6 +203,7 @@ const updateField = (field: string, value: string | number | null): void => {
 						</CautionZone>
 					</template>
 				</PanelSection>
+
 				<PanelSection>
 					<template #header>
 						<div v-if="isFormValid">
