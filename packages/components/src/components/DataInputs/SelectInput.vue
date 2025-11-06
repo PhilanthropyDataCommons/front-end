@@ -7,7 +7,6 @@
 			<template #instructions><slot name="instructions"></slot></template>
 		</InputInstructions>
 		<select v-model="modelValue">
-			<option value=""></option>
 			<option
 				v-for="option in options"
 				:key="option.value"
