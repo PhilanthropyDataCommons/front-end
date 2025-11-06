@@ -215,7 +215,7 @@ const updateField = (field: string, value: string | number | null): void => {
 						<div v-if="isFormValid">
 							<h3>Ready to save</h3>
 							<p class="text-color-gray-medium-dark">
-								All required fields have been completed.
+								All required fields are completed.
 							</p>
 						</div>
 						<div v-else>
