@@ -12,6 +12,7 @@ import {
 	RadioInput,
 	BackButton,
 	ErrorMessage,
+	OffSiteLink,
 } from '@pdc/components';
 import { getLogger } from '@pdc/utilities';
 import { ref, computed } from 'vue';
@@ -33,6 +34,7 @@ const logger = getLogger('BaseFieldForm');
 const hadError = ref(false);
 const errorMessage = ref('');
 const initialLabel = ref(props.baseField.label);
+const hasFormBeenEdited = ref(false);
 
 const handleFormSubmit = async (event: Event): Promise<void> => {
 	event.preventDefault();
@@ -61,6 +63,7 @@ const isFormValid = computed((): boolean => {
 const updateField = (field: string, value: string | number | null): void => {
 	hadError.value = false;
 	errorMessage.value = '';
+	hasFormBeenEdited.value = true;
 	emit('update:base-field', { ...props.baseField, [field]: value });
 };
 </script>
@@ -165,19 +168,19 @@ const updateField = (field: string, value: string | number | null): void => {
 								How long values in this field remain relevant
 							</template>
 						</RelevanceDurationInput>
-					</template>
-				</PanelSection>
-				<PanelSection>
-					<template #header>
-						<h3>Sensitivity Classification</h3>
-					</template>
-					<template #content>
 						<CautionZone>
 							<template #description>
-								Choose these settings thoughtfully, as changing them later may
-								trigger data loss or break external integrations. Read
-								descriptions carefully and confirm your selections before
-								saving.
+								<p>
+									Choose these settings thoughtfully, as changing them later may
+									trigger data loss or break external integrations.
+									<OffSiteLink
+										to="https://github.com/PhilanthropyDataCommons/front-end/tree/main/docs/SENSITIVITY_CLASSIFICATIONS.md"
+										target-blank
+										>Read these descriptions of sensitivity classification
+										levels carefully</OffSiteLink
+									>
+									and confirm your selections before saving.
+								</p>
 							</template>
 							<template #default="{ isUnlocked }">
 								<RadioInput
@@ -199,7 +202,7 @@ const updateField = (field: string, value: string | number | null): void => {
 										}
 									"
 								>
-									<template #header>Classification Level</template>
+									<template #header>Sensitivity Classification Level</template>
 									<template #instructions>
 										Select the appropriate sensitivity level for this field
 									</template>
@@ -208,12 +211,13 @@ const updateField = (field: string, value: string | number | null): void => {
 						</CautionZone>
 					</template>
 				</PanelSection>
+
 				<PanelSection>
 					<template #header>
 						<div v-if="isFormValid">
 							<h3>Ready to save</h3>
 							<p class="text-color-gray-medium-dark">
-								All required fields have been completed.
+								All required fields are completed.
 							</p>
 						</div>
 						<div v-else>
@@ -224,7 +228,7 @@ const updateField = (field: string, value: string | number | null): void => {
 						</div>
 					</template>
 					<template #content>
-						<DataSubmitButton :disabled="!isFormValid">{{
+						<DataSubmitButton :disabled="!isFormValid || !hasFormBeenEdited">{{
 							props.isCreating ? 'Create Base Field' : 'Save Changes'
 						}}</DataSubmitButton>
 						<ErrorMessage v-if="hadError" :message="errorMessage" />

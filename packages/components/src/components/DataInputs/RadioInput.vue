@@ -3,7 +3,9 @@
 		<InputHeader>
 			<template #header><slot name="header"></slot></template>
 		</InputHeader>
-
+		<InputInstructions>
+			<template #instructions><slot name="instructions"></slot></template>
+		</InputInstructions>
 		<fieldset>
 			<div
 				v-for="(option, index) in options"
@@ -27,10 +29,6 @@
 				</p>
 			</div>
 		</fieldset>
-
-		<InputInstructions>
-			<template #instructions><slot name="instructions"></slot></template>
-		</InputInstructions>
 	</div>
 </template>
 

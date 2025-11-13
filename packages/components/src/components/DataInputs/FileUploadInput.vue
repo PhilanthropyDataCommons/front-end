@@ -3,7 +3,9 @@
 		<InputHeader>
 			<template #header><slot name="header"></slot></template>
 		</InputHeader>
-
+		<InputInstructions>
+			<template #instructions><slot name="instructions"></slot></template>
+		</InputInstructions>
 		<label :for="props.id" class="file-upload-area">
 			<div v-if="!file" class="upload-text">Select a file to upload</div>
 			<div v-else class="uploaded-file">
@@ -18,10 +20,6 @@
 			:accept="props.accept"
 			@change="handleFileSelect"
 		/>
-
-		<InputInstructions>
-			<template #instructions><slot name="instructions"></slot></template>
-		</InputInstructions>
 	</div>
 </template>
 

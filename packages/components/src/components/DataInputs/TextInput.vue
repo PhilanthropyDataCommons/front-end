@@ -4,11 +4,11 @@
 			<template #header><slot name="header"></slot></template>
 		</InputHeader>
 
-		<input v-model="modelValue" type="text" />
-
 		<InputInstructions>
 			<template #instructions><slot name="instructions"></slot></template>
 		</InputInstructions>
+
+		<input v-model="modelValue" type="text" />
 	</div>
 </template>
 

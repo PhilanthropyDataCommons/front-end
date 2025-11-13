@@ -16,12 +16,19 @@
 	display: flex;
 	width: 100%;
 	align-items: flex-start;
+	padding-bottom: var(--fixed-spacing--2x);
 }
 
 .panel-section-header,
 .panel-section-content {
 	flex: 1;
 	width: 50%;
+}
+
+.panel-section-content {
+	display: flex;
+	flex-direction: column;
+	gap: var(--fixed-spacing--2x);
 }
 
 .panel-section-header {

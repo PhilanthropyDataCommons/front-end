@@ -4,6 +4,10 @@
 			<template #header><slot name="header"></slot></template>
 		</InputHeader>
 
+		<InputInstructions>
+			<template #instructions><slot name="instructions"></slot></template>
+		</InputInstructions>
+
 		<fieldset>
 			<div class="radio-input-container">
 				<div class="radio-input-option">
@@ -59,10 +63,6 @@
 				</div>
 			</div>
 		</fieldset>
-
-		<InputInstructions>
-			<template #instructions><slot name="instructions"></slot></template>
-		</InputInstructions>
 	</div>
 </template>
 
