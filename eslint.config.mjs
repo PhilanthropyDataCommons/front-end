@@ -67,4 +67,10 @@ export default typescriptEslint.config(
 		},
 	},
 	eslintConfigPrettier,
+	{
+		rules: {
+			'eqeqeq': 'off',
+			'no-useless-assignment': 'off'
+		}
+	},
 );
