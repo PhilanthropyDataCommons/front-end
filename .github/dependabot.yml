@@ -32,6 +32,9 @@ updates:
       eslint:
         patterns:
           - '*eslint*'
+      vue:
+        patterns:
+          - '*vue*'
 
   - package-ecosystem: 'github-actions'
     directory: '.github/workflows'
