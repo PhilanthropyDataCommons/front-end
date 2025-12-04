@@ -48,6 +48,14 @@ export default typescriptEslint.config(
 		},
 	},
 	{
+		files: ['**/*.vue'],
+		rules: {
+			// Vue templates expect assignment to variables which then appear unused
+			// to eslint
+			'no-useless-assignment': 'off',
+		},
+	},
+	{
 		files: ['**/*.stories.*'],
 		rules: {
 			'import/no-anonymous-default-export': 'off',
@@ -66,10 +74,5 @@ export default typescriptEslint.config(
 			],
 		},
 	},
-	eslintConfigPrettier,
-	{
-		rules: {
-			'no-useless-assignment': 'off'
-		}
-	},
+	eslintConfigPrettier
 );
