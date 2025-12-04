@@ -4,11 +4,11 @@ updates:
     directory: '/'
     versioning-strategy: 'increase'
     schedule:
-      interval: 'weekly'
-      timezone: 'America/Los_Angeles'
-      time: '01:00'
-      day: 'monday'
-    open-pull-requests-limit: 10
+      interval: 'monthly'
+      time: '00:00'
+      timezone: 'Etc/UTC'
+    cooldown:
+      default-days: 7
     ignore:
       - dependency-name: '@types/node'
         update-types:
@@ -36,6 +36,8 @@ updates:
   - package-ecosystem: 'github-actions'
     directory: '.github/workflows'
     schedule:
-      interval: 'weekly'
-      timezone: 'America/Los_Angeles'
-      time: '12:00'
+      interval: 'monthly'
+      time: '00:00'
+      timezone: 'Etc/UTC'
+    cooldown:
+      default-days: 7
