@@ -10,15 +10,15 @@ const getKeycloakOptions = (
 	clientId?: string,
 	realm?: string,
 ): VueKeycloakConfig => {
-	if (authority == null) {
+	if (authority === undefined) {
 		throw new Error('No Keycloak authority configured');
 	}
 
-	if (clientId == null) {
+	if (clientId === undefined) {
 		throw new Error('No Keycloak client ID configured');
 	}
 
-	if (realm == null) {
+	if (realm === undefined) {
 		throw new Error('No Keycloak realm configured');
 	}
 

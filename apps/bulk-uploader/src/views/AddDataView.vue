@@ -53,7 +53,7 @@ const getSelectedSourceId = (): number => {
 	if (sourceId.value !== null && sourceId.value !== '') {
 		return Number(sourceId.value);
 	}
-	if (systemSource.value?.id == null) {
+	if (systemSource.value?.id === undefined) {
 		throw new Error('No System Source Available');
 	}
 	return systemSource.value.id;
