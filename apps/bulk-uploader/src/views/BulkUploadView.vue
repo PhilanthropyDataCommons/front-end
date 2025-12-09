@@ -10,10 +10,10 @@ import {
 import BulkUploadStatus from '@/components/BulkUploadStatus.vue';
 import { useRoute } from 'vue-router';
 import { DocumentPlusIcon } from '@heroicons/vue/24/outline';
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, computed } from 'vue';
 import { useBulkUploads } from '../pdc-api';
 import { BulkUploadTask as BulkUploadTaskType } from '@pdc/sdk';
-import type { BulkUploadTask } from '@pdc/sdk';
+import type { BulkUploadTask, ModelFile } from '@pdc/sdk';
 import { getLogger, localizeDateTime } from '@pdc/utilities';
 
 const logger = getLogger('BulkUploadView');
@@ -27,6 +27,12 @@ const {
 const bulkUpload = ref<BulkUploadTask | undefined>(undefined);
 const { data: bulkUploads, fetchData: fetchBulkUploads } = useBulkUploads();
 let pollInterval: ReturnType<typeof setInterval> | null = null;
+
+const proposalsFile = computed(
+	() =>
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- SDK incorrectly types proposalsDataFile, it's actually ModelFile
+		bulkUpload.value?.proposalsDataFile as ModelFile | undefined,
+);
 
 const startPolling = (): void => {
 	if (pollInterval !== null) clearInterval(pollInterval);
@@ -96,7 +102,7 @@ onUnmounted(() => {
 							<h4>Original File</h4>
 							<div class="file-download">
 								<DocumentPlusIcon class="icon" />
-								<p>TO DO: IMPLEMENT</p>
+								<p>{{ proposalsFile?.name ?? 'No file' }}</p>
 							</div>
 						</div>
 						<h4>Job ID</h4>
