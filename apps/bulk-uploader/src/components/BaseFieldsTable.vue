@@ -17,12 +17,13 @@ export interface BaseFieldsTableProps {
 
 const props = defineProps<BaseFieldsTableProps>();
 
-const publicBaseFields = computed(() =>
-	props.baseFields?.filter(
-		(baseField) =>
-			baseField.sensitivityClassification ===
-			BaseField.SensitivityClassificationEnum.Public,
-	) ?? [],
+const publicBaseFields = computed(
+	() =>
+		props.baseFields?.filter(
+			(baseField) =>
+				baseField.sensitivityClassification ===
+				BaseField.SensitivityClassificationEnum.Public,
+		) ?? [],
 );
 
 const columns: Array<ColumnDef<BaseField>> = [

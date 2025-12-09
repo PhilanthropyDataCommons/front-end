@@ -31,12 +31,15 @@ const columns: Array<ColumnDef<BulkUploadTask>> = [
 	{
 		accessorKey: 'createdAt',
 		header: 'Timestamp',
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- createdAt is known to be a string from the API
 		cell: (info) => localizeDateTime(info.getValue() as string),
 	},
 	{
 		accessorKey: 'createdByUser',
 		header: 'Uploader',
-		cell: (info) => (info.getValue() as { keycloakUserName: string }).keycloakUserName,
+		cell: (info) =>
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- createdByUser structure is known from the API
+			(info.getValue() as { keycloakUserName: string }).keycloakUserName,
 	},
 	{
 		id: 'recordsAdded',
@@ -47,7 +50,11 @@ const columns: Array<ColumnDef<BulkUploadTask>> = [
 	{
 		accessorKey: 'status',
 		header: 'Result',
-		cell: (info) => h(BulkUploadStatus, { status: info.getValue() as BulkUploadTask['status'] }),
+		cell: (info) =>
+			h(BulkUploadStatus, {
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- status is known to be StatusEnum from the API
+				status: info.getValue() as BulkUploadTask['status'],
+			}),
 		enableSorting: true,
 	},
 	linkIconColumn<BulkUploadTask>('edit', '', {

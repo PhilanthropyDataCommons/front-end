@@ -26,14 +26,6 @@ export {
 } from './components/Panel';
 
 export {
-	TableColumnAction,
-	TableColumnActions,
-	TableColumnHead,
-	TableRowCell,
-	TableBody,
-	TableComponent,
-	TableHead,
-	TableRow,
 	DataTable,
 	textColumn,
 	actionColumn,
