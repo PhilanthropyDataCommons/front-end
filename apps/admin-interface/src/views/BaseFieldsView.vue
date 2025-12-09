@@ -24,7 +24,7 @@ const isLoading = ref(true);
 const caughtError = ref(false);
 
 const baseFieldsArray = computed(() => {
-	if (!baseFields.value) return [];
+	if (baseFields.value === null) return [];
 	return [...baseFields.value].sort((a, b) =>
 		dateCompare(a.createdAt, b.createdAt),
 	);
@@ -39,7 +39,8 @@ const columns: Array<ColumnDef<BaseField>> = [
 	{
 		accessorKey: 'valueRelevanceHours',
 		header: 'Relevance Duration (hours)',
-		cell: (info) => String(info.getValue() ?? ''),
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- valueRelevanceHours is known to be a number from the API
+		cell: (info) => String(info.getValue() as number),
 	},
 	linkIconColumn<BaseField>('edit', '', {
 		to: (row) => `/basefields/${row.shortCode}`,
