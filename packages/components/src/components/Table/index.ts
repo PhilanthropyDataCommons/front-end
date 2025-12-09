@@ -6,6 +6,7 @@ import TableColumnAction from './TableColumnAction.vue';
 import TableBody from './TableBody.vue';
 import TableRow from './TableRow.vue';
 import TableRowCell from './TableRowCell.vue';
+import DataTable from './DataTable.vue';
 
 export {
 	TableComponent,
@@ -16,4 +17,7 @@ export {
 	TableBody,
 	TableRow,
 	TableRowCell,
+	DataTable,
 };
+
+export * from './columnHelpers';

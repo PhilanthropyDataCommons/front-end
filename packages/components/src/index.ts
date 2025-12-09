@@ -34,6 +34,12 @@ export {
 	TableComponent,
 	TableHead,
 	TableRow,
+	DataTable,
+	textColumn,
+	actionColumn,
+	linkIconColumn,
+	componentColumn,
+	createColumnHelper,
 } from './components/Table';
 
 export {
