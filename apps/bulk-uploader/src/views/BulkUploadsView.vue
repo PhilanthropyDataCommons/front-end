@@ -5,25 +5,58 @@ import {
 	PanelHeader,
 	PanelHeaderAction,
 	PanelHeaderActionsWrapper,
-	TableComponent,
-	TableHead,
-	TableBody,
-	TableRow,
-	TableColumnHead,
-	TableRowCell,
+	DataTable,
+	textColumn,
+	linkIconColumn,
 } from '@pdc/components';
 import BulkUploadStatus from '../components/BulkUploadStatus.vue';
 import { RouterLink } from 'vue-router';
 import { PlusIcon, PencilSquareIcon } from '@heroicons/vue/24/outline';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, computed, h } from 'vue';
 import { useBulkUploads } from '../pdc-api';
 import { getLogger, localizeDateTime } from '@pdc/utilities';
+import type { BulkUploadTask } from '@pdc/sdk';
+import type { ColumnDef } from '@tanstack/vue-table';
 
 const logger = getLogger('<BulkUploadsView>');
 
 const { data: bulkUploads, fetchData: fetchBulkUploads } = useBulkUploads();
 const isLoading = ref(true);
 const caughtError = ref(false);
+
+const bulkUploadsArray = computed(() => bulkUploads.value?.entries ?? []);
+
+const columns: Array<ColumnDef<BulkUploadTask>> = [
+	textColumn<BulkUploadTask>('id', 'ID'),
+	{
+		accessorKey: 'createdAt',
+		header: 'Timestamp',
+		cell: (info) => localizeDateTime(info.getValue() as string),
+	},
+	{
+		accessorKey: 'createdByUser',
+		header: 'Uploader',
+		cell: (info) => (info.getValue() as { keycloakUserName: string }).keycloakUserName,
+	},
+	{
+		id: 'recordsAdded',
+		header: 'Records added',
+		cell: () => 'TBD',
+		enableSorting: false,
+	},
+	{
+		accessorKey: 'status',
+		header: 'Result',
+		cell: (info) => h(BulkUploadStatus, { status: info.getValue() as BulkUploadTask['status'] }),
+		enableSorting: true,
+	},
+	linkIconColumn<BulkUploadTask>('edit', '', {
+		to: (row) => `/bulk-uploads/${row.id}`,
+		icon: PencilSquareIcon,
+		linkClass: 'pencil-icon',
+		iconClass: 'icon text-black',
+	}),
+];
 
 onMounted(async () => {
 	try {
@@ -61,42 +94,11 @@ onMounted(async () => {
 				<p>Loading bulk uploads...</p>
 			</div>
 
-			<TableComponent
-				v-else-if="
-					bulkUploads && bulkUploads.entries.length > 0 && !caughtError
-				"
-			>
-				<TableHead fixed>
-					<TableRow>
-						<TableColumnHead>ID</TableColumnHead>
-						<TableColumnHead>Timestamp</TableColumnHead>
-						<TableColumnHead>Uploader</TableColumnHead>
-						<TableColumnHead>Records added</TableColumnHead>
-						<TableColumnHead>Result</TableColumnHead>
-						<TableColumnHead></TableColumnHead>
-					</TableRow>
-				</TableHead>
-				<TableBody>
-					<TableRow v-for="upload in bulkUploads.entries" :key="upload.id">
-						<TableRowCell>{{ upload.id }}</TableRowCell>
-						<TableRowCell>{{
-							localizeDateTime(upload.createdAt)
-						}}</TableRowCell>
-						<TableRowCell>{{
-							upload.createdByUser.keycloakUserName
-						}}</TableRowCell>
-						<TableRowCell>TBD</TableRowCell>
-						<TableRowCell>
-							<BulkUploadStatus :status="upload.status"
-						/></TableRowCell>
-						<TableRowCell class="pencil-icon">
-							<RouterLink :to="`/bulk-uploads/${upload.id}`">
-								<PencilSquareIcon class="icon text-black" />
-							</RouterLink>
-						</TableRowCell>
-					</TableRow>
-				</TableBody>
-			</TableComponent>
+			<DataTable
+				v-else-if="bulkUploadsArray.length > 0 && !caughtError"
+				:data="bulkUploadsArray"
+				:columns="columns"
+			/>
 
 			<div v-else-if="!caughtError">
 				<p>No bulk uploads found</p>
@@ -110,17 +112,9 @@ onMounted(async () => {
 	color: var(--color--black);
 }
 
-/* Override table cell width restrictions to fit content */
-:deep(.table td) {
-	white-space: nowrap;
-	width: auto;
-}
-
-:deep(.table td:last-child) {
-	width: auto;
-}
-
-.pencil-icon {
-	padding-left: 100px;
+:deep(.pencil-icon) {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 </style>
