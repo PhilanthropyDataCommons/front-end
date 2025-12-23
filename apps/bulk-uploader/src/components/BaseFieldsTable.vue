@@ -4,11 +4,10 @@ import {
 	PanelHeader,
 	PanelBody,
 	DataTable,
-	textColumn,
+	createColumnHelper,
 } from '@pdc/components';
 import { BaseField } from '@pdc/sdk';
 import { computed } from 'vue';
-import type { ColumnDef } from '@tanstack/vue-table';
 
 export interface BaseFieldsTableProps {
 	baseFields: BaseField[] | null;
@@ -26,12 +25,14 @@ const publicBaseFields = computed(
 		) ?? [],
 );
 
-const columns: Array<ColumnDef<BaseField>> = [
-	textColumn<BaseField>('label', 'Label'),
-	textColumn<BaseField>('description', 'Description'),
-	textColumn<BaseField>('shortCode', 'Short code'),
-	textColumn<BaseField>('dataType', 'Data type'),
-	textColumn<BaseField>('category', 'Category'),
+const columnHelper = createColumnHelper<BaseField>();
+
+const columns = [
+	columnHelper.text('label', 'Label'),
+	columnHelper.text('description', 'Description'),
+	columnHelper.text('shortCode', 'Short code'),
+	columnHelper.text('dataType', 'Data type'),
+	columnHelper.text('category', 'Category'),
 ];
 </script>
 

@@ -14,7 +14,8 @@ import { ref, computed } from 'vue';
 
 export interface DataTableProps<TData> {
 	data: TData[];
-	columns: Array<ColumnDef<TData>>;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any  -- needed to accept any column definition
+	columns: Array<ColumnDef<TData, any>>;
 	className?: string;
 	truncate?: boolean;
 	enableSorting?: boolean;

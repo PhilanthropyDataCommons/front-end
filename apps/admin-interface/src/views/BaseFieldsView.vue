@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="tsx">
 import {
 	PanelComponent,
 	PanelBody,
@@ -6,16 +6,15 @@ import {
 	PanelHeaderAction,
 	PanelHeaderActionsWrapper,
 	DataTable,
-	textColumn,
-	linkIconColumn,
+	EditIconLink,
+	createColumnHelper,
 } from '@pdc/components';
 import { RouterLink } from 'vue-router';
-import { PlusIcon, PencilSquareIcon } from '@heroicons/vue/24/outline';
-import { onMounted, ref, computed } from 'vue';
+import { PlusIcon } from '@heroicons/vue/24/outline';
+import { onMounted, ref, computed, h } from 'vue';
 import { useBaseFields } from '../pdc-api';
 import { getLogger, dateCompare } from '@pdc/utilities';
 import type { BaseField } from '@pdc/sdk';
-import type { ColumnDef } from '@tanstack/vue-table';
 
 const logger = getLogger('<BaseFieldsView>');
 
@@ -30,24 +29,20 @@ const baseFieldsArray = computed(() => {
 	);
 });
 
-const columns: Array<ColumnDef<BaseField>> = [
-	textColumn<BaseField>('label', 'Label'),
-	textColumn<BaseField>('description', 'Description'),
-	textColumn<BaseField>('shortCode', 'Short code'),
-	textColumn<BaseField>('dataType', 'Data type'),
-	textColumn<BaseField>('category', 'Category'),
-	{
-		accessorKey: 'valueRelevanceHours',
-		header: 'Relevance Duration (hours)',
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- valueRelevanceHours is known to be a number from the API
-		cell: (info) => String(info.getValue() as number),
-	},
-	linkIconColumn<BaseField>('edit', '', {
-		to: (row) => `/basefields/${row.shortCode}`,
-		icon: PencilSquareIcon,
-		linkClass: 'pencil-icon',
-		iconClass: 'icon text-black',
+const columnHelper = createColumnHelper<BaseField>();
+
+const columns = [
+	columnHelper.text('label', 'Label'),
+	columnHelper.text('description', 'Description'),
+	columnHelper.text('shortCode', 'Short code'),
+	columnHelper.text('dataType', 'Data type'),
+	columnHelper.text('category', 'Category'),
+	columnHelper.text('valueRelevanceHours', 'Relevance Duration (hours)', {
+		cell: (info) => String(info.getValue()),
 	}),
+	columnHelper.icon('edit', '', (row) =>
+		h(EditIconLink, { to: `/basefields/${row.shortCode}` }, 'Edit'),
+	),
 ];
 
 onMounted(async () => {
@@ -99,10 +94,6 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-.text-black {
-	color: var(--color--black);
-}
-
 :deep(.pencil-icon) {
 	display: flex;
 	align-items: center;
