@@ -27,10 +27,7 @@ export {
 
 export {
 	DataTable,
-	textColumn,
-	actionColumn,
-	linkIconColumn,
-	componentColumn,
+	EditIconLink,
 	createColumnHelper,
 } from './components/Table';
 

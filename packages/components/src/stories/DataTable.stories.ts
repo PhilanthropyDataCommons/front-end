@@ -1,6 +1,5 @@
-import { DataTable } from '../components/Table';
-import { textColumn, actionColumn } from '../components/Table/columnHelpers';
 import { h } from 'vue';
+import { createColumnHelper, DataTable } from '../components/Table';
 
 interface Person {
 	id: string;
@@ -64,17 +63,19 @@ const sampleData: Person[] = [
 	},
 ];
 
+const columnHelper = createColumnHelper<Person>();
+
 const basicColumns = [
-	textColumn<Person>('firstName', 'First Name'),
-	textColumn<Person>('lastName', 'Last Name'),
-	textColumn<Person>('email', 'Email'),
-	textColumn<Person>('age', 'Age', { size: AGE_COLUMN_SIZE }),
-	textColumn<Person>('status', 'Status', { size: STATUS_COLUMN_SIZE }),
+	columnHelper.text('firstName', 'First Name'),
+	columnHelper.text('lastName', 'Last Name'),
+	columnHelper.text('email', 'Email'),
+	columnHelper.text('age', 'Age', { size: AGE_COLUMN_SIZE }),
+	columnHelper.text('status', 'Status', { size: STATUS_COLUMN_SIZE }),
 ];
 
 const columnsWithActions = [
 	...basicColumns,
-	actionColumn<Person>(
+	columnHelper.action(
 		'actions',
 		'Actions',
 		(row) => {
