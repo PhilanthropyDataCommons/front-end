@@ -1,20 +1,17 @@
-<script setup lang="ts">
+<script setup lang="tsx">
 import {
 	PanelComponent,
 	PanelBody,
 	PanelHeader,
 	PanelHeaderAction,
 	PanelHeaderActionsWrapper,
-	TableComponent,
-	TableHead,
-	TableBody,
-	TableRow,
-	TableColumnHead,
-	TableRowCell,
+	DataTable,
+	EditIconLink,
+	createColumnHelper,
 } from '@pdc/components';
 import { RouterLink } from 'vue-router';
-import { PlusIcon, PencilSquareIcon } from '@heroicons/vue/24/outline';
-import { onMounted, ref } from 'vue';
+import { PlusIcon } from '@heroicons/vue/24/outline';
+import { onMounted, ref, computed, h } from 'vue';
 import { useBaseFields } from '../pdc-api';
 import { getLogger, dateCompare } from '@pdc/utilities';
 import type { BaseField } from '@pdc/sdk';
@@ -24,12 +21,33 @@ const logger = getLogger('<BaseFieldsView>');
 const { data: baseFields, fetchData: fetchBaseFields } = useBaseFields();
 const isLoading = ref(true);
 const caughtError = ref(false);
-const baseFieldsArray = ref<BaseField[]>([]);
+
+const baseFieldsArray = computed(() => {
+	if (baseFields.value === null) return [];
+	return [...baseFields.value].sort((a, b) =>
+		dateCompare(a.createdAt, b.createdAt),
+	);
+});
+
+const columnHelper = createColumnHelper<BaseField>();
+
+const columns = [
+	columnHelper.text('label', 'Label'),
+	columnHelper.text('description', 'Description'),
+	columnHelper.text('shortCode', 'Short code'),
+	columnHelper.text('dataType', 'Data type'),
+	columnHelper.text('category', 'Category'),
+	columnHelper.text('valueRelevanceHours', 'Relevance Duration (hours)', {
+		cell: (info) => String(info.getValue()),
+	}),
+	columnHelper.icon('edit', '', (row) =>
+		h(EditIconLink, { to: `/basefields/${row.shortCode}` }, 'Edit'),
+	),
+];
+
 onMounted(async () => {
 	try {
 		await fetchBaseFields();
-		baseFieldsArray.value = baseFields.value ?? [];
-		baseFieldsArray.value.sort((a, b) => dateCompare(a.createdAt, b.createdAt));
 	} catch (error: unknown) {
 		logger.error({ error }, 'Failed to load basefields');
 		caughtError.value = true;
@@ -61,37 +79,12 @@ onMounted(async () => {
 				<p>Loading base fields...</p>
 			</div>
 
-			<TableComponent
-				v-else-if="baseFields && baseFields.length > 0 && !caughtError"
-				truncate
-			>
-				<TableHead fixed>
-					<TableRow>
-						<TableColumnHead>Label</TableColumnHead>
-						<TableColumnHead>Description</TableColumnHead>
-						<TableColumnHead>Short code</TableColumnHead>
-						<TableColumnHead>Data type</TableColumnHead>
-						<TableColumnHead>Category</TableColumnHead>
-						<TableColumnHead>Relevance Duration (hours)</TableColumnHead>
-						<TableColumnHead></TableColumnHead>
-					</TableRow>
-				</TableHead>
-				<TableBody>
-					<TableRow v-for="baseField in baseFields" :key="baseField.shortCode">
-						<TableRowCell>{{ baseField.label }}</TableRowCell>
-						<TableRowCell>{{ baseField.description }}</TableRowCell>
-						<TableRowCell>{{ baseField.shortCode }}</TableRowCell>
-						<TableRowCell>{{ baseField.dataType }}</TableRowCell>
-						<TableRowCell>{{ baseField.category }}</TableRowCell>
-						<TableRowCell>{{ baseField.valueRelevanceHours }}</TableRowCell>
-						<TableRowCell class="pencil-icon">
-							<RouterLink :to="`/basefields/${baseField.shortCode}`">
-								<PencilSquareIcon class="icon text-black" />
-							</RouterLink>
-						</TableRowCell>
-					</TableRow>
-				</TableBody>
-			</TableComponent>
+			<DataTable
+				v-else-if="baseFieldsArray.length > 0 && !caughtError"
+				:data="baseFieldsArray"
+				:columns="columns"
+				:truncate="true"
+			/>
 
 			<div v-else-if="!caughtError">
 				<p>No base fields found</p>
@@ -101,21 +94,9 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-.text-black {
-	color: var(--color--black);
-}
-
-/* Override table cell width restrictions to fit content */
-:deep(.table td) {
-	white-space: nowrap;
-	width: auto;
-}
-
-:deep(.table td:last-child) {
-	width: auto;
-}
-
-.pencil-icon {
-	padding-left: 100px;
+:deep(.pencil-icon) {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 </style>

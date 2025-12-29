@@ -3,12 +3,8 @@ import {
 	PanelComponent,
 	PanelHeader,
 	PanelBody,
-	TableComponent,
-	TableHead,
-	TableRow,
-	TableBody,
-	TableColumnHead,
-	TableRowCell,
+	DataTable,
+	createColumnHelper,
 } from '@pdc/components';
 import { BaseField } from '@pdc/sdk';
 import { computed } from 'vue';
@@ -20,13 +16,24 @@ export interface BaseFieldsTableProps {
 
 const props = defineProps<BaseFieldsTableProps>();
 
-const publicBaseFields = computed(() =>
-	props.baseFields?.filter(
-		(baseField) =>
-			baseField.sensitivityClassification ===
-			BaseField.SensitivityClassificationEnum.Public,
-	),
+const publicBaseFields = computed(
+	() =>
+		props.baseFields?.filter(
+			(baseField) =>
+				baseField.sensitivityClassification ===
+				BaseField.SensitivityClassificationEnum.Public,
+		) ?? [],
 );
+
+const columnHelper = createColumnHelper<BaseField>();
+
+const columns = [
+	columnHelper.text('label', 'Label'),
+	columnHelper.text('description', 'Description'),
+	columnHelper.text('shortCode', 'Short code'),
+	columnHelper.text('dataType', 'Data type'),
+	columnHelper.text('category', 'Category'),
+];
 </script>
 
 <template>
@@ -39,32 +46,12 @@ const publicBaseFields = computed(() =>
 				<p>Loading base fields...</p>
 			</div>
 
-			<TableComponent
-				v-else-if="props.baseFields && props.baseFields.length > 0"
-				truncate
-			>
-				<TableHead fixed>
-					<TableRow>
-						<TableColumnHead>Label</TableColumnHead>
-						<TableColumnHead>Description</TableColumnHead>
-						<TableColumnHead>Short code</TableColumnHead>
-						<TableColumnHead>Data type</TableColumnHead>
-						<TableColumnHead>Category</TableColumnHead>
-					</TableRow>
-				</TableHead>
-				<TableBody>
-					<TableRow
-						v-for="baseField in publicBaseFields"
-						:key="baseField.label"
-					>
-						<TableRowCell>{{ baseField.label }}</TableRowCell>
-						<TableRowCell>{{ baseField.description }}</TableRowCell>
-						<TableRowCell>{{ baseField.shortCode }}</TableRowCell>
-						<TableRowCell>{{ baseField.dataType }}</TableRowCell>
-						<TableRowCell>{{ baseField.category }}</TableRowCell>
-					</TableRow>
-				</TableBody>
-			</TableComponent>
+			<DataTable
+				v-else-if="publicBaseFields.length > 0"
+				:data="publicBaseFields"
+				:columns="columns"
+				:truncate="true"
+			/>
 
 			<div v-else>
 				<p>No base fields found</p>

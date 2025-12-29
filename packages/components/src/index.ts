@@ -26,14 +26,9 @@ export {
 } from './components/Panel';
 
 export {
-	TableColumnAction,
-	TableColumnActions,
-	TableColumnHead,
-	TableRowCell,
-	TableBody,
-	TableComponent,
-	TableHead,
-	TableRow,
+	DataTable,
+	EditIconLink,
+	createColumnHelper,
 } from './components/Table';
 
 export {
