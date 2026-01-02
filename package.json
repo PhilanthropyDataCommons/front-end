@@ -20,9 +20,9 @@
 		"build": "npm run --workspaces --if-present build"
 	},
 	"devDependencies": {
-		"@storybook/addon-docs": "^9.1.16",
-		"@storybook/addon-onboarding": "^9.1.16",
-		"@storybook/vue3-vite": "^9.1.16",
+		"@storybook/addon-docs": "^9.1.17",
+		"@storybook/addon-onboarding": "^9.1.17",
+		"@storybook/vue3-vite": "^9.1.17",
 		"@testing-library/user-event": "^14.6.1",
 		"@types/node": "^24.10.4",
 		"@types/luxon": "^3.7.1",
