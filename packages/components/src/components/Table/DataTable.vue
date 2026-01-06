@@ -8,6 +8,7 @@ import {
 	type SortingState,
 	type ColumnFiltersState,
 	type ColumnResizeMode,
+	type ColumnSizingInfoState,
 	FlexRender,
 } from '@tanstack/vue-table';
 import { ref, computed } from 'vue';
@@ -35,6 +36,15 @@ const props = withDefaults(defineProps<DataTableProps<TData>>(), {
 
 const sorting = ref<SortingState>([]);
 const columnFilters = ref<ColumnFiltersState>([]);
+const columnSizing = ref<Record<string, number>>({});
+const columnSizingInfo = ref<ColumnSizingInfoState>({
+	columnSizingStart: [],
+	deltaOffset: null,
+	deltaPercentage: null,
+	isResizingColumn: false,
+	startOffset: null,
+	startSize: null,
+});
 
 const table = useVueTable({
 	get data() {
@@ -55,6 +65,12 @@ const table = useVueTable({
 		get columnFilters() {
 			return columnFilters.value;
 		},
+		get columnSizing() {
+			return columnSizing.value;
+		},
+		get columnSizingInfo() {
+			return columnSizingInfo.value;
+		},
 	},
 	onSortingChange: (updaterOrValue) => {
 		sorting.value =
@@ -68,9 +84,27 @@ const table = useVueTable({
 				? updaterOrValue(columnFilters.value)
 				: updaterOrValue;
 	},
-	enableSorting: props.enableSorting,
-	enableColumnResizing: props.enableColumnResizing,
-	columnResizeMode: props.columnResizeMode,
+	onColumnSizingChange: (updaterOrValue) => {
+		columnSizing.value =
+			typeof updaterOrValue === 'function'
+				? updaterOrValue(columnSizing.value)
+				: updaterOrValue;
+	},
+	onColumnSizingInfoChange: (updaterOrValue) => {
+		columnSizingInfo.value =
+			typeof updaterOrValue === 'function'
+				? updaterOrValue(columnSizingInfo.value)
+				: updaterOrValue;
+	},
+	get enableSorting() {
+		return props.enableSorting;
+	},
+	get enableColumnResizing() {
+		return props.enableColumnResizing;
+	},
+	get columnResizeMode() {
+		return props.columnResizeMode;
+	},
 });
 
 const tableClasses = computed(() =>
@@ -86,6 +120,7 @@ const tableClasses = computed(() =>
 					v-for="header in headerGroup.headers"
 					:key="header.id"
 					:colSpan="header.colSpan"
+					:style="{ width: header.getSize() + 'px' }"
 				>
 					<div
 						v-if="!header.isPlaceholder"
@@ -102,12 +137,23 @@ const tableClasses = computed(() =>
 							{{ header.column.getIsSorted() === 'asc' ? ' ↑' : ' ↓' }}
 						</span>
 					</div>
+					<div
+						v-if="props.enableColumnResizing && header.column.getCanResize()"
+						class="resizer"
+						:class="{ isResizing: header.column.getIsResizing() }"
+						@mousedown="(e) => header.getResizeHandler()(e)"
+						@touchstart="(e) => header.getResizeHandler()(e)"
+					/>
 				</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr v-for="row in table.getRowModel().rows" :key="row.id">
-				<td v-for="cell in row.getVisibleCells()" :key="cell.id">
+				<td
+					v-for="cell in row.getVisibleCells()"
+					:key="cell.id"
+					:style="{ width: cell.column.getSize() + 'px' }"
+				>
 					<FlexRender
 						:render="cell.column.columnDef.cell"
 						:props="cell.getContext()"
@@ -128,13 +174,32 @@ const tableClasses = computed(() =>
 }
 
 .data-table th {
+	position: relative;
 	min-width: 25%;
 	vertical-align: bottom;
 	white-space: nowrap;
 	text-align: left;
 	padding: var(--accessible-spacing--1x);
+	padding-right: calc(var(--accessible-spacing--1x) + 8px);
 	border-bottom: var(--table--border-width) solid var(--color--gray--light);
 	background-color: var(--color--gray--light);
+}
+
+.data-table .resizer {
+	position: absolute;
+	right: 0;
+	top: 0;
+	height: 100%;
+	width: 8px;
+	cursor: col-resize;
+	user-select: none;
+	touch-action: none;
+	z-index: 1;
+}
+
+.data-table .resizer:hover,
+.data-table .resizer.isResizing {
+	background-color: var(--color--blue);
 }
 
 .data-table td {

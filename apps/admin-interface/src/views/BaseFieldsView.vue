@@ -84,6 +84,7 @@ onMounted(async () => {
 				:data="baseFieldsArray"
 				:columns="columns"
 				:truncate="true"
+				:enable-column-resizing="true"
 			/>
 
 			<div v-else-if="!caughtError">
