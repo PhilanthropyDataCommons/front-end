@@ -175,7 +175,6 @@ const tableClasses = computed(() =>
 
 .data-table th {
 	position: relative;
-	min-width: 25%;
 	vertical-align: bottom;
 	white-space: nowrap;
 	text-align: left;
