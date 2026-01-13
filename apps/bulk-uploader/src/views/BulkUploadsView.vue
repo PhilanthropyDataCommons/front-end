@@ -87,6 +87,7 @@ onMounted(async () => {
 				v-else-if="bulkUploadsArray.length > 0 && !caughtError"
 				:data="bulkUploadsArray"
 				:columns="columns"
+				:enable-column-resizing="true"
 			/>
 
 			<div v-else-if="!caughtError">
