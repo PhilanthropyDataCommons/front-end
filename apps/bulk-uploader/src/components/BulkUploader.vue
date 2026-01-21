@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { FunderBundle, SourceBundle } from '@pdc/sdk';
+import type { ApplicationFormBundle, SourceBundle } from '@pdc/sdk';
 import {
 	PanelComponent,
 	PanelBody,
@@ -21,10 +21,9 @@ const props = defineProps<{
 	bulkUpload: File | null;
 	attachmentsUpload: File | null;
 	sourceId: string | null;
-	funderShortCode: string | null;
+	applicationFormId: string | null;
 	sources: SourceBundle | null;
-	funders: FunderBundle | null;
-	defaultFunderShortCode: string;
+	applicationForms: ApplicationFormBundle | null;
 	handleBulkUpload: (file: File, attachmentsFile: File | null) => Promise<void>;
 }>();
 
@@ -32,7 +31,7 @@ const emit = defineEmits<{
 	'update:bulk-upload': [file: File | null];
 	'update:attachments-upload': [file: File | null];
 	'update:source-id': [sourceId: string | null];
-	'update:funder-short-code': [funderShortCode: string | null];
+	'update:application-form-id': [applicationFormId: string | null];
 }>();
 
 const logger = getLogger('BulkUploader');
@@ -154,22 +153,21 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 							</template>
 						</SelectInput>
 						<SelectInput
-							:model-value="props.funderShortCode"
+							:model-value="props.applicationFormId"
 							:options="
-								props.funders?.entries.map((funder) => ({
-									label: funder.name,
-									value: funder.shortCode,
+								props.applicationForms?.entries.map((form) => ({
+									label: form.id.toString(),
+									value: form.id.toString(),
 								}))
 							"
 							@update:model-value="
 								(value: string | null | undefined) =>
-									emit('update:funder-short-code', value ?? null)
+									emit('update:application-form-id', value ?? null)
 							"
 						>
-							<template #header>Funder</template>
+							<template #header>Application Form</template>
 							<template #instructions>
-								If blank, the system funder shortcode will be used (default is
-								`{{ defaultFunderShortCode }}`)
+								Select the application form associated with this bulk upload.
 							</template>
 						</SelectInput>
 					</template>
