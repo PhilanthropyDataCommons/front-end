@@ -7,8 +7,8 @@ import {
 	useRegisterBulkUploadCallback,
 	uploadUsingPresignedPost,
 	useSources,
-	useFunders,
 	useBaseFields,
+	useApplicationForms,
 } from '../pdc-api';
 import { getLogger } from '@pdc/utilities';
 import BulkUploader from '../components/BulkUploader.vue';
@@ -22,10 +22,10 @@ const bulkUpload = ref<File | null>(null);
 const attachmentsUpload = ref<File | null>(null);
 
 const sourceId = ref<string | null>(null);
-const funderShortCode = ref<string | null>(null);
+const applicationFormId = ref<string | null>(null);
 
 const { data: sources } = useSources();
-const { data: funders } = useFunders();
+const { data: applicationForms } = useApplicationForms();
 
 const { data: systemSource, fetchData: fetchSystemSource } = useSystemSource();
 const { data: baseFields, fetchData: fetchBaseFields } = useBaseFields();
@@ -33,8 +33,6 @@ const isLoading = ref(true);
 
 const createPdcFile = useFileUploadCallback();
 const registerBulkUpload = useRegisterBulkUploadCallback();
-
-const defaultFunderShortCode = 'pdc';
 
 const getMimeType = (file: File): string =>
 	file.type === '' ? 'application/octet-stream' : file.type;
@@ -81,7 +79,6 @@ const handleBulkUpload = async (
 	const bulkUploadResult = await registerBulkUpload({
 		proposalsDataFileId: proposalsDataFile.id,
 		sourceId: getSelectedSourceId(),
-		funderShortCode: funderShortCode.value ?? defaultFunderShortCode,
 		/* @ts-expect-error  -- The bulk upload task should be typed as null, but is coming through as undefined due to an sdk issue. */
 		attachmentsArchiveFileId: attachmentsDataFile?.id ?? null,
 		attachmentsArchiveFile: null,
@@ -97,11 +94,10 @@ const handleBulkUpload = async (
 		v-model:bulk-upload="bulkUpload"
 		v-model:attachments-upload="attachmentsUpload"
 		v-model:source-id="sourceId"
-		v-model:funder-short-code="funderShortCode"
+		v-model:application-form-id="applicationFormId"
 		:sources="sources"
-		:funders="funders"
 		:handle-bulk-upload="handleBulkUpload"
-		:default-funder-short-code="defaultFunderShortCode"
+		:application-forms="applicationForms"
 	/>
 	<BaseFieldsTable :base-fields="baseFields" :is-loading="isLoading" />
 </template>
