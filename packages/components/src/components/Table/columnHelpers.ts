@@ -9,7 +9,7 @@ import type {
 } from '@tanstack/vue-table';
 
 const DEFAULT_ACTION_COLUMN_SIZE = 100;
-const DEFAULT_ICON_ACTION_COLUMN_SIZE = 60;
+const DEFAULT_ICON_ACTION_COLUMN_SIZE = 40;
 
 interface ColumnHelper<TData extends RowData> {
 	accessor: <

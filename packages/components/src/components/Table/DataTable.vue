@@ -7,7 +7,6 @@ import {
 	type ColumnDef,
 	type SortingState,
 	type ColumnFiltersState,
-	type ColumnResizeMode,
 	type ColumnSizingInfoState,
 	FlexRender,
 } from '@tanstack/vue-table';
@@ -15,14 +14,13 @@ import { ref, computed } from 'vue';
 
 export interface DataTableProps<TData> {
 	data: TData[];
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any  -- needed to accept any column definition
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- needed for generic column definitions
 	columns: Array<ColumnDef<TData, any>>;
 	className?: string;
 	truncate?: boolean;
 	enableSorting?: boolean;
 	enableFiltering?: boolean;
 	enableColumnResizing?: boolean;
-	columnResizeMode?: ColumnResizeMode;
 }
 
 const props = withDefaults(defineProps<DataTableProps<TData>>(), {
@@ -31,7 +29,6 @@ const props = withDefaults(defineProps<DataTableProps<TData>>(), {
 	enableSorting: true,
 	enableFiltering: false,
 	enableColumnResizing: false,
-	columnResizeMode: 'onChange',
 });
 
 const sorting = ref<SortingState>([]);
@@ -46,6 +43,10 @@ const columnSizingInfo = ref<ColumnSizingInfoState>({
 	startSize: null,
 });
 
+const isResizing = computed(
+	() => columnSizingInfo.value.isResizingColumn !== false,
+);
+
 const table = useVueTable({
 	get data() {
 		return props.data;
@@ -53,11 +54,16 @@ const table = useVueTable({
 	get columns() {
 		return props.columns;
 	},
+	defaultColumn: {
+		size: 120, // eslint-disable-line @typescript-eslint/no-magic-numbers -- sensible default column width
+		minSize: 40, // eslint-disable-line @typescript-eslint/no-magic-numbers -- sensible minimum column width
+	},
 	getCoreRowModel: getCoreRowModel(),
 	getSortedRowModel: props.enableSorting ? getSortedRowModel() : undefined,
 	getFilteredRowModel: props.enableFiltering
 		? getFilteredRowModel()
 		: undefined,
+	columnResizeMode: 'onChange',
 	state: {
 		get sorting() {
 			return sorting.value;
@@ -102,9 +108,6 @@ const table = useVueTable({
 	get enableColumnResizing() {
 		return props.enableColumnResizing;
 	},
-	get columnResizeMode() {
-		return props.columnResizeMode;
-	},
 });
 
 const tableClasses = computed(() =>
@@ -113,55 +116,74 @@ const tableClasses = computed(() =>
 </script>
 
 <template>
-	<table :border="0" :cellPadding="0" :cellSpacing="0" :class="tableClasses">
-		<thead>
-			<tr v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
-				<th
-					v-for="header in headerGroup.headers"
-					:key="header.id"
-					:colSpan="header.colSpan"
-					:style="{ width: header.getSize() + 'px' }"
+	<div class="data-table-container" :class="{ 'is-resizing': isResizing }">
+		<table
+			:border="0"
+			:cellPadding="0"
+			:cellSpacing="0"
+			:class="tableClasses"
+			:style="{ width: `${table.getTotalSize()}px` }"
+		>
+			<thead>
+				<tr
+					v-for="headerGroup in table.getHeaderGroups()"
+					:key="headerGroup.id"
 				>
-					<div
-						v-if="!header.isPlaceholder"
+					<th
+						v-for="header in headerGroup.headers"
+						:key="header.id"
+						:colSpan="header.colSpan"
+						:style="{ width: `${header.getSize()}px` }"
 						:class="{
-							sortable: header.column.getCanSort(),
+							'sticky-end':
+								props.enableColumnResizing && !header.column.getCanResize(),
 						}"
-						@click="header.column.getToggleSortingHandler()?.($event)"
+					>
+						<div
+							v-if="!header.isPlaceholder"
+							:class="{
+								sortable: header.column.getCanSort(),
+							}"
+							@click="header.column.getToggleSortingHandler()?.($event)"
+						>
+							<FlexRender
+								:render="header.column.columnDef.header"
+								:props="header.getContext()"
+							/>
+							<span v-if="header.column.getIsSorted()" class="sort-indicator">
+								{{ header.column.getIsSorted() === 'asc' ? ' ↑' : ' ↓' }}
+							</span>
+						</div>
+						<div
+							v-if="props.enableColumnResizing && header.column.getCanResize()"
+							class="resizer"
+							:class="{ isResizing: header.column.getIsResizing() }"
+							@mousedown="(e) => header.getResizeHandler()(e)"
+							@touchstart="(e) => header.getResizeHandler()(e)"
+						/>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="row in table.getRowModel().rows" :key="row.id">
+					<td
+						v-for="cell in row.getVisibleCells()"
+						:key="cell.id"
+						:style="{ width: `${cell.column.getSize()}px` }"
+						:class="{
+							'sticky-end':
+								props.enableColumnResizing && !cell.column.getCanResize(),
+						}"
 					>
 						<FlexRender
-							:render="header.column.columnDef.header"
-							:props="header.getContext()"
+							:render="cell.column.columnDef.cell"
+							:props="cell.getContext()"
 						/>
-						<span v-if="header.column.getIsSorted()" class="sort-indicator">
-							{{ header.column.getIsSorted() === 'asc' ? ' ↑' : ' ↓' }}
-						</span>
-					</div>
-					<div
-						v-if="props.enableColumnResizing && header.column.getCanResize()"
-						class="resizer"
-						:class="{ isResizing: header.column.getIsResizing() }"
-						@mousedown="(e) => header.getResizeHandler()(e)"
-						@touchstart="(e) => header.getResizeHandler()(e)"
-					/>
-				</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr v-for="row in table.getRowModel().rows" :key="row.id">
-				<td
-					v-for="cell in row.getVisibleCells()"
-					:key="cell.id"
-					:style="{ width: cell.column.getSize() + 'px' }"
-				>
-					<FlexRender
-						:render="cell.column.columnDef.cell"
-						:props="cell.getContext()"
-					/>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </template>
 
 <style>
@@ -169,8 +191,24 @@ const tableClasses = computed(() =>
 	--table--border-width: 1px;
 }
 
-.data-table {
+.data-table-container {
 	width: 100%;
+	overflow-x: auto;
+}
+
+.data-table-container.is-resizing {
+	cursor: col-resize;
+}
+
+.data-table-container.is-resizing th {
+	user-select: none;
+}
+
+.data-table {
+	table-layout: fixed;
+	border-collapse: separate;
+	border-spacing: 0;
+	min-width: 100%;
 }
 
 .data-table th {
@@ -189,16 +227,42 @@ const tableClasses = computed(() =>
 	right: 0;
 	top: 0;
 	height: 100%;
-	width: 8px;
+	width: 12px;
 	cursor: col-resize;
 	user-select: none;
 	touch-action: none;
 	z-index: 1;
+	background: linear-gradient(
+		to right,
+		var(--color--gray--light) 2px,
+		var(--color--gray--medium) 2px,
+		var(--color--gray--medium) 6px,
+		var(--color--gray--light) 6px
+	);
 }
 
 .data-table .resizer:hover,
 .data-table .resizer.isResizing {
-	background-color: var(--color--blue);
+	background: var(--color--blue);
+}
+
+.data-table th.sticky-end,
+.data-table td.sticky-end {
+	position: sticky;
+	right: 0;
+}
+
+.data-table th.sticky-end {
+	z-index: 2;
+}
+
+.data-table td.sticky-end {
+	z-index: 1;
+	background-color: var(--color--white);
+}
+
+.data-table tbody tr:hover td.sticky-end {
+	background-color: var(--color--gray);
 }
 
 .data-table td {
@@ -207,20 +271,16 @@ const tableClasses = computed(() =>
 	border-bottom: var(--table--border-width) solid var(--color--gray--light);
 }
 
-/* The last column should stretch to the table edge and have no right border. */
 .data-table th:last-child,
 .data-table td:last-child {
-	width: 100%;
 	border-right: none;
 }
 
-/* The last body row should have a darker bottom border. */
 .data-table tbody tr:last-child th,
 .data-table tbody tr:last-child td {
 	border-bottom: var(--table--border-width) solid var(--color--gray--medium);
 }
 
-/* Truncated tables don't wrap table body contents. */
 .data-table.truncate tbody td {
 	white-space: nowrap;
 	overflow: hidden;
@@ -232,7 +292,6 @@ const tableClasses = computed(() =>
 	background-color: var(--color--gray);
 }
 
-/* Sortable column headers */
 .data-table .sortable {
 	cursor: pointer;
 	user-select: none;
@@ -249,12 +308,11 @@ const tableClasses = computed(() =>
 	font-size: 0.875em;
 }
 
-/* Icon link column styles */
 .data-table .icon-link,
 .data-table .pencil-icon {
 	color: inherit;
 	text-decoration: none;
-	padding-left: 50px;
+	padding-left: 8px;
 }
 
 .data-table .icon-link:visited,
