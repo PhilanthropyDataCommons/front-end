@@ -83,6 +83,10 @@ const handleBulkUpload = async (
 		attachmentsArchiveFileId: attachmentsDataFile?.id ?? null,
 		attachmentsArchiveFile: null,
 		logs: [],
+		applicationFormId:
+			applicationFormId.value !== null && applicationFormId.value !== ''
+				? Number(applicationFormId.value)
+				: null,
 	});
 
 	await router.push(`/bulk-uploads/${bulkUploadResult.id}`);
