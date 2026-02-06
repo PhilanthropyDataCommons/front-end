@@ -38,9 +38,9 @@ const startPolling = (): void => {
 	if (pollInterval !== null) clearInterval(pollInterval);
 	pollInterval = setInterval(() => {
 		void (async () => {
+			await fetchBulkUploads();
 			if (bulkUpload.value?.status === BulkUploadTaskStatus.InProgress) {
 				try {
-					await fetchBulkUploads();
 					bulkUpload.value = bulkUploads.value?.entries.find(
 						(upload) => upload.id === Number(bulkUploadId),
 					);

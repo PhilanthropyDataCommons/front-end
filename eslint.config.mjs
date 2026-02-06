@@ -46,7 +46,6 @@ export default typescriptEslint.config(
 			],
 			// Unicode regex literals are exclusive to ES2024+. For the time being we are still targeting ES2022
 			'require-unicode-regexp': 'off',
-			'require-atomic-updates': 'off',
 			'@typescript-eslint/require-await': 'off',
 		},
 	},
