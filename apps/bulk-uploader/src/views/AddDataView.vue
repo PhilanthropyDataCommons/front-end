@@ -83,6 +83,7 @@ const handleBulkUpload = async (
 		attachmentsArchiveFileId: attachmentsDataFile?.id ?? null,
 		attachmentsArchiveFile: null,
 		logs: [],
+		/* @ts-expect-error -- applicationFormId should be typed as nullable, but the SDK types it as required. */
 		applicationFormId:
 			applicationFormId.value !== null && applicationFormId.value !== ''
 				? Number(applicationFormId.value)
