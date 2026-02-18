@@ -111,6 +111,10 @@ onUnmounted(() => {
 						<p>{{ localizeDateTime(bulkUpload.createdAt) }}</p>
 						<h4>Uploader</h4>
 						<p>{{ bulkUpload.createdByUser.keycloakUserName }}</p>
+						<h4>Application Form Name</h4>
+						<p>{{ bulkUpload.applicationForm?.name }}</p>
+						<h4>Application Form Id</h4>
+						<p>{{ bulkUpload.applicationFormId }}</p>
 					</div>
 				</template>
 			</PanelSection>

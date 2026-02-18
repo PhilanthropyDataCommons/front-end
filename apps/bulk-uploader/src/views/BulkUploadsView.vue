@@ -35,6 +35,7 @@ const columns = [
 	columnHelper.text('createdByUser', 'Uploader', {
 		cell: (info) => info.getValue().keycloakUserName ?? '',
 	}),
+	columnHelper.text('applicationFormId', 'Application Form'),
 	columnHelper.display('recordsAdded', 'Records added', {
 		cell: () => 'TBD',
 		enableSorting: false,
