@@ -35,7 +35,7 @@
 		"eslint-plugin-import": "^2.32.0",
 		"eslint-plugin-storybook": "^9.1.17",
 		"eslint-plugin-vue": "^10.7.0",
-		"jsdom": "^27.2.0",
+		"jsdom": "^28.1.0",
 		"keycloak-js": "^26.2.1",
 		"prettier": "^3.7.4",
 		"storybook": "^9.1.19",
