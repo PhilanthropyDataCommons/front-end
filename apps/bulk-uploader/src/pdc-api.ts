@@ -13,6 +13,7 @@ import type {
 	BaseField,
 	ApplicationFormBundle,
 	OpportunityBundle,
+	Opportunity,
 } from '@pdc/sdk';
 
 export type FileUploadResponse = ModelFile & {
@@ -178,4 +179,9 @@ export function useOpportunities(
 			_count: count.toString(),
 		}),
 	);
+}
+
+export async function useOpportunity(id: number): Promise<Opportunity> {
+	const fetchOne = usePdcCallbackApi<Opportunity>(`/opportunities/${id}`);
+	return await fetchOne({ method: 'GET' });
 }

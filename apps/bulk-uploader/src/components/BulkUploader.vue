@@ -1,5 +1,11 @@
 <script setup lang="ts">
-import type { ApplicationForm, ApplicationFormBundle, Opportunity, OpportunityBundle, SourceBundle } from '@pdc/sdk';
+import type {
+	ApplicationForm,
+	ApplicationFormBundle,
+	Opportunity,
+	OpportunityBundle,
+	SourceBundle,
+} from '@pdc/sdk';
 import {
 	PanelComponent,
 	PanelBody,
@@ -55,11 +61,6 @@ const handleCsvDownload = async (): Promise<void> => {
 			error instanceof Error ? error.message : 'Failed to Load CSV Template';
 		hadCsvError.value = true;
 	}
-}
-const applicationFormLabel = (form: ApplicationForm, opportunities: Opportunity[]): string => {
-	const name = form.name ?? `Application Form #${form.id}`;
-	const opportunity = opportunities.find((o) => o.id === form.opportunityId);
-	return opportunity !== undefined ? `${name} (${opportunity.title})` : name;
 };
 
 const applicationFormLabel = (
@@ -67,19 +68,14 @@ const applicationFormLabel = (
 	opportunities: Opportunity[],
 ): string => {
 	const opportunity = opportunities.find(({ id }) => id === form.opportunityId);
-	// The SDK types name and title as `string`, but they can be null at runtime.
-	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-	const formName = form.name ?? null;
-	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 	const opportunityTitle = opportunity?.title ?? null;
 
-	if (formName !== null && opportunityTitle !== null) {
-		return `${formName} (${opportunityTitle})`;
-	}
-	if (formName !== null) {
-		return formName;
-	}
-	return `Application Form #${form.id}`;
+	// The SDK types name as `string`, but it can be null at runtime.
+	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- SDK type is incorrect, name can be null
+	const baseLabel = form.name ?? `Application Form #${form.id}`;
+	return opportunityTitle === null
+		? baseLabel
+		: `${baseLabel} (${opportunityTitle})`;
 };
 
 const handleFormSubmit = async (event: Event): Promise<void> => {
@@ -125,7 +121,10 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 							:model-value="props.applicationFormId"
 							:options="
 								props.applicationForms?.entries.map((form) => ({
-									label: applicationFormLabel(form, props.opportunities?.entries ?? []),
+									label: applicationFormLabel(
+										form,
+										props.opportunities?.entries ?? [],
+									),
 									value: form.id.toString(),
 								}))
 							"

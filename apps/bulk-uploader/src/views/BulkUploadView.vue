@@ -11,9 +11,9 @@ import BulkUploadStatus from '@/components/BulkUploadStatus.vue';
 import { useRoute } from 'vue-router';
 import { DocumentPlusIcon } from '@heroicons/vue/24/outline';
 import { ref, onMounted, onUnmounted, computed } from 'vue';
-import { useBulkUploads } from '../pdc-api';
+import { useBulkUploads, useOpportunity } from '../pdc-api';
 import { BulkUploadTask as BulkUploadTaskType } from '@pdc/sdk';
-import type { BulkUploadTask, ModelFile } from '@pdc/sdk';
+import type { BulkUploadTask, ModelFile, Opportunity } from '@pdc/sdk';
 import { getLogger, localizeDateTime } from '@pdc/utilities';
 
 const logger = getLogger('BulkUploadView');
@@ -26,6 +26,9 @@ const {
 } = useRoute();
 const bulkUpload = ref<BulkUploadTask | undefined>(undefined);
 const { data: bulkUploads, fetchData: fetchBulkUploads } = useBulkUploads();
+
+const opportunity = ref<Opportunity | undefined>(undefined);
+
 let pollInterval: ReturnType<typeof setInterval> | null = null;
 
 const proposalsFile = computed(
@@ -71,6 +74,11 @@ onMounted(() => {
 		if (bulkUpload.value?.status === BulkUploadTaskStatus.InProgress) {
 			startPolling();
 		}
+		if (bulkUpload.value?.applicationForm?.opportunityId !== undefined) {
+			opportunity.value = await useOpportunity(
+				bulkUpload.value.applicationForm.opportunityId,
+			);
+		}
 	})();
 });
 
@@ -111,10 +119,15 @@ onUnmounted(() => {
 						<p>{{ localizeDateTime(bulkUpload.createdAt) }}</p>
 						<h4>Uploader</h4>
 						<p>{{ bulkUpload.createdByUser.keycloakUserName }}</p>
-						<h4>Application Form Name</h4>
-						<p>{{ bulkUpload.applicationForm?.name }}</p>
-						<h4>Application Form Id</h4>
-						<p>{{ bulkUpload.applicationFormId }}</p>
+						<h4>Application Form</h4>
+						<p>
+							{{
+								bulkUpload.applicationForm?.name ??
+								`Application Form #${bulkUpload.applicationFormId}`
+							}}
+						</p>
+						<h4>Opportunity</h4>
+						<p>{{ opportunity?.title }}</p>
 					</div>
 				</template>
 			</PanelSection>
