@@ -1,4 +1,5 @@
 import { usePdcApi, usePdcCallbackApi, throwIfNotOk } from '@pdc/utilities';
+import { useKeycloak } from '@dsb-norge/vue-keycloak-js';
 import type {
 	BulkUploadTaskBundle,
 	Source,
@@ -124,6 +125,32 @@ export function useBaseFields(
 			_count: count.toString(),
 		}),
 	);
+}
+
+const REVOKE_URL_TIMEOUT = 100;
+
+export async function downloadApplicationFormCsv(id: number): Promise<void> {
+	const { token } = useKeycloak();
+	const url = new URL(
+		`/applicationForms/${id}/proposalDataCsv`,
+		import.meta.env.VITE_API_URL,
+	);
+	const res = await fetch(url.toString(), {
+		headers: { Authorization: `Bearer ${token}` },
+	}).then(throwIfNotOk);
+
+	const blob = await res.blob();
+	const objectUrl = URL.createObjectURL(blob);
+	const link = document.createElement('a');
+	link.href = objectUrl;
+	link.download = `application-form-${id}-proposal-data.csv`;
+
+	document.body.appendChild(link);
+	link.click();
+	document.body.removeChild(link);
+	setTimeout(() => {
+		URL.revokeObjectURL(objectUrl);
+	}, REVOKE_URL_TIMEOUT);
 }
 
 export function useApplicationForms(

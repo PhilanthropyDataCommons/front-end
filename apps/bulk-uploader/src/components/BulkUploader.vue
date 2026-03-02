@@ -11,11 +11,11 @@ import {
 	SelectInput,
 	ErrorMessage,
 	PanelHeaderAction,
-	OffSiteLink,
 } from '@pdc/components';
 import { getLogger } from '@pdc/utilities';
 import { DocumentPlusIcon } from '@heroicons/vue/24/outline';
 import { ref } from 'vue';
+import { downloadApplicationFormCsv } from '../pdc-api';
 
 const props = defineProps<{
 	bulkUpload: File | null;
@@ -37,6 +37,24 @@ const emit = defineEmits<{
 const logger = getLogger('BulkUploader');
 const hadError = ref(false);
 const errorMessage = ref('');
+
+const hadCsvError = ref(false);
+const csvErrorMessage = ref('');
+
+const handleCsvDownload = async (): Promise<void> => {
+	if (props.applicationFormId === null) {
+		return;
+	}
+	try {
+		await downloadApplicationFormCsv(Number(props.applicationFormId));
+		hadCsvError.value = false;
+	} catch (error) {
+		logger.error({ error }, 'Failed to download CSV template');
+		csvErrorMessage.value =
+			error instanceof Error ? error.message : 'Failed to Load CSV Template';
+		hadCsvError.value = true;
+	}
+};
 
 const handleFormSubmit = async (event: Event): Promise<void> => {
 	event.preventDefault();
@@ -68,22 +86,73 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 				<PanelHeaderAction>
 					<BackButton to="/bulk-uploads" label="Back to bulk uploads" />
 				</PanelHeaderAction>
-				<PanelHeaderAction>
-					<DocumentPlusIcon class="icon" />
-					<OffSiteLink
-						to="https://api.philanthropydatacommons.org/static/bulkUpload.csv"
-						class="download-csv-text"
-					>
-						Download CSV template
-					</OffSiteLink>
-				</PanelHeaderAction>
 			</PanelHeaderActionsWrapper>
 		</PanelHeader>
 		<PanelBody variant="data-panel-padded">
 			<form @submit="handleFormSubmit">
 				<PanelSection>
 					<template #header>
+						<h3>Associated Entities</h3>
+					</template>
+					<template #content>
+						<SelectInput
+							:model-value="props.applicationFormId"
+							:options="
+								props.applicationForms?.entries.map((form) => ({
+									label: form.id.toString(),
+									value: form.id.toString(),
+								}))
+							"
+							@update:model-value="
+								(value: string | null | undefined) =>
+									emit('update:application-form-id', value ?? null)
+							"
+						>
+							<template #header>Application Form</template>
+							<template #instructions>
+								Select the application form associated with this bulk upload.
+							</template>
+						</SelectInput>
+						<SelectInput
+							:model-value="props.sourceId"
+							:options="
+								props.sources?.entries.map((source) => ({
+									label: source.label,
+									value: source.id.toString(),
+								}))
+							"
+							@update:model-value="
+								(value: string | null | undefined) =>
+									emit('update:source-id', value ?? null)
+							"
+						>
+							<template #header>Source</template>
+							<template #instructions>
+								If blank, the default source in the pdc instance will be used
+								for the bulk upload.
+							</template>
+						</SelectInput>
+					</template>
+				</PanelSection>
+				<PanelSection>
+					<template #header>
 						<h3>Upload CSV File</h3>
+						<div class="csv-download-wrapper">
+							<div class="csv-download-top">
+								<DocumentPlusIcon class="icon" />
+								<button
+									:disabled="props.applicationFormId === null"
+									class="download-csv-text"
+									@click.prevent="handleCsvDownload"
+								>
+									Download CSV template
+								</button>
+							</div>
+							<p v-if="props.applicationFormId === null" class="csv-hint">
+								Select an application form to download its CSV template.
+							</p>
+							<ErrorMessage v-if="hadCsvError" :message="csvErrorMessage" />
+						</div>
 					</template>
 					<template #content>
 						<FileUploadInput
@@ -130,50 +199,6 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 				</PanelSection>
 				<PanelSection>
 					<template #header>
-						<h3>Associated Entities</h3>
-					</template>
-					<template #content>
-						<SelectInput
-							:model-value="props.sourceId"
-							:options="
-								props.sources?.entries.map((source) => ({
-									label: source.label,
-									value: source.id.toString(),
-								}))
-							"
-							@update:model-value="
-								(value: string | null | undefined) =>
-									emit('update:source-id', value ?? null)
-							"
-						>
-							<template #header>Source</template>
-							<template #instructions>
-								If blank, the default source in the pdc instance will be used
-								for the bulk upload.
-							</template>
-						</SelectInput>
-						<SelectInput
-							:model-value="props.applicationFormId"
-							:options="
-								props.applicationForms?.entries.map((form) => ({
-									label: form.id.toString(),
-									value: form.id.toString(),
-								}))
-							"
-							@update:model-value="
-								(value: string | null | undefined) =>
-									emit('update:application-form-id', value ?? null)
-							"
-						>
-							<template #header>Application Form</template>
-							<template #instructions>
-								Select the application form associated with this bulk upload.
-							</template>
-						</SelectInput>
-					</template>
-				</PanelSection>
-				<PanelSection>
-					<template #header>
 						<div v-if="props.bulkUpload">
 							<h3>Ready to upload</h3>
 							<p class="text-color-gray-medium-dark">
@@ -182,10 +207,10 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 						</div>
 					</template>
 					<template #content>
+						<ErrorMessage v-if="hadError" :message="errorMessage" />
 						<DataSubmitButton :disabled="props.bulkUpload === null">
 							Submit
 						</DataSubmitButton>
-						<ErrorMessage v-if="hadError" :message="errorMessage" />
 					</template>
 				</PanelSection>
 			</form>
@@ -198,5 +223,33 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 	color: var(--color--red--dark);
 	display: flex;
 	align-items: center;
+}
+
+.download-csv-text {
+	background: none;
+	border: none;
+	padding: 0;
+	font: inherit;
+	color: var(--color--blue);
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.download-csv-text:disabled {
+	color: var(--color--gray--medium-dark);
+	cursor: not-allowed;
+}
+
+.csv-download-top {
+	display: flex;
+	align-items: center;
+	gap: var(--fixed-spacing--1x);
+}
+
+.csv-hint {
+	margin: var(--fixed-spacing--1x) 0 0;
+	font-size: 0.75rem;
+	color: var(--color--gray--medium-dark);
+	white-space: nowrap;
 }
 </style>
