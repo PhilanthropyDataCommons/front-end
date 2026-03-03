@@ -1,5 +1,11 @@
 <script setup lang="ts">
-import type { ApplicationFormBundle, SourceBundle } from '@pdc/sdk';
+import type {
+	ApplicationForm,
+	ApplicationFormBundle,
+	Opportunity,
+	OpportunityBundle,
+	SourceBundle,
+} from '@pdc/sdk';
 import {
 	PanelComponent,
 	PanelBody,
@@ -24,6 +30,7 @@ const props = defineProps<{
 	applicationFormId: string | null;
 	sources: SourceBundle | null;
 	applicationForms: ApplicationFormBundle | null;
+	opportunities: OpportunityBundle | null;
 	handleBulkUpload: (file: File, attachmentsFile: File | null) => Promise<void>;
 }>();
 
@@ -54,6 +61,21 @@ const handleCsvDownload = async (): Promise<void> => {
 			error instanceof Error ? error.message : 'Failed to Load CSV Template';
 		hadCsvError.value = true;
 	}
+};
+
+const applicationFormLabel = (
+	form: ApplicationForm,
+	opportunities: Opportunity[],
+): string => {
+	const opportunity = opportunities.find(({ id }) => id === form.opportunityId);
+	const opportunityTitle = opportunity?.title ?? null;
+
+	// The SDK types name as `string`, but it can be null at runtime.
+	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- SDK type is incorrect, name can be null
+	const baseLabel = form.name ?? `Application Form #${form.id}`;
+	return opportunityTitle === null
+		? baseLabel
+		: `${baseLabel} (${opportunityTitle})`;
 };
 
 const handleFormSubmit = async (event: Event): Promise<void> => {
@@ -99,7 +121,10 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 							:model-value="props.applicationFormId"
 							:options="
 								props.applicationForms?.entries.map((form) => ({
-									label: form.id.toString(),
+									label: applicationFormLabel(
+										form,
+										props.opportunities?.entries ?? [],
+									),
 									value: form.id.toString(),
 								}))
 							"

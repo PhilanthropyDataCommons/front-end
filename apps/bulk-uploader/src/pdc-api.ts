@@ -12,6 +12,8 @@ import type {
 	FunderBundle,
 	BaseField,
 	ApplicationFormBundle,
+	OpportunityBundle,
+	Opportunity,
 } from '@pdc/sdk';
 
 export type FileUploadResponse = ModelFile & {
@@ -164,4 +166,22 @@ export function useApplicationForms(
 			_count: count.toString(),
 		}),
 	);
+}
+
+export function useOpportunities(
+	page: number = DEFAULT_ENTITY_PAGE,
+	count: number = DEFAULT_ENTITY_COUNT,
+): ReturnType<typeof usePdcApi<OpportunityBundle>> {
+	return usePdcApi<OpportunityBundle>(
+		'/opportunities',
+		new URLSearchParams({
+			_page: page.toString(),
+			_count: count.toString(),
+		}),
+	);
+}
+
+export async function useOpportunity(id: number): Promise<Opportunity> {
+	const fetchOne = usePdcCallbackApi<Opportunity>(`/opportunities/${id}`);
+	return await fetchOne({ method: 'GET' });
 }

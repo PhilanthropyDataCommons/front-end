@@ -9,6 +9,7 @@ import {
 	useSources,
 	useBaseFields,
 	useApplicationForms,
+	useOpportunities,
 } from '../pdc-api';
 import { getLogger } from '@pdc/utilities';
 import BulkUploader from '../components/BulkUploader.vue';
@@ -26,6 +27,7 @@ const applicationFormId = ref<string | null>(null);
 
 const { data: sources } = useSources();
 const { data: applicationForms } = useApplicationForms();
+const { data: opportunities } = useOpportunities();
 
 const { data: systemSource, fetchData: fetchSystemSource } = useSystemSource();
 const { data: baseFields, fetchData: fetchBaseFields } = useBaseFields();
@@ -103,6 +105,7 @@ const handleBulkUpload = async (
 		:sources="sources"
 		:handle-bulk-upload="handleBulkUpload"
 		:application-forms="applicationForms"
+		:opportunities="opportunities"
 	/>
 	<BaseFieldsTable :base-fields="baseFields" :is-loading="isLoading" />
 </template>
