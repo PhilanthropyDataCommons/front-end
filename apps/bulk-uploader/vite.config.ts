@@ -9,6 +9,7 @@ export default defineConfig({
 		alias: {
 			'@': path.resolve(__dirname, './src'),
 		},
+		dedupe: ['vue', 'vue-router'],
 	},
 	server: {
 		port: Number.parseInt(process.env.PORT ?? '3000'),
