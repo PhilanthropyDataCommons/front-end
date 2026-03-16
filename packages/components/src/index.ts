@@ -6,6 +6,8 @@ export { default as UserComponent } from './components/UserComponent.vue';
 export { default as SidePanel } from './components/SidePanel.vue';
 export { default as BackButton } from './components/BackButton.vue';
 export { default as ErrorMessage } from './components/ErrorMessage.vue';
+export { default as InfoBlock } from './components/InfoBlock.vue';
+export { default as CodeText } from './components/CodeText.vue';
 export {
 	DropdownComponent,
 	DropdownTrigger,
