@@ -7,7 +7,9 @@
 			<template #instructions><slot name="instructions"></slot></template>
 		</InputInstructions>
 		<label :for="props.id" class="file-upload-area">
-			<div v-if="!file" class="upload-text">Select a file to upload</div>
+			<div v-if="!file" class="upload-text">
+				{{ props.label ?? 'Select a file to upload' }}
+			</div>
 			<div v-else class="uploaded-file">
 				<span class="file-name">{{ file.name }}</span>
 				<button class="remove-btn" @click.prevent="removeFile">×</button>
@@ -30,6 +32,7 @@ import InputInstructions from './InputInstructions.vue';
 const props = defineProps<{
 	accept?: string;
 	id: string;
+	label?: string;
 }>();
 
 const file = defineModel<File | null>();

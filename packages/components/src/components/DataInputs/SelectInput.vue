@@ -19,14 +19,25 @@
 </template>
 
 <script setup lang="ts">
+import { watch } from 'vue';
 import InputHeader from './InputHeader.vue';
 import InputInstructions from './InputInstructions.vue';
 
 const modelValue = defineModel<string | null>();
 export interface SelectInputProps {
 	options?: Array<{ label: string | undefined; value: string | undefined }>;
+	defaultValue?: string;
 }
-const { options = undefined } = defineProps<SelectInputProps>();
+const { options = undefined, defaultValue = undefined } =
+	defineProps<SelectInputProps>();
+
+watch(
+	() => defaultValue,
+	(newDefault) => {
+		modelValue.value ??= newDefault ?? null;
+	},
+	{ immediate: true },
+);
 </script>
 
 <style scoped>

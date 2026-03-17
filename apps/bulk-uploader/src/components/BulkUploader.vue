@@ -17,9 +17,11 @@ import {
 	SelectInput,
 	ErrorMessage,
 	PanelHeaderAction,
+	InfoBlock,
+	CodeText,
 } from '@pdc/components';
 import { getLogger } from '@pdc/utilities';
-import { DocumentPlusIcon } from '@heroicons/vue/24/outline';
+import { ArrowDownTrayIcon } from '@heroicons/vue/24/outline';
 import { ref } from 'vue';
 import { downloadApplicationFormCsv } from '../pdc-api';
 
@@ -114,7 +116,7 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 			<form @submit="handleFormSubmit">
 				<PanelSection>
 					<template #header>
-						<h3>Associated Entities</h3>
+						<h3>Application Form</h3>
 					</template>
 					<template #content>
 						<SelectInput
@@ -133,13 +135,21 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 									emit('update:application-form-id', value ?? null)
 							"
 						>
-							<template #header>Application Form</template>
+							<template #header>Choose Application Form</template>
 							<template #instructions>
-								Select the application form associated with this bulk upload.
+								Choose an application form to define the fields of this upload
 							</template>
 						</SelectInput>
+					</template>
+				</PanelSection>
+				<PanelSection>
+					<template #header>
+						<h3>Source</h3>
+					</template>
+					<template #content>
 						<SelectInput
 							:model-value="props.sourceId"
+							default-value="1"
 							:options="
 								props.sources?.entries.map((source) => ({
 									label: source.label,
@@ -151,11 +161,8 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 									emit('update:source-id', value ?? null)
 							"
 						>
-							<template #header>Source</template>
-							<template #instructions>
-								If blank, the default source in the pdc instance will be used
-								for the bulk upload.
-							</template>
+							<template #header>Choose Source</template>
+							<template #instructions> Defaults to the pdc source </template>
 						</SelectInput>
 					</template>
 				</PanelSection>
@@ -164,7 +171,7 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 						<h3>Upload CSV File</h3>
 						<div class="csv-download-wrapper">
 							<div class="csv-download-top">
-								<DocumentPlusIcon class="icon" />
+								<ArrowDownTrayIcon class="icon" />
 								<button
 									:disabled="props.applicationFormId === null"
 									class="download-csv-text"
@@ -183,6 +190,7 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 						<FileUploadInput
 							id="bulk-upload-file-input"
 							accept=".csv"
+							label="Select a .csv to upload"
 							:model-value="props.bulkUpload"
 							@update:model-value="
 								(value: File | null | undefined) =>
@@ -191,23 +199,30 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 						>
 							<template #header>Choose File</template>
 							<template #instructions>
-								A bulk-upload CSV must have a valid email address in the
-								proposal_submitter_email address column.
+								<div>
+									Upload a CSV containing the application records for this bulk
+									submission. Each row represents one application.
+								</div>
+								<InfoBlock>
+									Every row must include a valid email address in the
+									<CodeText>proposal_submitter_email</CodeText> column
+								</InfoBlock>
 							</template>
 						</FileUploadInput>
 					</template>
 				</PanelSection>
 				<PanelSection>
 					<template #header>
-						<h3>Base Field File Attachments (Optional)</h3>
+						<h3>Upload Attachments ZIP (Optional)</h3>
 						<p class="text-color-gray-medium-dark">
-							A zip file containing the file attachments for basefields.
+							A ZIP file containing the file attachments for basefields.
 						</p>
 					</template>
 					<template #content>
 						<FileUploadInput
 							id="attachments-file-input"
 							accept=".zip"
+							label="Select a .zip to upload"
 							:model-value="props.attachmentsUpload"
 							@update:model-value="
 								(value: File | null | undefined) =>
@@ -216,8 +231,15 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 						>
 							<template #header>Choose Attachments File</template>
 							<template #instructions>
-								The bulk upload CSV file must refer to the files by their
-								relative path from the root of the zip file.
+								<div>
+									Upload a ZIP file containing any file attachments referenced
+									in your CSV.
+								</div>
+								<InfoBlock>
+									The bulk upload CSV must refer to the attachments in this ZIP
+									file by their relative path from the root of the
+									ZIP</InfoBlock
+								>
 							</template>
 						</FileUploadInput>
 					</template>
@@ -234,7 +256,7 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 					<template #content>
 						<ErrorMessage v-if="hadError" :message="errorMessage" />
 						<DataSubmitButton :disabled="props.bulkUpload === null">
-							Submit
+							Upload bulk submission
 						</DataSubmitButton>
 					</template>
 				</PanelSection>
