@@ -1,5 +1,5 @@
 {
-	"name": "@pdc/bulk-uploader",
+	"name": "@pdc/user-tools",
 	"version": "0.0.0",
 	"private": true,
 	"dependencies": {
