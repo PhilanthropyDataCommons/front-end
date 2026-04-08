@@ -22,6 +22,9 @@ updates:
       - dependency-name: 'eslint-plugin-storybook'
         update-types:
           - 'version-update:semver-major'
+      - dependency-name: 'eslint'
+        update-types:
+          - 'version-update:semver-major'
 
     groups:
       storybook:
