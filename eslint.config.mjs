@@ -48,7 +48,6 @@ export default typescriptEslint.config(
 			'require-unicode-regexp': 'off',
 			'@typescript-eslint/require-await': 'off',
 			'@typescript-eslint/no-useless-default-assignment': 'off',
-			'@typescript-eslint/no-unnecessary-type-arguments': 'off',
 		},
 	},
 	{
@@ -57,6 +56,11 @@ export default typescriptEslint.config(
 			// Vue templates expect assignment to variables which then appear unused
 			// to eslint
 			'no-useless-assignment': 'off',
+
+			// Vue's `ref<T>(value: T)` overload preserves literal narrowing of the
+			// initializer, so `ref(1)` yields `Ref<1>` and `ref('hours')` yields
+			// `Ref<'hours'>` — explicit type arguments are load-bearing for reassignment.
+			'@typescript-eslint/no-unnecessary-type-arguments': 'off',
 		},
 	},
 	{
