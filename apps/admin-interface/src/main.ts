@@ -26,16 +26,15 @@ const router = initRouter();
 
 logger.debug(keycloakOptions, 'Keycloak options');
 
-(async () => {
-	app.use(VueKeycloak, {
-		...keycloakOptions,
-		onReady: () => {
-			setupAuthGuard(router, useKeycloak());
-			app.use(router).mount('#app');
-		},
-	});
-})().catch((error: unknown) => {
-	logger.error({ error }, 'error initializing application');
+app.use(VueKeycloak, {
+	...keycloakOptions,
+	onReady: () => {
+		setupAuthGuard(router, useKeycloak());
+		app.use(router).mount('#app');
+	},
+	onInitError: (error) => {
+		logger.error({ error }, 'error initializing application');
+	},
 });
 
 reportWebVitals();
