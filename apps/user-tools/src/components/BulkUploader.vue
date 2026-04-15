@@ -237,8 +237,8 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 								</div>
 								<InfoBlock>
 									The bulk upload CSV must refer to the attachments in this ZIP
-									file by their relative path from the root of the
-									ZIP.</InfoBlock
+									file by their case-sensitive relative path from the root of
+									the ZIP.</InfoBlock
 								>
 							</template>
 						</FileUploadInput>
