@@ -137,7 +137,7 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 						>
 							<template #header>Choose Application Form</template>
 							<template #instructions>
-								Choose an application form to define the fields of this upload
+								Choose an application form to define the fields of this upload.
 							</template>
 						</SelectInput>
 					</template>
@@ -162,7 +162,7 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 							"
 						>
 							<template #header>Choose Source</template>
-							<template #instructions> Defaults to the pdc source </template>
+							<template #instructions> Defaults to the PDC source. </template>
 						</SelectInput>
 					</template>
 				</PanelSection>
@@ -190,7 +190,7 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 						<FileUploadInput
 							id="bulk-upload-file-input"
 							accept=".csv"
-							label="Select a .csv to upload"
+							label="Select a CSV to upload"
 							:model-value="props.bulkUpload"
 							@update:model-value="
 								(value: File | null | undefined) =>
@@ -205,7 +205,7 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 								</div>
 								<InfoBlock>
 									Every row must include a valid email address in the
-									<CodeText>proposal_submitter_email</CodeText> column
+									<CodeText>proposal_submitter_email</CodeText> column.
 								</InfoBlock>
 							</template>
 						</FileUploadInput>
@@ -222,7 +222,7 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 						<FileUploadInput
 							id="attachments-file-input"
 							accept=".zip"
-							label="Select a .zip to upload"
+							label="Select a ZIP file to upload"
 							:model-value="props.attachmentsUpload"
 							@update:model-value="
 								(value: File | null | undefined) =>
@@ -238,7 +238,7 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 								<InfoBlock>
 									The bulk upload CSV must refer to the attachments in this ZIP
 									file by their relative path from the root of the
-									ZIP</InfoBlock
+									ZIP.</InfoBlock
 								>
 							</template>
 						</FileUploadInput>
