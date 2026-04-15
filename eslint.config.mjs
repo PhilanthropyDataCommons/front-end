@@ -46,7 +46,6 @@ export default typescriptEslint.config(
 			],
 			// Unicode regex literals are exclusive to ES2024+. For the time being we are still targeting ES2022
 			'require-unicode-regexp': 'off',
-			'@typescript-eslint/require-await': 'off',
 		},
 	},
 	{
@@ -55,6 +54,17 @@ export default typescriptEslint.config(
 			// Vue templates expect assignment to variables which then appear unused
 			// to eslint
 			'no-useless-assignment': 'off',
+
+			// Vue's `ref<T>(value: T)` overload preserves literal narrowing of the
+			// initializer, so `ref(1)` yields `Ref<1>` and `ref('hours')` yields
+			// `Ref<'hours'>` — explicit type arguments are load-bearing for reassignment.
+			'@typescript-eslint/no-unnecessary-type-arguments': 'off',
+
+			// Vue's reactive-props-destructure idiom (`const { foo = x } = defineProps<...>()`)
+			// trips this rule: the default is what narrows the destructured var to
+			// non-undefined, but the rule reads that as "prop isn't optional, default is
+			// useless" and will even strip meaningful `= true` defaults via --fix.
+			'@typescript-eslint/no-useless-default-assignment': 'off',
 		},
 	},
 	{

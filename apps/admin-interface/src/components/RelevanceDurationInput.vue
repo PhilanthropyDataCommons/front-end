@@ -71,6 +71,8 @@ import { ref, watch } from 'vue';
 import { Duration } from 'luxon';
 import { InputHeader, InputInstructions } from '@pdc/components';
 
+type DurationUnit = 'hours' | 'days' | 'months';
+
 const modelValue = defineModel<number | null>();
 
 const DEFAULT_DURATION = 1;
@@ -80,7 +82,7 @@ const MINIMUM_DURATION = 0;
 
 const selectedValue = ref<string | null>(null);
 const durationNumber = ref<number>(DEFAULT_DURATION);
-const durationUnit = ref<string>('hours');
+const durationUnit = ref<DurationUnit>('hours');
 
 const initializeFromModelValue = (): void => {
 	if (modelValue.value === null) {
@@ -119,10 +121,8 @@ const updateValue = (): void => {
 		const { value: num } = durationNumber;
 		if (num > MINIMUM_DURATION) {
 			const { value: unit } = durationUnit;
-			if (unit === 'hours' || unit === 'days' || unit === 'months') {
-				const duration = Duration.fromObject({ [unit]: num });
-				modelValue.value = Math.round(duration.as('hours'));
-			}
+			const duration = Duration.fromObject({ [unit]: num });
+			modelValue.value = Math.round(duration.as('hours'));
 		}
 	}
 };
