@@ -7,11 +7,11 @@ import {
 	PanelHeaderActionsWrapper,
 	PanelSection,
 } from '@pdc/components';
-import BulkUploadStatus from '@/components/BulkUploadStatus.vue';
+import BulkUploadStatus from '@/components/bulk-upload/BulkUploadStatus.vue';
 import { useRoute } from 'vue-router';
 import { DocumentPlusIcon } from '@heroicons/vue/24/outline';
 import { ref, onMounted, onUnmounted, computed } from 'vue';
-import { useBulkUploads, useOpportunity } from '../pdc-api';
+import { useBulkUploads, useOpportunity } from '../../pdc-api';
 import { BulkUploadTask as BulkUploadTaskType } from '@pdc/sdk';
 import type { BulkUploadTask, ModelFile, Opportunity } from '@pdc/sdk';
 import { getLogger, localizeDateTime } from '@pdc/utilities';

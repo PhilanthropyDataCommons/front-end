@@ -23,7 +23,7 @@ import {
 import { getLogger } from '@pdc/utilities';
 import { ArrowDownTrayIcon } from '@heroicons/vue/24/outline';
 import { ref } from 'vue';
-import { downloadApplicationFormCsv } from '../pdc-api';
+import { downloadApplicationFormCsv } from '../../pdc-api';
 
 const props = defineProps<{
 	bulkUpload: File | null;
