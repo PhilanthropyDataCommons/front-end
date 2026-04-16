@@ -14,6 +14,7 @@ import type {
 	ApplicationFormBundle,
 	OpportunityBundle,
 	Opportunity,
+	PermissionGrantBundle,
 } from '@pdc/sdk';
 
 export type FileUploadResponse = ModelFile & {
@@ -29,6 +30,19 @@ export function useBulkUploads(
 ): ReturnType<typeof usePdcApi<BulkUploadTaskBundle>> {
 	return usePdcApi<BulkUploadTaskBundle>(
 		'/tasks/bulkUploads',
+		new URLSearchParams({
+			_page: page.toString(),
+			_count: count.toString(),
+		}),
+	);
+}
+
+export function usePermissionGrants(
+	page: number = DEFAULT_ENTITY_PAGE,
+	count: number = DEFAULT_ENTITY_COUNT,
+): ReturnType<typeof usePdcApi<PermissionGrantBundle>> {
+	return usePdcApi<PermissionGrantBundle>(
+		'/permissionGrants',
 		new URLSearchParams({
 			_page: page.toString(),
 			_count: count.toString(),
