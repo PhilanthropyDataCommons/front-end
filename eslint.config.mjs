@@ -18,7 +18,7 @@ export default typescriptEslint.config(
 			import: eslintPluginImport,
 		},
 	},
-	{ ignores: ['*.d.ts', '**/coverage', '**/dist'] },
+	{ ignores: ['**/*.d.ts', '**/coverage', '**/dist', '**/vite.config.ts', '**/vitest.config.ts'] },
 	{
 		files: ['**/*.{ts,vue}'],
 		languageOptions: {
@@ -71,6 +71,13 @@ export default typescriptEslint.config(
 		files: ['**/*.stories.*'],
 		rules: {
 			'import/no-anonymous-default-export': 'off',
+			'import/no-default-export': 'off',
+		},
+	},
+	{
+		// Storybook configuration files conventionally use default exports
+		files: ['**/.storybook/*.ts'],
+		rules: {
 			'import/no-default-export': 'off',
 		},
 	},
