@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router';
 import { SidePanel } from '@pdc/components';
-import { ArrowUpCircleIcon } from '@heroicons/vue/24/outline';
-import { ArrowUpCircleIcon as ArrowUpCircleIconSolid } from '@heroicons/vue/24/solid';
+import { ArrowUpCircleIcon, KeyIcon } from '@heroicons/vue/24/outline';
+import {
+	ArrowUpCircleIcon as ArrowUpCircleIconSolid,
+	KeyIcon as KeyIconSolid,
+} from '@heroicons/vue/24/solid';
 import { useKeycloak } from '@dsb-norge/vue-keycloak-js';
 
 const { authenticated } = useKeycloak();
@@ -13,6 +16,12 @@ const navLinks = [
 		activeIcon: ArrowUpCircleIconSolid,
 		label: 'Bulk Uploads',
 		destination: '/bulk-uploads',
+	},
+	{
+		icon: KeyIcon,
+		activeIcon: KeyIconSolid,
+		label: 'Permissions',
+		destination: '/permissions',
 	},
 ];
 </script>
