@@ -18,7 +18,7 @@ export default typescriptEslint.config(
 			import: eslintPluginImport,
 		},
 	},
-	{ ignores: ['*.d.ts', '**/coverage', '**/dist'] },
+	{ ignores: ['**/*.d.ts', '**/coverage', '**/dist', '**/.storybook', '**/vite.config.ts', '**/vitest.config.ts'] },
 	{
 		files: ['**/*.{ts,vue}'],
 		languageOptions: {
