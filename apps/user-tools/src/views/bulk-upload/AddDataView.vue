@@ -10,11 +10,11 @@ import {
 	useBaseFields,
 	useApplicationForms,
 	useOpportunities,
-} from '../pdc-api';
+} from '../../pdc-api';
 import { getLogger } from '@pdc/utilities';
-import BulkUploader from '../components/BulkUploader.vue';
-import BaseFieldsTable from '../components/BaseFieldsTable.vue';
-import type { FileUploadResponse } from '../pdc-api';
+import BulkUploader from '../../components/bulk-upload/BulkUploader.vue';
+import BaseFieldsTable from '../../components/bulk-upload/BaseFieldsTable.vue';
+import type { FileUploadResponse } from '../../pdc-api';
 
 const logger = getLogger('<AddDataView>');
 

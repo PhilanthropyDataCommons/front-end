@@ -9,11 +9,11 @@ import {
 	EditIconLink,
 	createColumnHelper,
 } from '@pdc/components';
-import BulkUploadStatus from '../components/BulkUploadStatus.vue';
+import BulkUploadStatus from '../../components/bulk-upload/BulkUploadStatus.vue';
 import { RouterLink } from 'vue-router';
 import { PlusIcon } from '@heroicons/vue/24/outline';
 import { onMounted, ref, computed, h } from 'vue';
-import { useBulkUploads } from '../pdc-api';
+import { useBulkUploads } from '../../pdc-api';
 import { getLogger, localizeDateTime } from '@pdc/utilities';
 import type { BulkUploadTask } from '@pdc/sdk';
 
@@ -69,7 +69,7 @@ onMounted(async () => {
 			<PanelHeaderActionsWrapper>
 				<PanelHeaderAction>
 					<PlusIcon class="icon" />
-					<RouterLink to="/add-data">New bulk upload</RouterLink>
+					<RouterLink to="/bulk-uploads/add">New bulk upload</RouterLink>
 				</PanelHeaderAction>
 			</PanelHeaderActionsWrapper>
 		</PanelHeader>

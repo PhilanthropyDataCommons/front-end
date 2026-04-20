@@ -1,6 +1,11 @@
 <script setup lang="ts">
-import { UserIcon } from '@heroicons/vue/24/outline';
+import {
+	UserIcon,
+	ArrowUpCircleIcon,
+	KeyIcon,
+} from '@heroicons/vue/24/outline';
 import { useKeycloak } from '@dsb-norge/vue-keycloak-js';
+import { RouterLink } from 'vue-router';
 import {
 	PanelComponent,
 	PanelBody,
@@ -21,22 +26,33 @@ const handleLogin = async (): Promise<void> => {
 <template>
 	<PanelComponent class="landing-panel">
 		<PanelBody variant="padded">
-			<h3 style="font-weight: 600">Philanthropy Data Commons Bulk Uploader</h3>
+			<h3 style="font-weight: 600">Philanthropy Data Commons User Tools</h3>
 			<p>
-				This site provides tools for uploading data to the Philanthropy Data
-				Commons. {{ ' ' }}
+				This site provides tools for working with the Philanthropy Data Commons.
+				{{ ' ' }}
 				<OffSiteLink to="https://philanthropydatacommons.org">
 					Read more about the project here.
 				</OffSiteLink>
 			</p>
-			<div
-				v-if="!authenticated"
-				:class="`launch-buttons ${authenticated ? 'authenticated' : ''}`"
-			>
+			<div v-if="!authenticated" class="launch-buttons">
 				<CustomButton color="blue" inverted block @click="handleLogin">
 					<UserIcon class="icon" />
 					Log in
 				</CustomButton>
+			</div>
+			<div v-else class="launch-buttons authenticated">
+				<RouterLink to="/bulk-uploads" class="tool-link">
+					<CustomButton color="blue" inverted block>
+						<ArrowUpCircleIcon class="icon" />
+						Bulk Uploads
+					</CustomButton>
+				</RouterLink>
+				<RouterLink to="/permissions" class="tool-link">
+					<CustomButton color="blue" inverted block>
+						<KeyIcon class="icon" />
+						Permissions
+					</CustomButton>
+				</RouterLink>
 			</div>
 
 			<dl>
@@ -78,5 +94,9 @@ const handleLogin = async (): Promise<void> => {
 	&.authenticated {
 		flex-direction: row;
 	}
+}
+.tool-link {
+	flex: 1;
+	text-decoration: none;
 }
 </style>
