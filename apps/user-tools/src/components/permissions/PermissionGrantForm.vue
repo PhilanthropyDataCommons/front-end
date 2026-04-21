@@ -6,6 +6,7 @@ import {
 	PanelHeaderActionsWrapper,
 	PanelSection,
 	BackButton,
+	CustomButton,
 	RadioInput,
 	TextInput,
 	SelectInput,
@@ -29,27 +30,38 @@ import {
 
 const logger = getLogger('<PermissionGrantForm>');
 
+type FormMode = 'create' | 'edit';
+
 const props = defineProps<{
+	mode: FormMode;
 	onSubmit: (payload: WritablePermissionGrantPayload) => Promise<void>;
+	initialValue?: PermissionGrantFormState;
+	onDelete?: () => Promise<void>;
 	title?: string;
 	submitLabel?: string;
 	backTo?: string;
 }>();
 
 const {
-	title = 'New Permission Grant',
-	submitLabel = 'Create Permission Grant',
+	mode,
+	title = mode === 'edit' ? 'Edit Permission Grant' : 'New Permission Grant',
+	submitLabel = mode === 'edit' ? 'Save changes' : 'Create Permission Grant',
 	backTo = '/permissions',
 } = props;
 
-const form = reactive<PermissionGrantFormState>({
-	granteeType: null,
-	granteeId: '',
-	contextEntityType: null,
-	entityKey: '',
-	verbs: [],
-	scope: [],
-});
+const readyHeading =
+	mode === 'edit' ? 'Ready to save' : 'Ready to Create Permission Grant';
+
+const form = reactive<PermissionGrantFormState>(
+	props.initialValue ?? {
+		granteeType: null,
+		granteeId: '',
+		contextEntityType: null,
+		entityKey: '',
+		verbs: [],
+		scope: [],
+	},
+);
 
 const hadError = ref(false);
 const errorMessage = ref('');
@@ -188,7 +200,7 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 
 				<PanelSection>
 					<template #header>
-						<h3>Ready to Create Permission Grant</h3>
+						<h3>{{ readyHeading }}</h3>
 						<p class="text-color-gray-medium-dark">
 							{{
 								canSubmit
@@ -202,6 +214,17 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 							{{ submitLabel }}
 						</DataSubmitButton>
 						<ErrorMessage v-if="hadError" :message="errorMessage" />
+					</template>
+				</PanelSection>
+
+				<PanelSection v-if="onDelete !== undefined">
+					<template #header>
+						<h3>Remove Permission</h3>
+					</template>
+					<template #content>
+						<CustomButton color="red" @click="onDelete">
+							Delete Permission
+						</CustomButton>
 					</template>
 				</PanelSection>
 			</form>

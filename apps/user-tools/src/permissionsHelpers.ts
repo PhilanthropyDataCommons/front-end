@@ -157,6 +157,31 @@ export const getScopesForContextEntityType = (
 ): readonly string[] =>
 	isContextEntityType(value) ? CONTEXT_ENTITY_SCOPES[value] : [];
 
+/**
+ * Derive form state from a fetched permission grant row — the inverse of
+ * `buildPermissionGrantPayload`. Used by the edit view to pre-populate the
+ * form.
+ */
+export const rowToFormState = (
+	row: PermissionGrantRow,
+): PermissionGrantFormState => {
+	let entityKey = '';
+	if (isContextEntityType(row.contextEntityType)) {
+		const { [CONTEXT_ENTITY_KEYS[row.contextEntityType]]: value } = row;
+		if (typeof value === 'string') entityKey = value;
+		else if (typeof value === 'number') entityKey = value.toString();
+	}
+	return {
+		granteeType: row.granteeType ?? null,
+		granteeId:
+			row.granteeUserKeycloakUserId ?? row.granteeKeycloakOrganizationId ?? '',
+		contextEntityType: row.contextEntityType,
+		entityKey,
+		verbs: row.verbs,
+		scope: row.scope,
+	};
+};
+
 const MIN_ENTITY_ID = 1;
 
 /**
