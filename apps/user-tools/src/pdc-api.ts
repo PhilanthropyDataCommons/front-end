@@ -14,8 +14,10 @@ import type {
 	ApplicationFormBundle,
 	OpportunityBundle,
 	Opportunity,
+	PermissionGrant,
 	PermissionGrantBundle,
 } from '@pdc/sdk';
+import type { WritablePermissionGrantPayload } from './permissionsHelpers';
 
 export type FileUploadResponse = ModelFile & {
 	presignedPost: PresignedPost;
@@ -49,6 +51,19 @@ export function usePermissionGrants(
 		}),
 	);
 }
+
+export const useCreatePermissionGrantCallback = () => {
+	const api = usePdcCallbackApi<PermissionGrant>('/permissionGrants');
+	return async (params: WritablePermissionGrantPayload) =>
+		await api({
+			method: 'POST',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(params),
+		});
+};
 
 export function useSystemSource(): ReturnType<typeof usePdcApi<Source>> {
 	return usePdcApi<Source>('/sources/1');
