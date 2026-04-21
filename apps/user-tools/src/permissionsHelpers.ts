@@ -157,6 +157,26 @@ export const getScopesForContextEntityType = (
 ): readonly string[] =>
 	isContextEntityType(value) ? CONTEXT_ENTITY_SCOPES[value] : [];
 
+export const rowToFormState = (
+	row: PermissionGrantRow,
+): PermissionGrantFormState => {
+	const entityKey = isContextEntityType(row.contextEntityType)
+		? row[CONTEXT_ENTITY_KEYS[row.contextEntityType]]
+		: undefined;
+	return {
+		granteeType: row.granteeType ?? null,
+		granteeId:
+			row.granteeUserKeycloakUserId ?? row.granteeKeycloakOrganizationId ?? '',
+		contextEntityType: row.contextEntityType,
+		entityKey:
+			typeof entityKey === 'string' || typeof entityKey === 'number'
+				? String(entityKey)
+				: '',
+		verbs: row.verbs,
+		scope: row.scope,
+	};
+};
+
 const MIN_ENTITY_ID = 1;
 
 /**
