@@ -16,5 +16,5 @@ const handleCreate = async (
 </script>
 
 <template>
-	<PermissionGrantForm :on-submit="handleCreate" />
+	<PermissionGrantForm mode="create" :on-submit="handleCreate" />
 </template>
