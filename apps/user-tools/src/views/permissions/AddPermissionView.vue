@@ -1,23 +1,20 @@
 <script setup lang="ts">
-import {
-	PanelComponent,
-	PanelBody,
-	PanelHeader,
-	PanelHeaderActionsWrapper,
-	BackButton,
-} from '@pdc/components';
+import { useRouter } from 'vue-router';
+import PermissionGrantForm from '../../components/permissions/PermissionGrantForm.vue';
+import { useCreatePermissionGrantCallback } from '../../pdc-api';
+import type { WritablePermissionGrantPayload } from '../../permissionsHelpers';
+
+const router = useRouter();
+const createPermissionGrant = useCreatePermissionGrantCallback();
+
+const handleCreate = async (
+	payload: WritablePermissionGrantPayload,
+): Promise<void> => {
+	await createPermissionGrant(payload);
+	await router.push('/permissions');
+};
 </script>
 
 <template>
-	<PanelComponent padded>
-		<PanelHeader>
-			<h1>New Permission Grant</h1>
-			<PanelHeaderActionsWrapper>
-				<BackButton to="/permissions" label="Back to permissions" />
-			</PanelHeaderActionsWrapper>
-		</PanelHeader>
-		<PanelBody variant="padded">
-			<p>Permission grant creation form coming soon.</p>
-		</PanelBody>
-	</PanelComponent>
+	<PermissionGrantForm :on-submit="handleCreate" />
 </template>
