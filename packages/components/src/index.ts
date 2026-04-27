@@ -38,6 +38,7 @@ export {
 	FileUploadInput,
 	SelectInput,
 	RadioInput,
+	CheckboxInput,
 	TextInput,
 	InputHeader,
 	InputInstructions,
