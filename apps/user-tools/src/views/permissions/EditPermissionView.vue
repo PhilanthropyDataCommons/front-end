@@ -1,28 +1,77 @@
 <script setup lang="ts">
+import { ref, onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { getLogger } from '@pdc/utilities';
+import PermissionGrantForm from '../../components/permissions/PermissionGrantForm.vue';
 import {
-	PanelComponent,
-	PanelBody,
-	PanelHeader,
-	PanelHeaderActionsWrapper,
-	BackButton,
-} from '@pdc/components';
-import { useRoute } from 'vue-router';
+	usePermissionGrant,
+	useUpdatePermissionGrantCallback,
+	useDeletePermissionGrantCallback,
+} from '../../pdc-api';
+import {
+	rowToFormState,
+	type PermissionGrantFormState,
+	type PermissionGrantRow,
+	type WritablePermissionGrantPayload,
+} from '../../permissionsHelpers';
+
+const logger = getLogger('<EditPermissionView>');
+const route = useRoute();
+const router = useRouter();
 
 const {
-	params: { id: permissionId },
-} = useRoute();
+	params: { id: rawId },
+} = route;
+const permissionGrantId = Number(rawId);
+
+const initialValue = ref<PermissionGrantFormState | null>(null);
+const loadError = ref(false);
+
+const updateGrant = useUpdatePermissionGrantCallback(permissionGrantId);
+const deleteGrant = useDeletePermissionGrantCallback(permissionGrantId);
+
+onMounted(async () => {
+	try {
+		const grant = await usePermissionGrant(permissionGrantId);
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- SDK types omit grantee fields the API returns; see permissionsHelpers.ts
+		initialValue.value = rowToFormState(grant as unknown as PermissionGrantRow);
+	} catch (error) {
+		logger.error({ error }, 'Failed to load permission grant');
+		loadError.value = true;
+	}
+});
+
+const handleUpdate = async (
+	payload: WritablePermissionGrantPayload,
+): Promise<void> => {
+	await updateGrant(payload);
+	await router.push('/permissions');
+};
+
+const handleDelete = async (): Promise<void> => {
+	// eslint-disable-next-line no-alert -- intentional confirm() for destructive action; upgrade to modal TBD
+	const confirmed = window.confirm(
+		`Delete permission grant #${permissionGrantId.toString()}? This cannot be undone.`,
+	);
+	if (!confirmed) return;
+	await deleteGrant();
+	await router.push('/permissions');
+};
 </script>
 
 <template>
-	<PanelComponent padded>
-		<PanelHeader>
-			<h1>Permission Grant {{ permissionId }}</h1>
-			<PanelHeaderActionsWrapper>
-				<BackButton to="/permissions" label="Back to permissions" />
-			</PanelHeaderActionsWrapper>
-		</PanelHeader>
-		<PanelBody variant="padded">
-			<p>Permission grant view/edit coming soon.</p>
-		</PanelBody>
-	</PanelComponent>
+	<div v-if="loadError">
+		<p>Error loading permission grant.</p>
+	</div>
+	<div v-else-if="initialValue === null">
+		<p>Loading permission grant...</p>
+	</div>
+	<PermissionGrantForm
+		v-else
+		mode="edit"
+		:title="`Permission #${permissionGrantId.toString()}`"
+		:initial-value="initialValue"
+		:on-submit="handleUpdate"
+		:on-delete="handleDelete"
+	/>
 </template>
