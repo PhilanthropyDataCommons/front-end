@@ -20,16 +20,16 @@
 	"dependencies": {
 		"@dsb-norge/vue-keycloak-js": "^3.0.3",
 		"@pdc/sdk": "^0.33.1",
-		"@vitejs/plugin-vue": "^6.0.5",
-		"@vue/compiler-sfc": "^3.5.32",
+		"@vitejs/plugin-vue": "^6.0.6",
+		"@vue/compiler-sfc": "^3.5.33",
 		"dayjs": "^1.11.20",
 		"jsonpath-plus": "^10.4.0",
 		"luxon": "^3.7.2",
 		"pino": "^10.1.0",
 		"qs": "^6.15.0",
 		"vitest": "^4.0.18",
-		"vue": "^3.5.32",
-		"vue-router": "^5.0.4",
+		"vue": "^3.5.33",
+		"vue-router": "^5.0.6",
 		"web-vitals": "^5.2.0"
 	}
 }
