@@ -22,14 +22,14 @@
 		"@heroicons/vue": "^2.2.0",
 		"@pdc/sdk": "^0.33.1",
 		"@tanstack/vue-table": "^8.21.3",
-		"@vitejs/plugin-vue": "^6.0.5",
-		"@vue/compiler-sfc": "^3.5.32",
+		"@vitejs/plugin-vue": "^6.0.6",
+		"@vue/compiler-sfc": "^3.5.33",
 		"dayjs": "^1.11.20",
 		"jsonpath-plus": "^10.4.0",
 		"pino": "^10.1.0",
 		"qs": "^6.15.0",
-		"vue": "^3.5.32",
-		"vue-router": "^5.0.4",
+		"vue": "^3.5.33",
+		"vue-router": "^5.0.6",
 		"web-vitals": "^5.2.0"
 	}
 }
