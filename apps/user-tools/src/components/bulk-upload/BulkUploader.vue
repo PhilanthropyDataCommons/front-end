@@ -22,7 +22,7 @@ import {
 } from '@pdc/components';
 import { getLogger } from '@pdc/utilities';
 import { ArrowDownTrayIcon } from '@heroicons/vue/24/outline';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { downloadApplicationFormCsv } from '../../pdc-api';
 
 const props = defineProps<{
@@ -46,6 +46,13 @@ const emit = defineEmits<{
 const logger = getLogger('BulkUploader');
 const hadError = ref(false);
 const errorMessage = ref('');
+
+const MIN_APPLICATION_FORMS = 1;
+const hasNoApplicationForms = computed(
+	() =>
+		props.applicationForms === null ||
+		props.applicationForms.entries.length < MIN_APPLICATION_FORMS,
+);
 
 const hadCsvError = ref(false);
 const csvErrorMessage = ref('');
@@ -119,7 +126,14 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 						<h3>Application Form</h3>
 					</template>
 					<template #content>
+						<InfoBlock v-if="hasNoApplicationForms">
+							No application forms are available. A bulk upload must have a
+							target application form. If you are expecting to see application
+							forms, it is likely you are missing view permissions and need to
+							be granted them by an admin.
+						</InfoBlock>
 						<SelectInput
+							v-else
 							:model-value="props.applicationFormId"
 							:options="
 								props.applicationForms?.entries.map((form) => ({
@@ -173,7 +187,7 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 							<div class="csv-download-top">
 								<ArrowDownTrayIcon class="icon" />
 								<button
-									:disabled="props.applicationFormId === null"
+									:disabled="props.bulkUpload === null || hasNoApplicationForms"
 									class="download-csv-text"
 									@click.prevent="handleCsvDownload"
 								>
@@ -255,7 +269,9 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 					</template>
 					<template #content>
 						<ErrorMessage v-if="hadError" :message="errorMessage" />
-						<DataSubmitButton :disabled="props.bulkUpload === null">
+						<DataSubmitButton
+							:disabled="props.bulkUpload === null || hasNoApplicationForms"
+						>
 							Upload bulk submission
 						</DataSubmitButton>
 					</template>
