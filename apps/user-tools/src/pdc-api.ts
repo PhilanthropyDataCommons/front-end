@@ -65,6 +65,41 @@ export const useCreatePermissionGrantCallback = () => {
 		});
 };
 
+export async function usePermissionGrant(id: number): Promise<PermissionGrant> {
+	const fetchOne = usePdcCallbackApi<PermissionGrant>(
+		`/permissionGrants/${id.toString()}`,
+	);
+	return await fetchOne({ method: 'GET' });
+}
+
+export const useUpdatePermissionGrantCallback = (id: number) => {
+	const api = usePdcCallbackApi<PermissionGrant>(
+		`/permissionGrants/${id.toString()}`,
+	);
+	return async (params: WritablePermissionGrantPayload) =>
+		await api({
+			method: 'PUT',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(params),
+		});
+};
+
+export const useDeletePermissionGrantCallback =
+	(id: number) => async (): Promise<void> => {
+		const { token } = useKeycloak();
+		const url = new URL(
+			`/permissionGrants/${id.toString()}`,
+			import.meta.env.VITE_API_URL,
+		);
+		await fetch(url.toString(), {
+			method: 'DELETE',
+			headers: { Authorization: `Bearer ${token}` },
+		}).then(throwIfNotOk);
+	};
+
 export function useSystemSource(): ReturnType<typeof usePdcApi<Source>> {
 	return usePdcApi<Source>('/sources/1');
 }

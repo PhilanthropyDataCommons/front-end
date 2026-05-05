@@ -6,6 +6,7 @@ import {
 	PanelHeaderActionsWrapper,
 	PanelSection,
 	BackButton,
+	CustomButton,
 	RadioInput,
 	TextInput,
 	SelectInput,
@@ -29,27 +30,38 @@ import {
 
 const logger = getLogger('<PermissionGrantForm>');
 
+type FormMode = 'create' | 'edit';
+
 const props = defineProps<{
+	mode: FormMode;
 	onSubmit: (payload: WritablePermissionGrantPayload) => Promise<void>;
+	initialValue?: PermissionGrantFormState;
+	onDelete?: () => Promise<void>;
 	title?: string;
 	submitLabel?: string;
 	backTo?: string;
 }>();
 
 const {
-	title = 'Grant Permission',
-	submitLabel = 'Grant Permission',
+	mode,
+	title = mode === 'edit' ? 'Edit Permission Grant' : 'Grant Permission',
+	submitLabel = mode === 'edit' ? 'Save changes' : 'Grant Permission',
 	backTo = '/permissions',
 } = props;
 
-const form = reactive<PermissionGrantFormState>({
-	granteeType: null,
-	granteeId: '',
-	contextEntityType: null,
-	entityKey: '',
-	verbs: [],
-	scope: [],
-});
+const readyHeading =
+	mode === 'edit' ? 'Ready to save' : 'Ready to Grant Permission';
+
+const form = reactive<PermissionGrantFormState>(
+	props.initialValue ?? {
+		granteeType: null,
+		granteeId: '',
+		contextEntityType: null,
+		entityKey: '',
+		verbs: [],
+		scope: [],
+	},
+);
 
 const hadError = ref(false);
 const errorMessage = ref('');
@@ -196,7 +208,7 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 
 				<PanelSection>
 					<template #header>
-						<h3>Ready to Grant Permission</h3>
+						<h3>{{ readyHeading }}</h3>
 						<p class="text-color-gray-medium-dark">
 							{{
 								canSubmit
@@ -210,6 +222,19 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 							{{ submitLabel }}
 						</DataSubmitButton>
 						<ErrorMessage v-if="hadError" :message="errorMessage" />
+					</template>
+				</PanelSection>
+
+				<PanelSection v-if="onDelete !== undefined">
+					<template #header>
+						<h3>Remove Permission</h3>
+					</template>
+					<template #content>
+						<div>
+							<CustomButton color="red" inverted @click="onDelete">
+								Delete Permission
+							</CustomButton>
+						</div>
 					</template>
 				</PanelSection>
 			</form>
