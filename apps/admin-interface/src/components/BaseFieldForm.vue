@@ -16,6 +16,7 @@ import {
 } from '@pdc/components';
 import { getLogger } from '@pdc/utilities';
 import { ref, computed } from 'vue';
+import { BaseFieldCategory } from '../baseFieldCategories';
 import RelevanceDurationInput from './RelevanceDurationInput.vue';
 import CautionZone from './CautionZone.vue';
 
@@ -26,7 +27,6 @@ const props = defineProps<{
 }>();
 const {
 	DataTypeEnum: BaseFieldDataType,
-	CategoryEnum: BaseFieldCategory,
 	SensitivityClassificationEnum: BaseFieldSensitivityClassification,
 } = BaseField;
 const emit = defineEmits<{ 'update:base-field': [baseField: BaseField] }>();
@@ -140,11 +140,11 @@ const updateField = (field: string, value: string | number | null): void => {
 							</template>
 						</SelectInput>
 						<SelectInput
-							:model-value="props.baseField.category || ''"
+							:model-value="(props.baseField.category as string) || ''"
 							:options="
 								Object.values(BaseFieldCategory).map((category) => ({
-									label: category,
-									value: category,
+									label: category as string,
+									value: category as string,
 								}))
 							"
 							@update:model-value="

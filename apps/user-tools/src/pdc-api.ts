@@ -10,7 +10,7 @@ import type {
 	BulkUploadTask,
 	SourceBundle,
 	FunderBundle,
-	BaseField,
+	BaseFieldBundle,
 	ApplicationFormBundle,
 	OpportunityBundle,
 	Opportunity,
@@ -183,8 +183,8 @@ export function useFunders(
 export function useBaseFields(
 	page: number = DEFAULT_ENTITY_PAGE,
 	count: number = DEFAULT_ENTITY_COUNT,
-): ReturnType<typeof usePdcApi<BaseField[]>> {
-	return usePdcApi<BaseField[]>(
+): ReturnType<typeof usePdcApi<BaseFieldBundle>> {
+	return usePdcApi<BaseFieldBundle>(
 		'/baseFields',
 		new URLSearchParams({
 			_page: page.toString(),

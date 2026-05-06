@@ -1,5 +1,5 @@
 import { usePdcApi, usePdcCallbackApi } from '@pdc/utilities';
-import type { BaseField, WritableBaseField } from '@pdc/sdk';
+import type { BaseField, BaseFieldBundle, WritableBaseField } from '@pdc/sdk';
 
 const DEFAULT_ENTITY_PAGE = 1;
 const DEFAULT_ENTITY_COUNT = 200;
@@ -7,8 +7,8 @@ const DEFAULT_ENTITY_COUNT = 200;
 export function useBaseFields(
 	page: number = DEFAULT_ENTITY_PAGE,
 	count: number = DEFAULT_ENTITY_COUNT,
-): ReturnType<typeof usePdcApi<BaseField[]>> {
-	return usePdcApi<BaseField[]>(
+): ReturnType<typeof usePdcApi<BaseFieldBundle>> {
+	return usePdcApi<BaseFieldBundle>(
 		'/baseFields',
 		new URLSearchParams({
 			_page: page.toString(),

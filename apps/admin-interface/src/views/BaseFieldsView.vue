@@ -24,7 +24,7 @@ const caughtError = ref(false);
 
 const baseFieldsArray = computed(() => {
 	if (baseFields.value === null) return [];
-	return [...baseFields.value].sort((a, b) =>
+	return [...baseFields.value.entries].sort((a, b) =>
 		dateCompare(a.createdAt, b.createdAt),
 	);
 });
