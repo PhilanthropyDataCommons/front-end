@@ -18,7 +18,7 @@ const { data: baseFields, fetchData: fetchBaseFields } = useBaseFields();
 onMounted(async () => {
 	try {
 		await fetchBaseFields();
-		baseField.value = baseFields.value?.find(
+		baseField.value = baseFields.value?.entries.find(
 			(baseField) => baseField.shortCode === baseFieldShortCode,
 		);
 	} catch (error: unknown) {

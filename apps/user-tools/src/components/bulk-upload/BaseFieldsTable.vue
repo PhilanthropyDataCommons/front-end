@@ -7,10 +7,11 @@ import {
 	createColumnHelper,
 } from '@pdc/components';
 import { BaseField } from '@pdc/sdk';
+import type { BaseFieldBundle } from '@pdc/sdk';
 import { computed } from 'vue';
 
 export interface BaseFieldsTableProps {
-	baseFields: BaseField[] | null;
+	baseFields: BaseFieldBundle | null;
 	isLoading: boolean;
 }
 
@@ -18,7 +19,7 @@ const props = defineProps<BaseFieldsTableProps>();
 
 const publicBaseFields = computed(
 	() =>
-		props.baseFields?.filter(
+		props.baseFields?.entries.filter(
 			(baseField) =>
 				baseField.sensitivityClassification ===
 				BaseField.SensitivityClassificationEnum.Public,

@@ -3,13 +3,13 @@ import { useRouter } from 'vue-router';
 import { ref } from 'vue';
 import { usePutBaseFieldsCallback } from '../pdc-api';
 import { BaseField } from '@pdc/sdk';
+import { BaseFieldCategory } from '../baseFieldCategories';
 import BaseFieldForm from '../components/BaseFieldForm.vue';
 
 const DEFAULT_RELEVANCE_HOURS = 0;
 const router = useRouter();
 const {
 	DataTypeEnum: BaseFieldDataType,
-	CategoryEnum: BaseFieldCategory,
 	SensitivityClassificationEnum: BaseFieldSensitivityClassification,
 } = BaseField;
 
