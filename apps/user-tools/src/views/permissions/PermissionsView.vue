@@ -50,7 +50,7 @@ const columns = [
 	columnHelper.accessor('verbs', 'Verbs', {
 		cell: (info) => info.getValue().join(', '),
 	}),
-	columnHelper.text('createdBy', 'Created By'),
+	columnHelper.text('createdByUser.keycloakUserName', 'Created By'),
 	columnHelper.icon('edit', '', (row) =>
 		h(EditIconLink, { to: `/permissions/${String(row.id ?? '')}` }),
 	),
