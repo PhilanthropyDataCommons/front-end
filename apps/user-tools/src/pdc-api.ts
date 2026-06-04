@@ -16,6 +16,9 @@ import type {
 	Opportunity,
 	PermissionGrant,
 	PermissionGrantBundle,
+	ChangemakerBundle,
+	DataProviderBundle,
+	ProposalBundle,
 } from '@pdc/sdk';
 import type { WritablePermissionGrantPayload } from './permissionsHelpers';
 
@@ -24,7 +27,7 @@ export type FileUploadResponse = ModelFile & {
 };
 
 const DEFAULT_ENTITY_PAGE = 1;
-const DEFAULT_ENTITY_COUNT = 200;
+const DEFAULT_ENTITY_COUNT = 1000;
 
 export function useBulkUploads(
 	page: number = DEFAULT_ENTITY_PAGE,
@@ -248,4 +251,43 @@ export function useOpportunities(
 export async function useOpportunity(id: number): Promise<Opportunity> {
 	const fetchOne = usePdcCallbackApi<Opportunity>(`/opportunities/${id}`);
 	return await fetchOne({ method: 'GET' });
+}
+
+export function useChangemakers(
+	page: number = DEFAULT_ENTITY_PAGE,
+	count: number = DEFAULT_ENTITY_COUNT,
+): ReturnType<typeof usePdcApi<ChangemakerBundle>> {
+	return usePdcApi<ChangemakerBundle>(
+		'/changemakers',
+		new URLSearchParams({
+			_page: page.toString(),
+			_count: count.toString(),
+		}),
+	);
+}
+
+export function useDataProviders(
+	page: number = DEFAULT_ENTITY_PAGE,
+	count: number = DEFAULT_ENTITY_COUNT,
+): ReturnType<typeof usePdcApi<DataProviderBundle>> {
+	return usePdcApi<DataProviderBundle>(
+		'/dataProviders',
+		new URLSearchParams({
+			_page: page.toString(),
+			_count: count.toString(),
+		}),
+	);
+}
+
+export function useProposals(
+	page: number = DEFAULT_ENTITY_PAGE,
+	count: number = DEFAULT_ENTITY_COUNT,
+): ReturnType<typeof usePdcApi<ProposalBundle>> {
+	return usePdcApi<ProposalBundle>(
+		'/proposals',
+		new URLSearchParams({
+			_page: page.toString(),
+			_count: count.toString(),
+		}),
+	);
 }
