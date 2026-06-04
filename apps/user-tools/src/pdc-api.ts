@@ -27,7 +27,7 @@ export type FileUploadResponse = ModelFile & {
 };
 
 const DEFAULT_ENTITY_PAGE = 1;
-const DEFAULT_ENTITY_COUNT = 1000;
+const { MAX_SAFE_INTEGER: DEFAULT_ENTITY_COUNT } = Number;
 
 export function useBulkUploads(
 	page: number = DEFAULT_ENTITY_PAGE,

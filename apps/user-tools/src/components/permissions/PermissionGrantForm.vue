@@ -23,6 +23,7 @@ import {
 	buildPermissionGrantPayload,
 	getEntityKeyPlaceholder,
 	getScopesForContextEntityType,
+	humanLabel,
 	isFormReady,
 	type PermissionGrantFormState,
 	type WritablePermissionGrantPayload,
@@ -68,7 +69,7 @@ const errorMessage = ref('');
 
 const scopeOptions = computed(() =>
 	getScopesForContextEntityType(form.contextEntityType).map((s) => ({
-		label: s,
+		label: humanLabel(s),
 		value: s,
 	})),
 );
@@ -77,11 +78,26 @@ const entityKeyPlaceholder = computed(() =>
 	getEntityKeyPlaceholder(form.contextEntityType),
 );
 
+const contextEntityLabel = computed(() =>
+	typeof form.contextEntityType === 'string'
+		? humanLabel(form.contextEntityType).toLowerCase()
+		: '',
+);
+
 const granteeNoun = computed(() => {
 	if (form.granteeType === 'user') return 'the user';
 	if (form.granteeType === 'userGroup') return 'the group';
-	return 'the user or group';
+	if (form.granteeType === 'authenticatedUsers')
+		return 'all authenticated users';
+	return 'the user, group, or audience';
 });
+
+const granteeRequiresId = computed(
+	() =>
+		form.granteeType === 'user' ||
+		form.granteeType === 'userGroup' ||
+		form.granteeType === null,
+);
 
 watch(
 	() => form.contextEntityType,
@@ -137,7 +153,7 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 						>
 							<template #header>Grantee type</template>
 						</RadioInput>
-						<TextInput v-model="form.granteeId">
+						<TextInput v-if="granteeRequiresId" v-model="form.granteeId">
 							<template #header>Grantee ID</template>
 							<template #instructions>
 								The Keycloak UUID for {{ granteeNoun }} (e.g.,
@@ -189,7 +205,7 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 							<template #header>{{ entityKeyPlaceholder }}</template>
 							<template #instructions>
 								Enter the {{ entityKeyPlaceholder.toLowerCase() }} for the
-								{{ form.contextEntityType }}.
+								{{ contextEntityLabel }}.
 							</template>
 						</TextInput>
 						<CheckboxInput

@@ -1,42 +1,24 @@
-/**
- * Local types and lookups for permission grants.
- *
- * Much of this file exists to paper over gaps in the generated `@pdc/sdk`
- * types — see PhilanthropyDataCommons/service#2353 for the full list of
- * SDK issues being tracked. When that lands, the reshaped types and
- * hardcoded enum/scope tables here should fall out.
- */
+import {
+	PermissionGrantEntityType,
+	PermissionGrantGranteeType,
+	PermissionGrantVerb,
+} from '@pdc/sdk';
 import type { PermissionGrant } from '@pdc/sdk';
 
-/**
- * API-shaped permission grant row. The SDK's `PermissionGrant` omits
- * grantee fields and types `scope`/`verbs` as opaque empty interfaces, so
- * we reshape here. Tracks service#2353.
- */
-export type PermissionGrantRow = Omit<PermissionGrant, 'scope' | 'verbs'> & {
+export type PermissionGrantRow = Omit<PermissionGrant, 'scope'> & {
 	scope: string[];
-	verbs: string[];
 	granteeType?: string;
 	granteeUserKeycloakUserId?: string | null;
 	granteeKeycloakOrganizationId?: string | null;
 };
 
-export const CONTEXT_ENTITY_TYPES = [
-	'changemaker',
-	'funder',
-	'dataProvider',
-	'opportunity',
-	'proposal',
-	'proposalVersion',
-	'applicationForm',
-	'applicationFormField',
-	'proposalFieldValue',
-	'source',
-	'bulkUpload',
-	'changemakerFieldValue',
-] as const;
+export type ContextEntityType = Exclude<`${PermissionGrantEntityType}`, 'any'>;
 
-export type ContextEntityType = (typeof CONTEXT_ENTITY_TYPES)[number];
+export const CONTEXT_ENTITY_TYPES: readonly ContextEntityType[] = (
+	Object.values(
+		PermissionGrantEntityType,
+	) as ReadonlyArray<`${PermissionGrantEntityType}`>
+).filter((value): value is ContextEntityType => value !== 'any');
 
 export const CONTEXT_ENTITY_KEYS: Record<
 	ContextEntityType,
@@ -61,66 +43,73 @@ export const CONTEXT_ENTITY_KEY_IS_SHORT_CODE: ReadonlySet<string> = new Set([
 	'dataProvider',
 ]);
 
-/**
- * Valid `scope` values per `contextEntityType`. Mirrors
- * `contextEntityTypeScopes` in service/src/types/PermissionGrant.ts; keep
- * in sync when the service adds or changes a context type.
- */
 export const CONTEXT_ENTITY_SCOPES: Record<
 	ContextEntityType,
-	readonly ContextEntityType[]
+	ReadonlyArray<`${PermissionGrantEntityType}`>
 > = {
 	changemaker: [
 		'changemaker',
 		'changemakerFieldValue',
 		'proposal',
 		'proposalFieldValue',
+		'any',
 	],
-	funder: ['funder', 'opportunity', 'proposal', 'proposalFieldValue'],
-	dataProvider: ['dataProvider'],
-	opportunity: ['opportunity', 'proposal', 'proposalFieldValue'],
-	proposal: ['proposal', 'proposalFieldValue'],
-	proposalVersion: ['proposalVersion'],
-	applicationForm: ['applicationForm'],
-	applicationFormField: ['applicationFormField'],
-	proposalFieldValue: ['proposalFieldValue'],
-	source: ['source'],
-	bulkUpload: ['bulkUpload'],
-	changemakerFieldValue: ['changemakerFieldValue'],
+	funder: [
+		'funder',
+		'opportunity',
+		'applicationForm',
+		'proposal',
+		'proposalFieldValue',
+		'any',
+	],
+	dataProvider: ['dataProvider', 'any'],
+	opportunity: [
+		'opportunity',
+		'applicationForm',
+		'proposal',
+		'proposalFieldValue',
+		'any',
+	],
+	proposal: ['proposal', 'proposalFieldValue', 'any'],
+	proposalVersion: ['proposalVersion', 'any'],
+	applicationForm: ['applicationForm', 'any'],
+	applicationFormField: ['applicationFormField', 'any'],
+	proposalFieldValue: ['proposalFieldValue', 'any'],
+	source: ['source', 'any'],
+	bulkUpload: ['bulkUpload', 'any'],
+	changemakerFieldValue: ['changemakerFieldValue', 'any'],
 };
-
-export const PERMISSION_VERBS = [
-	'view',
-	'create',
-	'edit',
-	'delete',
-	'manage',
-] as const;
-
-export type PermissionVerb = (typeof PERMISSION_VERBS)[number];
 
 interface LabeledOption {
 	label: string;
 	value: string;
 }
 
-export const PERMISSION_VERB_OPTIONS: LabeledOption[] = [
-	{ label: 'View', value: 'view' },
-	{ label: 'Create', value: 'create' },
-	{ label: 'Edit', value: 'edit' },
-	{ label: 'Delete', value: 'delete' },
-	{ label: 'Manage', value: 'manage' },
-];
+export const humanLabel = (value: string): string =>
+	value
+		.replace(/(?<=[a-z])(?=[A-Z])/gu, ' ')
+		.replace(/^./u, (first) => first.toUpperCase());
 
-export type GranteeType = 'user' | 'userGroup';
+export const PERMISSION_VERB_OPTIONS: LabeledOption[] = Object.values(
+	PermissionGrantVerb,
+).map((verb) => ({ label: humanLabel(verb), value: verb }));
+
+export type GranteeType = `${PermissionGrantGranteeType}`;
 
 export const GRANTEE_TYPE_OPTIONS: LabeledOption[] = [
-	{ label: 'User', value: 'user' },
-	{ label: 'Group', value: 'userGroup' },
+	{ label: 'User', value: PermissionGrantGranteeType.User },
+	{ label: 'Group', value: PermissionGrantGranteeType.UserGroup },
+	{
+		label: 'All authenticated users',
+		value: PermissionGrantGranteeType.AuthenticatedUsers,
+	},
 ];
 
 export const CONTEXT_ENTITY_TYPE_OPTIONS: LabeledOption[] =
-	CONTEXT_ENTITY_TYPES.map((type) => ({ label: type, value: type }));
+	CONTEXT_ENTITY_TYPES.map((type) => ({
+		label: humanLabel(type),
+		value: type,
+	}));
 
 export const getEntityKeyPlaceholder = (
 	contextEntityType: string | null | undefined,
@@ -150,7 +139,11 @@ export const isContextEntityType = (
 
 export const isGranteeType = (
 	value: string | null | undefined,
-): value is GranteeType => value === 'user' || value === 'userGroup';
+): value is GranteeType =>
+	value === 'user' || value === 'userGroup' || value === 'authenticatedUsers';
+
+export const granteeTypeRequiresId = (granteeType: GranteeType): boolean =>
+	granteeType !== 'authenticatedUsers';
 
 export const getScopesForContextEntityType = (
 	value: string | null | undefined,
@@ -202,8 +195,15 @@ export type WritablePermissionGrantPayload = {
 	scope: string[];
 	verbs: string[];
 } & (
-	| { granteeType: 'user'; granteeUserKeycloakUserId: string }
-	| { granteeType: 'userGroup'; granteeKeycloakOrganizationId: string }
+	| {
+			granteeType: `${PermissionGrantGranteeType.User}`;
+			granteeUserKeycloakUserId: string;
+	  }
+	| {
+			granteeType: `${PermissionGrantGranteeType.UserGroup}`;
+			granteeKeycloakOrganizationId: string;
+	  }
+	| { granteeType: `${PermissionGrantGranteeType.AuthenticatedUsers}` }
 );
 
 export const formatEntityLabel = (row: PermissionGrantRow): string => {
@@ -217,15 +217,85 @@ export const formatEntityLabel = (row: PermissionGrantRow): string => {
 	return row.contextEntityType;
 };
 
+export const ENTITY_LABEL_FIELDS: Partial<
+	Record<ContextEntityType, { keyField: string; labelField: string }>
+> = {
+	changemaker: { keyField: 'id', labelField: 'name' },
+	funder: { keyField: 'shortCode', labelField: 'name' },
+	dataProvider: { keyField: 'shortCode', labelField: 'name' },
+	opportunity: { keyField: 'id', labelField: 'title' },
+	proposal: { keyField: 'id', labelField: 'externalId' },
+	applicationForm: { keyField: 'id', labelField: 'name' },
+	source: { keyField: 'id', labelField: 'label' },
+};
+
+export type EntityLabelLookup = ReadonlyMap<string, string>;
+
+const entityLabelMapKey = (
+	contextEntityType: string,
+	entityKey: string | number,
+): string => `${contextEntityType}:${String(entityKey)}`;
+
+const readEntityField = (entry: unknown, field: string): unknown => {
+	if (typeof entry !== 'object' || entry === null) return undefined;
+	if (!(field in entry)) return undefined;
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Dynamic field name driven by ENTITY_LABEL_FIELDS; SDK entry types don't carry an index signature.
+	return (entry as Record<string, unknown>)[field];
+};
+
+export const buildEntityLabelLookup = (
+	entityLists: Partial<
+		Record<ContextEntityType, readonly unknown[] | undefined>
+	>,
+): EntityLabelLookup => {
+	const lookup = new Map<string, string>();
+	for (const type of CONTEXT_ENTITY_TYPES) {
+		const { [type]: config } = ENTITY_LABEL_FIELDS;
+		const { [type]: entries } = entityLists;
+		if (config === undefined || entries === undefined) continue;
+		for (const entry of entries) {
+			const keyValue = readEntityField(entry, config.keyField);
+			const labelValue = readEntityField(entry, config.labelField);
+			if (
+				(typeof keyValue !== 'string' && typeof keyValue !== 'number') ||
+				typeof labelValue !== 'string' ||
+				labelValue === ''
+			)
+				continue;
+			lookup.set(entityLabelMapKey(type, keyValue), labelValue);
+		}
+	}
+	return lookup;
+};
+
+export const resolveEntityLabel = (
+	row: PermissionGrantRow,
+	lookup: EntityLabelLookup,
+): string => {
+	if (isContextEntityType(row.contextEntityType)) {
+		const { [row.contextEntityType]: key } = CONTEXT_ENTITY_KEYS;
+		const { [key]: value } = row;
+		if (typeof value === 'string' || typeof value === 'number') {
+			const label = lookup.get(entityLabelMapKey(row.contextEntityType, value));
+			if (label !== undefined) return label;
+		}
+	}
+	return formatEntityLabel(row);
+};
+
 const MIN_SELECTIONS = 1;
 
-export const isFormReady = (form: PermissionGrantFormState): boolean =>
-	isGranteeType(form.granteeType) &&
-	form.granteeId.trim() !== '' &&
-	isContextEntityType(form.contextEntityType) &&
-	isValidEntityKey(form.contextEntityType, form.entityKey) &&
-	form.verbs.length >= MIN_SELECTIONS &&
-	form.scope.length >= MIN_SELECTIONS;
+export const isFormReady = (form: PermissionGrantFormState): boolean => {
+	if (!isGranteeType(form.granteeType)) return false;
+	if (granteeTypeRequiresId(form.granteeType) && form.granteeId.trim() === '')
+		return false;
+	return (
+		isContextEntityType(form.contextEntityType) &&
+		isValidEntityKey(form.contextEntityType, form.entityKey) &&
+		form.verbs.length >= MIN_SELECTIONS &&
+		form.scope.length >= MIN_SELECTIONS
+	);
+};
 
 export const buildPermissionGrantPayload = (
 	form: PermissionGrantFormState,
@@ -248,10 +318,12 @@ export const buildPermissionGrantPayload = (
 		: Number(form.entityKey);
 
 	const granteeId = form.granteeId.trim();
-	const grantee =
+	const grantee: Record<string, string> =
 		granteeType === 'user'
 			? { granteeType, granteeUserKeycloakUserId: granteeId }
-			: { granteeType, granteeKeycloakOrganizationId: granteeId };
+			: granteeType === 'userGroup'
+				? { granteeType, granteeKeycloakOrganizationId: granteeId }
+				: { granteeType };
 
 	const payload: Record<string, unknown> = {
 		...grantee,
