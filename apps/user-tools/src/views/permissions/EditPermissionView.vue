@@ -11,7 +11,6 @@ import {
 import {
 	rowToFormState,
 	type PermissionGrantFormState,
-	type PermissionGrantRow,
 	type WritablePermissionGrantPayload,
 } from '../../permissionsHelpers';
 
@@ -33,8 +32,7 @@ const deleteGrant = useDeletePermissionGrantCallback(permissionGrantId);
 onMounted(async () => {
 	try {
 		const grant = await usePermissionGrant(permissionGrantId);
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- SDK types omit grantee fields the API returns; see permissionsHelpers.ts
-		initialValue.value = rowToFormState(grant as unknown as PermissionGrantRow);
+		initialValue.value = rowToFormState(grant);
 	} catch (error) {
 		logger.error({ error }, 'Failed to load permission grant');
 		loadError.value = true;

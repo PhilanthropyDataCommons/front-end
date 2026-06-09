@@ -2,7 +2,7 @@ import { usePdcApi, usePdcCallbackApi } from '@pdc/utilities';
 import type { BaseField, BaseFieldBundle, WritableBaseField } from '@pdc/sdk';
 
 const DEFAULT_ENTITY_PAGE = 1;
-const DEFAULT_ENTITY_COUNT = 200;
+const DEFAULT_ENTITY_COUNT = 1000;
 
 export function useBaseFields(
 	page: number = DEFAULT_ENTITY_PAGE,

@@ -12,10 +12,21 @@ import {
 import { RouterLink } from 'vue-router';
 import { PlusIcon } from '@heroicons/vue/24/outline';
 import { onMounted, ref, computed, h } from 'vue';
-import { usePermissionGrants } from '../../pdc-api';
+import {
+	usePermissionGrants,
+	useChangemakers,
+	useFunders,
+	useDataProviders,
+	useOpportunities,
+	useProposals,
+	useApplicationForms,
+	useSources,
+} from '../../pdc-api';
 import { getLogger } from '@pdc/utilities';
 import {
-	formatEntityLabel,
+	buildEntityLabelLookup,
+	humanLabel,
+	resolveEntityLabel,
 	type PermissionGrantRow,
 } from '../../permissionsHelpers';
 
@@ -23,13 +34,30 @@ const logger = getLogger('<PermissionsView>');
 
 const { data: permissionGrants, fetchData: fetchPermissionGrants } =
 	usePermissionGrants();
+const { data: changemakers } = useChangemakers();
+const { data: funders } = useFunders();
+const { data: dataProviders } = useDataProviders();
+const { data: opportunities } = useOpportunities();
+const { data: proposals } = useProposals();
+const { data: applicationForms } = useApplicationForms();
+const { data: sources } = useSources();
 const isLoading = ref(true);
 const caughtError = ref(false);
 
 const permissionGrantsArray = computed<PermissionGrantRow[]>(
-	() =>
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- SDK types omit grantee fields and type scope/verbs as opaque; see permissionsHelpers.ts
-		(permissionGrants.value?.entries ?? []) as unknown as PermissionGrantRow[],
+	() => permissionGrants.value?.entries ?? [],
+);
+
+const entityLabelLookup = computed(() =>
+	buildEntityLabelLookup({
+		changemaker: changemakers.value?.entries,
+		funder: funders.value?.entries,
+		dataProvider: dataProviders.value?.entries,
+		opportunity: opportunities.value?.entries,
+		proposal: proposals.value?.entries,
+		applicationForm: applicationForms.value?.entries,
+		source: sources.value?.entries,
+	}),
 );
 
 const columnHelper = createColumnHelper<PermissionGrantRow>();
@@ -37,18 +65,28 @@ const columnHelper = createColumnHelper<PermissionGrantRow>();
 const columns = [
 	columnHelper.text('id', 'Id'),
 	columnHelper.display('granteeType', 'Grantee Type', {
-		cell: (info) => info.row.original.granteeType ?? '',
+		cell: (info) => {
+			const {
+				row: {
+					original: { granteeType },
+				},
+			} = info;
+			return typeof granteeType === 'string' ? humanLabel(granteeType) : '';
+		},
 	}),
-	columnHelper.text('contextEntityType', 'Context Entity'),
+	columnHelper.display('contextEntityType', 'Context Entity', {
+		cell: (info) => humanLabel(info.row.original.contextEntityType),
+	}),
 	columnHelper.display('entityLabel', 'Entity Label', {
-		cell: (info) => formatEntityLabel(info.row.original),
+		cell: (info) =>
+			resolveEntityLabel(info.row.original, entityLabelLookup.value),
 		enableSorting: false,
 	}),
 	columnHelper.accessor('scope', 'Scope', {
-		cell: (info) => info.getValue().join(', '),
+		cell: (info) => info.getValue().map(humanLabel).join(', '),
 	}),
 	columnHelper.accessor('verbs', 'Verbs', {
-		cell: (info) => info.getValue().join(', '),
+		cell: (info) => info.getValue().map(humanLabel).join(', '),
 	}),
 	columnHelper.text('createdByUser.keycloakUserName', 'Created By'),
 	columnHelper.icon('edit', '', (row) =>
