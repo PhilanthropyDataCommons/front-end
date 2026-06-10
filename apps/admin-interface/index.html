@@ -13,6 +13,12 @@
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 		<link rel="manifest" href="/manifest.json" />
 		<title>Philanthropy Data Commons</title>
+		<script>
+			// 🔍 Runtime base path detection for preview envs
+			const parts = window.location.pathname.split('/').filter(Boolean);
+			const isPreview = parts[0]?.includes('-preview-') && parts[1] === 'admin';
+			window.__APP_BASE__ = isPreview ? `/${parts[0]}/${parts[1]}/` : '/';
+		</script>
 	</head>
 	<body>
 		<noscript>You need to enable JavaScript to run this app.</noscript>
