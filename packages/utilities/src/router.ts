@@ -1,6 +1,12 @@
 import { createWebHistory, createRouter } from 'vue-router';
 import type { Router, RouteRecordRaw } from 'vue-router';
 
+declare global {
+	interface Window {
+		__APP_BASE__: string | undefined;
+	}
+}
+
 declare module 'vue-router' {
 	interface RouteMeta {
 		requiresAuth?: boolean;
@@ -9,7 +15,7 @@ declare module 'vue-router' {
 
 const createAppRouter = (routes: RouteRecordRaw[]): Router =>
 	createRouter({
-		history: createWebHistory(),
+		history: createWebHistory(window.__APP_BASE__ ?? '/'),
 		routes,
 	});
 
