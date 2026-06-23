@@ -18,7 +18,6 @@ import {
 	useFunders,
 	useDataProviders,
 	useOpportunities,
-	useProposals,
 	useApplicationForms,
 	useSources,
 } from '../../pdc-api';
@@ -26,7 +25,9 @@ import { getLogger } from '@pdc/utilities';
 import {
 	buildEntityLabelLookup,
 	humanLabel,
+	isEntityLabelPending,
 	resolveEntityLabel,
+	type ContextEntityType,
 	type PermissionGrantRow,
 } from '../../permissionsHelpers';
 
@@ -34,13 +35,16 @@ const logger = getLogger('<PermissionsView>');
 
 const { data: permissionGrants, fetchData: fetchPermissionGrants } =
 	usePermissionGrants();
-const { data: changemakers } = useChangemakers();
-const { data: funders } = useFunders();
-const { data: dataProviders } = useDataProviders();
-const { data: opportunities } = useOpportunities();
-const { data: proposals } = useProposals();
-const { data: applicationForms } = useApplicationForms();
-const { data: sources } = useSources();
+const { data: changemakers, isLoading: changemakersLoading } =
+	useChangemakers();
+const { data: funders, isLoading: fundersLoading } = useFunders();
+const { data: dataProviders, isLoading: dataProvidersLoading } =
+	useDataProviders();
+const { data: opportunities, isLoading: opportunitiesLoading } =
+	useOpportunities();
+const { data: applicationForms, isLoading: applicationFormsLoading } =
+	useApplicationForms();
+const { data: sources, isLoading: sourcesLoading } = useSources();
 const isLoading = ref(true);
 const caughtError = ref(false);
 
@@ -54,10 +58,27 @@ const entityLabelLookup = computed(() =>
 		funder: funders.value?.entries,
 		dataProvider: dataProviders.value?.entries,
 		opportunity: opportunities.value?.entries,
-		proposal: proposals.value?.entries,
 		applicationForm: applicationForms.value?.entries,
 		source: sources.value?.entries,
 	}),
+);
+
+const labelEntityLoading = [
+	['changemaker', changemakersLoading],
+	['funder', fundersLoading],
+	['dataProvider', dataProvidersLoading],
+	['opportunity', opportunitiesLoading],
+	['applicationForm', applicationFormsLoading],
+	['source', sourcesLoading],
+] as const satisfies ReadonlyArray<readonly [ContextEntityType, unknown]>;
+
+const loadingEntityTypes = computed(
+	() =>
+		new Set(
+			labelEntityLoading
+				.filter(([, loading]) => loading.value)
+				.map(([type]) => type),
+		),
 );
 
 const columnHelper = createColumnHelper<PermissionGrantRow>();
@@ -78,8 +99,19 @@ const columns = [
 		cell: (info) => humanLabel(info.row.original.contextEntityType),
 	}),
 	columnHelper.display('entityLabel', 'Entity Label', {
-		cell: (info) =>
-			resolveEntityLabel(info.row.original, entityLabelLookup.value),
+		cell: (info) => {
+			const {
+				row: { original: row },
+			} = info;
+			if (isEntityLabelPending(row, loadingEntityTypes.value)) {
+				return h(
+					'span',
+					{ class: 'text-gray-500', 'aria-busy': 'true' },
+					'Loading…',
+				);
+			}
+			return resolveEntityLabel(row, entityLabelLookup.value);
+		},
 		enableSorting: false,
 	}),
 	columnHelper.accessor('scope', 'Scope', {

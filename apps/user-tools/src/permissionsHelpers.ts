@@ -224,7 +224,6 @@ export const ENTITY_LABEL_FIELDS: Partial<
 	funder: { keyField: 'shortCode', labelField: 'name' },
 	dataProvider: { keyField: 'shortCode', labelField: 'name' },
 	opportunity: { keyField: 'id', labelField: 'title' },
-	proposal: { keyField: 'id', labelField: 'externalId' },
 	applicationForm: { keyField: 'id', labelField: 'name' },
 	source: { keyField: 'id', labelField: 'label' },
 };
@@ -282,6 +281,14 @@ export const resolveEntityLabel = (
 	}
 	return formatEntityLabel(row);
 };
+
+export const isEntityLabelPending = (
+	row: PermissionGrantRow,
+	loadingEntityTypes: ReadonlySet<ContextEntityType>,
+): boolean =>
+	isContextEntityType(row.contextEntityType) &&
+	row.contextEntityType in ENTITY_LABEL_FIELDS &&
+	loadingEntityTypes.has(row.contextEntityType);
 
 const MIN_SELECTIONS = 1;
 

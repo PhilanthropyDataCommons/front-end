@@ -22,11 +22,21 @@ export function throwIfNotOk(res: Response): Response {
 export function usePdcApi<T>(
 	path: string,
 	params = new URLSearchParams(),
-): { data: Ref<T | null>; fetchData: () => Promise<void> } {
+): {
+	data: Ref<T | null>;
+	fetchData: () => Promise<void>;
+	isLoading: Ref<boolean>;
+	error: Ref<unknown>;
+} {
 	const data: Ref<T | null> = ref(null);
+
+	const isLoading = ref(true);
+	const error: Ref<unknown> = ref(null);
 
 	const fetchData = async (): Promise<void> => {
 		data.value = null;
+		error.value = null;
+		isLoading.value = true;
 		try {
 			const { token } = useKeycloak();
 			const url = new URL(path, API_URL);
@@ -40,10 +50,13 @@ export function usePdcApi<T>(
 			 */
 			data.value = (await res.json()) as T;
 		} catch (err) {
+			error.value = err;
 			logger.error(
 				{ error: err, params: params.toString() },
 				`Error fetching ${path}`,
 			);
+		} finally {
+			isLoading.value = false;
 		}
 	};
 
@@ -51,7 +64,7 @@ export function usePdcApi<T>(
 
 	watch(() => params.toString(), fetchData);
 
-	return { data, fetchData };
+	return { data, fetchData, isLoading, error };
 }
 
 export function usePdcCallbackApi<T>(
