@@ -187,7 +187,9 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 							<div class="csv-download-top">
 								<ArrowDownTrayIcon class="icon" />
 								<button
-									:disabled="props.bulkUpload === null || hasNoApplicationForms"
+									:disabled="
+										props.applicationFormId === null || hasNoApplicationForms
+									"
 									class="download-csv-text"
 									@click.prevent="handleCsvDownload"
 								>
