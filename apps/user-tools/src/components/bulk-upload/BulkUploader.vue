@@ -224,8 +224,8 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 									<CodeText>proposal_submitter_email</CodeText> column.
 								</InfoBlock>
 								<InfoBlock>
-									Set a row's <CodeText>pdc_changemaker_id</CodeText> to a
-									changemaker's PDC ID to link it to that exact changemaker —
+									Set a row's <CodeText>control:pdc_changemaker_id</CodeText> to
+									a changemaker's PDC ID to link it to that exact changemaker —
 									this takes precedence over matching by
 									<CodeText>organization_name</CodeText> and
 									<CodeText>organization_tax_id</CodeText>.
