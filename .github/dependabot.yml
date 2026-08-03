@@ -38,6 +38,10 @@ updates:
       vue:
         patterns:
           - '*vue*'
+      development:
+        dependency-type: 'development'
+        patterns:
+          - '*'
 
   - package-ecosystem: 'github-actions'
     directory: '.github/workflows'
@@ -47,3 +51,7 @@ updates:
       timezone: 'Etc/UTC'
     cooldown:
       default-days: 7
+    groups:
+      github-actions:
+        patterns:
+          - '*'
