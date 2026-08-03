@@ -4,7 +4,7 @@
 	"private": true,
 	"dependencies": {
 		"@dsb-norge/vue-keycloak-js": "^3.0.8",
-		"@fontsource/source-sans-pro": "^5.2.5",
+		"@fontsource/source-sans-pro": "^5.3.0",
 		"@heroicons/vue": "^2.2.0",
 		"@pdc/sdk": "^0.39.1",
 		"@vitejs/plugin-vue": "^6.0.7",
