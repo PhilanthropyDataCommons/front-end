@@ -1,21 +1,20 @@
-<script setup lang="ts" generic="TData">
+<script setup lang="ts" generic="TData extends RowData">
 import {
-	useVueTable,
-	getCoreRowModel,
-	getSortedRowModel,
-	getFilteredRowModel,
+	useTable,
 	type ColumnDef,
 	type SortingState,
 	type ColumnFiltersState,
-	type ColumnSizingInfoState,
+	type columnResizingState,
+	type RowData,
 	FlexRender,
 } from '@tanstack/vue-table';
 import { ref, computed } from 'vue';
+import { dataTableFeatures, type DataTableFeatures } from './tableFeatures';
 
-export interface DataTableProps<TData> {
+export interface DataTableProps<TData extends RowData> {
 	data: TData[];
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- needed for generic column definitions
-	columns: Array<ColumnDef<TData, any>>;
+	columns: Array<ColumnDef<DataTableFeatures, TData, any>>;
 	className?: string;
 	truncate?: boolean;
 	enableSorting?: boolean;
@@ -34,7 +33,7 @@ const props = withDefaults(defineProps<DataTableProps<TData>>(), {
 const sorting = ref<SortingState>([]);
 const columnFilters = ref<ColumnFiltersState>([]);
 const columnSizing = ref<Record<string, number>>({});
-const columnSizingInfo = ref<ColumnSizingInfoState>({
+const columnResizing = ref<columnResizingState>({
 	columnSizingStart: [],
 	deltaOffset: null,
 	deltaPercentage: null,
@@ -44,10 +43,11 @@ const columnSizingInfo = ref<ColumnSizingInfoState>({
 });
 
 const isResizing = computed(
-	() => columnSizingInfo.value.isResizingColumn !== false,
+	() => columnResizing.value.isResizingColumn !== false,
 );
 
-const table = useVueTable({
+const table = useTable({
+	features: dataTableFeatures,
 	get data() {
 		return props.data;
 	},
@@ -58,11 +58,6 @@ const table = useVueTable({
 		size: 120, // eslint-disable-line @typescript-eslint/no-magic-numbers -- sensible default column width
 		minSize: 40, // eslint-disable-line @typescript-eslint/no-magic-numbers -- sensible minimum column width
 	},
-	getCoreRowModel: getCoreRowModel(),
-	getSortedRowModel: props.enableSorting ? getSortedRowModel() : undefined,
-	getFilteredRowModel: props.enableFiltering
-		? getFilteredRowModel()
-		: undefined,
 	columnResizeMode: 'onChange',
 	state: {
 		get sorting() {
@@ -74,8 +69,8 @@ const table = useVueTable({
 		get columnSizing() {
 			return columnSizing.value;
 		},
-		get columnSizingInfo() {
-			return columnSizingInfo.value;
+		get columnResizing() {
+			return columnResizing.value;
 		},
 	},
 	onSortingChange: (updaterOrValue) => {
@@ -96,14 +91,17 @@ const table = useVueTable({
 				? updaterOrValue(columnSizing.value)
 				: updaterOrValue;
 	},
-	onColumnSizingInfoChange: (updaterOrValue) => {
-		columnSizingInfo.value =
+	onColumnResizingChange: (updaterOrValue) => {
+		columnResizing.value =
 			typeof updaterOrValue === 'function'
-				? updaterOrValue(columnSizingInfo.value)
+				? updaterOrValue(columnResizing.value)
 				: updaterOrValue;
 	},
 	get enableSorting() {
 		return props.enableSorting;
+	},
+	get enableColumnFilters() {
+		return props.enableFiltering;
 	},
 	get enableColumnResizing() {
 		return props.enableColumnResizing;
