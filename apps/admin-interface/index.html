@@ -18,6 +18,11 @@
 			const parts = window.location.pathname.split('/').filter(Boolean);
 			const isPreview = parts[0]?.includes('-preview-') && parts[1] === 'admin';
 			window.__APP_BASE__ = isPreview ? `/${parts[0]}/${parts[1]}/` : '/';
+			document.head.appendChild(
+				Object.assign(document.createElement('base'), {
+					href: window.__APP_BASE__,
+				}),
+			);
 		</script>
 	</head>
 	<body>
