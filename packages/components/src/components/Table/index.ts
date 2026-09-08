@@ -4,3 +4,5 @@ import EditIconLink from './EditIconLink.vue';
 export { DataTable, EditIconLink };
 
 export * from './columnHelpers';
+
+export * from './tableFeatures';
