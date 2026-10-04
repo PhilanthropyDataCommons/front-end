@@ -7,6 +7,7 @@ import type {
 	DisplayColumnDef,
 	CellContext,
 } from '@tanstack/vue-table';
+import type { Features } from './features';
 
 const DEFAULT_ACTION_COLUMN_SIZE = 100;
 const DEFAULT_ICON_ACTION_COLUMN_SIZE = 40;
@@ -19,10 +20,10 @@ interface ColumnHelper<TData extends RowData> {
 		accessor: TAccessor,
 		header: string,
 		options?: Omit<
-			IdentifiedColumnDef<TData, TValue>,
+			IdentifiedColumnDef<Features, TData, TValue>,
 			'accessorKey' | 'header'
 		>,
-	) => AccessorKeyColumnDef<TData, TValue>;
+	) => AccessorKeyColumnDef<Features, TData, TValue>;
 
 	text: <
 		TAccessor extends DeepKeys<TData>,
@@ -31,16 +32,16 @@ interface ColumnHelper<TData extends RowData> {
 		accessor: TAccessor,
 		header: string,
 		options?: Omit<
-			IdentifiedColumnDef<TData, TValue>,
+			IdentifiedColumnDef<Features, TData, TValue>,
 			'accessorKey' | 'header'
-		> & { cell?: (info: CellContext<TData, TValue>) => string },
-	) => AccessorKeyColumnDef<TData, TValue>;
+		> & { cell?: (info: CellContext<Features, TData, TValue>) => string },
+	) => AccessorKeyColumnDef<Features, TData, TValue>;
 
 	display: (
 		id: string,
 		header: string,
-		options?: Omit<DisplayColumnDef<TData>, 'id' | 'header'>,
-	) => DisplayColumnDef<TData>;
+		options?: Omit<DisplayColumnDef<Features, TData>, 'id' | 'header'>,
+	) => DisplayColumnDef<Features, TData>;
 
 	action: (
 		id: string,
@@ -51,7 +52,7 @@ interface ColumnHelper<TData extends RowData> {
 			minSize?: number;
 			maxSize?: number;
 		},
-	) => DisplayColumnDef<TData>;
+	) => DisplayColumnDef<Features, TData>;
 
 	icon: (
 		id: string,
@@ -60,7 +61,7 @@ interface ColumnHelper<TData extends RowData> {
 		options?: {
 			size?: number;
 		},
-	) => DisplayColumnDef<TData>;
+	) => DisplayColumnDef<Features, TData>;
 }
 
 export function createColumnHelper<
