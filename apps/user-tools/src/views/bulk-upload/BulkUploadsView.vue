@@ -25,6 +25,22 @@ const caughtError = ref(false);
 
 const bulkUploadsArray = computed(() => bulkUploads.value?.entries ?? []);
 
+const applicationFormLabel = ({
+	applicationForm,
+	applicationFormId,
+}: BulkUploadTask): string => {
+	const fallback = `Application Form #${applicationFormId}`;
+	if (applicationForm === undefined) {
+		return fallback;
+	}
+	// The SDK types name as `string`, but it can be null at runtime.
+	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- SDK type is incorrect, name can be null
+	if (applicationForm.name === null) {
+		return fallback;
+	}
+	return `${applicationForm.name} (v${applicationForm.version}, ID ${applicationForm.id})`;
+};
+
 const columnHelper = createColumnHelper<BulkUploadTask>();
 
 const columns = [
@@ -35,7 +51,13 @@ const columns = [
 	columnHelper.text('createdByUser', 'Uploader', {
 		cell: (info) => info.getValue().keycloakUserName ?? '',
 	}),
-	columnHelper.text('applicationFormId', 'Application Form'),
+	columnHelper.text('applicationFormId', 'Application Form', {
+		cell: ({ row: { original } }) => applicationFormLabel(original),
+		sortingFn: (rowA, rowB) =>
+			applicationFormLabel(rowA.original).localeCompare(
+				applicationFormLabel(rowB.original),
+			),
+	}),
 	columnHelper.display('recordsAdded', 'Records added', {
 		cell: () => 'TBD',
 		enableSorting: false,
