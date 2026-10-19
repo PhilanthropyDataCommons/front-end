@@ -37,6 +37,13 @@ const proposalsFile = computed(
 		bulkUpload.value?.proposalsDataFile as ModelFile | undefined,
 );
 
+const applicationFormName = computed(
+	() =>
+		// The SDK types name as `string`, but it can be null at runtime.
+		bulkUpload.value?.applicationForm?.name ??
+		`Application Form #${bulkUpload.value?.applicationFormId}`,
+);
+
 const startPolling = (): void => {
 	if (pollInterval !== null) clearInterval(pollInterval);
 	pollInterval = setInterval(() => {
@@ -120,12 +127,22 @@ onUnmounted(() => {
 						<h4>Uploader</h4>
 						<p>{{ bulkUpload.createdByUser.keycloakUserName }}</p>
 						<h4>Application Form</h4>
-						<p>
-							{{
-								bulkUpload.applicationForm?.name ??
-								`Application Form #${bulkUpload.applicationFormId}`
-							}}
-						</p>
+						<template v-if="bulkUpload.applicationForm">
+							<p>{{ applicationFormName }}</p>
+							<dl class="application-form-details">
+								<dt>ID</dt>
+								<dd>{{ bulkUpload.applicationForm.id }}</dd>
+								<dt>Version</dt>
+								<dd>{{ bulkUpload.applicationForm.version }}</dd>
+								<dt>Created</dt>
+								<dd>
+									{{ localizeDateTime(bulkUpload.applicationForm.createdAt) }}
+								</dd>
+								<dt>Fields</dt>
+								<dd>{{ bulkUpload.applicationForm.fields.length }}</dd>
+							</dl>
+						</template>
+						<p v-else>Application Form #{{ bulkUpload.applicationFormId }}</p>
 						<h4>Opportunity</h4>
 						<p>{{ opportunity?.title }}</p>
 					</div>
@@ -164,6 +181,19 @@ onUnmounted(() => {
 }
 .file-download a {
 	color: var(--color--blue);
+}
+
+.application-form-details {
+	display: grid;
+	grid-template-columns: max-content 1fr;
+	column-gap: var(--fixed-spacing--2x);
+	margin: 0;
+}
+.application-form-details dt {
+	font-weight: 600;
+}
+.application-form-details dd {
+	margin: 0;
 }
 
 .disabled {
