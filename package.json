@@ -40,7 +40,7 @@
 		"prettier": "^3.9.9",
 		"storybook": "^10.4.6",
 		"typescript": "^6.0.3",
-		"vite": "^8.3.1",
+		"vite": "^8.3.4",
 		"vitest": "^4.1.11",
 		"vue-eslint-parser": "^10.4.1",
 		"vue-tsc": "^3.3.8"
