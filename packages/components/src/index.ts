@@ -8,6 +8,7 @@ export { default as BackButton } from './components/BackButton.vue';
 export { default as ErrorMessage } from './components/ErrorMessage.vue';
 export { default as InfoBlock } from './components/InfoBlock.vue';
 export { default as CodeText } from './components/CodeText.vue';
+export { default as HelpPopover } from './components/HelpPopover.vue';
 export {
 	DropdownComponent,
 	DropdownTrigger,
