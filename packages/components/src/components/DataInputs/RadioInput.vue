@@ -2,6 +2,7 @@
 	<div class="radio-input-container">
 		<InputHeader>
 			<template #header><slot name="header"></slot></template>
+			<template v-if="$slots.help" #help><slot name="help"></slot></template>
 		</InputHeader>
 		<InputInstructions>
 			<template #instructions><slot name="instructions"></slot></template>

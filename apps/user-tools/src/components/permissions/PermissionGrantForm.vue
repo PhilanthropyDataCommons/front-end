@@ -12,7 +12,9 @@ import {
 	SelectInput,
 	CheckboxInput,
 	DataSubmitButton,
+	DliComponent,
 	ErrorMessage,
+	HelpPopover,
 } from '@pdc/components';
 import { reactive, ref, computed, watch } from 'vue';
 import { getLogger } from '@pdc/utilities';
@@ -152,6 +154,35 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 							:options="GRANTEE_TYPE_OPTIONS"
 						>
 							<template #header>Grantee type</template>
+							<template #help>
+								<HelpPopover label="About grantee types">
+									<p>The grantee type decides who receives this permission.</p>
+									<dl>
+										<DliComponent>
+											<dt>User</dt>
+											<dd>
+												One specific person, identified by their Keycloak user
+												ID.
+											</dd>
+										</DliComponent>
+										<DliComponent>
+											<dt>Group</dt>
+											<dd>
+												Everyone in a Keycloak organization, identified by the
+												organization's ID. People gain or lose the permission as
+												they join or leave the organization.
+											</dd>
+										</DliComponent>
+										<DliComponent>
+											<dt>All authenticated users</dt>
+											<dd>
+												Anyone who is signed in to the PDC. No ID is needed. Use
+												this with care, since it includes every account.
+											</dd>
+										</DliComponent>
+									</dl>
+								</HelpPopover>
+							</template>
 						</RadioInput>
 						<TextInput v-if="granteeRequiresId" v-model="form.granteeId">
 							<template #header>Grantee ID</template>
