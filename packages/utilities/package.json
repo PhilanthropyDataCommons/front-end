@@ -19,7 +19,7 @@
 	},
 	"dependencies": {
 		"@dsb-norge/vue-keycloak-js": "^3.0.8",
-		"@pdc/sdk": "^0.39.1",
+		"@pdc/sdk": "^0.42.1",
 		"@vitejs/plugin-vue": "^6.0.8",
 		"@vue/compiler-sfc": "^3.5.40",
 		"dayjs": "^1.11.21",
