@@ -7,11 +7,12 @@ import {
 	PanelHeaderActionsWrapper,
 	DataTable,
 	EditIconLink,
+	ErrorMessage,
 	createColumnHelper,
 } from '@pdc/components';
 import { RouterLink } from 'vue-router';
 import { PlusIcon } from '@heroicons/vue/24/outline';
-import { onMounted, ref, computed, h } from 'vue';
+import { ref, computed, h, nextTick, watch } from 'vue';
 import {
 	usePermissionGrants,
 	useChangemakers,
@@ -21,7 +22,6 @@ import {
 	useApplicationForms,
 	useSources,
 } from '../../pdc-api';
-import { getLogger } from '@pdc/utilities';
 import {
 	buildEntityLabelLookup,
 	humanLabel,
@@ -31,10 +31,27 @@ import {
 	type PermissionGrantRow,
 } from '../../permissionsHelpers';
 
-const logger = getLogger('<PermissionsView>');
+const SMALL_PAGE_SIZE = 10;
+const DEFAULT_PERMISSIONS_PAGE_SIZE = 25;
+const LARGE_PAGE_SIZE = 50;
+const LARGEST_PAGE_SIZE = 100;
+const PERMISSIONS_PAGE_SIZE_OPTIONS = [
+	SMALL_PAGE_SIZE,
+	DEFAULT_PERMISSIONS_PAGE_SIZE,
+	LARGE_PAGE_SIZE,
+	LARGEST_PAGE_SIZE,
+];
+const FIRST_PAGE = 1;
 
-const { data: permissionGrants, fetchData: fetchPermissionGrants } =
-	usePermissionGrants();
+const page = ref(FIRST_PAGE);
+const pageSize = ref(DEFAULT_PERMISSIONS_PAGE_SIZE);
+
+const {
+	data: permissionGrants,
+	isLoading: permissionGrantsLoading,
+	error: permissionGrantsError,
+	fetchData: fetchPermissionGrants,
+} = usePermissionGrants(page, pageSize);
 const { data: changemakers, isLoading: changemakersLoading } =
 	useChangemakers();
 const { data: funders, isLoading: fundersLoading } = useFunders();
@@ -45,11 +62,73 @@ const { data: opportunities, isLoading: opportunitiesLoading } =
 const { data: applicationForms, isLoading: applicationFormsLoading } =
 	useApplicationForms();
 const { data: sources, isLoading: sourcesLoading } = useSources();
-const isLoading = ref(true);
-const caughtError = ref(false);
+
+const loadedPermissionGrants = ref<typeof permissionGrants.value>(null);
+const loadedPage = ref(FIRST_PAGE);
+const loadedPageSize = ref(DEFAULT_PERMISSIONS_PAGE_SIZE);
+const pageLoadFailed = ref(false);
+watch(permissionGrants, (bundle) => {
+	if (bundle === null) return;
+	const { value: requestedPage } = page;
+	const { value: requestedPageSize } = pageSize;
+	const lastPage = Math.max(
+		Math.ceil(bundle.total / requestedPageSize),
+		FIRST_PAGE,
+	);
+	if (requestedPage > lastPage) {
+		page.value = lastPage;
+		return;
+	}
+	loadedPermissionGrants.value = bundle;
+	loadedPage.value = requestedPage;
+	loadedPageSize.value = requestedPageSize;
+});
+watch(permissionGrantsError, (error) => {
+	if (error === null || loadedPermissionGrants.value === null) return;
+	pageLoadFailed.value = true;
+});
+const retryFailedRequest = async (): Promise<void> => {
+	pageLoadFailed.value = false;
+	await fetchPermissionGrants();
+};
+interface PageRequest {
+	page?: number;
+	pageSize?: number;
+}
+let pendingPageRequest: PageRequest | null = null;
+const sendPendingPageRequest = async (): Promise<void> => {
+	if (pendingPageRequest === null) return;
+	const {
+		page: requestedPage = loadedPage.value,
+		pageSize: requestedPageSize = loadedPageSize.value,
+	} = pendingPageRequest;
+	pendingPageRequest = null;
+	if (requestedPage === page.value && requestedPageSize === pageSize.value) {
+		if (pageLoadFailed.value) await retryFailedRequest();
+		return;
+	}
+	page.value = requestedPage;
+	pageSize.value = requestedPageSize;
+};
+const queuePageRequest = (change: PageRequest): void => {
+	const isFirstChange = pendingPageRequest === null;
+	pendingPageRequest = { ...pendingPageRequest, ...change };
+	if (isFirstChange) {
+		void nextTick().then(sendPendingPageRequest);
+	}
+};
+const requestPage = (requested: number | undefined): void => {
+	queuePageRequest({ page: requested ?? FIRST_PAGE });
+};
+const requestPageSize = (requested: number | undefined): void => {
+	queuePageRequest({ pageSize: requested ?? DEFAULT_PERMISSIONS_PAGE_SIZE });
+};
+watch([page, pageSize], () => {
+	pageLoadFailed.value = false;
+});
 
 const permissionGrantsArray = computed<PermissionGrantRow[]>(
-	() => permissionGrants.value?.entries ?? [],
+	() => loadedPermissionGrants.value?.entries ?? [],
 );
 
 const entityLabelLookup = computed(() =>
@@ -125,19 +204,6 @@ const columns = [
 		h(EditIconLink, { to: `/permissions/${String(row.id ?? '')}` }),
 	),
 ];
-
-onMounted(async () => {
-	try {
-		await fetchPermissionGrants();
-	} catch (error: unknown) {
-		if (error instanceof Error) {
-			logger.error({ error }, `Failed to load data: ${error.message}`);
-		}
-		caughtError.value = true;
-	} finally {
-		isLoading.value = false;
-	}
-});
 </script>
 
 <template>
@@ -152,24 +218,44 @@ onMounted(async () => {
 			</PanelHeaderActionsWrapper>
 		</PanelHeader>
 		<PanelBody>
-			<div v-if="caughtError">
+			<div v-if="loadedPermissionGrants === null && permissionGrantsError">
 				<p>Error loading permissions</p>
 			</div>
 			<div
-				v-if="isLoading && !caughtError"
+				v-else-if="loadedPermissionGrants === null && permissionGrantsLoading"
 				class="text-center py-8 text-gray-500"
 			>
 				<p>Loading permissions...</p>
 			</div>
-
-			<DataTable
-				v-else-if="permissionGrantsArray.length > 0 && !caughtError"
-				:data="permissionGrantsArray"
-				:columns="columns"
-				:enable-column-resizing="true"
-			/>
-
-			<div v-else-if="!caughtError">
+			<template v-else-if="permissionGrantsArray.length > 0">
+				<ErrorMessage
+					v-if="pageLoadFailed"
+					message="That page of permissions couldn't be loaded. Showing the last page that loaded."
+				/>
+				<p
+					v-if="
+						permissionGrantsLoading &&
+						(page !== loadedPage || pageSize !== loadedPageSize)
+					"
+					class="text-gray-500"
+					aria-live="polite"
+				>
+					Loading page {{ page }}…
+				</p>
+				<DataTable
+					:page="loadedPage"
+					:data="permissionGrantsArray"
+					:columns="columns"
+					:enable-column-resizing="true"
+					:enable-sorting="false"
+					:page-size="loadedPageSize"
+					:page-size-options="PERMISSIONS_PAGE_SIZE_OPTIONS"
+					:row-count="loadedPermissionGrants?.total"
+					@update:page="requestPage"
+					@update:page-size="requestPageSize"
+				/>
+			</template>
+			<div v-else>
 				<p>No permissions found</p>
 			</div>
 		</PanelBody>

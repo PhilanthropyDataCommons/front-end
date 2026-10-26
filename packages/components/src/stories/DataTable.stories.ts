@@ -1,4 +1,4 @@
-import { h } from 'vue';
+import { h, ref, watch } from 'vue';
 import { createColumnHelper, DataTable } from '../components/Table';
 
 interface Person {
@@ -191,5 +191,98 @@ export const SortingDisabled = (): object => ({
 			:columns="columns"
 			:enableSorting="false"
 		/>
+	`,
+});
+
+const MANY_PEOPLE_COUNT = 70;
+const PAGE_SIZE = 25;
+const SMALL_PAGE_SIZE = 10;
+const LARGE_PAGE_SIZE = 50;
+const PAGE_SIZE_OPTIONS = [SMALL_PAGE_SIZE, PAGE_SIZE, LARGE_PAGE_SIZE];
+const FAKE_SERVER_DELAY_MS = 300;
+const BASE_AGE = 20;
+const AGE_SPREAD = 40;
+const FIRST_ID = 1;
+const FIRST_PAGE = 1;
+const STATUS_CYCLE = 2;
+const ACTIVE_STATUS_REMAINDER = 0;
+
+const manyPeople: Person[] = Array.from(
+	{ length: MANY_PEOPLE_COUNT },
+	(_, index) => {
+		const id = (index + FIRST_ID).toString();
+		return {
+			id,
+			firstName: `Person`,
+			lastName: id,
+			email: `person${id}@example.com`,
+			age: BASE_AGE + (index % AGE_SPREAD),
+			status:
+				index % STATUS_CYCLE === ACTIVE_STATUS_REMAINDER
+					? 'Active'
+					: 'Inactive',
+		};
+	},
+);
+
+export const Paginated = (): object => ({
+	components: { DataTable },
+	setup() {
+		const page = ref(FIRST_PAGE);
+		const pageSize = ref(PAGE_SIZE);
+		return {
+			data: manyPeople,
+			columns: basicColumns,
+			page,
+			pageSize,
+			pageSizeOptions: PAGE_SIZE_OPTIONS,
+		};
+	},
+	template: `
+		<DataTable
+			v-model:page="page"
+			v-model:pageSize="pageSize"
+			:data="data"
+			:columns="columns"
+			:pageSizeOptions="pageSizeOptions"
+		/>
+	`,
+});
+
+export const ServerPaginated = (): object => ({
+	components: { DataTable },
+	setup() {
+		const page = ref(FIRST_PAGE);
+		const rows = ref<Person[]>([]);
+		const requests = ref<string[]>([]);
+		const fetchPage = (pageNumber: number): void => {
+			const start = (pageNumber - FIRST_PAGE) * PAGE_SIZE;
+			requests.value.push(
+				`_page=${pageNumber.toString()}&_count=${PAGE_SIZE.toString()}`,
+			);
+			setTimeout(() => {
+				rows.value = manyPeople.slice(start, start + PAGE_SIZE);
+			}, FAKE_SERVER_DELAY_MS);
+		};
+		watch(page, fetchPage, { immediate: true });
+		return {
+			page,
+			rows,
+			requests,
+			columns: basicColumns,
+			pageSize: PAGE_SIZE,
+			rowCount: MANY_PEOPLE_COUNT,
+		};
+	},
+	template: `
+		<DataTable
+			v-model:page="page"
+			:data="rows"
+			:columns="columns"
+			:enableSorting="false"
+			:pageSize="pageSize"
+			:rowCount="rowCount"
+		/>
+		<p class="server-requests">Requests: {{ requests.join(', ') }}</p>
 	`,
 });
