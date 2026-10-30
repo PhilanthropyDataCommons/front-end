@@ -5,7 +5,13 @@ import {
 } from '@pdc/sdk';
 import type { PermissionGrant } from '@pdc/sdk';
 
-export type PermissionGrantRow = Omit<PermissionGrant, 'scope'> & {
+export type PermissionGrantRow = Omit<
+	PermissionGrant,
+	| 'scope'
+	| 'granteeType'
+	| 'granteeUserKeycloakUserId'
+	| 'granteeKeycloakOrganizationId'
+> & {
 	scope: string[];
 	granteeType?: string;
 	granteeUserKeycloakUserId?: string | null;
@@ -36,6 +42,9 @@ export const CONTEXT_ENTITY_KEYS: Record<
 	source: 'sourceId',
 	bulkUpload: 'bulkUploadTaskId',
 	changemakerFieldValue: 'changemakerFieldValueId',
+	terminologySet: 'terminologySetId',
+	initiative: 'initiativeId',
+	initiativeFieldValue: 'initiativeFieldValueId',
 };
 
 export const CONTEXT_ENTITY_KEY_IS_SHORT_CODE: ReadonlySet<string> = new Set([
@@ -50,8 +59,11 @@ export const CONTEXT_ENTITY_SCOPES: Record<
 	changemaker: [
 		'changemaker',
 		'changemakerFieldValue',
+		'initiative',
+		'initiativeFieldValue',
 		'proposal',
 		'proposalFieldValue',
+		'source',
 		'any',
 	],
 	funder: [
@@ -60,9 +72,11 @@ export const CONTEXT_ENTITY_SCOPES: Record<
 		'applicationForm',
 		'proposal',
 		'proposalFieldValue',
+		'terminologySet',
+		'source',
 		'any',
 	],
-	dataProvider: ['dataProvider', 'any'],
+	dataProvider: ['dataProvider', 'source', 'any'],
 	opportunity: [
 		'opportunity',
 		'applicationForm',
@@ -78,6 +92,9 @@ export const CONTEXT_ENTITY_SCOPES: Record<
 	source: ['source', 'any'],
 	bulkUpload: ['bulkUpload', 'any'],
 	changemakerFieldValue: ['changemakerFieldValue', 'any'],
+	terminologySet: ['terminologySet', 'any'],
+	initiative: ['initiative', 'initiativeFieldValue', 'any'],
+	initiativeFieldValue: ['initiativeFieldValue', 'any'],
 };
 
 interface LabeledOption {
