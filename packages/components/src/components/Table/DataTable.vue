@@ -4,13 +4,16 @@ import {
 	getCoreRowModel,
 	getSortedRowModel,
 	getFilteredRowModel,
+	getPaginationRowModel,
 	type ColumnDef,
 	type SortingState,
 	type ColumnFiltersState,
 	type ColumnSizingInfoState,
+	type PaginationState,
 	FlexRender,
 } from '@tanstack/vue-table';
 import { ref, computed } from 'vue';
+import CustomButton from '../CustomButton.vue';
 
 export interface DataTableProps<TData> {
 	data: TData[];
@@ -21,6 +24,10 @@ export interface DataTableProps<TData> {
 	enableSorting?: boolean;
 	enableFiltering?: boolean;
 	enableColumnResizing?: boolean;
+	/**
+	 * Number of rows per page. When omitted, all rows are shown on one page.
+	 */
+	pageSize?: number;
 }
 
 const props = withDefaults(defineProps<DataTableProps<TData>>(), {
@@ -29,7 +36,12 @@ const props = withDefaults(defineProps<DataTableProps<TData>>(), {
 	enableSorting: true,
 	enableFiltering: false,
 	enableColumnResizing: false,
+	pageSize: undefined,
 });
+
+const FIRST_PAGE_INDEX = 0;
+const ONE_BASED_OFFSET = 1;
+const isPaginated = props.pageSize !== undefined;
 
 const sorting = ref<SortingState>([]);
 const columnFilters = ref<ColumnFiltersState>([]);
@@ -41,6 +53,10 @@ const columnSizingInfo = ref<ColumnSizingInfoState>({
 	isResizingColumn: false,
 	startOffset: null,
 	startSize: null,
+});
+const pagination = ref<PaginationState>({
+	pageIndex: FIRST_PAGE_INDEX,
+	pageSize: props.pageSize ?? Number.MAX_SAFE_INTEGER,
 });
 
 const isResizing = computed(
@@ -63,6 +79,7 @@ const table = useVueTable({
 	getFilteredRowModel: props.enableFiltering
 		? getFilteredRowModel()
 		: undefined,
+	getPaginationRowModel: isPaginated ? getPaginationRowModel() : undefined,
 	columnResizeMode: 'onChange',
 	state: {
 		get sorting() {
@@ -76,6 +93,9 @@ const table = useVueTable({
 		},
 		get columnSizingInfo() {
 			return columnSizingInfo.value;
+		},
+		get pagination() {
+			return pagination.value;
 		},
 	},
 	onSortingChange: (updaterOrValue) => {
@@ -102,6 +122,12 @@ const table = useVueTable({
 				? updaterOrValue(columnSizingInfo.value)
 				: updaterOrValue;
 	},
+	onPaginationChange: (updaterOrValue) => {
+		pagination.value =
+			typeof updaterOrValue === 'function'
+				? updaterOrValue(pagination.value)
+				: updaterOrValue;
+	},
 	get enableSorting() {
 		return props.enableSorting;
 	},
@@ -110,79 +136,136 @@ const table = useVueTable({
 	},
 });
 
+const showPagination = computed(
+	() => isPaginated && (table.getCanPreviousPage() || table.getCanNextPage()),
+);
+
+const rowRangeLabel = computed(() => {
+	const {
+		value: { pageIndex, pageSize },
+	} = pagination;
+	const rowsBeforePage = pageIndex * pageSize;
+	const firstRow = rowsBeforePage + ONE_BASED_OFFSET;
+	const lastRow = rowsBeforePage + table.getRowModel().rows.length;
+	return `${firstRow.toString()}–${lastRow.toString()} of ${table.getRowCount().toString()}`;
+});
+
 const tableClasses = computed(() =>
 	`data-table ${props.truncate ? 'truncate' : ''} ${props.className}`.trim(),
 );
 </script>
 
 <template>
-	<div class="data-table-container" :class="{ 'is-resizing': isResizing }">
-		<table
-			:border="0"
-			:cellPadding="0"
-			:cellSpacing="0"
-			:class="tableClasses"
-			:style="{ width: `${table.getTotalSize()}px` }"
-		>
-			<thead>
-				<tr
-					v-for="headerGroup in table.getHeaderGroups()"
-					:key="headerGroup.id"
-				>
-					<th
-						v-for="header in headerGroup.headers"
-						:key="header.id"
-						:colSpan="header.colSpan"
-						:style="{ width: `${header.getSize()}px` }"
-						:class="{
-							'sticky-end':
-								props.enableColumnResizing && !header.column.getCanResize(),
-						}"
+	<div class="data-table-wrapper">
+		<div class="data-table-container" :class="{ 'is-resizing': isResizing }">
+			<table
+				:border="0"
+				:cellPadding="0"
+				:cellSpacing="0"
+				:class="tableClasses"
+				:style="{ width: `${table.getTotalSize()}px` }"
+			>
+				<thead>
+					<tr
+						v-for="headerGroup in table.getHeaderGroups()"
+						:key="headerGroup.id"
 					>
-						<div
-							v-if="!header.isPlaceholder"
+						<th
+							v-for="header in headerGroup.headers"
+							:key="header.id"
+							:colSpan="header.colSpan"
+							:style="{ width: `${header.getSize()}px` }"
 							:class="{
-								sortable: header.column.getCanSort(),
+								'sticky-end':
+									props.enableColumnResizing && !header.column.getCanResize(),
 							}"
-							@click="header.column.getToggleSortingHandler()?.($event)"
+						>
+							<div
+								v-if="!header.isPlaceholder"
+								:class="{
+									sortable: header.column.getCanSort(),
+								}"
+								@click="header.column.getToggleSortingHandler()?.($event)"
+							>
+								<FlexRender
+									:render="header.column.columnDef.header"
+									:props="header.getContext()"
+								/>
+								<span v-if="header.column.getIsSorted()" class="sort-indicator">
+									{{ header.column.getIsSorted() === 'asc' ? ' ↑' : ' ↓' }}
+								</span>
+							</div>
+							<div
+								v-if="
+									props.enableColumnResizing && header.column.getCanResize()
+								"
+								class="resizer"
+								:class="{ isResizing: header.column.getIsResizing() }"
+								@mousedown="(e) => header.getResizeHandler()(e)"
+								@touchstart="(e) => header.getResizeHandler()(e)"
+							/>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="row in table.getRowModel().rows" :key="row.id">
+						<td
+							v-for="cell in row.getVisibleCells()"
+							:key="cell.id"
+							:style="{ width: `${cell.column.getSize()}px` }"
+							:class="{
+								'sticky-end':
+									props.enableColumnResizing && !cell.column.getCanResize(),
+							}"
 						>
 							<FlexRender
-								:render="header.column.columnDef.header"
-								:props="header.getContext()"
+								:render="cell.column.columnDef.cell"
+								:props="cell.getContext()"
 							/>
-							<span v-if="header.column.getIsSorted()" class="sort-indicator">
-								{{ header.column.getIsSorted() === 'asc' ? ' ↑' : ' ↓' }}
-							</span>
-						</div>
-						<div
-							v-if="props.enableColumnResizing && header.column.getCanResize()"
-							class="resizer"
-							:class="{ isResizing: header.column.getIsResizing() }"
-							@mousedown="(e) => header.getResizeHandler()(e)"
-							@touchstart="(e) => header.getResizeHandler()(e)"
-						/>
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr v-for="row in table.getRowModel().rows" :key="row.id">
-					<td
-						v-for="cell in row.getVisibleCells()"
-						:key="cell.id"
-						:style="{ width: `${cell.column.getSize()}px` }"
-						:class="{
-							'sticky-end':
-								props.enableColumnResizing && !cell.column.getCanResize(),
-						}"
-					>
-						<FlexRender
-							:render="cell.column.columnDef.cell"
-							:props="cell.getContext()"
-						/>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<nav
+			v-if="showPagination"
+			class="data-table-pagination"
+			aria-label="Table pagination"
+		>
+			<span class="data-table-pagination-range">{{ rowRangeLabel }}</span>
+			<CustomButton
+				:disabled="!table.getCanPreviousPage()"
+				aria-label="First page"
+				@click="table.firstPage()"
+			>
+				«
+			</CustomButton>
+			<CustomButton
+				:disabled="!table.getCanPreviousPage()"
+				aria-label="Previous page"
+				@click="table.previousPage()"
+			>
+				‹
+			</CustomButton>
+			<span class="data-table-pagination-page" aria-live="polite">
+				Page {{ pagination.pageIndex + ONE_BASED_OFFSET }} of
+				{{ table.getPageCount() }}
+			</span>
+			<CustomButton
+				:disabled="!table.getCanNextPage()"
+				aria-label="Next page"
+				@click="table.nextPage()"
+			>
+				›
+			</CustomButton>
+			<CustomButton
+				:disabled="!table.getCanNextPage()"
+				aria-label="Last page"
+				@click="table.lastPage()"
+			>
+				»
+			</CustomButton>
+		</nav>
 	</div>
 </template>
 
@@ -202,6 +285,18 @@ const tableClasses = computed(() =>
 
 .data-table-container.is-resizing th {
 	user-select: none;
+}
+
+.data-table-pagination {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: var(--accessible-spacing--1x);
+	padding: var(--accessible-spacing--1x) 0;
+}
+
+.data-table-pagination-range {
+	margin-right: auto;
 }
 
 .data-table {

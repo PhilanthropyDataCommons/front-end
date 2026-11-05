@@ -33,6 +33,8 @@ import {
 
 const logger = getLogger('<PermissionsView>');
 
+const PERMISSIONS_PAGE_SIZE = 25;
+
 const { data: permissionGrants, fetchData: fetchPermissionGrants } =
 	usePermissionGrants();
 const { data: changemakers, isLoading: changemakersLoading } =
@@ -167,6 +169,7 @@ onMounted(async () => {
 				:data="permissionGrantsArray"
 				:columns="columns"
 				:enable-column-resizing="true"
+				:page-size="PERMISSIONS_PAGE_SIZE"
 			/>
 
 			<div v-else-if="!caughtError">
