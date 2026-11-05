@@ -53,7 +53,7 @@ const columns = [
 	}),
 	columnHelper.text('applicationFormId', 'Application Form', {
 		cell: ({ row: { original } }) => applicationFormLabel(original),
-		sortingFn: (rowA, rowB) =>
+		sortFn: (rowA, rowB) =>
 			applicationFormLabel(rowA.original).localeCompare(
 				applicationFormLabel(rowB.original),
 			),
