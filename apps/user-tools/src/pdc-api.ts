@@ -1,5 +1,6 @@
 import { usePdcApi, usePdcCallbackApi, throwIfNotOk } from '@pdc/utilities';
 import { useKeycloak } from '@dsb-norge/vue-keycloak-js';
+import { toValue, watch, type MaybeRefOrGetter } from 'vue';
 import type {
 	BulkUploadTaskBundle,
 	Source,
@@ -43,16 +44,25 @@ export function useBulkUploads(
 }
 
 export function usePermissionGrants(
-	page: number = DEFAULT_ENTITY_PAGE,
-	count: number = DEFAULT_ENTITY_COUNT,
+	page: MaybeRefOrGetter<number> = DEFAULT_ENTITY_PAGE,
+	count: MaybeRefOrGetter<number> = DEFAULT_ENTITY_COUNT,
 ): ReturnType<typeof usePdcApi<PermissionGrantBundle>> {
-	return usePdcApi<PermissionGrantBundle>(
-		'/permissionGrants',
-		new URLSearchParams({
-			_page: page.toString(),
-			_count: count.toString(),
-		}),
+	const params = new URLSearchParams({
+		_page: toValue(page).toString(),
+		_count: toValue(count).toString(),
+	});
+	const api = usePdcApi<PermissionGrantBundle>('/permissionGrants', params, {
+		ignoreSupersededResponses: true,
+	});
+	watch(
+		() => [toValue(page), toValue(count)] as const,
+		async ([newPage, newCount]) => {
+			params.set('_page', newPage.toString());
+			params.set('_count', newCount.toString());
+			await api.fetchData();
+		},
 	);
+	return api;
 }
 
 export const useCreatePermissionGrantCallback = () => {

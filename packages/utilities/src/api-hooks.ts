@@ -19,9 +19,14 @@ export function throwIfNotOk(res: Response): Response {
 	return res;
 }
 
+export interface PdcApiOptions {
+	ignoreSupersededResponses?: boolean;
+}
+
 export function usePdcApi<T>(
 	path: string,
 	params = new URLSearchParams(),
+	{ ignoreSupersededResponses = false }: PdcApiOptions = {},
 ): {
 	data: Ref<T | null>;
 	fetchData: () => Promise<void>;
@@ -33,7 +38,13 @@ export function usePdcApi<T>(
 	const isLoading = ref(true);
 	const error: Ref<unknown> = ref(null);
 
+	let latestRequest: symbol | null = null;
+	const isCurrent = (request: symbol): boolean =>
+		!ignoreSupersededResponses || request === latestRequest;
+
 	const fetchData = async (): Promise<void> => {
+		const request = Symbol('request');
+		latestRequest = request;
 		data.value = null;
 		error.value = null;
 		isLoading.value = true;
@@ -48,15 +59,22 @@ export function usePdcApi<T>(
 			 * We are assuming here that the pdc-service being communicated with is functioning
 			 * correctly, such that if the request is successful, the response is valid JSON of the
 			 */
-			data.value = (await res.json()) as T;
+			const body = (await res.json()) as T;
+			if (isCurrent(request)) {
+				data.value = body;
+			}
 		} catch (err) {
-			error.value = err;
+			if (isCurrent(request)) {
+				error.value = err;
+			}
 			logger.error(
 				{ error: err, params: params.toString() },
 				`Error fetching ${path}`,
 			);
 		} finally {
-			isLoading.value = false;
+			if (isCurrent(request)) {
+				isLoading.value = false;
+			}
 		}
 	};
 
