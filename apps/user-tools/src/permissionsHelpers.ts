@@ -120,6 +120,7 @@ export const GRANTEE_TYPE_OPTIONS: LabeledOption[] = [
 		label: 'All authenticated users',
 		value: PermissionGrantGranteeType.AuthenticatedUsers,
 	},
+	{ label: 'All funders', value: PermissionGrantGranteeType.AllFunders },
 ];
 
 export const CONTEXT_ENTITY_TYPE_OPTIONS: LabeledOption[] =
@@ -154,13 +155,17 @@ export const isContextEntityType = (
 ): value is ContextEntityType =>
 	typeof value === 'string' && CONTEXT_ENTITY_TYPES_SET.has(value);
 
+const GRANTEE_TYPES_SET: ReadonlySet<string> = new Set(
+	Object.values(PermissionGrantGranteeType),
+);
+
 export const isGranteeType = (
 	value: string | null | undefined,
 ): value is GranteeType =>
-	value === 'user' || value === 'userGroup' || value === 'authenticatedUsers';
+	typeof value === 'string' && GRANTEE_TYPES_SET.has(value);
 
 export const granteeTypeRequiresId = (granteeType: GranteeType): boolean =>
-	granteeType !== 'authenticatedUsers';
+	granteeType === 'user' || granteeType === 'userGroup';
 
 export const getScopesForContextEntityType = (
 	value: string | null | undefined,
@@ -221,6 +226,7 @@ export type WritablePermissionGrantPayload = {
 			granteeKeycloakOrganizationId: string;
 	  }
 	| { granteeType: `${PermissionGrantGranteeType.AuthenticatedUsers}` }
+	| { granteeType: `${PermissionGrantGranteeType.AllFunders}` }
 );
 
 export const formatEntityLabel = (row: PermissionGrantRow): string => {
