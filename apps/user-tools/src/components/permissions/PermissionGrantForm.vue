@@ -91,6 +91,7 @@ const granteeNoun = computed(() => {
 	if (form.granteeType === 'userGroup') return 'the group';
 	if (form.granteeType === 'authenticatedUsers')
 		return 'all authenticated users';
+	if (form.granteeType === 'allFunders') return 'all funders';
 	return 'the user, group, or audience';
 });
 
@@ -178,6 +179,14 @@ const handleFormSubmit = async (event: Event): Promise<void> => {
 											<dd>
 												Anyone who is signed in to the PDC. No ID is needed. Use
 												this with care, since it includes every account.
+											</dd>
+										</DliComponent>
+										<DliComponent>
+											<dt>All funders</dt>
+											<dd>
+												Everyone who belongs to any funder's Keycloak
+												organization. No ID is needed. People gain or lose the
+												permission as they join or leave a funder organization.
 											</dd>
 										</DliComponent>
 									</dl>
